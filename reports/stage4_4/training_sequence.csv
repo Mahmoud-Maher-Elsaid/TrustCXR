@@ -1,0 +1,6 @@
+order,stage,task,dataset_id,model,input_size,status,fallback_model
+1,Stage 5,quality_and_view_assessment,chexpert_small,EfficientNet-B0,224,GO,MobileNetV3-Small
+2,Stage 6,multi_label_classification,nih_chestxray14,DenseNet-121,224,GO,EfficientNet-B0
+3,Stage 7,foundation_model_comparison,nih_chestxray14,RAD-DINO Frozen Features,518,GO_AFTER_STAGE_6,DenseNet-121
+4,Stage 8,anatomy_segmentation,nih_chexmask,2D U-Net,256,GO_AFTER_ADAPTER_SMOKE_TEST,Compact U-Net
+5,Stage 10,pneumonia_detection,rsna_pneumonia,YOLO11n,512,GO_AFTER_LABEL_CONVERSION,YOLO11n Reduced Resolution

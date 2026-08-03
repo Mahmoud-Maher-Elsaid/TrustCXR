@@ -1,0 +1,151 @@
+{
+  "audit_mode": "READ_ONLY",
+  "dataset_count": 10,
+  "first_training_stage": {
+    "dataset_id": "chexpert_small",
+    "gate": "APPROVED",
+    "model": "EfficientNet-B0",
+    "stage": "Stage 5",
+    "task": "quality_and_view_assessment"
+  },
+  "generated_at_utc": "2026-08-03T14:35:32.342462+00:00",
+  "overall_gate": "GO_FOR_STAGE_5",
+  "patient_leakage_violations": 0,
+  "patient_level_complete_count": 4,
+  "safely_withheld_dataset_count": 6,
+  "safely_withheld_datasets": [
+    {
+      "id": "vinbigdata",
+      "name": "VinBigData",
+      "reason": "PATIENT_IDENTITY_UNRESOLVED",
+      "role": "future_detection_training"
+    },
+    {
+      "id": "indiana_reports",
+      "name": "Indiana Reports",
+      "reason": "PATIENT_IDENTITY_UNRESOLVED",
+      "role": "future_report_generation"
+    },
+    {
+      "id": "crd_masks",
+      "name": "CRD Masks",
+      "reason": "PATIENT_IDENTITY_UNRESOLVED",
+      "role": "future_lung_segmentation"
+    },
+    {
+      "id": "siim_pneumothorax",
+      "name": "SIIM Pneumothorax",
+      "reason": "PATIENT_IDENTITY_UNRESOLVED",
+      "role": "future_lesion_segmentation"
+    },
+    {
+      "id": "tbx11k",
+      "name": "TBX11K",
+      "reason": "PATIENT_IDENTITY_UNRESOLVED",
+      "role": "future_external_validation"
+    },
+    {
+      "id": "covid_radiography",
+      "name": "COVID Radiography",
+      "reason": "PATIENT_IDENTITY_UNRESOLVED",
+      "role": "future_external_validation"
+    }
+  ],
+  "safety_gates": {
+    "dataset_files_committed": false,
+    "image_level_random_split_allowed": false,
+    "patient_level_split_required": true,
+    "raw_patient_values_committed": false,
+    "unresolved_identity_action": "WITHHOLD"
+  },
+  "schema_version": "1.0",
+  "status": "PASSED",
+  "training_ready_dataset_count": 4,
+  "training_ready_datasets": [
+    {
+      "approved_tasks": [
+        "multi_label_classification"
+      ],
+      "id": "nih_chestxray14",
+      "name": "NIH ChestXray14",
+      "role": "primary_classification_training"
+    },
+    {
+      "approved_tasks": [
+        "anatomy_segmentation"
+      ],
+      "id": "nih_chexmask",
+      "name": "NIH CheXmask",
+      "role": "primary_anatomy_segmentation"
+    },
+    {
+      "approved_tasks": [
+        "pneumonia_detection"
+      ],
+      "id": "rsna_pneumonia",
+      "name": "RSNA Pneumonia",
+      "role": "primary_pneumonia_detection"
+    },
+    {
+      "approved_tasks": [
+        "view_classification",
+        "multi_label_external_validation"
+      ],
+      "id": "chexpert_small",
+      "name": "CheXpert Small",
+      "role": "primary_view_training_and_external_validation"
+    }
+  ],
+  "training_sequence": [
+    {
+      "dataset_id": "chexpert_small",
+      "fallback_model": "MobileNetV3-Small",
+      "input_size": 224,
+      "model": "EfficientNet-B0",
+      "order": 1,
+      "stage": "Stage 5",
+      "status": "GO",
+      "task": "quality_and_view_assessment"
+    },
+    {
+      "dataset_id": "nih_chestxray14",
+      "fallback_model": "EfficientNet-B0",
+      "input_size": 224,
+      "model": "DenseNet-121",
+      "order": 2,
+      "stage": "Stage 6",
+      "status": "GO",
+      "task": "multi_label_classification"
+    },
+    {
+      "dataset_id": "nih_chestxray14",
+      "fallback_model": "DenseNet-121",
+      "input_size": 518,
+      "model": "RAD-DINO Frozen Features",
+      "order": 3,
+      "stage": "Stage 7",
+      "status": "GO_AFTER_STAGE_6",
+      "task": "foundation_model_comparison"
+    },
+    {
+      "dataset_id": "nih_chexmask",
+      "fallback_model": "Compact U-Net",
+      "input_size": 256,
+      "model": "2D U-Net",
+      "order": 4,
+      "stage": "Stage 8",
+      "status": "GO_AFTER_ADAPTER_SMOKE_TEST",
+      "task": "anatomy_segmentation"
+    },
+    {
+      "dataset_id": "rsna_pneumonia",
+      "fallback_model": "YOLO11n Reduced Resolution",
+      "input_size": 512,
+      "model": "YOLO11n",
+      "order": 5,
+      "stage": "Stage 10",
+      "status": "GO_AFTER_LABEL_CONVERSION",
+      "task": "pneumonia_detection"
+    }
+  ]
+}

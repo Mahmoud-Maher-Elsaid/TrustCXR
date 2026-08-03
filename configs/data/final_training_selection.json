@@ -1,0 +1,162 @@
+{
+  "datasets": [
+    {
+      "approved_tasks": [
+        "multi_label_classification"
+      ],
+      "decision": "TRAINING_READY",
+      "id": "nih_chestxray14",
+      "name": "NIH ChestXray14",
+      "patient_level_ready": true,
+      "role": "primary_classification_training"
+    },
+    {
+      "approved_tasks": [],
+      "decision": "WITHHELD_IDENTITY",
+      "id": "vinbigdata",
+      "name": "VinBigData",
+      "patient_level_ready": false,
+      "role": "future_detection_training"
+    },
+    {
+      "approved_tasks": [],
+      "decision": "WITHHELD_IDENTITY",
+      "id": "indiana_reports",
+      "name": "Indiana Reports",
+      "patient_level_ready": false,
+      "role": "future_report_generation"
+    },
+    {
+      "approved_tasks": [
+        "anatomy_segmentation"
+      ],
+      "decision": "TRAINING_READY",
+      "id": "nih_chexmask",
+      "name": "NIH CheXmask",
+      "patient_level_ready": true,
+      "role": "primary_anatomy_segmentation"
+    },
+    {
+      "approved_tasks": [],
+      "decision": "WITHHELD_IDENTITY",
+      "id": "crd_masks",
+      "name": "CRD Masks",
+      "patient_level_ready": false,
+      "role": "future_lung_segmentation"
+    },
+    {
+      "approved_tasks": [
+        "pneumonia_detection"
+      ],
+      "decision": "TRAINING_READY",
+      "id": "rsna_pneumonia",
+      "name": "RSNA Pneumonia",
+      "patient_level_ready": true,
+      "role": "primary_pneumonia_detection"
+    },
+    {
+      "approved_tasks": [
+        "view_classification",
+        "multi_label_external_validation"
+      ],
+      "decision": "TRAINING_READY",
+      "id": "chexpert_small",
+      "name": "CheXpert Small",
+      "patient_level_ready": true,
+      "role": "primary_view_training_and_external_validation"
+    },
+    {
+      "approved_tasks": [],
+      "decision": "WITHHELD_IDENTITY",
+      "id": "siim_pneumothorax",
+      "name": "SIIM Pneumothorax",
+      "patient_level_ready": false,
+      "role": "future_lesion_segmentation"
+    },
+    {
+      "approved_tasks": [],
+      "decision": "WITHHELD_IDENTITY",
+      "id": "tbx11k",
+      "name": "TBX11K",
+      "patient_level_ready": false,
+      "role": "future_external_validation"
+    },
+    {
+      "approved_tasks": [],
+      "decision": "WITHHELD_IDENTITY",
+      "id": "covid_radiography",
+      "name": "COVID Radiography",
+      "patient_level_ready": false,
+      "role": "future_external_validation"
+    }
+  ],
+  "first_training_stage": {
+    "dataset_id": "chexpert_small",
+    "gate": "APPROVED",
+    "model": "EfficientNet-B0",
+    "stage": "Stage 5",
+    "task": "quality_and_view_assessment"
+  },
+  "gate_name": "Stage 4.4 Final Data Readiness Gate",
+  "schema_version": "1.0",
+  "split_policy": {
+    "allow_image_level_random_split": false,
+    "required_strategy": "patient_level",
+    "test_fraction": 0.1,
+    "train_fraction": 0.8,
+    "unresolved_identity_action": "withhold",
+    "validation_fraction": 0.1
+  },
+  "training_sequence": [
+    {
+      "dataset_id": "chexpert_small",
+      "fallback_model": "MobileNetV3-Small",
+      "input_size": 224,
+      "model": "EfficientNet-B0",
+      "order": 1,
+      "stage": "Stage 5",
+      "status": "GO",
+      "task": "quality_and_view_assessment"
+    },
+    {
+      "dataset_id": "nih_chestxray14",
+      "fallback_model": "EfficientNet-B0",
+      "input_size": 224,
+      "model": "DenseNet-121",
+      "order": 2,
+      "stage": "Stage 6",
+      "status": "GO",
+      "task": "multi_label_classification"
+    },
+    {
+      "dataset_id": "nih_chestxray14",
+      "fallback_model": "DenseNet-121",
+      "input_size": 518,
+      "model": "RAD-DINO Frozen Features",
+      "order": 3,
+      "stage": "Stage 7",
+      "status": "GO_AFTER_STAGE_6",
+      "task": "foundation_model_comparison"
+    },
+    {
+      "dataset_id": "nih_chexmask",
+      "fallback_model": "Compact U-Net",
+      "input_size": 256,
+      "model": "2D U-Net",
+      "order": 4,
+      "stage": "Stage 8",
+      "status": "GO_AFTER_ADAPTER_SMOKE_TEST",
+      "task": "anatomy_segmentation"
+    },
+    {
+      "dataset_id": "rsna_pneumonia",
+      "fallback_model": "YOLO11n Reduced Resolution",
+      "input_size": 512,
+      "model": "YOLO11n",
+      "order": 5,
+      "stage": "Stage 10",
+      "status": "GO_AFTER_LABEL_CONVERSION",
+      "task": "pneumonia_detection"
+    }
+  ]
+}
