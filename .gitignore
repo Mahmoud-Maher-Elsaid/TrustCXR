@@ -105,3 +105,6 @@ desktop.ini
 
 # Local Stage 4.1 details
 /reports/stage4_1/local/
+
+# Local Stage 4.2 record-level outputs
+/reports/stage4_2/local/

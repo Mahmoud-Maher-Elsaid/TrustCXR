@@ -1,0 +1,486 @@
+{
+  "audit_mode": "READ_ONLY",
+  "container_pending_count": 2,
+  "dataset_count": 10,
+  "datasets": [
+    {
+      "adapter_kind": "multi_label_classification",
+      "annotation_row_count": 113104,
+      "bbox_count": 0,
+      "container_count": 0,
+      "dataset_id": "nih_chestxray14",
+      "dicom_read_failure_count": 0,
+      "duplicate_image_key_count": 0,
+      "identity_sources": {
+        "VERIFIED_METADATA_PATIENT": 112120
+      },
+      "image_count": 112120,
+      "joined_image_count": 112120,
+      "label_counts": {
+        "Atelectasis": 11559,
+        "Cardiomegaly": 2776,
+        "Consolidation": 4667,
+        "Edema": 2303,
+        "Effusion": 13317,
+        "Emphysema": 2516,
+        "Fibrosis": 1686,
+        "Hernia": 227,
+        "Infiltration": 19894,
+        "Mass": 5782,
+        "No Finding": 60361,
+        "Nodule": 6331,
+        "Pleural_Thickening": 3385,
+        "Pneumonia": 1431,
+        "Pneumothorax": 5302
+      },
+      "leakage_violations": 0,
+      "mask_count": 0,
+      "mask_pair_count": 0,
+      "metadata_file_count": 2,
+      "metadata_profile": {
+        "files_without_image_key": 0,
+        "metadata_file_count": 2,
+        "metadata_row_count": 113104,
+        "rows_without_image_key": 0,
+        "selected_image_columns": {
+          "Image Index": 2
+        },
+        "selected_patient_columns": {
+          "Patient ID": 1
+        },
+        "selected_study_columns": {
+          "Follow-up #": 1
+        }
+      },
+      "name": "NIH ChestXray14",
+      "orphan_annotation_count": 0,
+      "orphan_image_count": 0,
+      "patient_resolution_rate": 1.0,
+      "patient_resolved_count": 112120,
+      "record_count": 112120,
+      "report_link_count": 0,
+      "safe_split_status": "PATIENT_LEVEL_COMPLETE",
+      "split_assigned_count": 112120,
+      "split_counts": {
+        "test": 11054,
+        "train": 90341,
+        "validation": 10725
+      },
+      "split_unassigned_count": 0,
+      "status": "MANIFEST_BUILT",
+      "study_resolved_count": 112120
+    },
+    {
+      "adapter_kind": "object_detection",
+      "annotation_row_count": 70914,
+      "bbox_count": 36096,
+      "container_count": 1,
+      "dataset_id": "vinbigdata",
+      "dicom_read_failure_count": 0,
+      "duplicate_image_key_count": 0,
+      "identity_sources": {
+        "UNRESOLVED": 18000
+      },
+      "image_count": 18000,
+      "joined_image_count": 18000,
+      "label_counts": {
+        "Aortic enlargement": 3067,
+        "Atelectasis": 186,
+        "Calcification": 452,
+        "Cardiomegaly": 2300,
+        "Consolidation": 353,
+        "ILD": 386,
+        "Infiltration": 613,
+        "Lung Opacity": 1322,
+        "No finding": 10606,
+        "Nodule/Mass": 826,
+        "Other lesion": 1134,
+        "Pleural effusion": 1032,
+        "Pleural thickening": 1981,
+        "Pneumothorax": 96,
+        "Pulmonary fibrosis": 1617
+      },
+      "leakage_violations": 0,
+      "mask_count": 0,
+      "mask_pair_count": 0,
+      "metadata_file_count": 2,
+      "metadata_profile": {
+        "files_without_image_key": 0,
+        "metadata_file_count": 2,
+        "metadata_row_count": 70914,
+        "rows_without_image_key": 0,
+        "selected_image_columns": {
+          "image_id": 2
+        },
+        "selected_patient_columns": {},
+        "selected_study_columns": {}
+      },
+      "name": "VinBigData Chest X-ray Abnormalities Detection",
+      "orphan_annotation_count": 0,
+      "orphan_image_count": 0,
+      "patient_resolution_rate": 0.0,
+      "patient_resolved_count": 0,
+      "record_count": 18000,
+      "report_link_count": 0,
+      "safe_split_status": "WITHHELD_IDENTITY_UNRESOLVED",
+      "split_assigned_count": 0,
+      "split_counts": {
+        "unassigned_identity_review": 18000
+      },
+      "split_unassigned_count": 18000,
+      "status": "MANIFEST_BUILT",
+      "study_resolved_count": 0
+    },
+    {
+      "adapter_kind": "image_report_join",
+      "annotation_row_count": 7466,
+      "bbox_count": 0,
+      "container_count": 0,
+      "dataset_id": "indiana_reports",
+      "dicom_read_failure_count": 0,
+      "duplicate_image_key_count": 0,
+      "identity_sources": {
+        "STUDY_ONLY": 7470
+      },
+      "image_count": 7470,
+      "joined_image_count": 7466,
+      "label_counts": {},
+      "leakage_violations": 0,
+      "mask_count": 0,
+      "mask_pair_count": 0,
+      "metadata_file_count": 2,
+      "metadata_profile": {
+        "files_without_image_key": 0,
+        "metadata_file_count": 2,
+        "metadata_row_count": 11317,
+        "rows_without_image_key": 0,
+        "selected_image_columns": {
+          "filename": 2
+        },
+        "selected_patient_columns": {},
+        "selected_study_columns": {
+          "uid": 2
+        }
+      },
+      "name": "Indiana University Chest X-ray Reports",
+      "orphan_annotation_count": 499,
+      "orphan_image_count": 4,
+      "patient_resolution_rate": 0.0,
+      "patient_resolved_count": 0,
+      "record_count": 7470,
+      "report_link_count": 0,
+      "safe_split_status": "WITHHELD_IDENTITY_UNRESOLVED",
+      "split_assigned_count": 0,
+      "split_counts": {
+        "unassigned_identity_review": 7470
+      },
+      "split_unassigned_count": 7470,
+      "status": "MANIFEST_BUILT",
+      "study_resolved_count": 7466
+    },
+    {
+      "adapter_kind": "container",
+      "container_count": 0,
+      "dataset_id": "nih_chexmask",
+      "identity_sources": {},
+      "image_count": 0,
+      "joined_image_count": 0,
+      "label_counts": {},
+      "leakage_violations": 0,
+      "mask_count": 0,
+      "metadata_file_count": 1,
+      "name": "NIH CheXmask",
+      "orphan_annotation_count": 0,
+      "orphan_image_count": 0,
+      "patient_resolution_rate": 0.0,
+      "patient_resolved_count": 0,
+      "record_count": 0,
+      "safe_split_status": "NOT_CREATED",
+      "split_counts": {},
+      "status": "CONTAINER_ADAPTER_PENDING"
+    },
+    {
+      "adapter_kind": "paired_image_mask",
+      "annotation_row_count": 0,
+      "bbox_count": 0,
+      "container_count": 0,
+      "dataset_id": "crd_masks",
+      "dicom_read_failure_count": 0,
+      "duplicate_image_key_count": 3311,
+      "identity_sources": {
+        "IMAGE_PROXY_REVIEW_REQUIRED": 6622
+      },
+      "image_count": 6622,
+      "joined_image_count": 0,
+      "label_counts": {},
+      "leakage_violations": 0,
+      "mask_count": 6622,
+      "mask_pair_count": 6622,
+      "metadata_file_count": 1,
+      "metadata_profile": {
+        "files_without_image_key": 1,
+        "metadata_file_count": 1,
+        "metadata_row_count": 3311,
+        "rows_without_image_key": 3311,
+        "selected_image_columns": {},
+        "selected_patient_columns": {},
+        "selected_study_columns": {}
+      },
+      "name": "Chest Radiography Database Lung Masks",
+      "orphan_annotation_count": 0,
+      "orphan_image_count": 6622,
+      "patient_resolution_rate": 0.0,
+      "patient_resolved_count": 0,
+      "record_count": 6622,
+      "report_link_count": 0,
+      "safe_split_status": "WITHHELD_IDENTITY_UNRESOLVED",
+      "split_assigned_count": 0,
+      "split_counts": {
+        "unassigned_identity_review": 6622
+      },
+      "split_unassigned_count": 6622,
+      "status": "MANIFEST_BUILT",
+      "study_resolved_count": 0
+    },
+    {
+      "adapter_kind": "object_detection",
+      "annotation_row_count": 63454,
+      "bbox_count": 9555,
+      "container_count": 0,
+      "dataset_id": "rsna_pneumonia",
+      "dicom_read_failure_count": 0,
+      "duplicate_image_key_count": 0,
+      "identity_sources": {
+        "VERIFIED_METADATA_PATIENT": 29684
+      },
+      "image_count": 29684,
+      "joined_image_count": 29684,
+      "label_counts": {
+        "Lung Opacity": 6012,
+        "No Lung Opacity / Not Normal": 11821,
+        "Normal": 8851,
+        "Pneumonia": 6012
+      },
+      "leakage_violations": 0,
+      "mask_count": 0,
+      "mask_pair_count": 0,
+      "metadata_file_count": 3,
+      "metadata_profile": {
+        "files_without_image_key": 0,
+        "metadata_file_count": 3,
+        "metadata_row_count": 63454,
+        "rows_without_image_key": 0,
+        "selected_image_columns": {
+          "patientId": 3
+        },
+        "selected_patient_columns": {
+          "patientId": 3
+        },
+        "selected_study_columns": {}
+      },
+      "name": "RSNA Pneumonia Detection Challenge",
+      "orphan_annotation_count": 0,
+      "orphan_image_count": 0,
+      "patient_resolution_rate": 1.0,
+      "patient_resolved_count": 29684,
+      "record_count": 29684,
+      "report_link_count": 0,
+      "safe_split_status": "PATIENT_LEVEL_COMPLETE",
+      "split_assigned_count": 29684,
+      "split_counts": {
+        "test": 3067,
+        "train": 23626,
+        "validation": 2991
+      },
+      "split_unassigned_count": 0,
+      "status": "MANIFEST_BUILT",
+      "study_resolved_count": 29684
+    },
+    {
+      "adapter_kind": "multi_label_classification",
+      "annotation_row_count": 223649,
+      "bbox_count": 0,
+      "container_count": 0,
+      "dataset_id": "chexpert_small",
+      "dicom_read_failure_count": 0,
+      "duplicate_image_key_count": 1,
+      "identity_sources": {
+        "VERIFIED_PATH_PATIENT": 223649
+      },
+      "image_count": 223649,
+      "joined_image_count": 223649,
+      "label_counts": {
+        "Atelectasis": 33456,
+        "Cardiomegaly": 27068,
+        "Consolidation": 14816,
+        "Edema": 52291,
+        "Enlarged Cardiomediastinum": 10907,
+        "Fracture": 9040,
+        "Lung Lesion": 9187,
+        "Lung Opacity": 105707,
+        "No Finding": 22420,
+        "Pleural Effusion": 86254,
+        "Pleural Other": 3524,
+        "Pneumonia": 6047,
+        "Pneumothorax": 19456,
+        "Support Devices": 116109
+      },
+      "leakage_violations": 0,
+      "mask_count": 0,
+      "mask_pair_count": 0,
+      "metadata_file_count": 2,
+      "metadata_profile": {
+        "files_without_image_key": 0,
+        "metadata_file_count": 2,
+        "metadata_row_count": 223648,
+        "rows_without_image_key": 0,
+        "selected_image_columns": {
+          "Path": 2
+        },
+        "selected_patient_columns": {},
+        "selected_study_columns": {}
+      },
+      "name": "CheXpert Small",
+      "orphan_annotation_count": 0,
+      "orphan_image_count": 0,
+      "patient_resolution_rate": 1.0,
+      "patient_resolved_count": 223649,
+      "record_count": 223649,
+      "report_link_count": 0,
+      "safe_split_status": "PATIENT_LEVEL_COMPLETE",
+      "split_assigned_count": 223649,
+      "split_counts": {
+        "test": 22784,
+        "train": 178589,
+        "validation": 22276
+      },
+      "split_unassigned_count": 0,
+      "status": "MANIFEST_BUILT",
+      "study_resolved_count": 223649
+    },
+    {
+      "adapter_kind": "rle_segmentation",
+      "container_count": 0,
+      "dataset_id": "siim_pneumothorax",
+      "identity_sources": {},
+      "image_count": 0,
+      "joined_image_count": 0,
+      "label_counts": {},
+      "leakage_violations": 0,
+      "mask_count": 3205,
+      "metadata_file_count": 2,
+      "name": "SIIM-ACR Pneumothorax Segmentation",
+      "orphan_annotation_count": 0,
+      "orphan_image_count": 0,
+      "patient_resolution_rate": 0.0,
+      "patient_resolved_count": 0,
+      "record_count": 0,
+      "safe_split_status": "NOT_CREATED",
+      "split_counts": {},
+      "status": "CONTAINER_ADAPTER_PENDING"
+    },
+    {
+      "adapter_kind": "classification_detection",
+      "annotation_row_count": 0,
+      "bbox_count": 0,
+      "container_count": 0,
+      "dataset_id": "tbx11k",
+      "dicom_read_failure_count": 0,
+      "duplicate_image_key_count": 0,
+      "identity_sources": {
+        "IMAGE_PROXY_REVIEW_REQUIRED": 11702
+      },
+      "image_count": 11702,
+      "joined_image_count": 0,
+      "label_counts": {
+        "tbx11k-simplified": 11702
+      },
+      "leakage_violations": 0,
+      "mask_count": 0,
+      "mask_pair_count": 0,
+      "metadata_file_count": 1,
+      "metadata_profile": {
+        "files_without_image_key": 1,
+        "metadata_file_count": 1,
+        "metadata_row_count": 8811,
+        "rows_without_image_key": 8811,
+        "selected_image_columns": {},
+        "selected_patient_columns": {},
+        "selected_study_columns": {}
+      },
+      "name": "TBX11K",
+      "orphan_annotation_count": 0,
+      "orphan_image_count": 11702,
+      "patient_resolution_rate": 0.0,
+      "patient_resolved_count": 0,
+      "record_count": 11702,
+      "report_link_count": 0,
+      "safe_split_status": "WITHHELD_IDENTITY_UNRESOLVED",
+      "split_assigned_count": 0,
+      "split_counts": {
+        "unassigned_identity_review": 11702
+      },
+      "split_unassigned_count": 11702,
+      "status": "MANIFEST_BUILT",
+      "study_resolved_count": 0
+    },
+    {
+      "adapter_kind": "classification_segmentation",
+      "annotation_row_count": 0,
+      "bbox_count": 0,
+      "container_count": 1,
+      "dataset_id": "covid_radiography",
+      "dicom_read_failure_count": 0,
+      "duplicate_image_key_count": 0,
+      "identity_sources": {
+        "IMAGE_PROXY_REVIEW_REQUIRED": 21165
+      },
+      "image_count": 21165,
+      "joined_image_count": 0,
+      "label_counts": {
+        "COVID": 3616,
+        "Lung_Opacity": 6012,
+        "Normal": 10192,
+        "Viral Pneumonia": 1345
+      },
+      "leakage_violations": 0,
+      "mask_count": 21165,
+      "mask_pair_count": 21165,
+      "metadata_file_count": 0,
+      "metadata_profile": {
+        "files_without_image_key": 0,
+        "metadata_file_count": 0,
+        "metadata_row_count": 0,
+        "rows_without_image_key": 0,
+        "selected_image_columns": {},
+        "selected_patient_columns": {},
+        "selected_study_columns": {}
+      },
+      "name": "COVID-19 Radiography Database",
+      "orphan_annotation_count": 0,
+      "orphan_image_count": 0,
+      "patient_resolution_rate": 0.0,
+      "patient_resolved_count": 0,
+      "record_count": 21165,
+      "report_link_count": 0,
+      "safe_split_status": "WITHHELD_IDENTITY_UNRESOLVED",
+      "split_assigned_count": 0,
+      "split_counts": {
+        "unassigned_identity_review": 21165
+      },
+      "split_unassigned_count": 21165,
+      "status": "MANIFEST_BUILT",
+      "study_resolved_count": 0
+    }
+  ],
+  "generated_at_utc": "2026-08-03T13:10:56.388601+00:00",
+  "identity_review_count": 5,
+  "patient_level_complete_count": 3,
+  "patient_level_partial_count": 0,
+  "schema_version": "1.0",
+  "status": "PASSED",
+  "total_leakage_violations": 0,
+  "total_orphan_annotation_count": 499,
+  "total_orphan_image_count": 18328,
+  "total_record_count": 430412
+}
