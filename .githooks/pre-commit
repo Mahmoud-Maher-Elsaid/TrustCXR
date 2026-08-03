@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -eu
+
+forbidden_paths="$(git diff --cached --name-only --diff-filter=ACMR | grep -E '^(TrustCXR-Data/|artifacts/|checkpoints/|logs/|outputs/|predictions/|runs/|wandb/)' || true)"
+
+if [ -n "$forbidden_paths" ]; then
+    echo "Commit blocked: local data or runtime output is staged."
+    echo "$forbidden_paths"
+    exit 1
+fi
+
+forbidden_extensions="$(git diff --cached --name-only --diff-filter=ACMR | grep -Ei '\.(dcm|dicom|nii|nii\.gz|mha|mhd|nrrd|pt|pth|ckpt|onnx|engine|safetensors|zip|7z|rar|tar|tgz)$' || true)"
+
+if [ -n "$forbidden_extensions" ]; then
+    echo "Commit blocked: prohibited medical, model, or archive files are staged."
+    echo "$forbidden_extensions"
+    exit 1
+fi
+
+exit 0

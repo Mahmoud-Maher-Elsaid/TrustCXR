@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trustcxr"
+version = "0.1.0"
+description = "Evidence-grounded and uncertainty-aware chest X-ray analysis and report verification."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+authors = [
+    { name = "Mahmoud Maher El-Said" }
+]
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]

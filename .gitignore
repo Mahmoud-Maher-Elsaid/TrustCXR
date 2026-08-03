@@ -1,0 +1,89 @@
+# Local datasets
+/TrustCXR-Data/
+/data/
+/datasets/
+
+# Python environments
+/.venv/
+/venv/
+/env/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets.json
+token.json
+
+# Medical imaging files
+*.dcm
+*.dicom
+*.nii
+*.nii.gz
+*.mha
+*.mhd
+*.nrrd
+
+# Dataset archives
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.gz
+
+# Model weights
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.engine
+*.safetensors
+*.bin
+
+# Local runtime outputs
+/artifacts/
+/checkpoints/
+/cache/
+/logs/
+/mlruns/
+/outputs/
+/predictions/
+/runs/
+/wandb/
+
+# Notebook caches
+.ipynb_checkpoints/
+
+# Download leftovers
+*.part
+*.crdownload
+*.download
+*.tmp
+*.temp
+
+# Local stage reports
+stage*_preflight_report.txt
+stage*_repository_report.txt
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
