@@ -102,3 +102,6 @@ desktop.ini
 
 # Local dataset audit details
 /reports/stage3/local/
+
+# Local Stage 4.1 details
+/reports/stage4_1/local/

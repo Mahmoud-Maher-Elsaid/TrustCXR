@@ -1,0 +1,1617 @@
+{
+  "datasets": [
+    {
+      "adapter_status": "READY_TO_IMPLEMENT",
+      "dataset_id": "nih_chestxray14",
+      "dicom_identity_profile": {
+        "attempted": 0,
+        "readable": 0,
+        "tag_presence": {
+          "AccessionNumber": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "PatientID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SOPInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SeriesInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "StudyInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          }
+        }
+      },
+      "filename_rule": {
+        "confidence": "MEDIUM",
+        "match_ratio": 1.0,
+        "regex": "^([0-9]{6,12})[_-]",
+        "repeated_group_observations": 3,
+        "sample_size": 256,
+        "strategy": "NUMERIC_PREFIX_BEFORE_SEPARATOR"
+      },
+      "folder": "01_NIH_ChestXray14",
+      "identity_rules": {
+        "image": {
+          "column": "Image Index",
+          "confidence": "HIGH",
+          "file_id": "8bd67a5b377be25a",
+          "sample_nonempty_count": 64,
+          "sample_unique_hash_count": 64,
+          "source": "METADATA_COLUMN"
+        },
+        "patient": {
+          "column": "Patient Age",
+          "confidence": "HIGH",
+          "file_id": "66035c022440723b",
+          "sample_nonempty_count": 64,
+          "sample_unique_hash_count": 19,
+          "source": "METADATA_COLUMN"
+        },
+        "study": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        }
+      },
+      "metadata_profiles": [
+        {
+          "column_count": 6,
+          "columns": [
+            "Image Index",
+            "Finding Label",
+            "Bbox [x",
+            "y",
+            "w",
+            "h]"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "8bd67a5b377be25a",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "Bbox [x": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 63
+            },
+            "Finding Label": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 1
+            },
+            "Image Index": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            }
+          },
+          "semantic_columns": {
+            "box": [
+              "Bbox [x"
+            ],
+            "image": [
+              "Image Index"
+            ],
+            "label": [
+              "Finding Label"
+            ],
+            "mask": [],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 92416,
+          "status": "PROFILED"
+        },
+        {
+          "extension": ".txt",
+          "file_id": "f41cdc54b59f527c",
+          "format": "TXT",
+          "line_count_in_prefix": 482,
+          "prefix_bytes_read": 8192,
+          "size_bytes": 1470907,
+          "status": "HEADER_ONLY"
+        },
+        {
+          "extension": ".txt",
+          "file_id": "4bf87aaa7d9ce5a2",
+          "format": "TXT",
+          "line_count_in_prefix": 482,
+          "prefix_bytes_read": 8192,
+          "size_bytes": 435131,
+          "status": "HEADER_ONLY"
+        },
+        {
+          "column_count": 11,
+          "columns": [
+            "Image Index",
+            "Finding Labels",
+            "Follow-up #",
+            "Patient ID",
+            "Patient Age",
+            "Patient Gender",
+            "View Position",
+            "OriginalImage[Width",
+            "Height]",
+            "OriginalImagePixelSpacing[x",
+            "y]"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "66035c022440723b",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "Finding Labels": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 25
+            },
+            "Height]": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 13
+            },
+            "Image Index": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            },
+            "OriginalImage[Width": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 21
+            },
+            "Patient Age": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 19
+            },
+            "Patient Gender": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 2
+            },
+            "Patient ID": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 13
+            }
+          },
+          "semantic_columns": {
+            "box": [
+              "OriginalImage[Width",
+              "Height]"
+            ],
+            "image": [
+              "Image Index"
+            ],
+            "label": [
+              "Finding Labels"
+            ],
+            "mask": [],
+            "patient": [
+              "Patient ID",
+              "Patient Age",
+              "Patient Gender"
+            ],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 7861152,
+          "status": "PROFILED"
+        }
+      ],
+      "path_patterns": [
+        {
+          "count": 112120,
+          "pattern": "archive/images_<N>/images/<N>_<N>.png"
+        }
+      ],
+      "patient_split_ready": true
+    },
+    {
+      "adapter_status": "READY_WITH_IDENTITY_REVIEW",
+      "dataset_id": "vinbigdata",
+      "dicom_identity_profile": {
+        "attempted": 64,
+        "readable": 64,
+        "tag_presence": {
+          "AccessionNumber": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "PatientID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SOPInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SeriesInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "StudyInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          }
+        }
+      },
+      "filename_rule": {
+        "confidence": "LOW",
+        "match_ratio": 0.0,
+        "regex": "^([A-Za-z]+[0-9]{4,})[_-]",
+        "repeated_group_observations": 0,
+        "sample_size": 256,
+        "strategy": "ALPHANUMERIC_PREFIX_BEFORE_SEPARATOR"
+      },
+      "folder": "02_VinBigData",
+      "identity_rules": {
+        "image": {
+          "column": "image_id",
+          "confidence": "HIGH",
+          "file_id": "d5323b6001c75eb5",
+          "sample_nonempty_count": 64,
+          "sample_unique_hash_count": 64,
+          "source": "METADATA_COLUMN"
+        },
+        "patient": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        },
+        "study": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        }
+      },
+      "metadata_profiles": [
+        {
+          "column_count": 8,
+          "columns": [
+            "image_id",
+            "class_name",
+            "class_id",
+            "rad_id",
+            "x_min",
+            "y_min",
+            "x_max",
+            "y_max"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "d5323b6001c75eb5",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "class_id": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 12
+            },
+            "class_name": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 12
+            },
+            "image_id": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            },
+            "x_max": {
+              "sample_nonempty_count": 36,
+              "sample_unique_hash_count": 34
+            },
+            "x_min": {
+              "sample_nonempty_count": 36,
+              "sample_unique_hash_count": 36
+            },
+            "y_max": {
+              "sample_nonempty_count": 36,
+              "sample_unique_hash_count": 35
+            },
+            "y_min": {
+              "sample_nonempty_count": 36,
+              "sample_unique_hash_count": 35
+            }
+          },
+          "semantic_columns": {
+            "box": [
+              "x_min",
+              "y_min",
+              "x_max",
+              "y_max"
+            ],
+            "image": [
+              "image_id"
+            ],
+            "label": [
+              "class_name",
+              "class_id"
+            ],
+            "mask": [],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 4650790,
+          "status": "PROFILED"
+        },
+        {
+          "column_count": 2,
+          "columns": [
+            "image_id",
+            "PredictionString"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "f063d8d47902a7fd",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "image_id": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            }
+          },
+          "semantic_columns": {
+            "box": [],
+            "image": [
+              "image_id"
+            ],
+            "label": [],
+            "mask": [],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 138026,
+          "status": "PROFILED"
+        },
+        {
+          "extension": ".zip",
+          "file_id": "3feba99a2e5afbde",
+          "format": "ZIP_OR_NPZ",
+          "size_bytes": 151975237922,
+          "status": "CONTAINER_REVIEW"
+        }
+      ],
+      "path_patterns": [
+        {
+          "count": 15000,
+          "pattern": "vinbigdata-chest-xray-abnormalities-detection/train/<HEX>.dicom"
+        },
+        {
+          "count": 3000,
+          "pattern": "vinbigdata-chest-xray-abnormalities-detection/test/<HEX>.dicom"
+        }
+      ],
+      "patient_split_ready": false
+    },
+    {
+      "adapter_status": "READY_WITH_IDENTITY_REVIEW",
+      "dataset_id": "indiana_reports",
+      "dicom_identity_profile": {
+        "attempted": 0,
+        "readable": 0,
+        "tag_presence": {
+          "AccessionNumber": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "PatientID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SOPInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SeriesInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "StudyInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          }
+        }
+      },
+      "filename_rule": {
+        "confidence": "LOW",
+        "match_ratio": 0.0,
+        "regex": "^([A-Za-z]+[0-9]{4,})[_-]",
+        "repeated_group_observations": 0,
+        "sample_size": 256,
+        "strategy": "ALPHANUMERIC_PREFIX_BEFORE_SEPARATOR"
+      },
+      "folder": "03_Indiana_Reports",
+      "identity_rules": {
+        "image": {
+          "column": "uid",
+          "confidence": "HIGH",
+          "file_id": "2b92d63462940df4",
+          "sample_nonempty_count": 64,
+          "sample_unique_hash_count": 64,
+          "source": "METADATA_COLUMN"
+        },
+        "patient": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        },
+        "study": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        }
+      },
+      "metadata_profiles": [
+        {
+          "column_count": 8,
+          "columns": [
+            "uid",
+            "MeSH",
+            "Problems",
+            "image",
+            "indication",
+            "comparison",
+            "findings",
+            "impression"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "2b92d63462940df4",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "findings": {
+              "sample_nonempty_count": 56,
+              "sample_unique_hash_count": 55
+            },
+            "image": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 29
+            },
+            "impression": {
+              "sample_nonempty_count": 63,
+              "sample_unique_hash_count": 45
+            },
+            "uid": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            }
+          },
+          "semantic_columns": {
+            "box": [],
+            "image": [
+              "uid",
+              "image"
+            ],
+            "label": [
+              "findings"
+            ],
+            "mask": [],
+            "patient": [],
+            "report": [
+              "findings",
+              "impression"
+            ],
+            "study": []
+          },
+          "size_bytes": 1679512,
+          "status": "PROFILED"
+        },
+        {
+          "column_count": 3,
+          "columns": [
+            "uid",
+            "filename",
+            "projection"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "dc3dd035692bd1a3",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "filename": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            },
+            "uid": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 32
+            }
+          },
+          "semantic_columns": {
+            "box": [],
+            "image": [
+              "uid",
+              "filename"
+            ],
+            "label": [],
+            "mask": [],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 289397,
+          "status": "PROFILED"
+        }
+      ],
+      "path_patterns": [
+        {
+          "count": 7066,
+          "pattern": "archive/images/images_normalized/<N>_IM-<N>-<N>.dcm.png"
+        },
+        {
+          "count": 404,
+          "pattern": "archive/images/images_normalized/<N>_IM-<N>-<N>-<N>.dcm.png"
+        }
+      ],
+      "patient_split_ready": false
+    },
+    {
+      "adapter_status": "CONTAINER_ADAPTER_REQUIRED",
+      "dataset_id": "nih_chexmask",
+      "dicom_identity_profile": {
+        "attempted": 0,
+        "readable": 0,
+        "tag_presence": {
+          "AccessionNumber": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "PatientID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SOPInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SeriesInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "StudyInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          }
+        }
+      },
+      "filename_rule": {
+        "confidence": "NONE",
+        "match_ratio": 0.0,
+        "strategy": "NONE"
+      },
+      "folder": "04_NIH_CheXmask",
+      "identity_rules": {
+        "image": {
+          "column": "Image Index",
+          "confidence": "HIGH",
+          "file_id": "098f17eea522ef75",
+          "sample_nonempty_count": 14,
+          "sample_unique_hash_count": 14,
+          "source": "METADATA_COLUMN"
+        },
+        "patient": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        },
+        "study": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        }
+      },
+      "metadata_profiles": [
+        {
+          "column_count": 9,
+          "columns": [
+            "Image Index",
+            "Dice RCA (Mean)",
+            "Dice RCA (Max)",
+            "Landmarks",
+            "Left Lung",
+            "Right Lung",
+            "Heart",
+            "Height",
+            "Width"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "098f17eea522ef75",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "Height": {
+              "sample_nonempty_count": 13,
+              "sample_unique_hash_count": 1
+            },
+            "Image Index": {
+              "sample_nonempty_count": 14,
+              "sample_unique_hash_count": 14
+            },
+            "Width": {
+              "sample_nonempty_count": 13,
+              "sample_unique_hash_count": 1
+            }
+          },
+          "semantic_columns": {
+            "box": [
+              "Height",
+              "Width"
+            ],
+            "image": [
+              "Image Index"
+            ],
+            "label": [],
+            "mask": [],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 2192460565,
+          "status": "PROFILED"
+        }
+      ],
+      "path_patterns": [],
+      "patient_split_ready": false
+    },
+    {
+      "adapter_status": "READY_WITH_IDENTITY_REVIEW",
+      "dataset_id": "crd_masks",
+      "dicom_identity_profile": {
+        "attempted": 0,
+        "readable": 0,
+        "tag_presence": {
+          "AccessionNumber": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "PatientID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SOPInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SeriesInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "StudyInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          }
+        }
+      },
+      "filename_rule": {
+        "confidence": "LOW",
+        "match_ratio": 0.0,
+        "regex": "^([A-Za-z]+[0-9]{4,})[_-]",
+        "repeated_group_observations": 0,
+        "sample_size": 256,
+        "strategy": "ALPHANUMERIC_PREFIX_BEFORE_SEPARATOR"
+      },
+      "folder": "05_CRD_Masks",
+      "identity_rules": {
+        "image": {
+          "column": "Old File Name",
+          "confidence": "HIGH",
+          "file_id": "259427f8deee8c20",
+          "sample_nonempty_count": 64,
+          "sample_unique_hash_count": 64,
+          "source": "METADATA_COLUMN"
+        },
+        "patient": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        },
+        "study": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        }
+      },
+      "metadata_profiles": [
+        {
+          "column_count": 6,
+          "columns": [
+            "Type",
+            "Dataset",
+            "File Number",
+            "Old File Name",
+            "New File Name",
+            "File Extension"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "259427f8deee8c20",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "New File Name": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            },
+            "Old File Name": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            }
+          },
+          "semantic_columns": {
+            "box": [],
+            "image": [
+              "Old File Name",
+              "New File Name"
+            ],
+            "label": [],
+            "mask": [],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 258141,
+          "status": "PROFILED"
+        }
+      ],
+      "path_patterns": [
+        {
+          "count": 2607,
+          "pattern": "archive/CXR_Combined/images/DARCXR_<N>.png"
+        },
+        {
+          "count": 2607,
+          "pattern": "archive/CXR_Combined/masks/DARCXR_<N>.png"
+        },
+        {
+          "count": 1691,
+          "pattern": "archive/CXR_RadioOpaque/DARCXR_<N>.png"
+        },
+        {
+          "count": 1691,
+          "pattern": "archive/CXR_RadioOpaque_Mask/DARCXR_<N>.png"
+        },
+        {
+          "count": 916,
+          "pattern": "archive/CXR_RadioLucent/DARCXR_<N>.png"
+        },
+        {
+          "count": 916,
+          "pattern": "archive/CXR_RadioLucent_Mask/DARCXR_<N>.png"
+        },
+        {
+          "count": 566,
+          "pattern": "archive/CXR_Combined/images/CHNCXR_<N>_<N>.png"
+        },
+        {
+          "count": 566,
+          "pattern": "archive/CXR_Combined/masks/CHNCXR_<N>_<N>.png"
+        },
+        {
+          "count": 566,
+          "pattern": "archive/CXR_RadioLucent/CHNCXR_<N>_<N>.png"
+        },
+        {
+          "count": 566,
+          "pattern": "archive/CXR_RadioLucent_Mask/CHNCXR_<N>_<N>.png"
+        },
+        {
+          "count": 138,
+          "pattern": "archive/CXR_Combined/images/MCUCXR_<N>_<N>.png"
+        },
+        {
+          "count": 138,
+          "pattern": "archive/CXR_Combined/masks/MCUCXR_<N>_<N>.png"
+        }
+      ],
+      "patient_split_ready": false
+    },
+    {
+      "adapter_status": "READY_TO_IMPLEMENT",
+      "dataset_id": "rsna_pneumonia",
+      "dicom_identity_profile": {
+        "attempted": 64,
+        "readable": 64,
+        "tag_presence": {
+          "AccessionNumber": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "PatientID": {
+            "presence_ratio": 1.0,
+            "present_count": 64
+          },
+          "SOPInstanceUID": {
+            "presence_ratio": 1.0,
+            "present_count": 64
+          },
+          "SeriesInstanceUID": {
+            "presence_ratio": 1.0,
+            "present_count": 64
+          },
+          "StudyInstanceUID": {
+            "presence_ratio": 1.0,
+            "present_count": 64
+          }
+        }
+      },
+      "filename_rule": {
+        "confidence": "LOW",
+        "match_ratio": 0.0352,
+        "regex": "^([A-Za-z]+[0-9]{4,})[_-]",
+        "repeated_group_observations": 0,
+        "sample_size": 256,
+        "strategy": "ALPHANUMERIC_PREFIX_BEFORE_SEPARATOR"
+      },
+      "folder": "06_RSNA_Pneumonia",
+      "identity_rules": {
+        "image": {
+          "confidence": "HIGH",
+          "presence_ratio": 1.0,
+          "source": "DICOM_TAG",
+          "tag": "SOPInstanceUID"
+        },
+        "patient": {
+          "column": "patientId",
+          "confidence": "HIGH",
+          "file_id": "bdd7e81f49cdaf7c",
+          "sample_nonempty_count": 64,
+          "sample_unique_hash_count": 64,
+          "source": "METADATA_COLUMN"
+        },
+        "study": {
+          "confidence": "HIGH",
+          "presence_ratio": 1.0,
+          "source": "DICOM_TAG",
+          "tag": "StudyInstanceUID"
+        }
+      },
+      "metadata_profiles": [
+        {
+          "column_count": 2,
+          "columns": [
+            "patientId",
+            "PredictionString"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "bdd7e81f49cdaf7c",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "patientId": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            }
+          },
+          "semantic_columns": {
+            "box": [],
+            "image": [],
+            "label": [],
+            "mask": [],
+            "patient": [
+              "patientId"
+            ],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 159027,
+          "status": "PROFILED"
+        },
+        {
+          "column_count": 2,
+          "columns": [
+            "patientId",
+            "class"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "7386357c543dd0c4",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "class": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 3
+            },
+            "patientId": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 50
+            }
+          },
+          "semantic_columns": {
+            "box": [],
+            "image": [],
+            "label": [
+              "class"
+            ],
+            "mask": [],
+            "patient": [
+              "patientId"
+            ],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 1647396,
+          "status": "PROFILED"
+        },
+        {
+          "column_count": 6,
+          "columns": [
+            "patientId",
+            "x",
+            "y",
+            "width",
+            "height",
+            "Target"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "c0ef52b2455d8e0e",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "Target": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 2
+            },
+            "height": {
+              "sample_nonempty_count": 32,
+              "sample_unique_hash_count": 32
+            },
+            "patientId": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 50
+            },
+            "width": {
+              "sample_nonempty_count": 32,
+              "sample_unique_hash_count": 28
+            }
+          },
+          "semantic_columns": {
+            "box": [
+              "width",
+              "height"
+            ],
+            "image": [],
+            "label": [
+              "Target"
+            ],
+            "mask": [],
+            "patient": [
+              "patientId"
+            ],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 1490034,
+          "status": "PROFILED"
+        },
+        {
+          "extension": ".txt",
+          "file_id": "c0f0fa7859d23f48",
+          "format": "TXT",
+          "line_count_in_prefix": 1,
+          "prefix_bytes_read": 55,
+          "size_bytes": 55,
+          "status": "HEADER_ONLY"
+        }
+      ],
+      "path_patterns": [
+        {
+          "count": 26684,
+          "pattern": "rsna-pneumonia-detection-challenge/stage_<N>_train_images/<UUID>.dcm"
+        },
+        {
+          "count": 3000,
+          "pattern": "rsna-pneumonia-detection-challenge/stage_<N>_test_images/<UUID>.dcm"
+        }
+      ],
+      "patient_split_ready": true
+    },
+    {
+      "adapter_status": "READY_TO_IMPLEMENT",
+      "dataset_id": "chexpert_small",
+      "dicom_identity_profile": {
+        "attempted": 0,
+        "readable": 0,
+        "tag_presence": {
+          "AccessionNumber": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "PatientID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SOPInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SeriesInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "StudyInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          }
+        }
+      },
+      "filename_rule": {
+        "confidence": "LOW",
+        "match_ratio": 0.0,
+        "regex": "^([A-Za-z]+[0-9]{4,})[_-]",
+        "repeated_group_observations": 0,
+        "sample_size": 256,
+        "strategy": "ALPHANUMERIC_PREFIX_BEFORE_SEPARATOR"
+      },
+      "folder": "07_CheXpert_Small",
+      "identity_rules": {
+        "image": {
+          "column": "Path",
+          "confidence": "HIGH",
+          "file_id": "698a1db316db5fb2",
+          "sample_nonempty_count": 64,
+          "sample_unique_hash_count": 64,
+          "source": "METADATA_COLUMN"
+        },
+        "patient": {
+          "confidence": "MEDIUM",
+          "keyword": "patient_or_subject",
+          "source": "PATH_COMPONENT"
+        },
+        "study": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        }
+      },
+      "metadata_profiles": [
+        {
+          "column_count": 19,
+          "columns": [
+            "Path",
+            "Sex",
+            "Age",
+            "Frontal/Lateral",
+            "AP/PA",
+            "No Finding",
+            "Enlarged Cardiomediastinum",
+            "Cardiomegaly",
+            "Lung Opacity",
+            "Lung Lesion",
+            "Edema",
+            "Consolidation",
+            "Pneumonia",
+            "Atelectasis",
+            "Pneumothorax",
+            "Pleural Effusion",
+            "Pleural Other",
+            "Fracture",
+            "Support Devices"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "698a1db316db5fb2",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "No Finding": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 2
+            },
+            "Path": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            }
+          },
+          "semantic_columns": {
+            "box": [],
+            "image": [
+              "Path"
+            ],
+            "label": [
+              "No Finding"
+            ],
+            "mask": [],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 32896,
+          "status": "PROFILED"
+        },
+        {
+          "column_count": 19,
+          "columns": [
+            "Path",
+            "Sex",
+            "Age",
+            "Frontal/Lateral",
+            "AP/PA",
+            "No Finding",
+            "Enlarged Cardiomediastinum",
+            "Cardiomegaly",
+            "Lung Opacity",
+            "Lung Lesion",
+            "Edema",
+            "Consolidation",
+            "Pneumonia",
+            "Atelectasis",
+            "Pneumothorax",
+            "Pleural Effusion",
+            "Pleural Other",
+            "Fracture",
+            "Support Devices"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "c06372e279e2102b",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "No Finding": {
+              "sample_nonempty_count": 12,
+              "sample_unique_hash_count": 1
+            },
+            "Path": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            }
+          },
+          "semantic_columns": {
+            "box": [],
+            "image": [
+              "Path"
+            ],
+            "label": [
+              "No Finding"
+            ],
+            "mask": [],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 24505945,
+          "status": "PROFILED"
+        }
+      ],
+      "path_patterns": [
+        {
+          "count": 191027,
+          "pattern": "archive/train/patient<N>/study<N>/view<N>_frontal.jpg"
+        },
+        {
+          "count": 32387,
+          "pattern": "archive/train/patient<N>/study<N>/view<N>_lateral.jpg"
+        },
+        {
+          "count": 202,
+          "pattern": "archive/valid/patient<N>/study<N>/view<N>_frontal.jpg"
+        },
+        {
+          "count": 32,
+          "pattern": "archive/valid/patient<N>/study<N>/view<N>_lateral.jpg"
+        },
+        {
+          "count": 1,
+          "pattern": "archive/train/patient<N>/study<N>/._view<N>_frontal.jpg"
+        }
+      ],
+      "patient_split_ready": true
+    },
+    {
+      "adapter_status": "READY_WITH_IDENTITY_REVIEW",
+      "dataset_id": "siim_pneumothorax",
+      "dicom_identity_profile": {
+        "attempted": 64,
+        "readable": 64,
+        "tag_presence": {
+          "AccessionNumber": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "PatientID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SOPInstanceUID": {
+            "presence_ratio": 1.0,
+            "present_count": 64
+          },
+          "SeriesInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "StudyInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          }
+        }
+      },
+      "filename_rule": {
+        "confidence": "LOW",
+        "match_ratio": 0.0,
+        "regex": "^([A-Za-z]+[0-9]{4,})[_-]",
+        "repeated_group_observations": 0,
+        "sample_size": 256,
+        "strategy": "ALPHANUMERIC_PREFIX_BEFORE_SEPARATOR"
+      },
+      "folder": "08_SIIM_Pneumothorax",
+      "identity_rules": {
+        "image": {
+          "column": "ImageId",
+          "confidence": "HIGH",
+          "file_id": "c45dc98c0bd9f00d",
+          "sample_nonempty_count": 64,
+          "sample_unique_hash_count": 64,
+          "source": "METADATA_COLUMN"
+        },
+        "patient": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        },
+        "study": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        }
+      },
+      "metadata_profiles": [
+        {
+          "column_count": 2,
+          "columns": [
+            "ImageId",
+            "EncodedPixels"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "c45dc98c0bd9f00d",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "EncodedPixels": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 20
+            },
+            "ImageId": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            }
+          },
+          "semantic_columns": {
+            "box": [],
+            "image": [
+              "ImageId"
+            ],
+            "label": [],
+            "mask": [
+              "EncodedPixels"
+            ],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 5836404,
+          "status": "PROFILED"
+        },
+        {
+          "column_count": 2,
+          "columns": [
+            "ImageId",
+            "EncodedPixels"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "f5c58cd6ede059a8",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "EncodedPixels": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 1
+            },
+            "ImageId": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 64
+            }
+          },
+          "semantic_columns": {
+            "box": [],
+            "image": [
+              "ImageId"
+            ],
+            "label": [],
+            "mask": [
+              "EncodedPixels"
+            ],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 51302,
+          "status": "PROFILED"
+        }
+      ],
+      "path_patterns": [
+        {
+          "count": 53,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>.dcm"
+        },
+        {
+          "count": 42,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>d<N>.dcm"
+        },
+        {
+          "count": 36,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>f<N>.dcm"
+        },
+        {
+          "count": 36,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>b<N>.dcm"
+        },
+        {
+          "count": 36,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>c<N>.dcm"
+        },
+        {
+          "count": 35,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>a<N>.dcm"
+        },
+        {
+          "count": 32,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>e<N>.dcm"
+        },
+        {
+          "count": 12,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>b<N>f<N>.dcm"
+        },
+        {
+          "count": 11,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>c<N>b<N>.dcm"
+        },
+        {
+          "count": 11,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>a<N>e<N>.dcm"
+        },
+        {
+          "count": 11,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>a<N>c<N>.dcm"
+        },
+        {
+          "count": 10,
+          "pattern": "siim-acr-pneumothorax-segmentation/stage_<N>_images/ID_<N>d<N>b<N>.dcm"
+        }
+      ],
+      "patient_split_ready": false
+    },
+    {
+      "adapter_status": "READY_WITH_IDENTITY_REVIEW",
+      "dataset_id": "tbx11k",
+      "dicom_identity_profile": {
+        "attempted": 0,
+        "readable": 0,
+        "tag_presence": {
+          "AccessionNumber": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "PatientID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SOPInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SeriesInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "StudyInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          }
+        }
+      },
+      "filename_rule": {
+        "confidence": "LOW",
+        "match_ratio": 0.0,
+        "regex": "^([A-Za-z]+[0-9]{4,})[_-]",
+        "repeated_group_observations": 0,
+        "sample_size": 256,
+        "strategy": "ALPHANUMERIC_PREFIX_BEFORE_SEPARATOR"
+      },
+      "folder": "09_TBX11K",
+      "identity_rules": {
+        "image": {
+          "column": "image_width",
+          "confidence": "HIGH",
+          "file_id": "cfb269c96e7e5b6b",
+          "sample_nonempty_count": 64,
+          "sample_unique_hash_count": 1,
+          "source": "METADATA_COLUMN"
+        },
+        "patient": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        },
+        "study": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        }
+      },
+      "metadata_profiles": [
+        {
+          "column_count": 8,
+          "columns": [
+            "fname",
+            "image_height",
+            "image_width",
+            "source",
+            "bbox",
+            "target",
+            "tb_type",
+            "image_type"
+          ],
+          "delimiter": ",",
+          "extension": ".csv",
+          "file_id": "cfb269c96e7e5b6b",
+          "format": "TABULAR_TEXT",
+          "sample_value_profiles": {
+            "bbox": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 1
+            },
+            "image_height": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 1
+            },
+            "image_type": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 1
+            },
+            "image_width": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 1
+            },
+            "target": {
+              "sample_nonempty_count": 64,
+              "sample_unique_hash_count": 1
+            }
+          },
+          "semantic_columns": {
+            "box": [
+              "image_height",
+              "image_width",
+              "bbox"
+            ],
+            "image": [
+              "image_height",
+              "image_width",
+              "image_type"
+            ],
+            "label": [
+              "target"
+            ],
+            "mask": [],
+            "patient": [],
+            "report": [],
+            "study": []
+          },
+          "size_bytes": 576488,
+          "status": "PROFILED"
+        }
+      ],
+      "path_patterns": [
+        {
+          "count": 3800,
+          "pattern": "archive/tbx<N>k-simplified/images/h<N>.png"
+        },
+        {
+          "count": 3800,
+          "pattern": "archive/tbx<N>k-simplified/images/s<N>.png"
+        },
+        {
+          "count": 3302,
+          "pattern": "archive/tbx<N>k-simplified/test/unknown_<N>.png"
+        },
+        {
+          "count": 800,
+          "pattern": "archive/tbx<N>k-simplified/images/tb<N>.png"
+        }
+      ],
+      "patient_split_ready": false
+    },
+    {
+      "adapter_status": "READY_WITH_IDENTITY_REVIEW",
+      "dataset_id": "covid_radiography",
+      "dicom_identity_profile": {
+        "attempted": 0,
+        "readable": 0,
+        "tag_presence": {
+          "AccessionNumber": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "PatientID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SOPInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "SeriesInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          },
+          "StudyInstanceUID": {
+            "presence_ratio": 0.0,
+            "present_count": 0
+          }
+        }
+      },
+      "filename_rule": {
+        "confidence": "LOW",
+        "match_ratio": 0.0,
+        "regex": "^([A-Za-z]+[0-9]{4,})[_-]",
+        "repeated_group_observations": 0,
+        "sample_size": 256,
+        "strategy": "ALPHANUMERIC_PREFIX_BEFORE_SEPARATOR"
+      },
+      "folder": "10_COVID_Radiography",
+      "identity_rules": {
+        "image": {
+          "confidence": "HIGH",
+          "source": "RELATIVE_PATH"
+        },
+        "patient": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        },
+        "study": {
+          "confidence": "NONE",
+          "source": "UNRESOLVED"
+        }
+      },
+      "metadata_profiles": [
+        {
+          "extension": ".txt",
+          "file_id": "8400781051e80801",
+          "format": "TXT",
+          "line_count_in_prefix": 55,
+          "prefix_bytes_read": 3348,
+          "size_bytes": 3348,
+          "status": "HEADER_ONLY"
+        },
+        {
+          "extension": ".zip",
+          "file_id": "eea30d209f6e099a",
+          "format": "ZIP_OR_NPZ",
+          "size_bytes": 816029038,
+          "status": "CONTAINER_REVIEW"
+        }
+      ],
+      "path_patterns": [
+        {
+          "count": 10192,
+          "pattern": "archive (<N>)/COVID-<N>_Radiography_Dataset/Normal/images/Normal-<N>.png"
+        },
+        {
+          "count": 10192,
+          "pattern": "archive (<N>)/COVID-<N>_Radiography_Dataset/Normal/masks/Normal-<N>.png"
+        },
+        {
+          "count": 6012,
+          "pattern": "archive (<N>)/COVID-<N>_Radiography_Dataset/Lung_Opacity/images/Lung_Opacity-<N>.png"
+        },
+        {
+          "count": 6012,
+          "pattern": "archive (<N>)/COVID-<N>_Radiography_Dataset/Lung_Opacity/masks/Lung_Opacity-<N>.png"
+        },
+        {
+          "count": 3616,
+          "pattern": "archive (<N>)/COVID-<N>_Radiography_Dataset/COVID/images/COVID-<N>.png"
+        },
+        {
+          "count": 3616,
+          "pattern": "archive (<N>)/COVID-<N>_Radiography_Dataset/COVID/masks/COVID-<N>.png"
+        },
+        {
+          "count": 1345,
+          "pattern": "archive (<N>)/COVID-<N>_Radiography_Dataset/Viral Pneumonia/images/Viral Pneumonia-<N>.png"
+        },
+        {
+          "count": 1345,
+          "pattern": "archive (<N>)/COVID-<N>_Radiography_Dataset/Viral Pneumonia/masks/Viral Pneumonia-<N>.png"
+        }
+      ],
+      "patient_split_ready": false
+    }
+  ],
+  "generated_at_utc": "2026-08-03T12:02:51.412583+00:00",
+  "schema_version": "1.0"
+}
