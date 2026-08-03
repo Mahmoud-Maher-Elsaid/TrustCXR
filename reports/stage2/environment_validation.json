@@ -1,0 +1,34 @@
+{
+  "gpu": {
+    "compute_capability": "8.6",
+    "name": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "peak_allocated_gib": 0.135,
+    "peak_reserved_gib": 0.221,
+    "total_memory_gib": 8.0
+  },
+  "project_root": "F:\\AI\\TrustCXR",
+  "python": {
+    "executable": "F:\\AI\\TrustCXR\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "version": "3.12.10"
+  },
+  "pytorch": {
+    "cuda_available": true,
+    "cuda_runtime": "13.0",
+    "cudnn_available": true,
+    "cudnn_version": 92000,
+    "torch_version": "2.12.1+cu130",
+    "torchvision_version": "0.27.1+cu130"
+  },
+  "status": "PASSED",
+  "tests": {
+    "checkpoint_save_load": "PASSED",
+    "cuda_matrix_multiplication": "PASSED",
+    "matrix_seconds": 0.1442,
+    "mixed_precision_forward_backward": "PASSED",
+    "mixed_precision_loss": 1.301025,
+    "optimizer_step": "PASSED",
+    "pinned_dataloader_transfer": "PASSED"
+  },
+  "timestamp_utc": "2026-08-03T11:11:52.030575+00:00"
+}

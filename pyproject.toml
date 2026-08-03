@@ -11,7 +11,39 @@ requires-python = ">=3.12,<3.13"
 authors = [
     { name = "Mahmoud Maher El-Said" }
 ]
-dependencies = []
+dependencies = [
+    "numpy>=2.0,<3",
+    "pillow>=11,<13",
+    "psutil>=6,<8",
+    "pyyaml>=6,<7"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3,<10",
+    "pytest-cov>=6,<8",
+    "ruff>=0.12,<1"
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "gpu: tests that require an NVIDIA CUDA GPU"
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "scripts", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"

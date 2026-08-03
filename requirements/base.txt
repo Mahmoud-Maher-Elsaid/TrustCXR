@@ -1,0 +1,4 @@
+numpy>=2.0,<3
+pillow>=11,<13
+psutil>=6,<8
+pyyaml>=6,<7

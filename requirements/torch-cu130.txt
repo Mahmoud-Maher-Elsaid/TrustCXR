@@ -1,0 +1,3 @@
+# Install this file using the official CUDA 13.0 PyTorch package index.
+torch==2.12.1
+torchvision==0.27.1

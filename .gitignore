@@ -17,6 +17,10 @@ __pycache__/
 .coverage
 htmlcov/
 
+# Project caches and temporary files
+/cache/
+/.cache/
+
 # Secrets and local configuration
 .env
 .env.*
@@ -57,7 +61,6 @@ token.json
 # Local runtime outputs
 /artifacts/
 /checkpoints/
-/cache/
 /logs/
 /mlruns/
 /outputs/
@@ -74,6 +77,10 @@ token.json
 *.download
 *.tmp
 *.temp
+
+# Local setup launchers
+/stage*_setup.ps1
+/stage*_environment_setup.ps1
 
 # Local stage reports
 stage*_preflight_report.txt
