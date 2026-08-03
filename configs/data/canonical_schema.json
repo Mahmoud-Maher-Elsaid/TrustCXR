@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "record_type": "trustcxr_image_study_record",
+  "description": "Canonical, dataset-agnostic representation for TrustCXR chest X-ray studies.",
+  "fields": {
+    "dataset_id": {
+      "type": "string",
+      "required": true,
+      "privacy": "public_metadata"
+    },
+    "source_record_id": {
+      "type": "string",
+      "required": true,
+      "privacy": "local_only"
+    },
+    "patient_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "required": false,
+      "privacy": "local_only"
+    },
+    "study_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "required": false,
+      "privacy": "local_only"
+    },
+    "image_id": {
+      "type": "string",
+      "required": true,
+      "privacy": "local_only"
+    },
+    "image_path": {
+      "type": "string",
+      "required": true,
+      "privacy": "local_only"
+    },
+    "view_position": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "required": false,
+      "privacy": "derived_metadata"
+    },
+    "labels": {
+      "type": "array[string]",
+      "required": false,
+      "privacy": "derived_metadata"
+    },
+    "bounding_boxes": {
+      "type": "array[object]",
+      "required": false,
+      "privacy": "derived_metadata"
+    },
+    "mask_path": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "required": false,
+      "privacy": "local_only"
+    },
+    "findings": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "required": false,
+      "privacy": "local_only"
+    },
+    "impression": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "required": false,
+      "privacy": "local_only"
+    },
+    "split": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "required": false,
+      "privacy": "derived_metadata"
+    },
+    "license_status": {
+      "type": "string",
+      "required": true,
+      "privacy": "public_metadata"
+    }
+  },
+  "policies": {
+    "patient_level_split_required_when_patient_id_available": true,
+    "cross_dataset_label_merge_requires_explicit_ontology_mapping": true,
+    "source_paths_and_patient_text_must_not_be_committed": true,
+    "missing_identifiers_require_dataset_specific_adapter": true
+  }
+}

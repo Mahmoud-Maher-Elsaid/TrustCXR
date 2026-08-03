@@ -1,0 +1,1022 @@
+{
+  "audit_mode": "READ_ONLY",
+  "dataset_count": 10,
+  "dataset_readiness": "PARTIAL_MAPPING_READINESS",
+  "datasets": [
+    {
+      "archive_file_count": 0,
+      "canonical_coverage": {
+        "bounding_box": "DISCOVERED",
+        "dataset_id": "CONFIGURED",
+        "image_id": "DISCOVERED",
+        "labels": "DISCOVERED",
+        "patient_id": "DISCOVERED",
+        "report_text": "TASK_DEPENDENT",
+        "split": "MUST_BE_GENERATED",
+        "study_id": "OPTIONAL_OR_NEEDS_MAPPING",
+        "view_position": "DISCOVERED"
+      },
+      "extension_counts": {
+        ".csv": 2,
+        ".pdf": 4,
+        ".png": 112120,
+        ".txt": 2
+      },
+      "folder": "01_NIH_ChestXray14",
+      "id": "nih_chestxray14",
+      "image_file_count": 112120,
+      "image_reference_match_rate": 1.0,
+      "max_depth": 3,
+      "metadata_file_count": 4,
+      "metadata_profile_limit": 40,
+      "metadata_profile_warnings": 0,
+      "metadata_profiles": 4,
+      "name": "NIH ChestXray14",
+      "other_file_count": 4,
+      "patient_split_readiness": "DIRECT_PATIENT_LEVEL_SPLIT",
+      "primary_tasks": [
+        "multi_label_classification"
+      ],
+      "profiled_metadata": [
+        {
+          "columns": [
+            "Image Index",
+            "Finding Label",
+            "Bbox [x",
+            "y",
+            "w",
+            "h]",
+            "",
+            "",
+            ""
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "3e57e33862e8fcb0",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 1.0,
+            "matched_references": 984,
+            "nonempty_references": 984
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 984,
+          "semantic_fields": {
+            "image_id": [
+              "Image Index"
+            ]
+          }
+        },
+        {
+          "columns": [
+            "Image Index",
+            "Finding Labels",
+            "Follow-up #",
+            "Patient ID",
+            "Patient Age",
+            "Patient Gender",
+            "View Position",
+            "OriginalImage[Width",
+            "Height]",
+            "OriginalImagePixelSpacing[x",
+            "y]",
+            ""
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "3923517dbe50db71",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 1.0,
+            "matched_references": 100000,
+            "nonempty_references": 100000
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 100000,
+          "semantic_fields": {
+            "bounding_box": [
+              "Height]",
+              "y]"
+            ],
+            "image_id": [
+              "Image Index"
+            ],
+            "labels": [
+              "Finding Labels"
+            ],
+            "patient_id": [
+              "Patient ID"
+            ],
+            "view_position": [
+              "View Position"
+            ]
+          }
+        },
+        {
+          "columns": [],
+          "encoding": "utf-8-sig",
+          "extension": ".txt",
+          "file_id": "2cb92a62a81b0a27",
+          "format": "text",
+          "nonempty_lines_scanned": 200,
+          "semantic_fields": {},
+          "status": "PROFILED"
+        },
+        {
+          "columns": [],
+          "encoding": "utf-8-sig",
+          "extension": ".txt",
+          "file_id": "ed3f80f1655240dc",
+          "format": "text",
+          "nonempty_lines_scanned": 200,
+          "semantic_fields": {},
+          "status": "PROFILED"
+        }
+      ],
+      "required_for_core": true,
+      "semantic_fields": {
+        "bounding_box": [
+          "Height]",
+          "y]"
+        ],
+        "image_id": [
+          "Image Index"
+        ],
+        "labels": [
+          "Finding Labels"
+        ],
+        "patient_id": [
+          "Patient ID"
+        ],
+        "view_position": [
+          "View Position"
+        ]
+      },
+      "status": "READY_FOR_CANONICAL_MAPPING"
+    },
+    {
+      "archive_file_count": 1,
+      "canonical_coverage": {
+        "bounding_box": "DISCOVERED",
+        "dataset_id": "CONFIGURED",
+        "image_id": "DISCOVERED",
+        "labels": "TASK_DEPENDENT",
+        "patient_id": "NEEDS_MAPPING",
+        "report_text": "TASK_DEPENDENT",
+        "split": "MUST_BE_GENERATED",
+        "study_id": "OPTIONAL_OR_NEEDS_MAPPING",
+        "view_position": "OPTIONAL_OR_NEEDS_MAPPING"
+      },
+      "extension_counts": {
+        ".csv": 2,
+        ".dicom": 18000,
+        ".zip": 1
+      },
+      "folder": "02_VinBigData",
+      "id": "vinbigdata",
+      "image_file_count": 18000,
+      "image_reference_match_rate": 0.0,
+      "max_depth": 2,
+      "metadata_file_count": 2,
+      "metadata_profile_limit": 40,
+      "metadata_profile_warnings": 0,
+      "metadata_profiles": 2,
+      "name": "VinBigData Chest X-ray Abnormalities Detection",
+      "other_file_count": 0,
+      "patient_split_readiness": "REQUIRES_DATASET_SPECIFIC_MAPPING",
+      "primary_tasks": [
+        "object_detection",
+        "localization"
+      ],
+      "profiled_metadata": [
+        {
+          "columns": [
+            "image_id",
+            "PredictionString"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "2020632386c94123",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 0.0,
+            "matched_references": 0,
+            "nonempty_references": 3000
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 3000,
+          "semantic_fields": {
+            "image_id": [
+              "image_id"
+            ]
+          }
+        },
+        {
+          "columns": [
+            "image_id",
+            "class_name",
+            "class_id",
+            "rad_id",
+            "x_min",
+            "y_min",
+            "x_max",
+            "y_max"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "81b5e67805ef4135",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 0.0,
+            "matched_references": 0,
+            "nonempty_references": 67914
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 67914,
+          "semantic_fields": {
+            "bounding_box": [
+              "x_max",
+              "x_min",
+              "y_max",
+              "y_min"
+            ],
+            "image_id": [
+              "image_id"
+            ]
+          }
+        }
+      ],
+      "required_for_core": true,
+      "semantic_fields": {
+        "bounding_box": [
+          "x_max",
+          "x_min",
+          "y_max",
+          "y_min"
+        ],
+        "image_id": [
+          "image_id"
+        ]
+      },
+      "status": "READY_FOR_CANONICAL_MAPPING"
+    },
+    {
+      "archive_file_count": 0,
+      "canonical_coverage": {
+        "bounding_box": "TASK_DEPENDENT",
+        "dataset_id": "CONFIGURED",
+        "image_id": "DISCOVERED",
+        "labels": "DISCOVERED",
+        "patient_id": "NEEDS_MAPPING",
+        "report_text": "DISCOVERED",
+        "split": "MUST_BE_GENERATED",
+        "study_id": "OPTIONAL_OR_NEEDS_MAPPING",
+        "view_position": "DISCOVERED"
+      },
+      "extension_counts": {
+        ".csv": 2,
+        ".png": 7470
+      },
+      "folder": "03_Indiana_Reports",
+      "id": "indiana_reports",
+      "image_file_count": 7470,
+      "image_reference_match_rate": 0.6597,
+      "max_depth": 3,
+      "metadata_file_count": 2,
+      "metadata_profile_limit": 40,
+      "metadata_profile_warnings": 0,
+      "metadata_profiles": 2,
+      "name": "Indiana University Chest X-ray Reports",
+      "other_file_count": 0,
+      "patient_split_readiness": "REQUIRES_DATASET_SPECIFIC_MAPPING",
+      "primary_tasks": [
+        "report_generation",
+        "report_retrieval",
+        "report_verification"
+      ],
+      "profiled_metadata": [
+        {
+          "columns": [
+            "uid",
+            "filename",
+            "projection"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "02b29fc15748866e",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 1.0,
+            "matched_references": 7466,
+            "nonempty_references": 7466
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 7466,
+          "semantic_fields": {
+            "image_id": [
+              "filename"
+            ],
+            "view_position": [
+              "projection"
+            ]
+          }
+        },
+        {
+          "columns": [
+            "uid",
+            "MeSH",
+            "Problems",
+            "image",
+            "indication",
+            "comparison",
+            "findings",
+            "impression"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "c1139995b1d890b6",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 0.0,
+            "matched_references": 0,
+            "nonempty_references": 3851
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 3851,
+          "semantic_fields": {
+            "image_id": [
+              "image"
+            ],
+            "labels": [
+              "findings"
+            ],
+            "report_findings": [
+              "findings"
+            ],
+            "report_impression": [
+              "impression"
+            ]
+          }
+        }
+      ],
+      "required_for_core": true,
+      "semantic_fields": {
+        "image_id": [
+          "filename",
+          "image"
+        ],
+        "labels": [
+          "findings"
+        ],
+        "report_findings": [
+          "findings"
+        ],
+        "report_impression": [
+          "impression"
+        ],
+        "view_position": [
+          "projection"
+        ]
+      },
+      "status": "READY_FOR_CANONICAL_MAPPING"
+    },
+    {
+      "archive_file_count": 0,
+      "canonical_coverage": {
+        "bounding_box": "DISCOVERED",
+        "dataset_id": "CONFIGURED",
+        "image_id": "DISCOVERED",
+        "labels": "TASK_DEPENDENT",
+        "patient_id": "NEEDS_MAPPING",
+        "report_text": "TASK_DEPENDENT",
+        "split": "MUST_BE_GENERATED",
+        "study_id": "OPTIONAL_OR_NEEDS_MAPPING",
+        "view_position": "OPTIONAL_OR_NEEDS_MAPPING"
+      },
+      "extension_counts": {
+        ".csv": 1
+      },
+      "folder": "04_NIH_CheXmask",
+      "id": "nih_chexmask",
+      "image_file_count": 0,
+      "image_reference_match_rate": 0.0,
+      "max_depth": 1,
+      "metadata_file_count": 1,
+      "metadata_profile_limit": 40,
+      "metadata_profile_warnings": 0,
+      "metadata_profiles": 1,
+      "name": "NIH CheXmask",
+      "other_file_count": 0,
+      "patient_split_readiness": "REQUIRES_DATASET_SPECIFIC_MAPPING",
+      "primary_tasks": [
+        "anatomy_segmentation"
+      ],
+      "profiled_metadata": [
+        {
+          "columns": [
+            "Image Index",
+            "Dice RCA (Mean)",
+            "Dice RCA (Max)",
+            "Landmarks",
+            "Left Lung",
+            "Right Lung",
+            "Heart",
+            "Height",
+            "Width"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "22c5ef8d2b98d474",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 0.0,
+            "matched_references": 0,
+            "nonempty_references": 100000
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 100000,
+          "semantic_fields": {
+            "bounding_box": [
+              "Height",
+              "Width"
+            ],
+            "image_id": [
+              "Image Index"
+            ]
+          }
+        }
+      ],
+      "required_for_core": false,
+      "semantic_fields": {
+        "bounding_box": [
+          "Height",
+          "Width"
+        ],
+        "image_id": [
+          "Image Index"
+        ]
+      },
+      "status": "NO_IMAGES_FOUND"
+    },
+    {
+      "archive_file_count": 0,
+      "canonical_coverage": {
+        "bounding_box": "TASK_DEPENDENT",
+        "dataset_id": "CONFIGURED",
+        "image_id": "NEEDS_MAPPING",
+        "labels": "TASK_DEPENDENT",
+        "patient_id": "NEEDS_MAPPING",
+        "report_text": "TASK_DEPENDENT",
+        "split": "MUST_BE_GENERATED",
+        "study_id": "OPTIONAL_OR_NEEDS_MAPPING",
+        "view_position": "OPTIONAL_OR_NEEDS_MAPPING"
+      },
+      "extension_counts": {
+        ".csv": 1,
+        ".ipynb": 1,
+        ".pdf": 1,
+        ".png": 13244
+      },
+      "folder": "05_CRD_Masks",
+      "id": "crd_masks",
+      "image_file_count": 13244,
+      "image_reference_match_rate": null,
+      "max_depth": 3,
+      "metadata_file_count": 1,
+      "metadata_profile_limit": 40,
+      "metadata_profile_warnings": 0,
+      "metadata_profiles": 1,
+      "name": "Chest Radiography Database Lung Masks",
+      "other_file_count": 2,
+      "patient_split_readiness": "REQUIRES_DATASET_SPECIFIC_MAPPING",
+      "primary_tasks": [
+        "lung_segmentation"
+      ],
+      "profiled_metadata": [
+        {
+          "columns": [
+            "Type",
+            "Dataset",
+            "File Number",
+            "Old File Name",
+            "New File Name",
+            "File Extension"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "69461f770b24c28d",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": null,
+            "matched_references": 0,
+            "nonempty_references": 0
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 3311,
+          "semantic_fields": {}
+        }
+      ],
+      "required_for_core": true,
+      "semantic_fields": {},
+      "status": "READY_FOR_CANONICAL_MAPPING"
+    },
+    {
+      "archive_file_count": 0,
+      "canonical_coverage": {
+        "bounding_box": "DISCOVERED",
+        "dataset_id": "CONFIGURED",
+        "image_id": "NEEDS_MAPPING",
+        "labels": "DISCOVERED",
+        "patient_id": "DISCOVERED",
+        "report_text": "TASK_DEPENDENT",
+        "split": "MUST_BE_GENERATED",
+        "study_id": "OPTIONAL_OR_NEEDS_MAPPING",
+        "view_position": "OPTIONAL_OR_NEEDS_MAPPING"
+      },
+      "extension_counts": {
+        ".csv": 3,
+        ".dcm": 29684,
+        ".txt": 1
+      },
+      "folder": "06_RSNA_Pneumonia",
+      "id": "rsna_pneumonia",
+      "image_file_count": 29684,
+      "image_reference_match_rate": null,
+      "max_depth": 2,
+      "metadata_file_count": 4,
+      "metadata_profile_limit": 40,
+      "metadata_profile_warnings": 0,
+      "metadata_profiles": 4,
+      "name": "RSNA Pneumonia Detection Challenge",
+      "other_file_count": 0,
+      "patient_split_readiness": "DIRECT_PATIENT_LEVEL_SPLIT",
+      "primary_tasks": [
+        "pneumonia_detection",
+        "external_validation"
+      ],
+      "profiled_metadata": [
+        {
+          "columns": [],
+          "encoding": "utf-8-sig",
+          "extension": ".txt",
+          "file_id": "40464cb8ee00bf29",
+          "format": "text",
+          "nonempty_lines_scanned": 1,
+          "semantic_fields": {},
+          "status": "PROFILED"
+        },
+        {
+          "columns": [
+            "patientId",
+            "class"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "623ec896b37e986f",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": null,
+            "matched_references": 0,
+            "nonempty_references": 0
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 30227,
+          "semantic_fields": {
+            "labels": [
+              "class"
+            ],
+            "patient_id": [
+              "patientId"
+            ]
+          }
+        },
+        {
+          "columns": [
+            "patientId",
+            "PredictionString"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "fc6acfd1af669120",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": null,
+            "matched_references": 0,
+            "nonempty_references": 0
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 3000,
+          "semantic_fields": {
+            "patient_id": [
+              "patientId"
+            ]
+          }
+        },
+        {
+          "columns": [
+            "patientId",
+            "x",
+            "y",
+            "width",
+            "height",
+            "Target"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "528e7587a3bf8b4e",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": null,
+            "matched_references": 0,
+            "nonempty_references": 0
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 30227,
+          "semantic_fields": {
+            "bounding_box": [
+              "height",
+              "width",
+              "x",
+              "y"
+            ],
+            "labels": [
+              "Target"
+            ],
+            "patient_id": [
+              "patientId"
+            ]
+          }
+        }
+      ],
+      "required_for_core": false,
+      "semantic_fields": {
+        "bounding_box": [
+          "height",
+          "width",
+          "x",
+          "y"
+        ],
+        "labels": [
+          "Target",
+          "class"
+        ],
+        "patient_id": [
+          "patientId"
+        ]
+      },
+      "status": "READY_FOR_CANONICAL_MAPPING"
+    },
+    {
+      "archive_file_count": 0,
+      "canonical_coverage": {
+        "bounding_box": "TASK_DEPENDENT",
+        "dataset_id": "CONFIGURED",
+        "image_id": "DISCOVERED",
+        "labels": "TASK_DEPENDENT",
+        "patient_id": "NEEDS_MAPPING",
+        "report_text": "TASK_DEPENDENT",
+        "split": "MUST_BE_GENERATED",
+        "study_id": "OPTIONAL_OR_NEEDS_MAPPING",
+        "view_position": "DISCOVERED"
+      },
+      "extension_counts": {
+        ".csv": 2,
+        ".jpg": 223649
+      },
+      "folder": "07_CheXpert_Small",
+      "id": "chexpert_small",
+      "image_file_count": 223649,
+      "image_reference_match_rate": 1.0,
+      "max_depth": 4,
+      "metadata_file_count": 2,
+      "metadata_profile_limit": 40,
+      "metadata_profile_warnings": 0,
+      "metadata_profiles": 2,
+      "name": "CheXpert Small",
+      "other_file_count": 0,
+      "patient_split_readiness": "REQUIRES_DATASET_SPECIFIC_MAPPING",
+      "primary_tasks": [
+        "multi_label_classification",
+        "external_validation"
+      ],
+      "profiled_metadata": [
+        {
+          "columns": [
+            "Path",
+            "Sex",
+            "Age",
+            "Frontal/Lateral",
+            "AP/PA",
+            "No Finding",
+            "Enlarged Cardiomediastinum",
+            "Cardiomegaly",
+            "Lung Opacity",
+            "Lung Lesion",
+            "Edema",
+            "Consolidation",
+            "Pneumonia",
+            "Atelectasis",
+            "Pneumothorax",
+            "Pleural Effusion",
+            "Pleural Other",
+            "Fracture",
+            "Support Devices"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "28d5b35289cf0a81",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 1.0,
+            "matched_references": 100000,
+            "nonempty_references": 100000
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 100000,
+          "semantic_fields": {
+            "image_id": [
+              "Path"
+            ],
+            "view_position": [
+              "AP/PA",
+              "Frontal/Lateral"
+            ]
+          }
+        },
+        {
+          "columns": [
+            "Path",
+            "Sex",
+            "Age",
+            "Frontal/Lateral",
+            "AP/PA",
+            "No Finding",
+            "Enlarged Cardiomediastinum",
+            "Cardiomegaly",
+            "Lung Opacity",
+            "Lung Lesion",
+            "Edema",
+            "Consolidation",
+            "Pneumonia",
+            "Atelectasis",
+            "Pneumothorax",
+            "Pleural Effusion",
+            "Pleural Other",
+            "Fracture",
+            "Support Devices"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "66d48b2c106b03ec",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 1.0,
+            "matched_references": 234,
+            "nonempty_references": 234
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 234,
+          "semantic_fields": {
+            "image_id": [
+              "Path"
+            ],
+            "view_position": [
+              "AP/PA",
+              "Frontal/Lateral"
+            ]
+          }
+        }
+      ],
+      "required_for_core": false,
+      "semantic_fields": {
+        "image_id": [
+          "Path"
+        ],
+        "view_position": [
+          "AP/PA",
+          "Frontal/Lateral"
+        ]
+      },
+      "status": "READY_FOR_CANONICAL_MAPPING"
+    },
+    {
+      "archive_file_count": 0,
+      "canonical_coverage": {
+        "bounding_box": "TASK_DEPENDENT",
+        "dataset_id": "CONFIGURED",
+        "image_id": "DISCOVERED",
+        "labels": "TASK_DEPENDENT",
+        "patient_id": "NEEDS_MAPPING",
+        "report_text": "TASK_DEPENDENT",
+        "split": "MUST_BE_GENERATED",
+        "study_id": "OPTIONAL_OR_NEEDS_MAPPING",
+        "view_position": "OPTIONAL_OR_NEEDS_MAPPING"
+      },
+      "extension_counts": {
+        ".csv": 2,
+        ".dcm": 3205,
+        ".py": 2
+      },
+      "folder": "08_SIIM_Pneumothorax",
+      "id": "siim_pneumothorax",
+      "image_file_count": 3205,
+      "image_reference_match_rate": 0.0,
+      "max_depth": 2,
+      "metadata_file_count": 2,
+      "metadata_profile_limit": 40,
+      "metadata_profile_warnings": 0,
+      "metadata_profiles": 2,
+      "name": "SIIM-ACR Pneumothorax Segmentation",
+      "other_file_count": 2,
+      "patient_split_readiness": "REQUIRES_DATASET_SPECIFIC_MAPPING",
+      "primary_tasks": [
+        "lesion_segmentation"
+      ],
+      "profiled_metadata": [
+        {
+          "columns": [
+            "ImageId",
+            "EncodedPixels"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "4eaa5f13e160017f",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 0.0,
+            "matched_references": 0,
+            "nonempty_references": 3205
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 3205,
+          "semantic_fields": {
+            "image_id": [
+              "ImageId"
+            ]
+          }
+        },
+        {
+          "columns": [
+            "",
+            "ImageId",
+            "EncodedPixels"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "a53e8c8c024eefab",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": 0.0,
+            "matched_references": 0,
+            "nonempty_references": 12954
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 12954,
+          "semantic_fields": {
+            "image_id": [
+              "ImageId"
+            ]
+          }
+        }
+      ],
+      "required_for_core": true,
+      "semantic_fields": {
+        "image_id": [
+          "ImageId"
+        ]
+      },
+      "status": "READY_FOR_CANONICAL_MAPPING"
+    },
+    {
+      "archive_file_count": 0,
+      "canonical_coverage": {
+        "bounding_box": "TASK_DEPENDENT",
+        "dataset_id": "CONFIGURED",
+        "image_id": "NEEDS_MAPPING",
+        "labels": "DISCOVERED",
+        "patient_id": "NEEDS_MAPPING",
+        "report_text": "TASK_DEPENDENT",
+        "split": "MUST_BE_GENERATED",
+        "study_id": "OPTIONAL_OR_NEEDS_MAPPING",
+        "view_position": "OPTIONAL_OR_NEEDS_MAPPING"
+      },
+      "extension_counts": {
+        ".csv": 1,
+        ".png": 11702
+      },
+      "folder": "09_TBX11K",
+      "id": "tbx11k",
+      "image_file_count": 11702,
+      "image_reference_match_rate": null,
+      "max_depth": 3,
+      "metadata_file_count": 1,
+      "metadata_profile_limit": 40,
+      "metadata_profile_warnings": 0,
+      "metadata_profiles": 1,
+      "name": "TBX11K",
+      "other_file_count": 0,
+      "patient_split_readiness": "REQUIRES_DATASET_SPECIFIC_MAPPING",
+      "primary_tasks": [
+        "tuberculosis_detection",
+        "external_validation"
+      ],
+      "profiled_metadata": [
+        {
+          "columns": [
+            "fname",
+            "image_height",
+            "image_width",
+            "source",
+            "bbox",
+            "target",
+            "tb_type",
+            "image_type"
+          ],
+          "encoding": "utf-8-sig",
+          "extension": ".csv",
+          "file_id": "4430d995be028d5e",
+          "format": "tabular",
+          "image_reference_check": {
+            "match_rate": null,
+            "matched_references": 0,
+            "nonempty_references": 0
+          },
+          "row_scan_limit": 100000,
+          "rows_scanned": 8811,
+          "semantic_fields": {
+            "labels": [
+              "target"
+            ]
+          }
+        }
+      ],
+      "required_for_core": false,
+      "semantic_fields": {
+        "labels": [
+          "target"
+        ]
+      },
+      "status": "READY_FOR_CANONICAL_MAPPING"
+    },
+    {
+      "archive_file_count": 1,
+      "canonical_coverage": {
+        "bounding_box": "TASK_DEPENDENT",
+        "dataset_id": "CONFIGURED",
+        "image_id": "NEEDS_MAPPING",
+        "labels": "TASK_DEPENDENT",
+        "patient_id": "NEEDS_MAPPING",
+        "report_text": "TASK_DEPENDENT",
+        "split": "MUST_BE_GENERATED",
+        "study_id": "OPTIONAL_OR_NEEDS_MAPPING",
+        "view_position": "OPTIONAL_OR_NEEDS_MAPPING"
+      },
+      "extension_counts": {
+        ".png": 42330,
+        ".txt": 1,
+        ".xlsx": 4,
+        ".zip": 1
+      },
+      "folder": "10_COVID_Radiography",
+      "id": "covid_radiography",
+      "image_file_count": 42330,
+      "image_reference_match_rate": null,
+      "max_depth": 4,
+      "metadata_file_count": 1,
+      "metadata_profile_limit": 40,
+      "metadata_profile_warnings": 0,
+      "metadata_profiles": 1,
+      "name": "COVID-19 Radiography Database",
+      "other_file_count": 4,
+      "patient_split_readiness": "REQUIRES_DATASET_SPECIFIC_MAPPING",
+      "primary_tasks": [
+        "classification",
+        "segmentation",
+        "external_validation"
+      ],
+      "profiled_metadata": [
+        {
+          "columns": [],
+          "encoding": "utf-8-sig",
+          "extension": ".txt",
+          "file_id": "ecae8cb8917edc0c",
+          "format": "text",
+          "nonempty_lines_scanned": 37,
+          "semantic_fields": {},
+          "status": "PROFILED"
+        }
+      ],
+      "required_for_core": false,
+      "semantic_fields": {},
+      "status": "READY_FOR_CANONICAL_MAPPING"
+    }
+  ],
+  "generated_at_utc": "2026-08-03T11:49:26.247583+00:00",
+  "metadata_file_limit_per_dataset": 40,
+  "metadata_row_scan_limit": 100000,
+  "needs_extraction_count": 0,
+  "patient_mapping_required_count": 8,
+  "ready_for_mapping_count": 9,
+  "schema_version": "1.0",
+  "status": "PASSED"
+}
