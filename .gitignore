@@ -111,3 +111,6 @@ desktop.ini
 
 # Local Stage 4.3 manifests
 /reports/stage4_3/local/
+/reports/stage5/local/
+/artifacts/stage5/
+/logs/stage5/

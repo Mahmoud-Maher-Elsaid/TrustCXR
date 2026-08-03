@@ -1,0 +1,36 @@
+{
+  "stage": "Stage 5",
+  "dataset": {
+    "dataset_id": "chexpert_small",
+    "relative_root": "TrustCXR-Data/07_CheXpert_Small"
+  },
+  "model": {
+    "name": "EfficientNet-B0",
+    "image_size": 224,
+    "view_classes": ["AP", "PA", "LATERAL"],
+    "quality_head": "deterministic_technical_proxy"
+  },
+  "training": {
+    "epochs": 8,
+    "batch_size": 32,
+    "num_workers": 4,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "quality_loss_weight": 0.2,
+    "max_train_steps": 300,
+    "max_validation_steps": 80,
+    "max_test_steps": 100,
+    "early_stopping_patience": 3
+  },
+  "profile_limits": {
+    "train_per_class": 22000,
+    "validation_per_class": 5000,
+    "test_per_class": 5000
+  },
+  "acceptance": {
+    "minimum_macro_f1": 0.75
+  },
+  "reproducibility": {
+    "seed": 20260803
+  }
+}
