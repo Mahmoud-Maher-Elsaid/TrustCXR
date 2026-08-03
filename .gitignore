@@ -108,3 +108,6 @@ desktop.ini
 
 # Local Stage 4.2 record-level outputs
 /reports/stage4_2/local/
+
+# Local Stage 4.3 manifests
+/reports/stage4_3/local/

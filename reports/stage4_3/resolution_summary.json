@@ -1,0 +1,133 @@
+{
+  "audit_mode": "READ_ONLY",
+  "container_adapter_resolved_count": 1,
+  "dataset_count": 7,
+  "datasets": [
+    {
+      "container_file_count": 1,
+      "container_format": "csv",
+      "container_profile": {
+        "column_count": 9,
+        "columns": [
+          "Image Index",
+          "Dice RCA (Mean)",
+          "Dice RCA (Max)",
+          "Landmarks",
+          "Left Lung",
+          "Right Lung",
+          "Heart",
+          "Height",
+          "Width"
+        ],
+        "container_format": "csv"
+      },
+      "container_size_gib": 2.042,
+      "dataset_id": "nih_chexmask",
+      "image_column_detected": true,
+      "leakage_violations": 0,
+      "mask_column_count": 3,
+      "matched_images": 112120,
+      "missing_images": 0,
+      "nih_join_profile": {
+        "image_lookup_count": 112120,
+        "metadata_selected": true,
+        "patient_lookup_count": 112120,
+        "selected_columns": {
+          "image": "Image Index",
+          "patient": "Patient ID"
+        }
+      },
+      "patient_identity_rate": 1.0,
+      "records_written": 112120,
+      "rows_scanned": 112120,
+      "split_safety": "PATIENT_LEVEL_COMPLETE",
+      "status": "CONTAINER_ADAPTER_RESOLVED"
+    },
+    {
+      "annotation_rows": 67914,
+      "annotation_table_found": true,
+      "dataset_id": "vinbigdata",
+      "dicom_count": 18000,
+      "header_failures": 0,
+      "leakage_violations": 0,
+      "matched_annotations": 15000,
+      "orphan_annotations": 0,
+      "patient_identity_rate": 0.0,
+      "records_written": 18000,
+      "split_safety": "WITHHELD_IDENTITY_UNRESOLVED",
+      "status": "ADAPTER_RESOLVED_IDENTITY_REVIEW",
+      "study_identity_rate": 0.0
+    },
+    {
+      "dataset_id": "indiana_reports",
+      "image_count": 7470,
+      "leakage_violations": 0,
+      "matched_images": 7466,
+      "metadata_found": true,
+      "orphan_metadata_rows": 0,
+      "patient_identity_rate": 0.0,
+      "records_written": 7466,
+      "split_safety": "WITHHELD_PATIENT_IDENTITY_UNRESOLVED",
+      "status": "STUDY_JOIN_RESOLVED_PATIENT_WITHHELD",
+      "study_identity_rate": 1.0
+    },
+    {
+      "dataset_id": "crd_masks",
+      "image_file_count": 0,
+      "leakage_violations": 0,
+      "mask_file_count": 3311,
+      "matched_pairs": 0,
+      "orphan_images": 0,
+      "orphan_masks": 3311,
+      "patient_identity_rate": 0.0,
+      "records_written": 0,
+      "split_safety": "WITHHELD_PATIENT_IDENTITY_UNRESOLVED",
+      "status": "PAIRING_REVIEW_REQUIRED"
+    },
+    {
+      "annotation_rows": 3205,
+      "annotation_table_found": true,
+      "dataset_id": "siim_pneumothorax",
+      "dicom_count": 3205,
+      "header_failures": 0,
+      "leakage_violations": 0,
+      "matched_annotations": 3205,
+      "orphan_annotations": 0,
+      "patient_identity_rate": 0.0,
+      "records_written": 3205,
+      "split_safety": "WITHHELD_IDENTITY_UNRESOLVED",
+      "status": "ADAPTER_RESOLVED_IDENTITY_REVIEW",
+      "study_identity_rate": 0.0
+    },
+    {
+      "dataset_id": "tbx11k",
+      "leakage_violations": 0,
+      "patient_identity_rate": 0.0,
+      "records_written": 11702,
+      "split_safety": "WITHHELD_PATIENT_IDENTITY_UNRESOLVED",
+      "status": "RECORD_ADAPTER_RESOLVED_PATIENT_WITHHELD"
+    },
+    {
+      "dataset_id": "covid_radiography",
+      "image_file_count": 21165,
+      "leakage_violations": 0,
+      "mask_file_count": 21165,
+      "matched_pairs": 21165,
+      "orphan_images": 0,
+      "orphan_masks": 0,
+      "patient_identity_rate": 0.0,
+      "records_written": 21165,
+      "split_safety": "WITHHELD_PATIENT_IDENTITY_UNRESOLVED",
+      "status": "PAIRING_RESOLVED_PATIENT_WITHHELD"
+    }
+  ],
+  "generated_at_utc": "2026-08-03T13:43:17.217094+00:00",
+  "join_resolved_count": 6,
+  "new_patient_level_complete_count": 1,
+  "overall_patient_level_complete_count": 4,
+  "safely_withheld_count": 6,
+  "schema_version": "1.0",
+  "status": "PASSED",
+  "total_leakage_violations": 0,
+  "total_local_record_count": 173658
+}

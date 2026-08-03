@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "stage": "4.3",
+  "audit_mode": "READ_ONLY",
+  "patient_identity_minimum_coverage": 0.99,
+  "split_ratios": {
+    "train": 0.80,
+    "validation": 0.10,
+    "test": 0.10
+  },
+  "identity_policy": {
+    "patient_id": "May create patient-level splits.",
+    "study_id": "May group study views but must not be promoted to patient identity.",
+    "image_id": "May identify a record but must not create patient-level splits.",
+    "unresolved": "Must remain withheld from patient-level training splits."
+  },
+  "privacy_policy": {
+    "raw_identifiers": "LOCAL_ONLY",
+    "source_paths": "LOCAL_ONLY",
+    "local_manifests": "GIT_IGNORED",
+    "committed_reports": "AGGREGATE_ONLY"
+  }
+}
