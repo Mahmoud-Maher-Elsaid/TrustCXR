@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "data_root": "TrustCXR-Data",
+  "datasets": [
+    {
+      "id": "nih_chestxray14",
+      "folder": "01_NIH_ChestXray14",
+      "name": "NIH ChestXray14",
+      "primary_tasks": [
+        "multi_label_classification"
+      ],
+      "required_for_core": true,
+      "license_status": "REVIEW_REQUIRED"
+    },
+    {
+      "id": "vinbigdata",
+      "folder": "02_VinBigData",
+      "name": "VinBigData Chest X-ray Abnormalities Detection",
+      "primary_tasks": [
+        "object_detection",
+        "localization"
+      ],
+      "required_for_core": true,
+      "license_status": "REVIEW_REQUIRED"
+    },
+    {
+      "id": "indiana_reports",
+      "folder": "03_Indiana_Reports",
+      "name": "Indiana University Chest X-ray Reports",
+      "primary_tasks": [
+        "report_generation",
+        "report_retrieval",
+        "report_verification"
+      ],
+      "required_for_core": true,
+      "license_status": "REVIEW_REQUIRED"
+    },
+    {
+      "id": "nih_chexmask",
+      "folder": "04_NIH_CheXmask",
+      "name": "NIH CheXmask",
+      "primary_tasks": [
+        "anatomy_segmentation"
+      ],
+      "required_for_core": false,
+      "license_status": "REVIEW_REQUIRED"
+    },
+    {
+      "id": "crd_masks",
+      "folder": "05_CRD_Masks",
+      "name": "Chest Radiography Database Lung Masks",
+      "primary_tasks": [
+        "lung_segmentation"
+      ],
+      "required_for_core": true,
+      "license_status": "REVIEW_REQUIRED"
+    },
+    {
+      "id": "rsna_pneumonia",
+      "folder": "06_RSNA_Pneumonia",
+      "name": "RSNA Pneumonia Detection Challenge",
+      "primary_tasks": [
+        "pneumonia_detection",
+        "external_validation"
+      ],
+      "required_for_core": false,
+      "license_status": "REVIEW_REQUIRED"
+    },
+    {
+      "id": "chexpert_small",
+      "folder": "07_CheXpert_Small",
+      "name": "CheXpert Small",
+      "primary_tasks": [
+        "multi_label_classification",
+        "external_validation"
+      ],
+      "required_for_core": false,
+      "license_status": "REVIEW_REQUIRED"
+    },
+    {
+      "id": "siim_pneumothorax",
+      "folder": "08_SIIM_Pneumothorax",
+      "name": "SIIM-ACR Pneumothorax Segmentation",
+      "primary_tasks": [
+        "lesion_segmentation"
+      ],
+      "required_for_core": true,
+      "license_status": "REVIEW_REQUIRED"
+    },
+    {
+      "id": "tbx11k",
+      "folder": "09_TBX11K",
+      "name": "TBX11K",
+      "primary_tasks": [
+        "tuberculosis_detection",
+        "external_validation"
+      ],
+      "required_for_core": false,
+      "license_status": "REVIEW_REQUIRED"
+    },
+    {
+      "id": "covid_radiography",
+      "folder": "10_COVID_Radiography",
+      "name": "COVID-19 Radiography Database",
+      "primary_tasks": [
+        "classification",
+        "segmentation",
+        "external_validation"
+      ],
+      "required_for_core": false,
+      "license_status": "REVIEW_REQUIRED"
+    }
+  ]
+}

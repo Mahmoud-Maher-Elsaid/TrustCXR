@@ -1,0 +1,372 @@
+{
+  "audit_mode": "READ_ONLY",
+  "data_readiness": "FULL",
+  "data_root": "TrustCXR-Data",
+  "dataset_count": 10,
+  "datasets": [
+    {
+      "category_counts": {
+        "metadata": 4,
+        "other": 4,
+        "raster_image": 112120
+      },
+      "directory_count": 25,
+      "exists": true,
+      "extension_counts": {
+        ".csv": 2,
+        ".pdf": 4,
+        ".png": 112120,
+        ".txt": 2
+      },
+      "file_count": 112128,
+      "folder": "01_NIH_ChestXray14",
+      "id": "nih_chestxray14",
+      "license_status": "REVIEW_REQUIRED",
+      "name": "NIH ChestXray14",
+      "primary_tasks": [
+        "multi_label_classification"
+      ],
+      "required_for_core": true,
+      "status": "READY",
+      "symbolic_links": 0,
+      "total_bytes": 45077186807,
+      "total_gib": 41.981,
+      "unreadable_entries": 0,
+      "validation": {
+        "invalid_files": 0,
+        "sample_limit": 200,
+        "sampled_files": 200,
+        "valid_files": 200
+      },
+      "zero_byte_files": 0
+    },
+    {
+      "category_counts": {
+        "archive": 1,
+        "dicom": 18000,
+        "metadata": 2
+      },
+      "directory_count": 3,
+      "exists": true,
+      "extension_counts": {
+        ".csv": 2,
+        ".dicom": 18000,
+        ".zip": 1
+      },
+      "file_count": 18003,
+      "folder": "02_VinBigData",
+      "id": "vinbigdata",
+      "license_status": "REVIEW_REQUIRED",
+      "name": "VinBigData Chest X-ray Abnormalities Detection",
+      "primary_tasks": [
+        "object_detection",
+        "localization"
+      ],
+      "required_for_core": true,
+      "status": "READY",
+      "symbolic_links": 0,
+      "total_bytes": 357938065916,
+      "total_gib": 333.356,
+      "unreadable_entries": 0,
+      "validation": {
+        "invalid_files": 0,
+        "sample_limit": 200,
+        "sampled_files": 200,
+        "valid_files": 200
+      },
+      "zero_byte_files": 0
+    },
+    {
+      "category_counts": {
+        "metadata": 2,
+        "raster_image": 7470
+      },
+      "directory_count": 3,
+      "exists": true,
+      "extension_counts": {
+        ".csv": 2,
+        ".png": 7470
+      },
+      "file_count": 7472,
+      "folder": "03_Indiana_Reports",
+      "id": "indiana_reports",
+      "license_status": "REVIEW_REQUIRED",
+      "name": "Indiana University Chest X-ray Reports",
+      "primary_tasks": [
+        "report_generation",
+        "report_retrieval",
+        "report_verification"
+      ],
+      "required_for_core": true,
+      "status": "READY",
+      "symbolic_links": 0,
+      "total_bytes": 14185071106,
+      "total_gib": 13.211,
+      "unreadable_entries": 0,
+      "validation": {
+        "invalid_files": 0,
+        "sample_limit": 200,
+        "sampled_files": 200,
+        "valid_files": 200
+      },
+      "zero_byte_files": 0
+    },
+    {
+      "category_counts": {
+        "metadata": 1
+      },
+      "directory_count": 1,
+      "exists": true,
+      "extension_counts": {
+        ".csv": 1
+      },
+      "file_count": 1,
+      "folder": "04_NIH_CheXmask",
+      "id": "nih_chexmask",
+      "license_status": "REVIEW_REQUIRED",
+      "name": "NIH CheXmask",
+      "primary_tasks": [
+        "anatomy_segmentation"
+      ],
+      "required_for_core": false,
+      "status": "READY",
+      "symbolic_links": 0,
+      "total_bytes": 2192460565,
+      "total_gib": 2.042,
+      "unreadable_entries": 0,
+      "validation": {
+        "invalid_files": 0,
+        "sample_limit": 200,
+        "sampled_files": 1,
+        "valid_files": 1
+      },
+      "zero_byte_files": 0
+    },
+    {
+      "category_counts": {
+        "metadata": 1,
+        "other": 2,
+        "raster_image": 13244
+      },
+      "directory_count": 8,
+      "exists": true,
+      "extension_counts": {
+        ".csv": 1,
+        ".ipynb": 1,
+        ".pdf": 1,
+        ".png": 13244
+      },
+      "file_count": 13247,
+      "folder": "05_CRD_Masks",
+      "id": "crd_masks",
+      "license_status": "REVIEW_REQUIRED",
+      "name": "Chest Radiography Database Lung Masks",
+      "primary_tasks": [
+        "lung_segmentation"
+      ],
+      "required_for_core": true,
+      "status": "READY",
+      "symbolic_links": 0,
+      "total_bytes": 2550330065,
+      "total_gib": 2.375,
+      "unreadable_entries": 0,
+      "validation": {
+        "invalid_files": 0,
+        "sample_limit": 200,
+        "sampled_files": 200,
+        "valid_files": 200
+      },
+      "zero_byte_files": 0
+    },
+    {
+      "category_counts": {
+        "dicom": 29684,
+        "metadata": 4
+      },
+      "directory_count": 3,
+      "exists": true,
+      "extension_counts": {
+        ".csv": 3,
+        ".dcm": 29684,
+        ".txt": 1
+      },
+      "file_count": 29688,
+      "folder": "06_RSNA_Pneumonia",
+      "id": "rsna_pneumonia",
+      "license_status": "REVIEW_REQUIRED",
+      "name": "RSNA Pneumonia Detection Challenge",
+      "primary_tasks": [
+        "pneumonia_detection",
+        "external_validation"
+      ],
+      "required_for_core": false,
+      "status": "READY",
+      "symbolic_links": 0,
+      "total_bytes": 3956648008,
+      "total_gib": 3.685,
+      "unreadable_entries": 0,
+      "validation": {
+        "invalid_files": 0,
+        "sample_limit": 200,
+        "sampled_files": 200,
+        "valid_files": 200
+      },
+      "zero_byte_files": 0
+    },
+    {
+      "category_counts": {
+        "metadata": 2,
+        "raster_image": 223649
+      },
+      "directory_count": 252584,
+      "exists": true,
+      "extension_counts": {
+        ".csv": 2,
+        ".jpg": 223649
+      },
+      "file_count": 223651,
+      "folder": "07_CheXpert_Small",
+      "id": "chexpert_small",
+      "license_status": "REVIEW_REQUIRED",
+      "name": "CheXpert Small",
+      "primary_tasks": [
+        "multi_label_classification",
+        "external_validation"
+      ],
+      "required_for_core": false,
+      "status": "READY",
+      "symbolic_links": 0,
+      "total_bytes": 11471429175,
+      "total_gib": 10.684,
+      "unreadable_entries": 0,
+      "validation": {
+        "invalid_files": 0,
+        "sample_limit": 200,
+        "sampled_files": 200,
+        "valid_files": 200
+      },
+      "zero_byte_files": 0
+    },
+    {
+      "category_counts": {
+        "dicom": 3205,
+        "metadata": 2,
+        "other": 2
+      },
+      "directory_count": 2,
+      "exists": true,
+      "extension_counts": {
+        ".csv": 2,
+        ".dcm": 3205,
+        ".py": 2
+      },
+      "file_count": 3209,
+      "folder": "08_SIIM_Pneumothorax",
+      "id": "siim_pneumothorax",
+      "license_status": "REVIEW_REQUIRED",
+      "name": "SIIM-ACR Pneumothorax Segmentation",
+      "primary_tasks": [
+        "lesion_segmentation"
+      ],
+      "required_for_core": true,
+      "status": "READY",
+      "symbolic_links": 0,
+      "total_bytes": 439106825,
+      "total_gib": 0.409,
+      "unreadable_entries": 0,
+      "validation": {
+        "invalid_files": 0,
+        "sample_limit": 200,
+        "sampled_files": 200,
+        "valid_files": 200
+      },
+      "zero_byte_files": 0
+    },
+    {
+      "category_counts": {
+        "metadata": 1,
+        "raster_image": 11702
+      },
+      "directory_count": 4,
+      "exists": true,
+      "extension_counts": {
+        ".csv": 1,
+        ".png": 11702
+      },
+      "file_count": 11703,
+      "folder": "09_TBX11K",
+      "id": "tbx11k",
+      "license_status": "REVIEW_REQUIRED",
+      "name": "TBX11K",
+      "primary_tasks": [
+        "tuberculosis_detection",
+        "external_validation"
+      ],
+      "required_for_core": false,
+      "status": "READY",
+      "symbolic_links": 0,
+      "total_bytes": 4071010628,
+      "total_gib": 3.791,
+      "unreadable_entries": 0,
+      "validation": {
+        "invalid_files": 0,
+        "sample_limit": 200,
+        "sampled_files": 200,
+        "valid_files": 200
+      },
+      "zero_byte_files": 0
+    },
+    {
+      "category_counts": {
+        "archive": 1,
+        "metadata": 1,
+        "other": 4,
+        "raster_image": 42330
+      },
+      "directory_count": 14,
+      "exists": true,
+      "extension_counts": {
+        ".png": 42330,
+        ".txt": 1,
+        ".xlsx": 4,
+        ".zip": 1
+      },
+      "file_count": 42336,
+      "folder": "10_COVID_Radiography",
+      "id": "covid_radiography",
+      "license_status": "REVIEW_REQUIRED",
+      "name": "COVID-19 Radiography Database",
+      "primary_tasks": [
+        "classification",
+        "segmentation",
+        "external_validation"
+      ],
+      "required_for_core": false,
+      "status": "READY",
+      "symbolic_links": 0,
+      "total_bytes": 1622867989,
+      "total_gib": 1.511,
+      "unreadable_entries": 0,
+      "validation": {
+        "invalid_files": 0,
+        "sample_limit": 200,
+        "sampled_files": 200,
+        "valid_files": 200
+      },
+      "zero_byte_files": 0
+    }
+  ],
+  "generated_at_utc": "2026-08-03T11:32:03.960808+00:00",
+  "nonempty_dataset_count": 10,
+  "present_dataset_count": 10,
+  "sample_limit_per_dataset": 200,
+  "sampling_strategy": "DETERMINISTIC_PATH_HASH",
+  "schema_version": "1.0",
+  "status": "PASSED",
+  "total_bytes": 443504177084,
+  "total_file_count": 461438,
+  "total_gib": 413.045,
+  "total_invalid_sampled_files": 0,
+  "total_unreadable_entries": 0,
+  "total_zero_byte_files": 0
+}

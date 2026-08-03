@@ -99,3 +99,6 @@ desktop.ini
 *.egg-info/
 /build/
 /dist/
+
+# Local dataset audit details
+/reports/stage3/local/

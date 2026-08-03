@@ -1,0 +1,11 @@
+id,folder,name,status,required_for_core,file_count,directory_count,total_gib,zero_byte_files,unreadable_entries,sampled_files,invalid_sampled_files
+nih_chestxray14,01_NIH_ChestXray14,NIH ChestXray14,READY,True,112128,25,41.981,0,0,200,0
+vinbigdata,02_VinBigData,VinBigData Chest X-ray Abnormalities Detection,READY,True,18003,3,333.356,0,0,200,0
+indiana_reports,03_Indiana_Reports,Indiana University Chest X-ray Reports,READY,True,7472,3,13.211,0,0,200,0
+nih_chexmask,04_NIH_CheXmask,NIH CheXmask,READY,False,1,1,2.042,0,0,1,0
+crd_masks,05_CRD_Masks,Chest Radiography Database Lung Masks,READY,True,13247,8,2.375,0,0,200,0
+rsna_pneumonia,06_RSNA_Pneumonia,RSNA Pneumonia Detection Challenge,READY,False,29688,3,3.685,0,0,200,0
+chexpert_small,07_CheXpert_Small,CheXpert Small,READY,False,223651,252584,10.684,0,0,200,0
+siim_pneumothorax,08_SIIM_Pneumothorax,SIIM-ACR Pneumothorax Segmentation,READY,True,3209,2,0.409,0,0,200,0
+tbx11k,09_TBX11K,TBX11K,READY,False,11703,4,3.791,0,0,200,0
+covid_radiography,10_COVID_Radiography,COVID-19 Radiography Database,READY,False,42336,14,1.511,0,0,200,0
