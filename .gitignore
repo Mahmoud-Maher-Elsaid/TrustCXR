@@ -94,3 +94,8 @@ stage*_repository_report.txt
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Python packaging artifacts
+*.egg-info/
+/build/
+/dist/
