@@ -1,0 +1,852 @@
+{
+  "candidates": [
+    {
+      "best_epoch": 10,
+      "best_selection_macro_auprc": 0.24262254292344185,
+      "early_stopping_activated": true,
+      "epochs_completed": 22,
+      "name": "linear",
+      "parameter_count": 10766,
+      "thresholds": {
+        "Atelectasis": 0.7,
+        "Cardiomegaly": 0.7999999999999999,
+        "Consolidation": 0.7,
+        "Edema": 0.7999999999999999,
+        "Effusion": 0.75,
+        "Emphysema": 0.7,
+        "Fibrosis": 0.85,
+        "Hernia": 0.65,
+        "Infiltration": 0.5499999999999999,
+        "Mass": 0.85,
+        "Nodule": 0.85,
+        "Pleural_Thickening": 0.7999999999999999,
+        "Pneumonia": 0.6,
+        "Pneumothorax": 0.7999999999999999
+      },
+      "type": "linear",
+      "validation_metrics": {
+        "macro_auprc": 0.24262254292344185,
+        "macro_auroc": 0.8260364222382005,
+        "macro_f1": 0.3074255469032337,
+        "micro_auprc": 0.2610267142412962,
+        "micro_auroc": 0.8231101257360314,
+        "micro_f1": 0.345546508758944,
+        "per_label": {
+          "Atelectasis": {
+            "auprc": 0.34144110405703515,
+            "auroc": 0.8158767114488439,
+            "f1": 0.40665873959571935,
+            "prevalence": 0.10281657888710785,
+            "sensitivity": 0.5712694877505567,
+            "specificity": 0.8580908626850434,
+            "threshold": 0.7
+          },
+          "Cardiomegaly": {
+            "auprc": 0.2651802800397874,
+            "auroc": 0.9160652306643963,
+            "f1": 0.3309002433090024,
+            "prevalence": 0.018662697504007328,
+            "sensitivity": 0.4171779141104294,
+            "specificity": 0.9789989499474974,
+            "threshold": 0.7999999999999999
+          },
+          "Consolidation": {
+            "auprc": 0.11444175339296342,
+            "auroc": 0.7864540166942932,
+            "f1": 0.19407407407407407,
+            "prevalence": 0.03297458209297,
+            "sensitivity": 0.4548611111111111,
+            "specificity": 0.889770305470045,
+            "threshold": 0.7
+          },
+          "Edema": {
+            "auprc": 0.17926978561280574,
+            "auroc": 0.8698128724848055,
+            "f1": 0.21226415094339623,
+            "prevalence": 0.014426379665674376,
+            "sensitivity": 0.35714285714285715,
+            "specificity": 0.9706087360594795,
+            "threshold": 0.7999999999999999
+          },
+          "Effusion": {
+            "auprc": 0.4783661450714499,
+            "auroc": 0.8765851403795831,
+            "f1": 0.49746192893401014,
+            "prevalence": 0.0984657659720632,
+            "sensitivity": 0.6267441860465116,
+            "specificity": 0.9024638049276098,
+            "threshold": 0.75
+          },
+          "Emphysema": {
+            "auprc": 0.17266902168294498,
+            "auroc": 0.8674877471691737,
+            "f1": 0.2367758186397985,
+            "prevalence": 0.02221204488207007,
+            "sensitivity": 0.4845360824742268,
+            "specificity": 0.9407494145199063,
+            "threshold": 0.7
+          },
+          "Fibrosis": {
+            "auprc": 0.2038908953181335,
+            "auroc": 0.7921520747774008,
+            "f1": 0.27927927927927926,
+            "prevalence": 0.015685825509503093,
+            "sensitivity": 0.22627737226277372,
+            "specificity": 0.9937187390950332,
+            "threshold": 0.85
+          },
+          "Hernia": {
+            "auprc": 0.30011231401590976,
+            "auroc": 0.8642119921363041,
+            "f1": 0.4,
+            "prevalence": 0.0016029310739638196,
+            "sensitivity": 0.42857142857142855,
+            "specificity": 0.9988532110091743,
+            "threshold": 0.65
+          },
+          "Infiltration": {
+            "auprc": 0.32675355822480967,
+            "auroc": 0.7161366478822668,
+            "f1": 0.3771078180889116,
+            "prevalence": 0.15514082894435538,
+            "sensitivity": 0.5446494464944649,
+            "specificity": 0.7532185933053259,
+            "threshold": 0.5499999999999999
+          },
+          "Mass": {
+            "auprc": 0.31734211173300964,
+            "auroc": 0.8663894450404127,
+            "f1": 0.3776908023483366,
+            "prevalence": 0.04762995191206778,
+            "sensitivity": 0.4639423076923077,
+            "specificity": 0.9503486415003607,
+            "threshold": 0.85
+          },
+          "Nodule": {
+            "auprc": 0.27005746450182444,
+            "auroc": 0.7942029543500302,
+            "f1": 0.3471698113207547,
+            "prevalence": 0.060911380810625144,
+            "sensitivity": 0.3458646616541353,
+            "specificity": 0.9580590099975616,
+            "threshold": 0.85
+          },
+          "Pleural_Thickening": {
+            "auprc": 0.12955227180465578,
+            "auroc": 0.7786036731076612,
+            "f1": 0.21379310344827587,
+            "prevalence": 0.027249828257384933,
+            "sensitivity": 0.2605042016806723,
+            "specificity": 0.9670433145009416,
+            "threshold": 0.7999999999999999
+          },
+          "Pneumonia": {
+            "auprc": 0.033409539729792305,
+            "auroc": 0.7276723995256423,
+            "f1": 0.08093994778067885,
+            "prevalence": 0.01064804213418823,
+            "sensitivity": 0.3333333333333333,
+            "specificity": 0.9257030436292096,
+            "threshold": 0.6
+          },
+          "Pneumothorax": {
+            "auprc": 0.2642293557430639,
+            "auroc": 0.8928590056739958,
+            "f1": 0.3498419388830348,
+            "prevalence": 0.03354705747652851,
+            "sensitivity": 0.5665529010238908,
+            "specificity": 0.9419500059234688,
+            "threshold": 0.7999999999999999
+          }
+        }
+      },
+      "validation_seconds": 0.041897599992807955
+    },
+    {
+      "best_epoch": 9,
+      "best_selection_macro_auprc": 0.23064175039477466,
+      "early_stopping_activated": true,
+      "epochs_completed": 21,
+      "name": "mlp",
+      "parameter_count": 400910,
+      "thresholds": {
+        "Atelectasis": 0.7,
+        "Cardiomegaly": 0.7999999999999999,
+        "Consolidation": 0.7,
+        "Edema": 0.75,
+        "Effusion": 0.75,
+        "Emphysema": 0.65,
+        "Fibrosis": 0.9,
+        "Hernia": 0.3,
+        "Infiltration": 0.5499999999999999,
+        "Mass": 0.75,
+        "Nodule": 0.7999999999999999,
+        "Pleural_Thickening": 0.75,
+        "Pneumonia": 0.39999999999999997,
+        "Pneumothorax": 0.75
+      },
+      "type": "mlp",
+      "validation_metrics": {
+        "macro_auprc": 0.23064175039477466,
+        "macro_auroc": 0.831074587110831,
+        "macro_f1": 0.2914589358483745,
+        "micro_auprc": 0.28270890433426576,
+        "micro_auroc": 0.8716668707212877,
+        "micro_f1": 0.3505695547117708,
+        "per_label": {
+          "Atelectasis": {
+            "auprc": 0.34057808455415406,
+            "auroc": 0.8172956948172502,
+            "f1": 0.39575033200531207,
+            "prevalence": 0.10281657888710785,
+            "sensitivity": 0.4977728285077951,
+            "specificity": 0.8833588565594691,
+            "threshold": 0.7
+          },
+          "Cardiomegaly": {
+            "auprc": 0.26667929416460373,
+            "auroc": 0.9194222492310711,
+            "f1": 0.31521739130434784,
+            "prevalence": 0.018662697504007328,
+            "sensitivity": 0.3558282208588957,
+            "specificity": 0.9828491424571228,
+            "threshold": 0.7999999999999999
+          },
+          "Consolidation": {
+            "auprc": 0.12242207178711373,
+            "auroc": 0.7870133297813562,
+            "f1": 0.19861431870669746,
+            "prevalence": 0.03297458209297,
+            "sensitivity": 0.2986111111111111,
+            "specificity": 0.941747572815534,
+            "threshold": 0.7
+          },
+          "Edema": {
+            "auprc": 0.18607001747772237,
+            "auroc": 0.8794854915324247,
+            "f1": 0.22570532915360503,
+            "prevalence": 0.014426379665674376,
+            "sensitivity": 0.2857142857142857,
+            "specificity": 0.9817611524163569,
+            "threshold": 0.75
+          },
+          "Effusion": {
+            "auprc": 0.48052706099314935,
+            "auroc": 0.8806978811632042,
+            "f1": 0.49846153846153846,
+            "prevalence": 0.0984657659720632,
+            "sensitivity": 0.5651162790697675,
+            "specificity": 0.9232918465836931,
+            "threshold": 0.75
+          },
+          "Emphysema": {
+            "auprc": 0.14743619032574268,
+            "auroc": 0.8629572177020207,
+            "f1": 0.2381852551984877,
+            "prevalence": 0.02221204488207007,
+            "sensitivity": 0.3247422680412371,
+            "specificity": 0.9681498829039813,
+            "threshold": 0.65
+          },
+          "Fibrosis": {
+            "auprc": 0.18676083187899578,
+            "auroc": 0.799695021773849,
+            "f1": 0.26666666666666666,
+            "prevalence": 0.015685825509503093,
+            "sensitivity": 0.17518248175182483,
+            "specificity": 0.9977899267186228,
+            "threshold": 0.9
+          },
+          "Hernia": {
+            "auprc": 0.14672837391138396,
+            "auroc": 0.8975016382699869,
+            "f1": 0.2222222222222222,
+            "prevalence": 0.0016029310739638196,
+            "sensitivity": 0.2857142857142857,
+            "specificity": 0.9979357798165137,
+            "threshold": 0.3
+          },
+          "Infiltration": {
+            "auprc": 0.3327735792680795,
+            "auroc": 0.718543848129903,
+            "f1": 0.3748663101604278,
+            "prevalence": 0.15514082894435538,
+            "sensitivity": 0.5173431734317343,
+            "specificity": 0.7717847946876271,
+            "threshold": 0.5499999999999999
+          },
+          "Mass": {
+            "auprc": 0.3176710422820513,
+            "auroc": 0.8619831644071244,
+            "f1": 0.37456445993031356,
+            "prevalence": 0.04762995191206778,
+            "sensitivity": 0.5168269230769231,
+            "specificity": 0.9378456359701851,
+            "threshold": 0.75
+          },
+          "Nodule": {
+            "auprc": 0.2696206526909326,
+            "auroc": 0.7945111956922298,
+            "f1": 0.3341729638958858,
+            "prevalence": 0.060911380810625144,
+            "sensitivity": 0.37406015037593987,
+            "specificity": 0.9439161180199951,
+            "threshold": 0.7999999999999999
+          },
+          "Pleural_Thickening": {
+            "auprc": 0.1400101383505546,
+            "auroc": 0.7866158469037332,
+            "f1": 0.20876826722338204,
+            "prevalence": 0.027249828257384933,
+            "sensitivity": 0.21008403361344538,
+            "specificity": 0.9775188323917138,
+            "threshold": 0.75
+          },
+          "Pneumonia": {
+            "auprc": 0.037635612775527474,
+            "auroc": 0.7378949817884977,
+            "f1": 0.08450704225352113,
+            "prevalence": 0.01064804213418823,
+            "sensitivity": 0.25806451612903225,
+            "specificity": 0.9478069667862515,
+            "threshold": 0.39999999999999997
+          },
+          "Pneumothorax": {
+            "auprc": 0.254071555066834,
+            "auroc": 0.8914266583589848,
+            "f1": 0.3427230046948357,
+            "prevalence": 0.03354705747652851,
+            "sensitivity": 0.49829351535836175,
+            "specificity": 0.9510721478497808,
+            "threshold": 0.75
+          }
+        }
+      },
+      "validation_seconds": 0.11146280000684783
+    }
+  ],
+  "champion": {
+    "best_epoch": 10,
+    "best_selection_macro_auprc": 0.24262254292344185,
+    "early_stopping_activated": true,
+    "epochs_completed": 22,
+    "name": "linear",
+    "parameter_count": 10766,
+    "thresholds": {
+      "Atelectasis": 0.7,
+      "Cardiomegaly": 0.7999999999999999,
+      "Consolidation": 0.7,
+      "Edema": 0.7999999999999999,
+      "Effusion": 0.75,
+      "Emphysema": 0.7,
+      "Fibrosis": 0.85,
+      "Hernia": 0.65,
+      "Infiltration": 0.5499999999999999,
+      "Mass": 0.85,
+      "Nodule": 0.85,
+      "Pleural_Thickening": 0.7999999999999999,
+      "Pneumonia": 0.6,
+      "Pneumothorax": 0.7999999999999999
+    },
+    "type": "linear",
+    "validation_metrics": {
+      "macro_auprc": 0.24262254292344185,
+      "macro_auroc": 0.8260364222382005,
+      "macro_f1": 0.3074255469032337,
+      "micro_auprc": 0.2610267142412962,
+      "micro_auroc": 0.8231101257360314,
+      "micro_f1": 0.345546508758944,
+      "per_label": {
+        "Atelectasis": {
+          "auprc": 0.34144110405703515,
+          "auroc": 0.8158767114488439,
+          "f1": 0.40665873959571935,
+          "prevalence": 0.10281657888710785,
+          "sensitivity": 0.5712694877505567,
+          "specificity": 0.8580908626850434,
+          "threshold": 0.7
+        },
+        "Cardiomegaly": {
+          "auprc": 0.2651802800397874,
+          "auroc": 0.9160652306643963,
+          "f1": 0.3309002433090024,
+          "prevalence": 0.018662697504007328,
+          "sensitivity": 0.4171779141104294,
+          "specificity": 0.9789989499474974,
+          "threshold": 0.7999999999999999
+        },
+        "Consolidation": {
+          "auprc": 0.11444175339296342,
+          "auroc": 0.7864540166942932,
+          "f1": 0.19407407407407407,
+          "prevalence": 0.03297458209297,
+          "sensitivity": 0.4548611111111111,
+          "specificity": 0.889770305470045,
+          "threshold": 0.7
+        },
+        "Edema": {
+          "auprc": 0.17926978561280574,
+          "auroc": 0.8698128724848055,
+          "f1": 0.21226415094339623,
+          "prevalence": 0.014426379665674376,
+          "sensitivity": 0.35714285714285715,
+          "specificity": 0.9706087360594795,
+          "threshold": 0.7999999999999999
+        },
+        "Effusion": {
+          "auprc": 0.4783661450714499,
+          "auroc": 0.8765851403795831,
+          "f1": 0.49746192893401014,
+          "prevalence": 0.0984657659720632,
+          "sensitivity": 0.6267441860465116,
+          "specificity": 0.9024638049276098,
+          "threshold": 0.75
+        },
+        "Emphysema": {
+          "auprc": 0.17266902168294498,
+          "auroc": 0.8674877471691737,
+          "f1": 0.2367758186397985,
+          "prevalence": 0.02221204488207007,
+          "sensitivity": 0.4845360824742268,
+          "specificity": 0.9407494145199063,
+          "threshold": 0.7
+        },
+        "Fibrosis": {
+          "auprc": 0.2038908953181335,
+          "auroc": 0.7921520747774008,
+          "f1": 0.27927927927927926,
+          "prevalence": 0.015685825509503093,
+          "sensitivity": 0.22627737226277372,
+          "specificity": 0.9937187390950332,
+          "threshold": 0.85
+        },
+        "Hernia": {
+          "auprc": 0.30011231401590976,
+          "auroc": 0.8642119921363041,
+          "f1": 0.4,
+          "prevalence": 0.0016029310739638196,
+          "sensitivity": 0.42857142857142855,
+          "specificity": 0.9988532110091743,
+          "threshold": 0.65
+        },
+        "Infiltration": {
+          "auprc": 0.32675355822480967,
+          "auroc": 0.7161366478822668,
+          "f1": 0.3771078180889116,
+          "prevalence": 0.15514082894435538,
+          "sensitivity": 0.5446494464944649,
+          "specificity": 0.7532185933053259,
+          "threshold": 0.5499999999999999
+        },
+        "Mass": {
+          "auprc": 0.31734211173300964,
+          "auroc": 0.8663894450404127,
+          "f1": 0.3776908023483366,
+          "prevalence": 0.04762995191206778,
+          "sensitivity": 0.4639423076923077,
+          "specificity": 0.9503486415003607,
+          "threshold": 0.85
+        },
+        "Nodule": {
+          "auprc": 0.27005746450182444,
+          "auroc": 0.7942029543500302,
+          "f1": 0.3471698113207547,
+          "prevalence": 0.060911380810625144,
+          "sensitivity": 0.3458646616541353,
+          "specificity": 0.9580590099975616,
+          "threshold": 0.85
+        },
+        "Pleural_Thickening": {
+          "auprc": 0.12955227180465578,
+          "auroc": 0.7786036731076612,
+          "f1": 0.21379310344827587,
+          "prevalence": 0.027249828257384933,
+          "sensitivity": 0.2605042016806723,
+          "specificity": 0.9670433145009416,
+          "threshold": 0.7999999999999999
+        },
+        "Pneumonia": {
+          "auprc": 0.033409539729792305,
+          "auroc": 0.7276723995256423,
+          "f1": 0.08093994778067885,
+          "prevalence": 0.01064804213418823,
+          "sensitivity": 0.3333333333333333,
+          "specificity": 0.9257030436292096,
+          "threshold": 0.6
+        },
+        "Pneumothorax": {
+          "auprc": 0.2642293557430639,
+          "auroc": 0.8928590056739958,
+          "f1": 0.3498419388830348,
+          "prevalence": 0.03354705747652851,
+          "sensitivity": 0.5665529010238908,
+          "specificity": 0.9419500059234688,
+          "threshold": 0.7999999999999999
+        }
+      }
+    },
+    "validation_seconds": 0.041897599992807955
+  },
+  "comparison": {
+    "macro_auprc_delta": -0.0026766556624213123,
+    "macro_auroc_delta": -0.0009073186791166421,
+    "macro_f1_delta": 0.0017141932913363744
+  },
+  "cuda": {
+    "cuda_version": "13.0",
+    "device_name": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "torch_version": "2.12.1+cu130",
+    "total_memory_gib": 7.99951171875
+  },
+  "dataset": "NIH ChestXray14",
+  "elapsed_seconds": 36.224611299985554,
+  "encoder": "microsoft/rad-dino",
+  "encoder_revision": "110cbc18d5133582e320b43d53bf5c44e410c936",
+  "gate": "GO_FOR_STAGE_7D_MODEL_COMPARISON",
+  "input_integrity": {
+    "patient_leakage_violations": 0,
+    "patient_overlap_details": {
+      "train_test": 0,
+      "train_validation": 0,
+      "validation_test": 0
+    },
+    "positive_label_counts": {
+      "test": {
+        "Atelectasis": 3279,
+        "Cardiomegaly": 1069,
+        "Consolidation": 1815,
+        "Edema": 925,
+        "Effusion": 4658,
+        "Emphysema": 1093,
+        "Fibrosis": 435,
+        "Hernia": 86,
+        "Infiltration": 6112,
+        "Mass": 1748,
+        "Nodule": 1623,
+        "Pleural_Thickening": 1143,
+        "Pneumonia": 555,
+        "Pneumothorax": 2665
+      },
+      "train": {
+        "Atelectasis": 7382,
+        "Cardiomegaly": 1544,
+        "Consolidation": 2564,
+        "Edema": 1252,
+        "Effusion": 7799,
+        "Emphysema": 1229,
+        "Fibrosis": 1114,
+        "Hernia": 127,
+        "Infiltration": 12427,
+        "Mass": 3618,
+        "Nodule": 4176,
+        "Pleural_Thickening": 2004,
+        "Pneumonia": 783,
+        "Pneumothorax": 2344
+      },
+      "validation": {
+        "Atelectasis": 898,
+        "Cardiomegaly": 163,
+        "Consolidation": 288,
+        "Edema": 126,
+        "Effusion": 860,
+        "Emphysema": 194,
+        "Fibrosis": 137,
+        "Hernia": 14,
+        "Infiltration": 1355,
+        "Mass": 416,
+        "Nodule": 532,
+        "Pleural_Thickening": 238,
+        "Pneumonia": 93,
+        "Pneumothorax": 293
+      }
+    },
+    "record_counts": {
+      "test": 25596,
+      "train": 77790,
+      "validation": 8734
+    },
+    "unique_patient_counts": {
+      "test": 2797,
+      "train": 25185,
+      "validation": 2823
+    }
+  },
+  "labels": [
+    "Atelectasis",
+    "Cardiomegaly",
+    "Effusion",
+    "Infiltration",
+    "Mass",
+    "Nodule",
+    "Pneumonia",
+    "Pneumothorax",
+    "Consolidation",
+    "Edema",
+    "Emphysema",
+    "Fibrosis",
+    "Pleural_Thickening",
+    "Hernia"
+  ],
+  "patient_leakage_violations": 0,
+  "positive_weight_details": {
+    "Atelectasis": {
+      "applied_weight": 9.537795066833496,
+      "negative_count": 70408,
+      "positive_count": 7382,
+      "raw_weight": 9.537794635600108
+    },
+    "Cardiomegaly": {
+      "applied_weight": 20.0,
+      "negative_count": 76246,
+      "positive_count": 1544,
+      "raw_weight": 49.38212435233161
+    },
+    "Consolidation": {
+      "applied_weight": 20.0,
+      "negative_count": 75226,
+      "positive_count": 2564,
+      "raw_weight": 29.339313572542903
+    },
+    "Edema": {
+      "applied_weight": 20.0,
+      "negative_count": 76538,
+      "positive_count": 1252,
+      "raw_weight": 61.13258785942492
+    },
+    "Effusion": {
+      "applied_weight": 8.974355697631836,
+      "negative_count": 69991,
+      "positive_count": 7799,
+      "raw_weight": 8.97435568662649
+    },
+    "Emphysema": {
+      "applied_weight": 20.0,
+      "negative_count": 76561,
+      "positive_count": 1229,
+      "raw_weight": 62.2953620829943
+    },
+    "Fibrosis": {
+      "applied_weight": 20.0,
+      "negative_count": 76676,
+      "positive_count": 1114,
+      "raw_weight": 68.8294434470377
+    },
+    "Hernia": {
+      "applied_weight": 20.0,
+      "negative_count": 77663,
+      "positive_count": 127,
+      "raw_weight": 611.5196850393701
+    },
+    "Infiltration": {
+      "applied_weight": 5.259757041931152,
+      "negative_count": 65363,
+      "positive_count": 12427,
+      "raw_weight": 5.259756980767683
+    },
+    "Mass": {
+      "applied_weight": 20.0,
+      "negative_count": 74172,
+      "positive_count": 3618,
+      "raw_weight": 20.500829187396352
+    },
+    "Nodule": {
+      "applied_weight": 17.62787437438965,
+      "negative_count": 73614,
+      "positive_count": 4176,
+      "raw_weight": 17.62787356321839
+    },
+    "Pleural_Thickening": {
+      "applied_weight": 20.0,
+      "negative_count": 75786,
+      "positive_count": 2004,
+      "raw_weight": 37.81736526946108
+    },
+    "Pneumonia": {
+      "applied_weight": 20.0,
+      "negative_count": 77007,
+      "positive_count": 783,
+      "raw_weight": 98.34865900383141
+    },
+    "Pneumothorax": {
+      "applied_weight": 20.0,
+      "negative_count": 75446,
+      "positive_count": 2344,
+      "raw_weight": 32.186860068259385
+    }
+  },
+  "scientific_disclosure": {
+    "comparison_type": "IN_DOMAIN_FROZEN_REPRESENTATION_PROBING",
+    "nih_in_rad_dino_pretraining": true,
+    "not_external_validation": true
+  },
+  "selection_protocol": "VALIDATION_ONLY_CHAMPION_SELECTION_SINGLE_TEST_EVALUATION",
+  "stage": "7C",
+  "stage6_baseline": {
+    "model": "DenseNet-121",
+    "test_macro_auprc": 0.2669733083774653,
+    "test_macro_auroc": 0.804781596894873,
+    "test_macro_f1": 0.32058500818417585
+  },
+  "stage7b_artifact_mib": 179.64974117279053,
+  "standardization": {
+    "mean_maximum": 0.4616188108921051,
+    "mean_minimum": -0.40629950165748596,
+    "std_maximum": 0.8946335911750793,
+    "std_mean": 0.4408780038356781,
+    "std_minimum": 0.0005151133518666029
+  },
+  "status": "PASSED",
+  "test_metrics": {
+    "macro_auprc": 0.264296652715044,
+    "macro_auroc": 0.8038742782157564,
+    "macro_f1": 0.3222992014755122,
+    "micro_auprc": 0.3070184842123642,
+    "micro_auroc": 0.8205904956950838,
+    "micro_f1": 0.3746809017574513,
+    "per_label": {
+      "Atelectasis": {
+        "auprc": 0.3371587733405502,
+        "auroc": 0.7631298896300599,
+        "f1": 0.38095238095238093,
+        "prevalence": 0.12810595405532113,
+        "sensitivity": 0.5794449527294907,
+        "specificity": 0.7850965631581306,
+        "threshold": 0.7
+      },
+      "Cardiomegaly": {
+        "auprc": 0.34072319921842587,
+        "auroc": 0.8777315833340422,
+        "f1": 0.3992047713717694,
+        "prevalence": 0.04176433817784029,
+        "sensitivity": 0.4695977549111319,
+        "specificity": 0.9615118033187915,
+        "threshold": 0.7999999999999999
+      },
+      "Consolidation": {
+        "auprc": 0.15616151055884786,
+        "auroc": 0.733894723233806,
+        "f1": 0.23337268791814247,
+        "prevalence": 0.07090951711204876,
+        "sensitivity": 0.6534435261707989,
+        "specificity": 0.6987931541987301,
+        "threshold": 0.7
+      },
+      "Edema": {
+        "auprc": 0.17750456524913558,
+        "auroc": 0.8497275168241081,
+        "f1": 0.25682382133995035,
+        "prevalence": 0.03613845913423973,
+        "sensitivity": 0.44756756756756755,
+        "specificity": 0.9235945036682744,
+        "threshold": 0.7999999999999999
+      },
+      "Effusion": {
+        "auprc": 0.4739087336935989,
+        "auroc": 0.8075085540532044,
+        "f1": 0.508296673612719,
+        "prevalence": 0.18198155961869042,
+        "sensitivity": 0.7069557750107343,
+        "specificity": 0.7609131722227529,
+        "threshold": 0.75
+      },
+      "Emphysema": {
+        "auprc": 0.230227528617286,
+        "auroc": 0.8647154843597207,
+        "f1": 0.27938734083779293,
+        "prevalence": 0.042701984685107046,
+        "sensitivity": 0.6925892040256175,
+        "specificity": 0.8543443659960005,
+        "threshold": 0.7
+      },
+      "Fibrosis": {
+        "auprc": 0.1199788169624298,
+        "auroc": 0.8189178015419777,
+        "f1": 0.1085814360770578,
+        "prevalence": 0.016994842944210033,
+        "sensitivity": 0.07126436781609195,
+        "specificity": 0.9958268749254799,
+        "threshold": 0.85
+      },
+      "Hernia": {
+        "auprc": 0.3263595280495643,
+        "auroc": 0.9043817745890804,
+        "f1": 0.43795620437956206,
+        "prevalence": 0.0033598999843725583,
+        "sensitivity": 0.3488372093023256,
+        "specificity": 0.9991767934143473,
+        "threshold": 0.65
+      },
+      "Infiltration": {
+        "auprc": 0.3871755697365499,
+        "auroc": 0.6963367160032504,
+        "f1": 0.46281313968223026,
+        "prevalence": 0.23878731051726831,
+        "sensitivity": 0.7768324607329843,
+        "specificity": 0.5043112297269554,
+        "threshold": 0.5499999999999999
+      },
+      "Mass": {
+        "auprc": 0.30925181044397343,
+        "auroc": 0.8242570269602219,
+        "f1": 0.3730794200389526,
+        "prevalence": 0.06829192061259572,
+        "sensitivity": 0.4931350114416476,
+        "specificity": 0.9156742703790675,
+        "threshold": 0.85
+      },
+      "Nodule": {
+        "auprc": 0.20423909819731342,
+        "auroc": 0.7495200430737198,
+        "f1": 0.25909248354693454,
+        "prevalence": 0.06340834505391467,
+        "sensitivity": 0.23043746149106592,
+        "specificity": 0.9628749009302131,
+        "threshold": 0.85
+      },
+      "Pleural_Thickening": {
+        "auprc": 0.14356459782263623,
+        "auroc": 0.7847229310829256,
+        "f1": 0.21541950113378686,
+        "prevalence": 0.044655414908579466,
+        "sensitivity": 0.3324584426946632,
+        "specificity": 0.9180059706375496,
+        "threshold": 0.7999999999999999
+      },
+      "Pneumonia": {
+        "auprc": 0.04762468070412898,
+        "auroc": 0.7006526953453993,
+        "f1": 0.08794714057871952,
+        "prevalence": 0.021683075480543833,
+        "sensitivity": 0.34774774774774775,
+        "specificity": 0.8545984585280141,
+        "threshold": 0.6
+      },
+      "Pneumothorax": {
+        "auprc": 0.4462747254161755,
+        "auroc": 0.878743154989072,
+        "f1": 0.5092618191871717,
+        "prevalence": 0.10411783091107986,
+        "sensitivity": 0.6911819887429643,
+        "specificity": 0.8810780166586717,
+        "threshold": 0.7999999999999999
+      }
+    }
+  },
+  "test_seconds": 0.15296530001796782,
+  "thresholds": {
+    "Atelectasis": 0.7,
+    "Cardiomegaly": 0.7999999999999999,
+    "Consolidation": 0.7,
+    "Edema": 0.7999999999999999,
+    "Effusion": 0.75,
+    "Emphysema": 0.7,
+    "Fibrosis": 0.85,
+    "Hernia": 0.65,
+    "Infiltration": 0.5499999999999999,
+    "Mass": 0.85,
+    "Nodule": 0.85,
+    "Pleural_Thickening": 0.7999999999999999,
+    "Pneumonia": 0.6,
+    "Pneumothorax": 0.7999999999999999
+  }
+}
