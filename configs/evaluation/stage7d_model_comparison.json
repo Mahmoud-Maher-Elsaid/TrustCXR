@@ -1,0 +1,52 @@
+{
+  "bootstrap": {
+    "confidence_level": 0.95,
+    "minimum_valid_replicates": 900,
+    "progress_interval": 100,
+    "replicates": 1000
+  },
+  "decision_policy": {
+    "clinically_relevant_margin": 0.005,
+    "minimum_ensemble_disagreement": 0.03,
+    "minimum_unique_correct_fraction": 0.005,
+    "pretraining_overlap_requires_primary_caution": true,
+    "primary_metric": "macro_auprc"
+  },
+  "dense_inference": {
+    "automatic_mixed_precision": true,
+    "batch_size": 32,
+    "channels_last": true,
+    "num_workers": 0,
+    "pin_memory": true,
+    "probability_path": "CPU_NUMPY_SIGMOID_FROM_FLOAT32_LOGITS",
+    "progress_interval_batches": 25,
+    "reproduction_contract": "STAGE7D_STAGE6_EXACT_REPRODUCTION_V3",
+    "tf32": true
+  },
+  "expected": {
+    "dataset": "NIH ChestXray14",
+    "label_count": 14,
+    "patient_leakage_violations": 0,
+    "stage6_commit": "a7bb9aa",
+    "stage7c_champion": "linear",
+    "stage7c_commit": "a689e77",
+    "test_patients": 2797,
+    "test_records": 25596
+  },
+  "paths": {
+    "comparison_artifacts": "artifacts/stage7/comparison",
+    "reports": "reports/stage7",
+    "stage6_checkpoint": "artifacts/stage6/best_model.pt",
+    "stage6_config": "configs/training/stage6_nih_densenet121.json",
+    "stage6_history": "reports/stage6/stage6_history.csv",
+    "stage6_summary": "reports/stage6/stage6_summary.json",
+    "stage7b_artifacts": "artifacts/stage7/rad_dino_cls",
+    "stage7b_manifest": "reports/stage7/stage7b_manifest.json",
+    "stage7b_summary": "reports/stage7/stage7b_summary.json",
+    "stage7c_history": "reports/stage7/stage7c_history.csv",
+    "stage7c_predictions": "artifacts/stage7/probes/champion_predictions.safetensors",
+    "stage7c_summary": "reports/stage7/stage7c_summary.json"
+  },
+  "seed": 20260804,
+  "stage": "7D"
+}

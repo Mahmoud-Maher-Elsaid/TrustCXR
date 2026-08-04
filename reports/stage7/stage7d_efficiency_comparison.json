@@ -1,0 +1,31 @@
+{
+  "densenet_121": {
+    "checkpoint_mib": 27.162269592285156,
+    "input_size": 224,
+    "measured_training_seconds": 11494.3537649996,
+    "role": "PRIMARY_CLASSIFICATION_BASELINE",
+    "test_images_per_second": 32.13314628024012,
+    "test_inference_seconds": 796.5606535000261,
+    "total_parameters": 6968206,
+    "trainable_parameters": 6968206,
+    "training_epoch_count": 100
+  },
+  "rad_dino_linear_probe": {
+    "embedding_extraction_images_per_second": 16.696001155014244,
+    "embeddings_reusable": true,
+    "encoder_input_size": 518,
+    "encoder_total_parameters": 86580480,
+    "encoder_trainable_parameters": 0,
+    "measured_probe_training_seconds": 11.837918300007004,
+    "one_time_embedding_extraction_seconds": 6715.380464999995,
+    "prediction_artifact_mib": 2.2922019958496094,
+    "probe_best_epoch": 10,
+    "probe_epochs_completed": 22,
+    "probe_trainable_parameters": 10766,
+    "role": "SECONDARY_EFFICIENT_REPRESENTATION_BASELINE"
+  },
+  "scientific_disclosure": {
+    "rad_dino_pretraining_included_nih_cxr": true,
+    "rad_dino_result_is_external_validation": false
+  }
+}
