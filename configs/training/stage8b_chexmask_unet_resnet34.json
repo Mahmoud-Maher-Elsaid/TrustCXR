@@ -1,0 +1,68 @@
+{
+  "dataset": {
+    "channels": [
+      "left_lung",
+      "right_lung",
+      "heart"
+    ],
+    "database_path": "F:\\AI\\TrustCXR\\artifacts\\stage8\\chexmask\\chexmask_nih_index.sqlite",
+    "minimum_quality": 0.7,
+    "name": "NIH CheXmask",
+    "patient_counts": {
+      "test": 4715,
+      "train": 21500,
+      "validation": 4486
+    },
+    "patient_split": {
+      "method": "deterministic_sha256_patient_hash",
+      "test": 0.15,
+      "train": 0.7,
+      "validation": 0.15
+    },
+    "quality_metric": "Dice RCA (Mean)",
+    "record_counts": {
+      "test": 17061,
+      "train": 77782,
+      "validation": 15952
+    }
+  },
+  "evaluation": {
+    "primary_metrics": [
+      "macro_dice",
+      "macro_iou"
+    ],
+    "secondary_metrics": [
+      "per_organ_dice",
+      "per_organ_iou",
+      "precision",
+      "recall"
+    ],
+    "test_evaluation_count": 1,
+    "threshold_selection": "validation_only"
+  },
+  "model": {
+    "activation": "logits",
+    "architecture": "UNet",
+    "encoder": "resnet34",
+    "encoder_weights": "ImageNet",
+    "input_channels": 3,
+    "output_channels": 3
+  },
+  "stage": "8B",
+  "task": "three_channel_anatomy_segmentation",
+  "training": {
+    "automatic_mixed_precision": true,
+    "batch_size": 16,
+    "early_stopping_patience": 12,
+    "epochs": 100,
+    "image_size": 256,
+    "learning_rate": 0.0001,
+    "loss": [
+      "binary_cross_entropy_with_logits",
+      "soft_dice_loss"
+    ],
+    "num_workers": 0,
+    "optimizer": "AdamW",
+    "weight_decay": 0.0001
+  }
+}

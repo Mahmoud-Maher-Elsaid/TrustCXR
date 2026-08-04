@@ -1,0 +1,70 @@
+{
+  "dataset": "NIH CheXmask",
+  "decode_validation": {
+    "decode_failures": 0,
+    "decoded_count": 192,
+    "mean_dice_rca": 0.8385012397151873,
+    "mean_heart_fraction": 0.08841415246327718,
+    "mean_lung_union_fraction": 0.2366689145565033,
+    "sample_count": 192,
+    "shape_mismatches": 0
+  },
+  "gate": "GO_FOR_STAGE_8B_UNET_BASELINE",
+  "index": {
+    "columns": {
+      "dice_mean": "Dice RCA (Mean)",
+      "heart": "Heart",
+      "height": "Height",
+      "image_id": "Image Index",
+      "left_lung": "Left Lung",
+      "right_lung": "Right Lung",
+      "width": "Width"
+    },
+    "counters": {
+      "accepted_or_updated": 110795,
+      "below_quality_threshold": 1325,
+      "final_unique_records": 110795,
+      "rows_seen": 112120
+    },
+    "patient_leakage_violations": 0,
+    "quality_threshold": 0.7,
+    "source_csv": "F:\\AI\\TrustCXR\\TrustCXR-Data\\04_NIH_CheXmask\\archive (1)\\ChestX-Ray8.csv",
+    "split_patient_counts": {
+      "test": 4715,
+      "train": 21500,
+      "validation": 4486
+    },
+    "split_record_counts": {
+      "test": 17061,
+      "train": 77782,
+      "validation": 15952
+    },
+    "sqlite_path": "F:\\AI\\TrustCXR\\artifacts\\stage8\\chexmask\\chexmask_nih_index.sqlite",
+    "sqlite_size_mib": 2060.0859375
+  },
+  "nih_index": {
+    "ambiguous_examples": [],
+    "ambiguous_image_names": 0,
+    "patient_mapping_count": 112120,
+    "patient_metadata_source": "F:\\AI\\TrustCXR\\TrustCXR-Data\\01_NIH_ChestXray14\\archive\\Data_Entry_2017.csv",
+    "unique_image_names": 112120
+  },
+  "patient_leakage_violations": 0,
+  "quality_threshold": 0.7,
+  "repository": {
+    "ahead_of_remote": 0,
+    "behind_remote": 0,
+    "branch": "develop",
+    "commit": "a2e80aa",
+    "visibility": "PRIVATE"
+  },
+  "scientific_contract": {
+    "clinical_ground_truth_claim": false,
+    "patient_safe_split": true,
+    "pseudo_masks": true,
+    "quality_filter": "Dice RCA (Mean) >= 0.70",
+    "test_threshold_tuning": false
+  },
+  "stage": "8A",
+  "status": "PASSED"
+}
