@@ -1,0 +1,34 @@
+{
+  "labels": [
+    "Atelectasis",
+    "Cardiomegaly",
+    "Effusion",
+    "Infiltration",
+    "Mass",
+    "Nodule",
+    "Pneumonia",
+    "Pneumothorax",
+    "Consolidation",
+    "Edema",
+    "Emphysema",
+    "Fibrosis",
+    "Pleural_Thickening",
+    "Hernia"
+  ],
+  "thresholds": {
+    "Atelectasis": 0.7,
+    "Cardiomegaly": 0.7,
+    "Consolidation": 0.75,
+    "Edema": 0.75,
+    "Effusion": 0.75,
+    "Emphysema": 0.7999999999999999,
+    "Fibrosis": 0.5499999999999999,
+    "Hernia": 0.35,
+    "Infiltration": 0.5499999999999999,
+    "Mass": 0.85,
+    "Nodule": 0.75,
+    "Pleural_Thickening": 0.65,
+    "Pneumonia": 0.39999999999999997,
+    "Pneumothorax": 0.7999999999999999
+  }
+}
