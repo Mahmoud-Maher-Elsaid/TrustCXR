@@ -1,0 +1,32 @@
+{
+  "stage": "7B",
+  "seed": 20260804,
+  "dataset_root": "TrustCXR-Data/01_NIH_ChestXray14",
+  "model": {
+    "id": "microsoft/rad-dino",
+    "revision": "110cbc18d5133582e320b43d53bf5c44e410c936",
+    "dtype": "float16",
+    "use_fast": false,
+    "frozen": true
+  },
+  "extraction": {
+    "batch_size": 16,
+    "shard_size": 4096,
+    "progress_interval_batches": 50,
+    "output_directory": "artifacts/stage7/rad_dino_cls",
+    "save_patch_tokens": false,
+    "minimum_free_space_gib": 5.0,
+    "resume": true
+  },
+  "expected": {
+    "total_records": 112120,
+    "split_counts": {
+      "train": 77790,
+      "validation": 8734,
+      "test": 25596
+    },
+    "hidden_size": 768,
+    "image_size": 518,
+    "patch_size": 14
+  }
+}

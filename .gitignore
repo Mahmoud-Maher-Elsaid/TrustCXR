@@ -119,3 +119,8 @@ desktop.ini
 /artifacts/stage6/
 /reports/stage6/local/
 # END TRUSTCXR STAGE 6
+
+# BEGIN TRUSTCXR STAGE 7
+/artifacts/stage7/
+/reports/stage7/local/
+# END TRUSTCXR STAGE 7

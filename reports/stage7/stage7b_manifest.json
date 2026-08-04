@@ -1,0 +1,1435 @@
+{
+  "fingerprint": "ebed9a800c96773874c2416609c1d6bba7b6e4caea47a05899f3729eb629801e",
+  "labels": [
+    "Atelectasis",
+    "Cardiomegaly",
+    "Effusion",
+    "Infiltration",
+    "Mass",
+    "Nodule",
+    "Pneumonia",
+    "Pneumothorax",
+    "Consolidation",
+    "Edema",
+    "Emphysema",
+    "Fibrosis",
+    "Pleural_Thickening",
+    "Hernia"
+  ],
+  "model_id": "microsoft/rad-dino",
+  "model_revision": "110cbc18d5133582e320b43d53bf5c44e410c936",
+  "schema_version": 1,
+  "splits": {
+    "test": {
+      "record_count": 25596,
+      "shard_count": 7,
+      "shards": [
+        {
+          "elapsed_seconds": 244.644042800006,
+          "embedding_l2_norm": {
+            "maximum": 23.36968231201172,
+            "mean": 13.275980949401855,
+            "minimum": 10.077542304992676
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.742692579473264,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 508945,
+          "metadata_file": "test-00000-of-00007.jsonl",
+          "metadata_sha256": "be5e5d6762368edcf00d8257b66ec5d1ad6eb7a6e2e83547223c5ef2731c66a5",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 469,
+            "Cardiomegaly": 378,
+            "Consolidation": 264,
+            "Edema": 121,
+            "Effusion": 589,
+            "Emphysema": 124,
+            "Fibrosis": 139,
+            "Hernia": 26,
+            "Infiltration": 1068,
+            "Mass": 150,
+            "Nodule": 211,
+            "Pleural_Thickening": 203,
+            "Pneumonia": 93,
+            "Pneumothorax": 309
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 90620,
+          "record_start_index": 86524,
+          "shard_count": 7,
+          "shard_index": 0,
+          "split": "test",
+          "split_end_index_exclusive": 4096,
+          "split_start_index": 0,
+          "tensor_bytes": 6381976,
+          "tensor_file": "test-00000-of-00007.safetensors",
+          "tensor_sha256": "f90507810b869943665d158d19763fe9a235731270fa95abe8d79092c9858b7c"
+        },
+        {
+          "elapsed_seconds": 243.63545000000158,
+          "embedding_l2_norm": {
+            "maximum": 22.569316864013672,
+            "mean": 13.546601295471191,
+            "minimum": 9.767949104309082
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.81200334351989,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 514782,
+          "metadata_file": "test-00001-of-00007.jsonl",
+          "metadata_sha256": "7d44a1d8ae4d0b9288a76117da9a0d16cf8e0221f7a35fb5131e678fed591e01",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 572,
+            "Cardiomegaly": 135,
+            "Consolidation": 323,
+            "Edema": 168,
+            "Effusion": 726,
+            "Emphysema": 204,
+            "Fibrosis": 85,
+            "Hernia": 22,
+            "Infiltration": 941,
+            "Mass": 339,
+            "Nodule": 199,
+            "Pleural_Thickening": 202,
+            "Pneumonia": 84,
+            "Pneumothorax": 489
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 94716,
+          "record_start_index": 90620,
+          "shard_count": 7,
+          "shard_index": 1,
+          "split": "test",
+          "split_end_index_exclusive": 8192,
+          "split_start_index": 4096,
+          "tensor_bytes": 6381976,
+          "tensor_file": "test-00001-of-00007.safetensors",
+          "tensor_sha256": "36fdd3f2544919d5ea1a52be5a558c44fd618a493bc14fabc4d1516a43d68aed"
+        },
+        {
+          "elapsed_seconds": 244.01664539997,
+          "embedding_l2_norm": {
+            "maximum": 22.08483123779297,
+            "mean": 13.341196060180664,
+            "minimum": 9.301791191101074
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.78574014197354,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 519616,
+          "metadata_file": "test-00002-of-00007.jsonl",
+          "metadata_sha256": "4a7ed7ccf78361257390a9b58e17922b573f7ae2e03f5150d1c9dead3f0c9a4c",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 535,
+            "Cardiomegaly": 147,
+            "Consolidation": 385,
+            "Edema": 198,
+            "Effusion": 817,
+            "Emphysema": 184,
+            "Fibrosis": 74,
+            "Hernia": 15,
+            "Infiltration": 1118,
+            "Mass": 420,
+            "Nodule": 312,
+            "Pleural_Thickening": 152,
+            "Pneumonia": 118,
+            "Pneumothorax": 318
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 98812,
+          "record_start_index": 94716,
+          "shard_count": 7,
+          "shard_index": 2,
+          "split": "test",
+          "split_end_index_exclusive": 12288,
+          "split_start_index": 8192,
+          "tensor_bytes": 6381976,
+          "tensor_file": "test-00002-of-00007.safetensors",
+          "tensor_sha256": "e7164d42daa002ea55fdb7ba0f1614d6a8ed13f028430d032655df2be250a378"
+        },
+        {
+          "elapsed_seconds": 243.84514240000863,
+          "embedding_l2_norm": {
+            "maximum": 22.525754928588867,
+            "mean": 13.526606559753418,
+            "minimum": 10.50251579284668
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.797546015006674,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 522843,
+          "metadata_file": "test-00003-of-00007.jsonl",
+          "metadata_sha256": "8b56e0548847263b4a576deee908de39c743566bc2ffc26312451b4f722e6b91",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 517,
+            "Cardiomegaly": 153,
+            "Consolidation": 340,
+            "Edema": 191,
+            "Effusion": 793,
+            "Emphysema": 228,
+            "Fibrosis": 58,
+            "Hernia": 5,
+            "Infiltration": 1016,
+            "Mass": 336,
+            "Nodule": 288,
+            "Pleural_Thickening": 198,
+            "Pneumonia": 109,
+            "Pneumothorax": 507
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 102908,
+          "record_start_index": 98812,
+          "shard_count": 7,
+          "shard_index": 3,
+          "split": "test",
+          "split_end_index_exclusive": 16384,
+          "split_start_index": 12288,
+          "tensor_bytes": 6381976,
+          "tensor_file": "test-00003-of-00007.safetensors",
+          "tensor_sha256": "311b012e775083ed10ab58c62aab345861d1f67d07e97e1608449349cc4cc011"
+        },
+        {
+          "elapsed_seconds": 244.77785279997624,
+          "embedding_l2_norm": {
+            "maximum": 24.074708938598633,
+            "mean": 13.450591087341309,
+            "minimum": 10.133352279663086
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.73354003700288,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 529085,
+          "metadata_file": "test-00004-of-00007.jsonl",
+          "metadata_sha256": "161386141a5dbb44dfdc482943d8ecf255967f84521622b30321dc023a8f252f",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 714,
+            "Cardiomegaly": 159,
+            "Consolidation": 289,
+            "Edema": 156,
+            "Effusion": 983,
+            "Emphysema": 103,
+            "Fibrosis": 56,
+            "Hernia": 13,
+            "Infiltration": 1150,
+            "Mass": 287,
+            "Nodule": 392,
+            "Pleural_Thickening": 231,
+            "Pneumonia": 101,
+            "Pneumothorax": 461
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 107004,
+          "record_start_index": 102908,
+          "shard_count": 7,
+          "shard_index": 4,
+          "split": "test",
+          "split_end_index_exclusive": 20480,
+          "split_start_index": 16384,
+          "tensor_bytes": 6381976,
+          "tensor_file": "test-00004-of-00007.safetensors",
+          "tensor_sha256": "5874545a458555fb58f746e0cee1a3cc3df1a737f904bb029332462ded5b975b"
+        },
+        {
+          "elapsed_seconds": 244.503899000003,
+          "embedding_l2_norm": {
+            "maximum": 20.169485092163086,
+            "mean": 12.980765342712402,
+            "minimum": 9.590978622436523
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.752289091307905,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 507267,
+          "metadata_file": "test-00005-of-00007.jsonl",
+          "metadata_sha256": "2cd173beb2dd0acda0bade86eab340f56ce3949ae83b97d0d1d159b56ac20ff0",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 402,
+            "Cardiomegaly": 77,
+            "Consolidation": 178,
+            "Edema": 84,
+            "Effusion": 648,
+            "Emphysema": 225,
+            "Fibrosis": 21,
+            "Hernia": 5,
+            "Infiltration": 692,
+            "Mass": 203,
+            "Nodule": 193,
+            "Pleural_Thickening": 145,
+            "Pneumonia": 44,
+            "Pneumothorax": 492
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 111100,
+          "record_start_index": 107004,
+          "shard_count": 7,
+          "shard_index": 5,
+          "split": "test",
+          "split_end_index_exclusive": 24576,
+          "split_start_index": 20480,
+          "tensor_bytes": 6381976,
+          "tensor_file": "test-00005-of-00007.safetensors",
+          "tensor_sha256": "a480c39b1d416379814bd0b3bee17d6c87be8ca5ec229a3a94f0b09f9ebb9027"
+        },
+        {
+          "elapsed_seconds": 60.8015938999597,
+          "embedding_l2_norm": {
+            "maximum": 21.52947235107422,
+            "mean": 12.861895561218262,
+            "minimum": 10.053317070007324
+          },
+          "embedding_shape": [
+            1020,
+            768
+          ],
+          "images_per_second": 16.775876002169674,
+          "label_shape": [
+            1020,
+            14
+          ],
+          "metadata_bytes": 122422,
+          "metadata_file": "test-00006-of-00007.jsonl",
+          "metadata_sha256": "a2a187e5c81bbde9ebf36cc00bce734673be898ba6086d62f1a17c14fe94207b",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 70,
+            "Cardiomegaly": 20,
+            "Consolidation": 36,
+            "Edema": 7,
+            "Effusion": 102,
+            "Emphysema": 25,
+            "Fibrosis": 2,
+            "Hernia": 0,
+            "Infiltration": 127,
+            "Mass": 13,
+            "Nodule": 28,
+            "Pleural_Thickening": 12,
+            "Pneumonia": 6,
+            "Pneumothorax": 89
+          },
+          "record_count": 1020,
+          "record_end_index_exclusive": 112120,
+          "record_start_index": 111100,
+          "shard_count": 7,
+          "shard_index": 6,
+          "split": "test",
+          "split_end_index_exclusive": 25596,
+          "split_start_index": 24576,
+          "tensor_bytes": 1589568,
+          "tensor_file": "test-00006-of-00007.safetensors",
+          "tensor_sha256": "634749ab20ae06e61c81f1a5c1b5768924357c464a6b595f9fa0bd51c20ccf1d"
+        }
+      ]
+    },
+    "train": {
+      "record_count": 77790,
+      "shard_count": 19,
+      "shards": [
+        {
+          "elapsed_seconds": 225.78717160003725,
+          "embedding_l2_norm": {
+            "maximum": 24.87750816345215,
+            "mean": 12.750204086303711,
+            "minimum": 9.799793243408203
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 18.1409775009526,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 479931,
+          "metadata_file": "train-00000-of-00019.jsonl",
+          "metadata_sha256": "8ec0bfd0ee96b8b6a1587afef2bf2f101c49ee140949698133465e26a2c00c17",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 314,
+            "Cardiomegaly": 95,
+            "Consolidation": 130,
+            "Edema": 46,
+            "Effusion": 330,
+            "Emphysema": 77,
+            "Fibrosis": 138,
+            "Hernia": 14,
+            "Infiltration": 585,
+            "Mass": 105,
+            "Nodule": 169,
+            "Pleural_Thickening": 122,
+            "Pneumonia": 45,
+            "Pneumothorax": 99
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 4096,
+          "record_start_index": 0,
+          "shard_count": 19,
+          "shard_index": 0,
+          "split": "train",
+          "split_end_index_exclusive": 4096,
+          "split_start_index": 0,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00000-of-00019.safetensors",
+          "tensor_sha256": "473f8d928b1d73475513a544309b966b06e19ce6e6db5f638b747d9905e2bafd"
+        },
+        {
+          "elapsed_seconds": 233.32368620001944,
+          "embedding_l2_norm": {
+            "maximum": 23.922164916992188,
+            "mean": 12.754935264587402,
+            "minimum": 9.76131820678711
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.555011523727842,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 483008,
+          "metadata_file": "train-00001-of-00019.jsonl",
+          "metadata_sha256": "13d3768067155a850ca3b8749d66a2d3ec56461f7b2119ff7f2ecba420025992",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 348,
+            "Cardiomegaly": 50,
+            "Consolidation": 136,
+            "Edema": 36,
+            "Effusion": 287,
+            "Emphysema": 95,
+            "Fibrosis": 79,
+            "Hernia": 4,
+            "Infiltration": 520,
+            "Mass": 117,
+            "Nodule": 155,
+            "Pleural_Thickening": 119,
+            "Pneumonia": 41,
+            "Pneumothorax": 194
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 8192,
+          "record_start_index": 4096,
+          "shard_count": 19,
+          "shard_index": 1,
+          "split": "train",
+          "split_end_index_exclusive": 8192,
+          "split_start_index": 4096,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00001-of-00019.safetensors",
+          "tensor_sha256": "eded7f271e19c2a49b3fa78a9eefd401ec42e7a5b7a1a23304a4aa27508bd849"
+        },
+        {
+          "elapsed_seconds": 238.672370699991,
+          "embedding_l2_norm": {
+            "maximum": 23.934309005737305,
+            "mean": 12.653704643249512,
+            "minimum": 9.590618133544922
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.161601018111288,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 485217,
+          "metadata_file": "train-00002-of-00019.jsonl",
+          "metadata_sha256": "86b76059a8384f341cd2532cd3eba0451ed895ab642818aaec226305d1a65fd4",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 340,
+            "Cardiomegaly": 111,
+            "Consolidation": 113,
+            "Edema": 32,
+            "Effusion": 367,
+            "Emphysema": 65,
+            "Fibrosis": 64,
+            "Hernia": 5,
+            "Infiltration": 489,
+            "Mass": 122,
+            "Nodule": 200,
+            "Pleural_Thickening": 108,
+            "Pneumonia": 31,
+            "Pneumothorax": 160
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 12288,
+          "record_start_index": 8192,
+          "shard_count": 19,
+          "shard_index": 2,
+          "split": "train",
+          "split_end_index_exclusive": 12288,
+          "split_start_index": 8192,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00002-of-00019.safetensors",
+          "tensor_sha256": "847ef2ec22ea01f651d4c197232e61bdefd6f0177b46d040ca67564e20ec2976"
+        },
+        {
+          "elapsed_seconds": 241.9154303999967,
+          "embedding_l2_norm": {
+            "maximum": 24.383615493774414,
+            "mean": 12.771443367004395,
+            "minimum": 9.750910758972168
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.931536749133535,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 486600,
+          "metadata_file": "train-00003-of-00019.jsonl",
+          "metadata_sha256": "880ac1b7d56392edcfa595b9868ae786d2cf3e96535476ba7cf107a4ad0f9f85",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 375,
+            "Cardiomegaly": 97,
+            "Consolidation": 131,
+            "Edema": 52,
+            "Effusion": 343,
+            "Emphysema": 56,
+            "Fibrosis": 53,
+            "Hernia": 2,
+            "Infiltration": 478,
+            "Mass": 161,
+            "Nodule": 257,
+            "Pleural_Thickening": 89,
+            "Pneumonia": 26,
+            "Pneumothorax": 110
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 16384,
+          "record_start_index": 12288,
+          "shard_count": 19,
+          "shard_index": 3,
+          "split": "train",
+          "split_end_index_exclusive": 16384,
+          "split_start_index": 12288,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00003-of-00019.safetensors",
+          "tensor_sha256": "356c879144a17b518b8d681eb3e8930c144c5473827a43c1716df522ea758c33"
+        },
+        {
+          "elapsed_seconds": 242.27439939999022,
+          "embedding_l2_norm": {
+            "maximum": 23.644182205200195,
+            "mean": 12.7047700881958,
+            "minimum": 9.887598037719727
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.906449918538794,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 486969,
+          "metadata_file": "train-00004-of-00019.jsonl",
+          "metadata_sha256": "8844c4a4a181747dad27e38ae43a0d0cdc77635d71c303aacccc2f301872893c",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 388,
+            "Cardiomegaly": 83,
+            "Consolidation": 126,
+            "Edema": 39,
+            "Effusion": 414,
+            "Emphysema": 49,
+            "Fibrosis": 64,
+            "Hernia": 7,
+            "Infiltration": 463,
+            "Mass": 165,
+            "Nodule": 217,
+            "Pleural_Thickening": 98,
+            "Pneumonia": 43,
+            "Pneumothorax": 99
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 20480,
+          "record_start_index": 16384,
+          "shard_count": 19,
+          "shard_index": 4,
+          "split": "train",
+          "split_end_index_exclusive": 20480,
+          "split_start_index": 16384,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00004-of-00019.safetensors",
+          "tensor_sha256": "478626514766390975f6df30520c4d1d06c9ecd19d8edabbf7edc5dfdaa99e98"
+        },
+        {
+          "elapsed_seconds": 241.55289210000774,
+          "embedding_l2_norm": {
+            "maximum": 22.45314598083496,
+            "mean": 12.633087158203125,
+            "minimum": 9.395156860351562
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.95694870133939,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 488318,
+          "metadata_file": "train-00005-of-00019.jsonl",
+          "metadata_sha256": "6e90b4cefee38c9ce582f0b7f649c5ab9a8b2a28db77d03ed588f6671a786c7f",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 431,
+            "Cardiomegaly": 53,
+            "Consolidation": 111,
+            "Edema": 44,
+            "Effusion": 360,
+            "Emphysema": 71,
+            "Fibrosis": 64,
+            "Hernia": 9,
+            "Infiltration": 528,
+            "Mass": 191,
+            "Nodule": 237,
+            "Pleural_Thickening": 98,
+            "Pneumonia": 41,
+            "Pneumothorax": 125
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 24576,
+          "record_start_index": 20480,
+          "shard_count": 19,
+          "shard_index": 5,
+          "split": "train",
+          "split_end_index_exclusive": 24576,
+          "split_start_index": 20480,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00005-of-00019.safetensors",
+          "tensor_sha256": "7931c089692fa19e88101b0a7593c24a7c0481aa86d871b9deca86fee5e17b07"
+        },
+        {
+          "elapsed_seconds": 241.54621639999095,
+          "embedding_l2_norm": {
+            "maximum": 23.408220291137695,
+            "mean": 12.708274841308594,
+            "minimum": 9.83254337310791
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.95741734665463,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 488354,
+          "metadata_file": "train-00006-of-00019.jsonl",
+          "metadata_sha256": "5cc5e65b0f7752fb463f9d60a3f83215fb4d439d7b15243031f1cb0b9b15d24c",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 414,
+            "Cardiomegaly": 61,
+            "Consolidation": 121,
+            "Edema": 53,
+            "Effusion": 462,
+            "Emphysema": 59,
+            "Fibrosis": 55,
+            "Hernia": 17,
+            "Infiltration": 510,
+            "Mass": 199,
+            "Nodule": 192,
+            "Pleural_Thickening": 99,
+            "Pneumonia": 35,
+            "Pneumothorax": 76
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 28672,
+          "record_start_index": 24576,
+          "shard_count": 19,
+          "shard_index": 6,
+          "split": "train",
+          "split_end_index_exclusive": 28672,
+          "split_start_index": 24576,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00006-of-00019.safetensors",
+          "tensor_sha256": "2c4d8ea5799434dc2f7d88e3dfe9b4e69efb46b356eba7fb8345a60c550d0a55"
+        },
+        {
+          "elapsed_seconds": 239.52206300001126,
+          "embedding_l2_norm": {
+            "maximum": 21.432235717773438,
+            "mean": 12.856175422668457,
+            "minimum": 9.630688667297363
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.10072111394518,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 493436,
+          "metadata_file": "train-00007-of-00019.jsonl",
+          "metadata_sha256": "f2c735d32a95597e341e7af17b5984a4999d3ec75a34842a545f7f290de66ca7",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 370,
+            "Cardiomegaly": 86,
+            "Consolidation": 160,
+            "Edema": 99,
+            "Effusion": 394,
+            "Emphysema": 44,
+            "Fibrosis": 73,
+            "Hernia": 1,
+            "Infiltration": 600,
+            "Mass": 170,
+            "Nodule": 177,
+            "Pleural_Thickening": 94,
+            "Pneumonia": 45,
+            "Pneumothorax": 108
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 32768,
+          "record_start_index": 28672,
+          "shard_count": 19,
+          "shard_index": 7,
+          "split": "train",
+          "split_end_index_exclusive": 32768,
+          "split_start_index": 28672,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00007-of-00019.safetensors",
+          "tensor_sha256": "7e7b3c6b241ee128475f957c4b2107f509562b8cc096a80e87cccfe83dd9848f"
+        },
+        {
+          "elapsed_seconds": 239.62362869997742,
+          "embedding_l2_norm": {
+            "maximum": 20.831907272338867,
+            "mean": 12.877949714660645,
+            "minimum": 9.689363479614258
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.09347288588317,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 492931,
+          "metadata_file": "train-00008-of-00019.jsonl",
+          "metadata_sha256": "92db6f3d68e586db72bc4072d5b8e1366eb0fba768510337b0a0e7d2061e93c7",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 379,
+            "Cardiomegaly": 82,
+            "Consolidation": 144,
+            "Edema": 81,
+            "Effusion": 436,
+            "Emphysema": 73,
+            "Fibrosis": 66,
+            "Hernia": 6,
+            "Infiltration": 512,
+            "Mass": 183,
+            "Nodule": 187,
+            "Pleural_Thickening": 101,
+            "Pneumonia": 34,
+            "Pneumothorax": 115
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 36864,
+          "record_start_index": 32768,
+          "shard_count": 19,
+          "shard_index": 8,
+          "split": "train",
+          "split_end_index_exclusive": 36864,
+          "split_start_index": 32768,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00008-of-00019.safetensors",
+          "tensor_sha256": "fafa097ed26510403adb1ac84fcc69ba9280bf58baad7c6904fdeff08728bc74"
+        },
+        {
+          "elapsed_seconds": 238.4599091000273,
+          "embedding_l2_norm": {
+            "maximum": 24.228147506713867,
+            "mean": 12.869706153869629,
+            "minimum": 9.594094276428223
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.17689155992189,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 494231,
+          "metadata_file": "train-00009-of-00019.jsonl",
+          "metadata_sha256": "543c8b82bc768f8506410018fe4d7641689eb42dd914e67f79128b7789a95686",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 415,
+            "Cardiomegaly": 85,
+            "Consolidation": 174,
+            "Edema": 110,
+            "Effusion": 454,
+            "Emphysema": 53,
+            "Fibrosis": 67,
+            "Hernia": 5,
+            "Infiltration": 596,
+            "Mass": 187,
+            "Nodule": 201,
+            "Pleural_Thickening": 74,
+            "Pneumonia": 41,
+            "Pneumothorax": 65
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 40960,
+          "record_start_index": 36864,
+          "shard_count": 19,
+          "shard_index": 9,
+          "split": "train",
+          "split_end_index_exclusive": 40960,
+          "split_start_index": 36864,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00009-of-00019.safetensors",
+          "tensor_sha256": "376d77769c2695209b9a7e7be089b2512d9b3b333b8b54626fa1f21ddd6a67d2"
+        },
+        {
+          "elapsed_seconds": 239.0480384999537,
+          "embedding_l2_norm": {
+            "maximum": 21.56178855895996,
+            "mean": 12.814767837524414,
+            "minimum": 9.753569602966309
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.13463128876832,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 494533,
+          "metadata_file": "train-00010-of-00019.jsonl",
+          "metadata_sha256": "d79fc1c8db36132c264eff18214d650595622b704f1198a9d8f1288e7e913905",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 431,
+            "Cardiomegaly": 86,
+            "Consolidation": 144,
+            "Edema": 91,
+            "Effusion": 411,
+            "Emphysema": 70,
+            "Fibrosis": 54,
+            "Hernia": 5,
+            "Infiltration": 557,
+            "Mass": 229,
+            "Nodule": 207,
+            "Pleural_Thickening": 81,
+            "Pneumonia": 45,
+            "Pneumothorax": 131
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 45056,
+          "record_start_index": 40960,
+          "shard_count": 19,
+          "shard_index": 10,
+          "split": "train",
+          "split_end_index_exclusive": 45056,
+          "split_start_index": 40960,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00010-of-00019.safetensors",
+          "tensor_sha256": "a0524588bf82fd40f5f0d06e1429320434d154a544d963f1e9d35c40e392cb8b"
+        },
+        {
+          "elapsed_seconds": 238.70616559998598,
+          "embedding_l2_norm": {
+            "maximum": 20.933828353881836,
+            "mean": 12.911666870117188,
+            "minimum": 9.484186172485352
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.159171359083825,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 495872,
+          "metadata_file": "train-00011-of-00019.jsonl",
+          "metadata_sha256": "918406e3222c6be8eed894e9d0bb4246edb8c27a1da329c3e11f8d399d5a73d3",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 438,
+            "Cardiomegaly": 78,
+            "Consolidation": 127,
+            "Edema": 81,
+            "Effusion": 446,
+            "Emphysema": 82,
+            "Fibrosis": 43,
+            "Hernia": 2,
+            "Infiltration": 586,
+            "Mass": 274,
+            "Nodule": 218,
+            "Pleural_Thickening": 98,
+            "Pneumonia": 66,
+            "Pneumothorax": 131
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 49152,
+          "record_start_index": 45056,
+          "shard_count": 19,
+          "shard_index": 11,
+          "split": "train",
+          "split_end_index_exclusive": 49152,
+          "split_start_index": 45056,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00011-of-00019.safetensors",
+          "tensor_sha256": "8aa53a09bc2a702273774b6f5a86bbcb2363389f4144e54a5ebef2f9d4bbfd7b"
+        },
+        {
+          "elapsed_seconds": 238.88178170000901,
+          "embedding_l2_norm": {
+            "maximum": 23.149682998657227,
+            "mean": 12.948200225830078,
+            "minimum": 9.544235229492188
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.146556639232593,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 497155,
+          "metadata_file": "train-00012-of-00019.jsonl",
+          "metadata_sha256": "ca24d6e2d2ac0beed10cfe03b019c00457cc8e71e498ef0bbb2b822eb7529fea",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 401,
+            "Cardiomegaly": 65,
+            "Consolidation": 138,
+            "Edema": 97,
+            "Effusion": 435,
+            "Emphysema": 67,
+            "Fibrosis": 67,
+            "Hernia": 6,
+            "Infiltration": 704,
+            "Mass": 294,
+            "Nodule": 230,
+            "Pleural_Thickening": 101,
+            "Pneumonia": 48,
+            "Pneumothorax": 122
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 53248,
+          "record_start_index": 49152,
+          "shard_count": 19,
+          "shard_index": 12,
+          "split": "train",
+          "split_end_index_exclusive": 53248,
+          "split_start_index": 49152,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00012-of-00019.safetensors",
+          "tensor_sha256": "2b131c470c4c20cbf2dd6b4d8fbf0c400c081459fb27918a64ee43f0adee8dc3"
+        },
+        {
+          "elapsed_seconds": 240.2323985999683,
+          "embedding_l2_norm": {
+            "maximum": 24.45732879638672,
+            "mean": 12.91641616821289,
+            "minimum": 9.751290321350098
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.050156531220434,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 502754,
+          "metadata_file": "train-00013-of-00019.jsonl",
+          "metadata_sha256": "69c095d16dfa7152c6b56c60b6a465379d2f61dae7b5606f9bec7a75c1517d27",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 414,
+            "Cardiomegaly": 85,
+            "Consolidation": 151,
+            "Edema": 94,
+            "Effusion": 501,
+            "Emphysema": 62,
+            "Fibrosis": 49,
+            "Hernia": 11,
+            "Infiltration": 959,
+            "Mass": 265,
+            "Nodule": 324,
+            "Pleural_Thickening": 123,
+            "Pneumonia": 43,
+            "Pneumothorax": 94
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 57344,
+          "record_start_index": 53248,
+          "shard_count": 19,
+          "shard_index": 13,
+          "split": "train",
+          "split_end_index_exclusive": 57344,
+          "split_start_index": 53248,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00013-of-00019.safetensors",
+          "tensor_sha256": "765fbe12db849618bfe9138ccf3e03de5d50b0eba8d71abf1aa404be30ab8baa"
+        },
+        {
+          "elapsed_seconds": 240.32787600002484,
+          "embedding_l2_norm": {
+            "maximum": 20.700876235961914,
+            "mean": 12.797760963439941,
+            "minimum": 9.802373886108398
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.043382849185488,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 503481,
+          "metadata_file": "train-00014-of-00019.jsonl",
+          "metadata_sha256": "cc7faf8663ec37f1eceef9bb5b328d77d3651ed7e23ce621a048daa96091be62",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 453,
+            "Cardiomegaly": 85,
+            "Consolidation": 152,
+            "Edema": 64,
+            "Effusion": 496,
+            "Emphysema": 60,
+            "Fibrosis": 52,
+            "Hernia": 4,
+            "Infiltration": 925,
+            "Mass": 219,
+            "Nodule": 300,
+            "Pleural_Thickening": 151,
+            "Pneumonia": 38,
+            "Pneumothorax": 155
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 61440,
+          "record_start_index": 57344,
+          "shard_count": 19,
+          "shard_index": 14,
+          "split": "train",
+          "split_end_index_exclusive": 61440,
+          "split_start_index": 57344,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00014-of-00019.safetensors",
+          "tensor_sha256": "0f2814365336cb88fed6e4b09517216dabe7cb9696280e180215458b170a213a"
+        },
+        {
+          "elapsed_seconds": 240.10359240003163,
+          "embedding_l2_norm": {
+            "maximum": 18.196155548095703,
+            "mean": 12.841058731079102,
+            "minimum": 9.731359481811523
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.05930327429562,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 498043,
+          "metadata_file": "train-00015-of-00019.jsonl",
+          "metadata_sha256": "8f23804c660cfb01c2ad1d8054016cc13e3b146a9c8f1da84c46a8ba01682df3",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 375,
+            "Cardiomegaly": 80,
+            "Consolidation": 110,
+            "Edema": 63,
+            "Effusion": 415,
+            "Emphysema": 48,
+            "Fibrosis": 38,
+            "Hernia": 7,
+            "Infiltration": 918,
+            "Mass": 172,
+            "Nodule": 224,
+            "Pleural_Thickening": 127,
+            "Pneumonia": 43,
+            "Pneumothorax": 116
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 65536,
+          "record_start_index": 61440,
+          "shard_count": 19,
+          "shard_index": 15,
+          "split": "train",
+          "split_end_index_exclusive": 65536,
+          "split_start_index": 61440,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00015-of-00019.safetensors",
+          "tensor_sha256": "27e3814707e5c9f8bccf5d8bbff33efb366aa0b7eb0cf3f204ae22a423c34545"
+        },
+        {
+          "elapsed_seconds": 241.06155610003043,
+          "embedding_l2_norm": {
+            "maximum": 17.92198371887207,
+            "mean": 12.596717834472656,
+            "minimum": 9.08615493774414
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.99151065921242,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 486387,
+          "metadata_file": "train-00016-of-00019.jsonl",
+          "metadata_sha256": "4f381a050a1b894f27c033725762351752cbf856ff7e22b4c054acff943970cf",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 237,
+            "Cardiomegaly": 47,
+            "Consolidation": 87,
+            "Edema": 32,
+            "Effusion": 278,
+            "Emphysema": 31,
+            "Fibrosis": 28,
+            "Hernia": 3,
+            "Infiltration": 600,
+            "Mass": 155,
+            "Nodule": 159,
+            "Pleural_Thickening": 78,
+            "Pneumonia": 22,
+            "Pneumothorax": 96
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 69632,
+          "record_start_index": 65536,
+          "shard_count": 19,
+          "shard_index": 16,
+          "split": "train",
+          "split_end_index_exclusive": 69632,
+          "split_start_index": 65536,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00016-of-00019.safetensors",
+          "tensor_sha256": "b125c7e8f348e0a1fac6b5f702a0e16b280ed19b4d98c37a1da2f77301b151d8"
+        },
+        {
+          "elapsed_seconds": 238.99259569996502,
+          "embedding_l2_norm": {
+            "maximum": 21.38092613220215,
+            "mean": 12.883085250854492,
+            "minimum": 9.555649757385254
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 17.138606273569167,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 496271,
+          "metadata_file": "train-00017-of-00019.jsonl",
+          "metadata_sha256": "929959f0126eb0dbdf1bea6276f0ef061aad1b30ccbbcd6d341140f3908cce1d",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 386,
+            "Cardiomegaly": 58,
+            "Consolidation": 123,
+            "Edema": 60,
+            "Effusion": 388,
+            "Emphysema": 79,
+            "Fibrosis": 29,
+            "Hernia": 6,
+            "Infiltration": 816,
+            "Mass": 164,
+            "Nodule": 215,
+            "Pleural_Thickening": 107,
+            "Pneumonia": 43,
+            "Pneumothorax": 136
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 73728,
+          "record_start_index": 69632,
+          "shard_count": 19,
+          "shard_index": 17,
+          "split": "train",
+          "split_end_index_exclusive": 73728,
+          "split_start_index": 69632,
+          "tensor_bytes": 6381976,
+          "tensor_file": "train-00017-of-00019.safetensors",
+          "tensor_sha256": "6f9b34f79ab915a6d60820c22d4c4ffecefb21fe3b68774a5b67f25da681fe5a"
+        },
+        {
+          "elapsed_seconds": 237.40774960001,
+          "embedding_l2_norm": {
+            "maximum": 23.349538803100586,
+            "mean": 12.869391441345215,
+            "minimum": 9.742335319519043
+          },
+          "embedding_shape": [
+            4062,
+            768
+          ],
+          "images_per_second": 17.109803731528352,
+          "label_shape": [
+            4062,
+            14
+          ],
+          "metadata_bytes": 505710,
+          "metadata_file": "train-00018-of-00019.jsonl",
+          "metadata_sha256": "d6108a34eb87e9bd1f305b80f43862503957524978ea072e172e2db963853f9f",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 473,
+            "Cardiomegaly": 157,
+            "Consolidation": 186,
+            "Edema": 78,
+            "Effusion": 582,
+            "Emphysema": 88,
+            "Fibrosis": 31,
+            "Hernia": 13,
+            "Infiltration": 1081,
+            "Mass": 246,
+            "Nodule": 307,
+            "Pleural_Thickening": 136,
+            "Pneumonia": 53,
+            "Pneumothorax": 212
+          },
+          "record_count": 4062,
+          "record_end_index_exclusive": 77790,
+          "record_start_index": 73728,
+          "shard_count": 19,
+          "shard_index": 18,
+          "split": "train",
+          "split_end_index_exclusive": 77790,
+          "split_start_index": 73728,
+          "tensor_bytes": 6329004,
+          "tensor_file": "train-00018-of-00019.safetensors",
+          "tensor_sha256": "11c1aa1cf2050a901e0e3dd1778ee5dec1aeec5000d6d404728bb48fa6eac5d9"
+        }
+      ]
+    },
+    "validation": {
+      "record_count": 8734,
+      "shard_count": 3,
+      "shards": [
+        {
+          "elapsed_seconds": 245.3786121000303,
+          "embedding_l2_norm": {
+            "maximum": 24.42279815673828,
+            "mean": 12.823575019836426,
+            "minimum": 9.778545379638672
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 16.692571389760072,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 510548,
+          "metadata_file": "validation-00000-of-00003.jsonl",
+          "metadata_sha256": "d1d649d7f10dcbb33f3b914dffb373c3eedb1963c47ef7cfc20185bf71014d8b",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 395,
+            "Cardiomegaly": 67,
+            "Consolidation": 138,
+            "Edema": 66,
+            "Effusion": 392,
+            "Emphysema": 119,
+            "Fibrosis": 77,
+            "Hernia": 6,
+            "Infiltration": 581,
+            "Mass": 162,
+            "Nodule": 215,
+            "Pleural_Thickening": 82,
+            "Pneumonia": 45,
+            "Pneumothorax": 132
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 81886,
+          "record_start_index": 77790,
+          "shard_count": 3,
+          "shard_index": 0,
+          "split": "validation",
+          "split_end_index_exclusive": 4096,
+          "split_start_index": 0,
+          "tensor_bytes": 6381976,
+          "tensor_file": "validation-00000-of-00003.safetensors",
+          "tensor_sha256": "3369fb052e2c7c1a9baccb1211ac6fd7fa8b568070848b3d795280f43c2c6448"
+        },
+        {
+          "elapsed_seconds": 362.07415890000993,
+          "embedding_l2_norm": {
+            "maximum": 21.38223648071289,
+            "mean": 12.8533296585083,
+            "minimum": 9.733499526977539
+          },
+          "embedding_shape": [
+            4096,
+            768
+          ],
+          "images_per_second": 11.312599641034167,
+          "label_shape": [
+            4096,
+            14
+          ],
+          "metadata_bytes": 516816,
+          "metadata_file": "validation-00001-of-00003.jsonl",
+          "metadata_sha256": "b90613b949cd78eb34f199c16238746beff89444ef77ef2785646f33f1b6ffea",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 415,
+            "Cardiomegaly": 74,
+            "Consolidation": 127,
+            "Edema": 57,
+            "Effusion": 398,
+            "Emphysema": 55,
+            "Fibrosis": 53,
+            "Hernia": 8,
+            "Infiltration": 661,
+            "Mass": 209,
+            "Nodule": 281,
+            "Pleural_Thickening": 131,
+            "Pneumonia": 40,
+            "Pneumothorax": 141
+          },
+          "record_count": 4096,
+          "record_end_index_exclusive": 85982,
+          "record_start_index": 81886,
+          "shard_count": 3,
+          "shard_index": 1,
+          "split": "validation",
+          "split_end_index_exclusive": 8192,
+          "split_start_index": 4096,
+          "tensor_bytes": 6381976,
+          "tensor_file": "validation-00001-of-00003.safetensors",
+          "tensor_sha256": "6f29f536f82ebf3f94c1fb2609c259125148883f33e145ce30c8c7cc66ebd6b5"
+        },
+        {
+          "elapsed_seconds": 32.47370199998841,
+          "embedding_l2_norm": {
+            "maximum": 19.70519256591797,
+            "mean": 13.002623558044434,
+            "minimum": 9.835579872131348
+          },
+          "embedding_shape": [
+            542,
+            768
+          ],
+          "images_per_second": 16.69042845808567,
+          "label_shape": [
+            542,
+            14
+          ],
+          "metadata_bytes": 70098,
+          "metadata_file": "validation-00002-of-00003.jsonl",
+          "metadata_sha256": "be421b18c620b43fe20ae81225f35bf31df3465a00cfd406059794c76cc77f3e",
+          "peak_memory_gib": 0.7014942169189453,
+          "positive_label_counts": {
+            "Atelectasis": 88,
+            "Cardiomegaly": 22,
+            "Consolidation": 23,
+            "Edema": 3,
+            "Effusion": 70,
+            "Emphysema": 20,
+            "Fibrosis": 7,
+            "Hernia": 0,
+            "Infiltration": 113,
+            "Mass": 45,
+            "Nodule": 36,
+            "Pleural_Thickening": 25,
+            "Pneumonia": 8,
+            "Pneumothorax": 20
+          },
+          "record_count": 542,
+          "record_end_index_exclusive": 86524,
+          "record_start_index": 85982,
+          "shard_count": 3,
+          "shard_index": 2,
+          "split": "validation",
+          "split_end_index_exclusive": 8734,
+          "split_start_index": 8192,
+          "tensor_bytes": 844836,
+          "tensor_file": "validation-00002-of-00003.safetensors",
+          "tensor_sha256": "78587e83941a288618827423976c56d7a96c056579fdc5aa9f4b2334074bde90"
+        }
+      ]
+    }
+  },
+  "status": "EXTRACTION_COMPLETE"
+}
