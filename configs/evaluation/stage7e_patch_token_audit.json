@@ -1,0 +1,32 @@
+{
+  "stage": "7E",
+  "dataset_root": "TrustCXR-Data/01_NIH_ChestXray14",
+  "model": {
+    "id": "microsoft/rad-dino",
+    "revision": "110cbc18d5133582e320b43d53bf5c44e410c936",
+    "dtype": "float16",
+    "use_fast": false
+  },
+  "audit": {
+    "split": "test",
+    "positive_images_per_label": 3,
+    "no_finding_images": 6,
+    "batch_size": 8,
+    "seed": 20260804,
+    "top_fraction": 0.1,
+    "center_height_fraction": 0.8,
+    "center_width_fraction": 0.6,
+    "border_width_patches": 4,
+    "save_overlays": true,
+    "overlay_alpha": 0.45
+  },
+  "expected": {
+    "labels": 14,
+    "hidden_size": 768,
+    "image_size": 518,
+    "patch_size": 14,
+    "patch_grid": 37,
+    "patch_tokens": 1369,
+    "patient_leakage_violations": 0
+  }
+}

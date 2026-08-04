@@ -1,0 +1,122 @@
+{
+  "artifacts": {
+    "image_metrics": "F:\\AI\\TrustCXR\\reports\\stage7\\stage7e_image_metrics.csv",
+    "label_summary": "F:\\AI\\TrustCXR\\reports\\stage7\\stage7e_label_summary.csv",
+    "manifest": "F:\\AI\\TrustCXR\\reports\\stage7\\stage7e_manifest.json",
+    "overlay_directory": "F:\\AI\\TrustCXR\\artifacts\\stage7\\patch_token_audit\\overlays",
+    "overlays_local_only": true
+  },
+  "audit_type": "BOUNDED_FROZEN_PATCH_TOKEN_SPATIAL_AUDIT",
+  "audited_images": 48,
+  "audited_split": "test",
+  "clinical_localization_validation": false,
+  "cuda": {
+    "cuda_version": "13.0",
+    "device_name": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "torch_version": "2.12.1+cu130",
+    "total_memory_gib": 7.99951171875
+  },
+  "dataset_statistics": {
+    "ambiguous_image_count": 0,
+    "ambiguous_image_examples": [],
+    "dataset_root": "F:\\AI\\TrustCXR\\TrustCXR-Data\\01_NIH_ChestXray14",
+    "indexed_images": 112120,
+    "metadata_csv": "F:\\AI\\TrustCXR\\TrustCXR-Data\\01_NIH_ChestXray14\\archive\\Data_Entry_2017.csv",
+    "missing_image_count": 0,
+    "missing_image_examples": [],
+    "resolved_records": 112120,
+    "rows_seen": 112120,
+    "unique_patients": 30805,
+    "unknown_labels": {}
+  },
+  "elapsed_minutes": 0.405820193332814,
+  "elapsed_seconds": 24.34921159996884,
+  "gate": "GO_FOR_STAGE_8_ANATOMY_SEGMENTATION",
+  "hidden_size": 768,
+  "labels": [
+    "Atelectasis",
+    "Cardiomegaly",
+    "Effusion",
+    "Infiltration",
+    "Mass",
+    "Nodule",
+    "Pneumonia",
+    "Pneumothorax",
+    "Consolidation",
+    "Edema",
+    "Emphysema",
+    "Fibrosis",
+    "Pleural_Thickening",
+    "Hernia"
+  ],
+  "model": {
+    "dtype": "torch.float16",
+    "hidden_size": 768,
+    "image_size": 518,
+    "model_id": "microsoft/rad-dino",
+    "parameter_count": 86580480,
+    "patch_size": 14,
+    "revision": "110cbc18d5133582e320b43d53bf5c44e410c936",
+    "trainable_parameter_count": 0
+  },
+  "overall_metrics": {
+    "center_border_density_ratio_mean": 1.7774406236875393,
+    "center_border_density_ratio_median": 1.7380540866563905,
+    "center_border_density_ratio_std": 0.3242049276656719,
+    "cls_flip_cosine_mean": 0.9955724540910161,
+    "cls_flip_cosine_median": 0.9959632024779718,
+    "cls_flip_cosine_std": 0.00153532140016155,
+    "flip_map_correlation_mean": 0.9638820556667387,
+    "flip_map_correlation_median": 0.965900233324184,
+    "flip_map_correlation_std": 0.021391495578437402,
+    "normalized_entropy_mean": 0.979386440982926,
+    "normalized_entropy_median": 0.9804583358499794,
+    "normalized_entropy_std": 0.0057949831201953884,
+    "peak_distance_from_center_mean": 0.14066663138328453,
+    "peak_distance_from_center_median": 0.12499999999999999,
+    "peak_distance_from_center_std": 0.09656557425993786,
+    "top_fraction_concentration_mean": 0.22404237901011959,
+    "top_fraction_concentration_median": 0.22139406549607038,
+    "top_fraction_concentration_std": 0.023406196867984005
+  },
+  "patch_grid": 37,
+  "patch_tokens": 1369,
+  "patient_leakage_violations": 0,
+  "peak_memory_gib": 0.7014942169189453,
+  "spatial_interpretation": "REPRESENTATION_AFFINITY_ONLY_NOT_LESION_LOCALIZATION",
+  "split_statistics": {
+    "patient_counts": {
+      "test": 2797,
+      "train": 25185,
+      "validation": 2823
+    },
+    "patient_leakage_violations": 0,
+    "record_counts": {
+      "test": 25596,
+      "train": 77790,
+      "validation": 8734
+    },
+    "source": "OFFICIAL_NIH_TEST_PLUS_PATIENT_HASH_VALIDATION"
+  },
+  "stage": "7E",
+  "stage7d_primary_model": "DenseNet-121",
+  "status": "PASSED",
+  "target_counts": {
+    "Atelectasis": 3,
+    "Cardiomegaly": 3,
+    "Consolidation": 3,
+    "Edema": 3,
+    "Effusion": 3,
+    "Emphysema": 3,
+    "Fibrosis": 3,
+    "Hernia": 3,
+    "Infiltration": 3,
+    "Mass": 3,
+    "No Finding": 6,
+    "Nodule": 3,
+    "Pleural_Thickening": 3,
+    "Pneumonia": 3,
+    "Pneumothorax": 3
+  },
+  "unique_patients": 48
+}
