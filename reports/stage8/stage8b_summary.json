@@ -1,0 +1,109 @@
+{
+  "acceptance": {
+    "accepted": true,
+    "minimum_macro_dice": 0.85,
+    "minimum_observed_organ_dice": 0.9613389682490333,
+    "minimum_per_organ_dice": 0.75
+  },
+  "best_epoch": 38,
+  "best_validation_macro_dice_at_0_5": 0.9714974984414658,
+  "config_fingerprint": "e7a8760bb42323bc783ef57e7f43b5b4130562272bbd7162dce2942ee7b9e842",
+  "dataset": {
+    "name": "NIH CheXmask",
+    "test_records_available": 17061,
+    "test_records_used": 17061,
+    "train_records_available": 77782,
+    "train_records_per_epoch": 8000,
+    "validation_records_available": 15952,
+    "validation_records_used": 2000
+  },
+  "gate": "GO_FOR_STAGE_8C_FULL_SEGMENTATION_TRAINING",
+  "model": {
+    "architecture": "U-Net",
+    "encoder": "ResNet34",
+    "trainable_parameters": 24433091
+  },
+  "patient_leakage_violations": 0,
+  "runtime": {
+    "epochs_completed": 40,
+    "gpu": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "mean_epoch_seconds": 391.7084035150052,
+    "total_minutes": 273.06394933333405,
+    "total_seconds": 16383.836960000044
+  },
+  "scientific_contract": {
+    "bounded_training_baseline": true,
+    "clinical_ground_truth_claim": false,
+    "patient_safe_split": true,
+    "targets_are_pseudo_masks": true,
+    "test_threshold_tuning": false,
+    "test_used_once_after_model_selection": true
+  },
+  "selected_thresholds": {
+    "heart": 0.6,
+    "left_lung": 0.35,
+    "right_lung": 0.5
+  },
+  "stage": "8B",
+  "status": "PASSED",
+  "test": {
+    "macro_dice": 0.9701697024413868,
+    "macro_iou": 0.9421486548008552,
+    "per_organ": {
+      "heart": {
+        "dice": 0.9613389682490333,
+        "iou": 0.9255560176628707,
+        "precision": 0.9610032930911674,
+        "recall": 0.9616748779892031,
+        "specificity": 0.9962070808164534,
+        "threshold": 0.6
+      },
+      "left_lung": {
+        "dice": 0.9717399708260589,
+        "iou": 0.9450333021373125,
+        "precision": 0.9723012992642466,
+        "recall": 0.9711792901455433,
+        "specificity": 0.9964823594866832,
+        "threshold": 0.35
+      },
+      "right_lung": {
+        "dice": 0.9774301682490683,
+        "iou": 0.9558566446023822,
+        "precision": 0.9775923225487632,
+        "recall": 0.9772680677338714,
+        "specificity": 0.996630804631916,
+        "threshold": 0.5
+      }
+    }
+  },
+  "validation": {
+    "macro_dice": 0.9716206006502829,
+    "macro_iou": 0.9448864107598021,
+    "per_organ": {
+      "heart": {
+        "dice": 0.9627966578107534,
+        "iou": 0.9282622014874717,
+        "precision": 0.9627075616952163,
+        "recall": 0.9628857704190508,
+        "specificity": 0.9963456840682501,
+        "threshold": 0.6
+      },
+      "left_lung": {
+        "dice": 0.9735601647454266,
+        "iou": 0.9484824451537075,
+        "precision": 0.9737450491084045,
+        "recall": 0.9733753505768774,
+        "specificity": 0.9966070122487811,
+        "threshold": 0.35
+      },
+      "right_lung": {
+        "dice": 0.9785049793946684,
+        "iou": 0.957914585638227,
+        "precision": 0.979093177557955,
+        "recall": 0.9779174875366925,
+        "specificity": 0.9967957996401398,
+        "threshold": 0.5
+      }
+    }
+  }
+}

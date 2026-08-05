@@ -1,4 +1,10 @@
 {
+  "artifacts": {
+    "best_checkpoint": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8b_unet_resnet34\\best_checkpoint.pt",
+    "local_summary": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8b_unet_resnet34\\stage8b_local_summary.json",
+    "resume_checkpoint": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8b_unet_resnet34\\last_checkpoint.pt",
+    "root": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8b_unet_resnet34"
+  },
   "dataset": {
     "channels": [
       "left_lung",
@@ -27,17 +33,25 @@
     }
   },
   "evaluation": {
-    "primary_metrics": [
-      "macro_dice",
-      "macro_iou"
-    ],
-    "secondary_metrics": [
-      "per_organ_dice",
-      "per_organ_iou",
-      "precision",
-      "recall"
-    ],
+    "acceptance": {
+      "minimum_macro_dice": 0.85,
+      "minimum_per_organ_dice": 0.75
+    },
+    "selection_metric": "validation_macro_dice_at_0_5",
     "test_evaluation_count": 1,
+    "threshold_grid": [
+      0.25,
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75
+    ],
     "threshold_selection": "validation_only"
   },
   "model": {
@@ -48,21 +62,49 @@
     "input_channels": 3,
     "output_channels": 3
   },
+  "reports": {
+    "history": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8b_history.csv",
+    "per_organ": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8b_per_organ_metrics.csv",
+    "report": "F:\\AI\\TrustCXR\\reports\\stage8\\STAGE8B_UNET_BASELINE_REPORT.md",
+    "summary": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8b_summary.json",
+    "thresholds": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8b_thresholds.json"
+  },
+  "scientific_contract": {
+    "bounded_training_baseline": true,
+    "clinical_ground_truth_claim": false,
+    "patient_safe_split": true,
+    "targets_are_pseudo_masks": true,
+    "test_threshold_tuning": false,
+    "test_used_once_after_model_selection": true
+  },
   "stage": "8B",
+  "status_contract": "bounded_baseline",
   "task": "three_channel_anatomy_segmentation",
   "training": {
+    "augmentations": {
+      "brightness_jitter": 0.1,
+      "contrast_jitter": 0.1,
+      "horizontal_flip_probability": 0.5,
+      "swap_left_right_channels_after_flip": true
+    },
     "automatic_mixed_precision": true,
     "batch_size": 16,
-    "early_stopping_patience": 12,
-    "epochs": 100,
+    "early_stopping_patience": 8,
+    "epochs": 40,
+    "gradient_clip_norm": 1.0,
     "image_size": 256,
     "learning_rate": 0.0001,
-    "loss": [
-      "binary_cross_entropy_with_logits",
-      "soft_dice_loss"
-    ],
+    "loss": {
+      "binary_cross_entropy_weight": 0.5,
+      "soft_dice_weight": 0.5
+    },
+    "max_train_records_per_epoch": 8000,
+    "max_validation_records": 2000,
+    "minimum_epochs": 8,
+    "minimum_learning_rate": 1e-06,
     "num_workers": 0,
     "optimizer": "AdamW",
+    "seed": 20260804,
     "weight_decay": 0.0001
   }
 }

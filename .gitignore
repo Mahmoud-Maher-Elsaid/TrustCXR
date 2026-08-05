@@ -124,3 +124,7 @@ desktop.ini
 /artifacts/stage7/
 /reports/stage7/local/
 # END TRUSTCXR STAGE 7
+
+# BEGIN TRUSTCXR STAGE 8B
+/artifacts/stage8/stage8b_unet_resnet34/
+# END TRUSTCXR STAGE 8B
