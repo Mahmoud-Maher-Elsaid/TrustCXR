@@ -1,0 +1,10 @@
+{
+  "elapsed_seconds": 652.9269938999787,
+  "expected_records": 17061,
+  "gpu": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+  "inference_seconds": 71.26935609942302,
+  "new_records_evaluated": 17061,
+  "observed_records": 17061,
+  "peak_vram_gib": 0.34387922286987305,
+  "records_per_inference_second": 239.38759845394648
+}

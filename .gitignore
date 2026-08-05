@@ -136,3 +136,8 @@ desktop.ini
 # BEGIN TRUSTCXR STAGE 8D
 /artifacts/stage8/stage8d_comparison/
 # END TRUSTCXR STAGE 8D
+
+# BEGIN TRUSTCXR STAGE 8E
+/artifacts/stage8/stage8e_final_evaluation/
+/artifacts/stage8/final_segmentation_model/
+# END TRUSTCXR STAGE 8E

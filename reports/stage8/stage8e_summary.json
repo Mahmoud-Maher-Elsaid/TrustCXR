@@ -1,0 +1,108 @@
+{
+  "bootstrap": {
+    "heart_dice": {
+      "ci_lower": 0.9618389059444455,
+      "ci_upper": 0.9638813329983559,
+      "mean": 0.9628596711508876
+    },
+    "left_lung_dice": {
+      "ci_lower": 0.9715467080583025,
+      "ci_upper": 0.9739329323483948,
+      "mean": 0.972751008310317
+    },
+    "macro_dice": {
+      "ci_lower": 0.9703964798161326,
+      "ci_upper": 0.9723576033022919,
+      "mean": 0.9713908726576083
+    },
+    "macro_iou": {
+      "ci_lower": 0.94257434291734,
+      "ci_upper": 0.9462785412208522,
+      "mean": 0.9444507889962594
+    },
+    "right_lung_dice": {
+      "ci_lower": 0.9776420343121721,
+      "ci_upper": 0.9794117213448188,
+      "mean": 0.9785619385116203
+    }
+  },
+  "efficiency": {
+    "elapsed_seconds": 652.9269938999787,
+    "expected_records": 17061,
+    "gpu": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "inference_seconds": 71.26935609942302,
+    "new_records_evaluated": 17061,
+    "observed_records": 17061,
+    "peak_vram_gib": 0.34387922286987305,
+    "records_per_inference_second": 239.38759845394648
+  },
+  "gate": "GO_FOR_STAGE_9_SEGMENTATION_GUIDED_CLASSIFICATION_INTEGRATION",
+  "hashes": {
+    "checkpoint_sha256": "f97e6f94ea0ad5f33c98bdeffe3bf19f3d168c0bd41317e083fa08361cba00ba",
+    "config_sha256": "009e4cd6ba8c13e4dab493c45838f23e30e66eabedb0d9597a728b6deaa2b825",
+    "thresholds_sha256": "52dab314c34d2f079203a13eceb54bfb5fe3c8a88e2faea878746a76b49c0b42"
+  },
+  "patient_leakage_violations": 0,
+  "qualitative_overlays": [
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00028270_001.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00020037_012.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00011021_017.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00027422_000.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00018175_012.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00027995_000.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00018574_002.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00018019_008.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00027941_001.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00008938_001.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00004746_023.png",
+    "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8e_final_evaluation\\overlays\\00028499_011.png"
+  ],
+  "scientific_contract": {
+    "candidate_selected_on_validation_only": true,
+    "clinical_ground_truth_claim": false,
+    "external_validation_claim": false,
+    "stage8b_test_was_previously_reported": true,
+    "targets_are_quality_filtered_pseudo_masks": true,
+    "test_used_for_stage8e_tuning": false,
+    "thresholds_selected_on_validation_only": true
+  },
+  "selected_candidate": "STAGE8C_CONTINUATION",
+  "stage": "8E",
+  "status": "PASSED",
+  "test": {
+    "macro_dice": 0.9713775446801493,
+    "macro_iou": 0.944425117536535,
+    "per_organ": {
+      "heart": {
+        "dice": 0.9628464687363624,
+        "iou": 0.9283548093050972,
+        "precision": 0.9620691992661244,
+        "recall": 0.9636249951563586,
+        "specificity": 0.9963073681086003
+      },
+      "left_lung": {
+        "dice": 0.9727290633003262,
+        "iou": 0.9469060483940341,
+        "precision": 0.9745301129655048,
+        "recall": 0.9709346584704669,
+        "specificity": 0.996773621840566
+      },
+      "right_lung": {
+        "dice": 0.9785571020037591,
+        "iou": 0.9580144949104735,
+        "precision": 0.9788342533395148,
+        "recall": 0.978280107571217,
+        "specificity": 0.9968182864172027
+      }
+    }
+  },
+  "test_patients": 4715,
+  "test_records_evaluated": 17061,
+  "test_tuning_performed": false,
+  "thresholds": {
+    "heart": 0.45,
+    "left_lung": 0.5,
+    "right_lung": 0.5
+  },
+  "training_performed": false
+}
