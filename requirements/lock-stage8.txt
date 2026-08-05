@@ -39,7 +39,7 @@ torch==2.12.1+cu130
 torchvision==0.27.1+cu130
 tqdm==4.70.0
 transformers==4.57.6
--e git+https://github.com/Mahmoud-Maher-Elsaid/TrustCXR.git@66b83a312fe6efecaf642ed9faf9641a47556b7e#egg=trustcxr
+-e .
 typing_extensions==4.15.0
 urllib3==2.7.0
 wheel==0.47.0

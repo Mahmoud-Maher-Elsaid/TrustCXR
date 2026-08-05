@@ -1,0 +1,75 @@
+{
+  "baseline_validation": {
+    "macro_dice": 0.9716495789633575,
+    "macro_iou": 0.9449449746202391,
+    "stage8b_reported_macro_dice": 0.9714974984414658
+  },
+  "best_global_epoch": 21,
+  "best_validation": {
+    "macro_dice": 0.9728580997907965,
+    "macro_dice_at_0_5": 0.9728385700887822,
+    "macro_iou": 0.9472249246705711,
+    "per_organ": {
+      "heart": {
+        "dice": 0.9643274590202155,
+        "iou": 0.93111231674437,
+        "precision": 0.9641484595438488,
+        "recall": 0.9645065249734032,
+        "specificity": 0.9965248420663868,
+        "threshold": 0.45
+      },
+      "left_lung": {
+        "dice": 0.9746839427366111,
+        "iou": 0.9506180419509697,
+        "precision": 0.9759177295486047,
+        "recall": 0.973453271572236,
+        "specificity": 0.9969034832235087,
+        "threshold": 0.5
+      },
+      "right_lung": {
+        "dice": 0.9795628976155628,
+        "iou": 0.9599444153163734,
+        "precision": 0.9795959844208597,
+        "recall": 0.9795298130452684,
+        "specificity": 0.9968719143150545,
+        "threshold": 0.5
+      }
+    }
+  },
+  "candidate_origin": "STAGE8C_CONTINUATION",
+  "config_fingerprint": "9afa2b08fd3aff8cafaa730d9cbf434921741af42bc3480bf961ecd410dabe77",
+  "coverage": {
+    "coverage_fraction_per_cycle": 1.0,
+    "cycles": 1,
+    "duplicate_identifiers_per_cycle": 0,
+    "planned_record_exposures": 77782,
+    "records_per_cycle": 77782,
+    "shard_count": 26,
+    "violations": []
+  },
+  "gate": "GO_FOR_STAGE_8D_SEGMENTATION_COMPARISON",
+  "patient_leakage_violations": 0,
+  "runtime": {
+    "epochs_completed": 26,
+    "gpu": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "mean_epoch_seconds": 209.60093340769302,
+    "total_minutes": 92.25810749999945,
+    "total_seconds": 5535.486449999968
+  },
+  "scientific_contract": {
+    "clinical_ground_truth_claim": false,
+    "complete_training_coverage_required": true,
+    "patient_safe_split": true,
+    "targets_are_pseudo_masks": true,
+    "test_accessed": false,
+    "test_threshold_tuning": false
+  },
+  "selected_thresholds": {
+    "heart": 0.45,
+    "left_lung": 0.5,
+    "right_lung": 0.5
+  },
+  "stage": "8C",
+  "status": "PASSED",
+  "test_records_accessed": 0
+}

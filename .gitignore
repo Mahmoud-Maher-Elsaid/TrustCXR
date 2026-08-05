@@ -128,3 +128,7 @@ desktop.ini
 # BEGIN TRUSTCXR STAGE 8B
 /artifacts/stage8/stage8b_unet_resnet34/
 # END TRUSTCXR STAGE 8B
+
+# BEGIN TRUSTCXR STAGE 8C
+/artifacts/stage8/stage8c_coverage_continuation/
+# END TRUSTCXR STAGE 8C

@@ -1,0 +1,93 @@
+{
+  "artifacts": {
+    "best_checkpoint": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8c_coverage_continuation\\best_checkpoint.pt",
+    "last_checkpoint": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8c_coverage_continuation\\last_checkpoint.pt",
+    "local_summary": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8c_coverage_continuation\\stage8c_local_summary.json",
+    "root": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8c_coverage_continuation"
+  },
+  "dataset": {
+    "channels": [
+      "left_lung",
+      "right_lung",
+      "heart"
+    ],
+    "database_path": "F:\\AI\\TrustCXR\\artifacts\\stage8\\chexmask\\chexmask_nih_index.sqlite",
+    "name": "NIH CheXmask",
+    "test_records_locked": 17061,
+    "train_records": 77782,
+    "validation_records": 15952
+  },
+  "evaluation": {
+    "minimum_improvement_for_candidate": 0.0001,
+    "selection_metric": "validation_macro_dice_at_0_5",
+    "test_access": false,
+    "threshold_grid": [
+      0.25,
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75
+    ],
+    "threshold_selection": "validation_only"
+  },
+  "model": {
+    "architecture": "UNet",
+    "encoder": "ResNet34",
+    "input_channels": 3,
+    "output_channels": 3
+  },
+  "reports": {
+    "coverage": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8c_coverage_summary.csv",
+    "history": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8c_history.csv",
+    "report": "F:\\AI\\TrustCXR\\reports\\stage8\\STAGE8C_COVERAGE_CONTINUATION_REPORT.md",
+    "summary": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8c_summary.json",
+    "thresholds": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8c_thresholds.json"
+  },
+  "scientific_contract": {
+    "clinical_ground_truth_claim": false,
+    "complete_training_coverage_required": true,
+    "patient_safe_split": true,
+    "targets_are_pseudo_masks": true,
+    "test_accessed": false,
+    "test_threshold_tuning": false
+  },
+  "stage": "8C",
+  "starting_checkpoint": {
+    "best_epoch": 38,
+    "path": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8b_unet_resnet34\\best_checkpoint.pt",
+    "reported_validation_macro_dice": 0.9714974984414658,
+    "stage": "8B"
+  },
+  "task": "coverage_complete_anatomy_segmentation_continuation",
+  "training": {
+    "augmentations": {
+      "brightness_jitter": 0.1,
+      "contrast_jitter": 0.1,
+      "horizontal_flip_probability": 0.5,
+      "swap_left_right_channels_after_flip": true
+    },
+    "automatic_mixed_precision": true,
+    "batch_size": 16,
+    "coverage_cycles": 1,
+    "coverage_shard_size": 3000,
+    "gradient_clip_norm": 1.0,
+    "image_size": 256,
+    "learning_rate": 2.5e-05,
+    "loss": {
+      "binary_cross_entropy_weight": 0.5,
+      "soft_dice_weight": 0.5
+    },
+    "minimum_learning_rate": 1e-06,
+    "num_workers": 0,
+    "optimizer": "AdamW",
+    "seed": 20260805,
+    "validation_records": 2000,
+    "weight_decay": 0.0001
+  }
+}
