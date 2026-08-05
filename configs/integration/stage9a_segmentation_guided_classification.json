@@ -1,0 +1,75 @@
+{
+  "cohort": {
+    "canonical_split_source": "Stage 8 CheXmask patient split",
+    "database_path": "F:\\AI\\TrustCXR\\artifacts\\stage9\\stage9a_shared_cohort\\stage9a_shared_cohort.sqlite",
+    "patient_leakage_tolerance": 0,
+    "required_splits": [
+      "train",
+      "validation",
+      "test"
+    ]
+  },
+  "future_experiments": {
+    "same_architecture_across_variants": true,
+    "same_initialization_across_variants": true,
+    "same_patient_split_across_variants": true,
+    "test_locked_until_final_selection": true,
+    "training_schedule": "Choose per experiment using validation behavior, compute budget, and fair-comparison requirements; do not impose a universal epoch cap.",
+    "validation_only_model_selection": true,
+    "variants": [
+      "original_image",
+      "lung_masked_image",
+      "anatomy_crop",
+      "image_plus_anatomy_masks"
+    ]
+  },
+  "reports": {
+    "label_distribution": "F:\\AI\\TrustCXR\\reports\\stage9\\stage9a_label_distribution.csv",
+    "report": "F:\\AI\\TrustCXR\\reports\\stage9\\STAGE9A_SHARED_COHORT_REPORT.md",
+    "summary": "F:\\AI\\TrustCXR\\reports\\stage9\\stage9a_summary.json"
+  },
+  "scientific_contract": {
+    "all_stage9_variants_use_the_same_cohort": true,
+    "patient_safe_split_required": true,
+    "stage6_checkpoint_reused": false,
+    "test_predictions_generated": false,
+    "training_performed": false
+  },
+  "segmentation_source": {
+    "database_path": "F:\\AI\\TrustCXR\\artifacts\\stage8\\chexmask\\chexmask_nih_index.sqlite",
+    "name": "NIH CheXmask",
+    "selected_model": "Stage 8C U-Net ResNet34 continuation",
+    "stage8e_test_macro_dice": 0.9713775446801493,
+    "targets": [
+      "left_lung",
+      "right_lung",
+      "heart"
+    ]
+  },
+  "source_dataset": {
+    "classification_labels": [
+      "Atelectasis",
+      "Cardiomegaly",
+      "Effusion",
+      "Infiltration",
+      "Mass",
+      "Nodule",
+      "Pneumonia",
+      "Pneumothorax",
+      "Consolidation",
+      "Edema",
+      "Emphysema",
+      "Fibrosis",
+      "Pleural_Thickening",
+      "Hernia"
+    ],
+    "name": "NIH ChestXray14",
+    "root": "F:\\AI\\TrustCXR\\TrustCXR-Data\\01_NIH_ChestXray14"
+  },
+  "stage": "9A",
+  "stage6_checkpoint_policy": {
+    "eligible_for_stage9_fair_initialization": false,
+    "reason": "The Stage 6 checkpoint predates the canonical Stage 9 patient split and may have learned from Stage 9 validation or test patients. Use it as a historical reference only."
+  },
+  "task": "segmentation_guided_classification_shared_cohort_readiness"
+}

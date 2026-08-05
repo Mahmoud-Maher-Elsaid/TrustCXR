@@ -1,0 +1,347 @@
+{
+  "complete_match": true,
+  "database": {
+    "integrity_check": "ok",
+    "path": "F:\\AI\\TrustCXR\\artifacts\\stage9\\stage9a_shared_cohort\\stage9a_shared_cohort.sqlite",
+    "sha256": "838f220cdc7a1a21d37576549070a636b09687523c8ade3d785b602898b3f6bc",
+    "size_bytes": 26873856
+  },
+  "duplicate_image_violations": 0,
+  "elapsed_seconds": 4.064907599939033,
+  "final_records": 110795,
+  "gate": "GO_FOR_STAGE_9B_SEGMENTATION_GUIDED_CLASSIFICATION_ABLATION",
+  "label_distribution": [
+    {
+      "label": "Atelectasis",
+      "positives": 7903,
+      "prevalence": 0.10160448432799363,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Atelectasis",
+      "positives": 1679,
+      "prevalence": 0.10525325977933801,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Atelectasis",
+      "positives": 1797,
+      "prevalence": 0.10532794091788289,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Cardiomegaly",
+      "positives": 1943,
+      "prevalence": 0.02498007251034944,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Cardiomegaly",
+      "positives": 308,
+      "prevalence": 0.01930792377131394,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Cardiomegaly",
+      "positives": 480,
+      "prevalence": 0.02813434148056972,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Effusion",
+      "positives": 9175,
+      "prevalence": 0.11795788228639016,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Effusion",
+      "positives": 1820,
+      "prevalence": 0.11409227683049147,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Effusion",
+      "positives": 2080,
+      "prevalence": 0.12191547974913546,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Infiltration",
+      "positives": 13860,
+      "prevalence": 0.17819032681083027,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Infiltration",
+      "positives": 2727,
+      "prevalence": 0.17095035105315948,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Infiltration",
+      "positives": 3004,
+      "prevalence": 0.17607408709923217,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Mass",
+      "positives": 3988,
+      "prevalence": 0.051271502404155206,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Mass",
+      "positives": 835,
+      "prevalence": 0.052344533600802406,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Mass",
+      "positives": 914,
+      "prevalence": 0.053572475235918175,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Nodule",
+      "positives": 4435,
+      "prevalence": 0.057018333290478514,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Nodule",
+      "positives": 882,
+      "prevalence": 0.05529087261785356,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Nodule",
+      "positives": 983,
+      "prevalence": 0.05761678682375007,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Pneumonia",
+      "positives": 996,
+      "prevalence": 0.012805019156102954,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Pneumonia",
+      "positives": 218,
+      "prevalence": 0.013665997993981946,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Pneumonia",
+      "positives": 197,
+      "prevalence": 0.011546802649317156,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Pneumothorax",
+      "positives": 3713,
+      "prevalence": 0.04773598004679746,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Pneumothorax",
+      "positives": 824,
+      "prevalence": 0.051654964894684054,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Pneumothorax",
+      "positives": 735,
+      "prevalence": 0.043080710392122384,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Consolidation",
+      "positives": 3242,
+      "prevalence": 0.04168059448201383,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Consolidation",
+      "positives": 607,
+      "prevalence": 0.03805165496489468,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Consolidation",
+      "positives": 716,
+      "prevalence": 0.04196705937518316,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Edema",
+      "positives": 1607,
+      "prevalence": 0.020660307011905066,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Edema",
+      "positives": 330,
+      "prevalence": 0.020687061183550653,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Edema",
+      "positives": 322,
+      "prevalence": 0.018873454076548855,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Emphysema",
+      "positives": 1748,
+      "prevalence": 0.022473065747859403,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Emphysema",
+      "positives": 401,
+      "prevalence": 0.02513791374122367,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Emphysema",
+      "positives": 346,
+      "prevalence": 0.02028017115057734,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Fibrosis",
+      "positives": 1228,
+      "prevalence": 0.015787714381219304,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Fibrosis",
+      "positives": 210,
+      "prevalence": 0.013164493480441323,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Fibrosis",
+      "positives": 246,
+      "prevalence": 0.014418850008791981,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Pleural_Thickening",
+      "positives": 2388,
+      "prevalence": 0.03070119050680106,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Pleural_Thickening",
+      "positives": 460,
+      "prevalence": 0.028836509528585758,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Pleural_Thickening",
+      "positives": 511,
+      "prevalence": 0.02995135103452318,
+      "records": 17061,
+      "split": "test"
+    },
+    {
+      "label": "Hernia",
+      "positives": 157,
+      "prevalence": 0.0020184618549278755,
+      "records": 77782,
+      "split": "train"
+    },
+    {
+      "label": "Hernia",
+      "positives": 29,
+      "prevalence": 0.0018179538615847543,
+      "records": 15952,
+      "split": "validation"
+    },
+    {
+      "label": "Hernia",
+      "positives": 39,
+      "prevalence": 0.0022859152452962897,
+      "records": 17061,
+      "split": "test"
+    }
+  ],
+  "metadata": {
+    "duplicate_image_ids": 0,
+    "encoding": "utf-8-sig",
+    "finding_column": "Finding Labels",
+    "image_column": "Image Index",
+    "metadata_rows": 112120,
+    "path": "F:\\AI\\TrustCXR\\TrustCXR-Data\\01_NIH_ChestXray14\\archive\\Data_Entry_2017.csv",
+    "unknown_labels": {}
+  },
+  "missing_image_count": 0,
+  "missing_image_examples": [],
+  "missing_metadata_count": 0,
+  "missing_metadata_examples": [],
+  "patient_leakage_violations": 0,
+  "scientific_contract": {
+    "all_future_variants_use_same_cohort": true,
+    "canonical_split_source": "Stage 8 CheXmask patient split",
+    "test_predictions_generated": false,
+    "training_performed": false
+  },
+  "source_stage8_records": 110795,
+  "split_patient_counts": {
+    "test": 4715,
+    "train": 21500,
+    "validation": 4486
+  },
+  "split_record_counts": {
+    "test": 17061,
+    "train": 77782,
+    "validation": 15952
+  },
+  "stage6_checkpoint": {
+    "eligible_for_fair_stage9_initialization": false,
+    "reason": "Stage 6 predates the canonical Stage 9 patient split and may include Stage 9 validation or test patients.",
+    "reused": false
+  },
+  "status": "PASSED",
+  "zero_positive_label_split_cells": []
+}

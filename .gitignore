@@ -141,3 +141,7 @@ desktop.ini
 /artifacts/stage8/stage8e_final_evaluation/
 /artifacts/stage8/final_segmentation_model/
 # END TRUSTCXR STAGE 8E
+
+# BEGIN TRUSTCXR STAGE 9A
+/artifacts/stage9/stage9a_shared_cohort/
+# END TRUSTCXR STAGE 9A
