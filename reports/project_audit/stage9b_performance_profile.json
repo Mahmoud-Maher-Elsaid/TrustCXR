@@ -1,0 +1,30 @@
+{
+  "batch_size_selected": 64,
+  "candidate_batch_sizes": [32, 64],
+  "candidate_worker_counts": [0, 1, 2, 4],
+  "formal_learning_rate": 0.0001,
+  "learning_rate_scaled_for_batch_size": false,
+  "num_workers_selected": 4,
+  "pilot_type": "BOUNDED_NON_LEARNING",
+  "prefetch_factor_selected": 2,
+  "test_records_accessed": 0,
+  "variants": {
+    "anatomy_crop": {
+      "batch64_loader_records_per_second": 110.42579634780809,
+      "batch64_peak_reserved_vram_bytes": 4911529984
+    },
+    "image_plus_masks": {
+      "batch64_loader_records_per_second": 116.2807113027969,
+      "batch64_peak_reserved_vram_bytes": 4966055936
+    },
+    "lung_masked": {
+      "batch64_loader_records_per_second": 60.588415377499096,
+      "batch64_peak_reserved_vram_bytes": 4911529984
+    },
+    "original": {
+      "batch64_loader_records_per_second": 111.17189762819632,
+      "batch64_peak_reserved_vram_bytes": 4928307200
+    }
+  },
+  "windows_worker_crashes": 0
+}

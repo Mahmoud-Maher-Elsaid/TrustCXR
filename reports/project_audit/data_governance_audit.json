@@ -1,0 +1,16 @@
+﻿{
+    "generated_at":  "2026-08-05T17:05:49.9023606Z",
+    "raw_data_root":  "TrustCXR-Data",
+    "raw_data_tracked":  false,
+    "patient_level_rows_in_audit":  false,
+    "dataset_count":  10,
+    "total_dataset_files":  461438,
+    "total_dataset_bytes":  443504177084,
+    "stage9a_patient_leakage_violations":  0,
+    "stage9a_test_records_accessed":  0,
+    "stage9b_test_predictions_generated":  false,
+    "unresolved":  [
+                       "Dataset license verification incomplete",
+                       "Cross-dataset exact/near-duplicate audit pending"
+                   ]
+}

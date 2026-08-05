@@ -1,0 +1,29 @@
+﻿{
+    "generated_at":  "2026-08-05T17:05:49.9023606Z",
+    "environment_status":  "VALIDATED",
+    "expected_python":  "3.12.10",
+    "observed_python":  "3.12.10",
+    "virtual_environment_launcher":  ".venv/Scripts/python.exe",
+    "lock_files":  [
+                       "base.txt",
+                       "container-resolution.txt",
+                       "data-audit.txt",
+                       "dev.txt",
+                       "lock-stage2.txt",
+                       "lock-stage3.txt",
+                       "lock-stage4.txt",
+                       "lock-stage4_1.txt",
+                       "lock-stage4_2.txt",
+                       "lock-stage4_3.txt",
+                       "lock-stage4_4.txt",
+                       "lock-stage5.txt",
+                       "lock-stage6.txt",
+                       "lock-stage7.txt",
+                       "lock-stage8.txt",
+                       "torch-cu130.txt"
+                   ],
+    "pip_check":  "PASSED",
+    "ruff":  "PASSED",
+    "pytest":  "111_PASSED",
+    "license_and_security_review":  "PENDING_AFTER_ENVIRONMENT_REPAIR"
+}

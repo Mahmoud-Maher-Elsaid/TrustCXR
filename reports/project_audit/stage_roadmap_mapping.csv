@@ -1,0 +1,8 @@
+﻿"ExistingStage","ExistingCommit","ExistingGate","ExistingImplementation","ScientificCapability","OldRoadmapItem","CurrentStatus","MissingWork","NextValidStageIdentifier"
+"4.4","pre-45111d6","GO_FOR_STAGE_5","data readiness","patient-safe dataset readiness","data foundation","COMPLETE","ongoing governance audit","5"
+"5","pre-45111d6","complete","quality/view EfficientNet-B0","quality and view assessment","quality/view","COMPLETE","device and expanded view handling remain future","6"
+"6","pre-45111d6","complete","NIH DenseNet-121","multi-label classification","classification","COMPLETE","calibration and external validation","7"
+"7","pre-45111d6","GO_FOR_STAGE_8","RAD-DINO probes/comparison/spatial audit","representation audit","advanced representation","COMPLETE","no clinical localization claim","8"
+"8","pre-45111d6","GO_FOR_STAGE_9A","CheXmask pseudo-mask anatomy segmentation","anatomy segmentation","segmentation","COMPLETE_WITH_LIMITATIONS","manual-ground-truth external validation","9A"
+"9A","45111d6","GO_FOR_STAGE_9B","shared classification cohort","integration data contract","fusion readiness","COMPLETE","none for cohort gate","9B"
+"9B","UNCOMMITTED","CLOSED","segmentation-guided ablation","classification/segmentation integration","fusion","INTERRUPTED","audit, profiling, protocol freeze, fresh four-variant run","9C after 9B gate"

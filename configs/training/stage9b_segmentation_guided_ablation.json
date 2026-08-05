@@ -1,0 +1,91 @@
+{
+  "artifacts": {
+    "root": "F:\\AI\\TrustCXR\\artifacts\\stage9\\stage9b_ablation"
+  },
+  "cohort": {
+    "database_path": "F:\\AI\\TrustCXR\\artifacts\\stage9\\stage9a_shared_cohort\\stage9a_shared_cohort.sqlite",
+    "final_records": 110795,
+    "patient_safe": true,
+    "segmentation_database_path": "F:\\AI\\TrustCXR\\artifacts\\stage8\\chexmask\\chexmask_nih_index.sqlite"
+  },
+  "labels": [
+    "Atelectasis",
+    "Cardiomegaly",
+    "Effusion",
+    "Infiltration",
+    "Mass",
+    "Nodule",
+    "Pneumonia",
+    "Pneumothorax",
+    "Consolidation",
+    "Edema",
+    "Emphysema",
+    "Fibrosis",
+    "Pleural_Thickening",
+    "Hernia"
+  ],
+  "model": {
+    "architecture": "DenseNet121",
+    "fusion_initialization": "rgb_pretrained_plus_zero_initialized_mask_channels",
+    "fusion_input_channels": 6,
+    "output_labels": 14,
+    "weights": "ImageNet"
+  },
+  "reports": {
+    "history": "F:\\AI\\TrustCXR\\reports\\stage9\\stage9b_history.csv",
+    "report": "F:\\AI\\TrustCXR\\reports\\stage9\\STAGE9B_SEGMENTATION_GUIDED_ABLATION_REPORT.md",
+    "summary": "F:\\AI\\TrustCXR\\reports\\stage9\\stage9b_summary.json",
+    "variant_metrics": "F:\\AI\\TrustCXR\\reports\\stage9\\stage9b_variant_metrics.csv"
+  },
+  "scientific_contract": {
+    "bounded_ablation": true,
+    "same_cohort": true,
+    "same_pretrained_initialization_policy": true,
+    "same_seed": true,
+    "same_split": true,
+    "same_training_budget": true,
+    "stage6_checkpoint_reused": false,
+    "test_predictions_generated": false,
+    "validation_only_selection": true
+  },
+  "selection": {
+    "minimum_meaningful_delta_over_original": 0.001,
+    "primary_metric": "validation_macro_auprc",
+    "secondary_metric": "validation_macro_auroc",
+    "test_records_accessed": 0,
+    "test_split_locked": true
+  },
+  "stage": "9B",
+  "task": "bounded_segmentation_guided_multilabel_ablation",
+  "training": {
+    "automatic_mixed_precision": true,
+    "batch_size": 64,
+    "brightness_jitter": 0.08,
+    "contrast_jitter": 0.08,
+    "early_stopping_patience": 10,
+    "gradient_clip_norm": 1.0,
+    "horizontal_flip_probability": 0.5,
+    "image_size": 224,
+    "learning_rate": 0.0001,
+    "max_train_records": 6000,
+    "max_validation_records": 3000,
+    "maximum_epochs": 100,
+    "minimum_epochs": 12,
+    "minimum_improvement": 0.0002,
+    "minimum_learning_rate": 1e-06,
+    "non_blocking_transfers": true,
+    "num_workers": 4,
+    "optimizer": "AdamW",
+    "persistent_workers": false,
+    "pin_memory": true,
+    "prefetch_factor": 2,
+    "seed": 20260805,
+    "weight_decay": 0.0001
+  },
+  "variants": [
+    "original",
+    "lung_masked",
+    "anatomy_crop",
+    "image_plus_masks"
+  ]
+}

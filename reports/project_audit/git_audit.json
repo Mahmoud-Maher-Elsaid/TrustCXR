@@ -1,0 +1,25 @@
+﻿{
+    "generated_at":  "2026-08-05T17:05:49.5707257Z",
+    "branch":  "develop",
+    "head":  "45111d6f105d8b7762e48873e293abc59aae4d88",
+    "upstream":  "origin/develop",
+    "divergence":  "0\t0",
+    "remote":  "https://github.com/Mahmoud-Maher-Elsaid/TrustCXR.git",
+    "visibility":  "PRIVATE_VERIFIED_BY_GITHUB_CLI_2026-08-05",
+    "tracked_file_count":  226,
+    "tracked_medical_or_artifact_paths":  0,
+    "status_before_reports":  [
+                                  "## develop...origin/develop",
+                                  " M .gitignore",
+                                  "?? configs/training/stage9b_segmentation_guided_ablation.json",
+                                  "?? docs/integration/STAGE9B_SEGMENTATION_GUIDED_ABLATION.md",
+                                  "?? docs/research_protocol/",
+                                  "?? reports/project_audit/",
+                                  "?? scripts/audit/",
+                                  "?? scripts/training/profile_stage9b.py",
+                                  "?? scripts/training/run_stage9b.py",
+                                  "?? src/trustcxr/integration/stage9b_ablation.py",
+                                  "?? tests/unit/test_stage9b_ablation.py"
+                              ],
+    "history_rewritten":  false
+}

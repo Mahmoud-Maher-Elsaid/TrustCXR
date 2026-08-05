@@ -145,3 +145,7 @@ desktop.ini
 # BEGIN TRUSTCXR STAGE 9A
 /artifacts/stage9/stage9a_shared_cohort/
 # END TRUSTCXR STAGE 9A
+
+# BEGIN TRUSTCXR STAGE 9B
+/artifacts/stage9/stage9b_ablation/
+# END TRUSTCXR STAGE 9B
