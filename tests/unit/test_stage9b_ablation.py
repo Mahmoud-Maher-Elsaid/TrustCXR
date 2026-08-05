@@ -1,12 +1,16 @@
 from __future__ import annotations
 
 import json
+import pickle
+import sqlite3
 
 import numpy as np
 import torch
 
 from trustcxr.integration.stage9b_ablation import (
     LABELS,
+    CohortIndex,
+    Stage9Dataset,
     build_model,
     config_fingerprint,
     deterministic_subset,
@@ -82,6 +86,35 @@ def test_fingerprint_changes_with_source_and_database_content(tmp_path) -> None:
         "segmentation_database_sha256",
         "source_sha256",
     }
+
+
+def test_dataset_drops_sqlite_connections_when_pickled(tmp_path) -> None:
+    database = tmp_path / "cohort.sqlite"
+    with sqlite3.connect(database) as connection:
+        connection.execute(
+            "CREATE TABLE records (image_id TEXT, image_path TEXT, "
+            "patient_id TEXT, split TEXT, labels TEXT)"
+        )
+        connection.execute(
+            "INSERT INTO records VALUES ('image-1', 'unused.png', 'patient-1', 'train', '[]')"
+        )
+    index = CohortIndex(database)
+    dataset = Stage9Dataset(
+        index,
+        tmp_path / "masks.sqlite",
+        ["image-1"],
+        variant="original",
+        image_size=224,
+        augment=False,
+        seed=1,
+        horizontal_flip_probability=0.0,
+        brightness_jitter=0.0,
+        contrast_jitter=0.0,
+    )
+    dataset._cohort()
+    restored = pickle.loads(pickle.dumps(dataset))
+    assert restored.cohort_connection is None
+    assert restored.mask_connection is None
 
 
 def test_macro_metrics_are_finite_for_valid_labels() -> None:

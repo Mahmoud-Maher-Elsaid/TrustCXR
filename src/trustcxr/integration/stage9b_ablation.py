@@ -275,6 +275,12 @@ class Stage9Dataset(Dataset):
         self.cohort_connection: sqlite3.Connection | None = None
         self.mask_connection: sqlite3.Connection | None = None
 
+    def __getstate__(self) -> dict[str, Any]:
+        state = self.__dict__.copy()
+        state["cohort_connection"] = None
+        state["mask_connection"] = None
+        return state
+
     def set_epoch(self, epoch: int) -> None:
         self.epoch = epoch
 

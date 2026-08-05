@@ -48,6 +48,9 @@ def profile_candidate(
         brightness_jitter=float(training["brightness_jitter"]),
         contrast_jitter=float(training["contrast_jitter"]),
     )
+    # Match training, where positive-weight computation opens this connection
+    # before Windows worker processes serialize the dataset.
+    dataset._cohort()
     loader = build_loader(
         dataset,
         batch_size=int(training["batch_size"]),
