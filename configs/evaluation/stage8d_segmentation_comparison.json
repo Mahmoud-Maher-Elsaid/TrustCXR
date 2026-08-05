@@ -1,0 +1,66 @@
+{
+  "artifacts": {
+    "final_candidate": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8d_comparison\\final_candidate.json",
+    "local_summary": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8d_comparison\\stage8d_local_summary.json",
+    "root": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8d_comparison"
+  },
+  "candidates": {
+    "stage8b_baseline": {
+      "checkpoint": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8b_unet_resnet34\\best_checkpoint.pt",
+      "reported_validation_macro_dice": 0.9714974984414658,
+      "thresholds": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8b_thresholds.json"
+    },
+    "stage8c_continuation": {
+      "checkpoint": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8c_coverage_continuation\\best_checkpoint.pt",
+      "coverage_fraction": 1.0,
+      "reported_validation_macro_dice": 0.9728385700887822,
+      "thresholds": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8c_thresholds.json"
+    }
+  },
+  "dataset": {
+    "database_path": "F:\\AI\\TrustCXR\\artifacts\\stage8\\chexmask\\chexmask_nih_index.sqlite",
+    "name": "NIH CheXmask",
+    "patient_safe": true,
+    "records": 15952,
+    "split": "validation",
+    "test_access": false
+  },
+  "evaluation": {
+    "automatic_mixed_precision": true,
+    "batch_size": 16,
+    "bootstrap_confidence": 0.95,
+    "bootstrap_replicates": 1000,
+    "bootstrap_unit": "patient",
+    "image_size": 256,
+    "minimum_macro_dice_improvement": 0.0001,
+    "num_workers": 0,
+    "primary_threshold": 0.5,
+    "seed": 20260805,
+    "selection_metric": "patient_bootstrap_macro_dice_delta",
+    "test_access": false
+  },
+  "reports": {
+    "bootstrap": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8d_bootstrap_intervals.csv",
+    "efficiency": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8d_efficiency_comparison.json",
+    "per_organ": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8d_per_organ_metrics.csv",
+    "report": "F:\\AI\\TrustCXR\\reports\\stage8\\STAGE8D_SEGMENTATION_COMPARISON_REPORT.md",
+    "summary": "F:\\AI\\TrustCXR\\reports\\stage8\\stage8d_summary.json"
+  },
+  "scientific_contract": {
+    "calibrated_threshold_metrics_are_secondary": true,
+    "clinical_ground_truth_claim": false,
+    "paired_same_validation_images": true,
+    "patient_cluster_bootstrap": true,
+    "primary_comparison_uses_fixed_threshold_0_5": true,
+    "targets_are_pseudo_masks": true,
+    "test_accessed": false,
+    "test_threshold_tuning": false
+  },
+  "stage": "8D",
+  "task": "formal_segmentation_candidate_comparison",
+  "training_policy": {
+    "early_stopping_required_for_future_training": true,
+    "maximum_epochs_for_future_training": 100,
+    "training_performed": false
+  }
+}

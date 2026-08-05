@@ -1,0 +1,19 @@
+{
+  "stage8b_baseline": {
+    "checkpoint_size_mib": 93.36814022064209,
+    "train_records_per_epoch": 8000,
+    "training_epochs": 40,
+    "training_total_minutes": 273.06394933333405,
+    "validation_images_per_second": 26.376759548143518,
+    "validation_inference_seconds": 604.7748197000474
+  },
+  "stage8c_continuation": {
+    "checkpoint_size_mib": 93.36820125579834,
+    "continuation_total_minutes": 92.25810749999945,
+    "coverage_epochs": 26,
+    "coverage_fraction": 1.0,
+    "coverage_records": 77782,
+    "validation_images_per_second": 44.22438506505455,
+    "validation_inference_seconds": 360.70597649994306
+  }
+}

@@ -132,3 +132,7 @@ desktop.ini
 # BEGIN TRUSTCXR STAGE 8C
 /artifacts/stage8/stage8c_coverage_continuation/
 # END TRUSTCXR STAGE 8C
+
+# BEGIN TRUSTCXR STAGE 8D
+/artifacts/stage8/stage8d_comparison/
+# END TRUSTCXR STAGE 8D

@@ -1,0 +1,222 @@
+{
+  "bootstrap": {
+    "confidence": 0.95,
+    "macro_dice_delta": {
+      "lower": 0.001187647955682164,
+      "mean": 0.0012789109602375688,
+      "median": 0.0012775404648694422,
+      "probability_stage8c_greater": 1.0,
+      "upper": 0.0013777459055125175
+    },
+    "macro_iou_delta": {
+      "lower": 0.002246065778842188,
+      "mean": 0.0024168571299684554,
+      "median": 0.0024144637456139373,
+      "probability_stage8c_greater": 1.0,
+      "upper": 0.00260038117314359
+    },
+    "per_organ_dice_delta": {
+      "heart": {
+        "lower": 0.0014160890992136134,
+        "mean": 0.001578082975359488,
+        "median": 0.0015757535185648708,
+        "probability_stage8c_greater": 1.0,
+        "upper": 0.0017512911697886685
+      },
+      "left_lung": {
+        "lower": 0.001048373832960753,
+        "mean": 0.0011676075508837709,
+        "median": 0.0011658922546370354,
+        "probability_stage8c_greater": 1.0,
+        "upper": 0.0012885721638370151
+      },
+      "right_lung": {
+        "lower": 0.0009961572368785171,
+        "mean": 0.0010910423544694462,
+        "median": 0.0010884234398143566,
+        "probability_stage8c_greater": 1.0,
+        "upper": 0.0012000236848079548
+      }
+    },
+    "replicates": 1000,
+    "unit": "patient"
+  },
+  "calibrated_threshold_metrics_secondary": {
+    "stage8b_baseline": {
+      "macro_dice": 0.9717057701148502,
+      "macro_iou": 0.9450490829313457,
+      "per_organ": {
+        "heart": {
+          "dice": 0.9628148235638865,
+          "iou": 0.928295973986273,
+          "precision": 0.9628691703573855,
+          "recall": 0.9627604829049845,
+          "specificity": 0.996392095361099
+        },
+        "left_lung": {
+          "dice": 0.9736008621954321,
+          "iou": 0.9485597038574394,
+          "precision": 0.9736853332987927,
+          "recall": 0.9735164057472132,
+          "specificity": 0.9966034003236285
+        },
+        "right_lung": {
+          "dice": 0.9787016245852322,
+          "iou": 0.9582915709503247,
+          "precision": 0.9788257673031494,
+          "recall": 0.9785775133529186,
+          "specificity": 0.9967521627268813
+        }
+      }
+    },
+    "stage8c_continuation": {
+      "macro_dice": 0.9728950366491577,
+      "macro_iou": 0.9472964410144619,
+      "per_organ": {
+        "heart": {
+          "dice": 0.9643446119471336,
+          "iou": 0.931144300576851,
+          "precision": 0.9639661125889546,
+          "recall": 0.9647234086560925,
+          "specificity": 0.9964955361100969
+        },
+        "left_lung": {
+          "dice": 0.9745446737384624,
+          "iou": 0.9503531248809461,
+          "precision": 0.9759608669584368,
+          "recall": 0.9731325845706865,
+          "specificity": 0.9969055729024678
+        },
+        "right_lung": {
+          "dice": 0.979795824261877,
+          "iou": 0.9603918975855883,
+          "precision": 0.9801310553441334,
+          "recall": 0.9794608224172396,
+          "specificity": 0.9969536874404716
+        }
+      }
+    }
+  },
+  "efficiency": {
+    "stage8b_baseline": {
+      "checkpoint_size_mib": 93.36814022064209,
+      "train_records_per_epoch": 8000,
+      "training_epochs": 40,
+      "training_total_minutes": 273.06394933333405,
+      "validation_images_per_second": 26.376759548143518,
+      "validation_inference_seconds": 604.7748197000474
+    },
+    "stage8c_continuation": {
+      "checkpoint_size_mib": 93.36820125579834,
+      "continuation_total_minutes": 92.25810749999945,
+      "coverage_epochs": 26,
+      "coverage_fraction": 1.0,
+      "coverage_records": 77782,
+      "validation_images_per_second": 44.22438506505455,
+      "validation_inference_seconds": 360.70597649994306
+    }
+  },
+  "fixed_threshold_metrics": {
+    "stage8b_baseline": {
+      "macro_dice": 0.9715963891339844,
+      "macro_iou": 0.9448427698324099,
+      "per_organ": {
+        "heart": {
+          "dice": 0.9627153636780338,
+          "iou": 0.9281110796084455,
+          "precision": 0.9587435592389358,
+          "recall": 0.9667202131468431,
+          "specificity": 0.9959574116462651
+        },
+        "left_lung": {
+          "dice": 0.9733721791386871,
+          "iou": 0.9481256589384596,
+          "precision": 0.9787325535664634,
+          "recall": 0.9680702008505204,
+          "specificity": 0.9972843111468067
+        },
+        "right_lung": {
+          "dice": 0.9787016245852322,
+          "iou": 0.9582915709503247,
+          "precision": 0.9788257673031494,
+          "recall": 0.9785775133529186,
+          "specificity": 0.9967521627268813
+        }
+      }
+    },
+    "stage8c_continuation": {
+      "macro_dice": 0.9728783586019216,
+      "macro_iou": 0.9472653436433616,
+      "per_organ": {
+        "heart": {
+          "dice": 0.9642945778054255,
+          "iou": 0.9310510084635502,
+          "precision": 0.9658555362676404,
+          "recall": 0.9627386566592664,
+          "specificity": 0.9966926058392327
+        },
+        "left_lung": {
+          "dice": 0.9745446737384624,
+          "iou": 0.9503531248809461,
+          "precision": 0.9759608669584368,
+          "recall": 0.9731325845706865,
+          "specificity": 0.9969055729024678
+        },
+        "right_lung": {
+          "dice": 0.979795824261877,
+          "iou": 0.9603918975855883,
+          "precision": 0.9801310553441334,
+          "recall": 0.9794608224172396,
+          "specificity": 0.9969536874404716
+        }
+      }
+    }
+  },
+  "gate": "GO_FOR_STAGE_8E_FINAL_SEGMENTATION_EVALUATION",
+  "image_level_comparison": {
+    "mean_image_macro_dice_delta": 0.0013707177576858661,
+    "median_image_macro_dice_delta": 0.0009581728165264924,
+    "stage8b_wins": 5134,
+    "stage8c_wins": 10818,
+    "ties": 0
+  },
+  "patient_leakage_violations": 0,
+  "point_deltas": {
+    "macro_dice": 0.0012819694679372384,
+    "macro_iou": 0.002422573810951678,
+    "per_organ_dice": {
+      "heart": 0.0015792141273917037,
+      "left_lung": 0.001172494599775309,
+      "right_lung": 0.0010941996766447026
+    }
+  },
+  "primary_threshold": 0.5,
+  "scientific_contract": {
+    "calibrated_threshold_metrics_are_secondary": true,
+    "clinical_ground_truth_claim": false,
+    "paired_same_validation_images": true,
+    "patient_cluster_bootstrap": true,
+    "primary_comparison_uses_fixed_threshold_0_5": true,
+    "targets_are_pseudo_masks": true,
+    "test_accessed": false,
+    "test_threshold_tuning": false
+  },
+  "selected_candidate": "STAGE8C_CONTINUATION",
+  "selected_checkpoint": "F:\\AI\\TrustCXR\\artifacts\\stage8\\stage8c_coverage_continuation\\best_checkpoint.pt",
+  "selected_thresholds": {
+    "heart": 0.45,
+    "left_lung": 0.5,
+    "right_lung": 0.5
+  },
+  "selection_basis": "PAIRED_PATIENT_BOOTSTRAP_SUPPORTS_STAGE8C",
+  "stage": "8D",
+  "status": "PASSED",
+  "test_records_accessed": 0,
+  "training_policy": {
+    "early_stopping_required_for_future_training": true,
+    "maximum_epochs_for_future_training": 100,
+    "training_performed": false
+  },
+  "validation_patients": 4486,
+  "validation_records": 15952
+}
