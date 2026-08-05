@@ -74,7 +74,7 @@
     "minimum_improvement": 0.0002,
     "minimum_learning_rate": 1e-06,
     "non_blocking_transfers": true,
-    "num_workers": 4,
+    "num_workers": 0,
     "optimizer": "AdamW",
     "persistent_workers": false,
     "pin_memory": true,

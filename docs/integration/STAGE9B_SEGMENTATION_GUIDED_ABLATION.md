@@ -29,7 +29,9 @@ Stage 9C comparison. It is not the final test evaluation.
 - Early-stopping patience: 10; minimum AUPRC improvement: 0.0002.
 - Train records per epoch: 6,000; validation records: 3,000.
 - Batch size: 64 for every variant.
-- Windows data-loader workers: 4; prefetch factor: 2.
+- Windows data-loader workers: 0. The four-worker candidate was rejected after
+  repeated sustained-run worker exits despite passing bounded pilots.
+- Prefetch factor: 2 in configuration but inactive when workers are disabled.
 - Pinned memory and non-blocking device transfers: enabled.
 - Persistent workers: disabled to preserve epoch-dependent dataset state.
 - Automatic mixed precision: enabled.
@@ -45,7 +47,11 @@ resume is permitted only when the complete fingerprint matches.
 ## Performance evidence
 
 A bounded non-learning Windows pilot compared 0, 1, 2, and 4 workers across
-all variants. A longer 640-record comparison showed that four workers improved
-loader throughput for every variant. Batch size 64 passed all variants; the
-six-channel variant reserved approximately 4.97 GB on the 8 GB GPU. Detailed
-profiles remain local-only under `artifacts/stage9/stage9b_ablation/profiles`.
+all variants. A longer 640-record comparison showed higher loader throughput
+with four workers, and batch size 64 passed every variant with approximately
+4.97 GB reserved for the six-channel model. Sustained formal execution then
+produced two explicit all-worker exits and one silent process termination.
+The four-worker experiment was archived and invalidated. The formal protocol
+therefore uses zero workers and restarts all variants from epoch 1. Batch size,
+learning rate, record budgets, data order, augmentation, and model contracts
+are unchanged. Detailed profiles and invalidated checkpoints remain local-only.

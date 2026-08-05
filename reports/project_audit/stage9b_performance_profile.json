@@ -4,7 +4,9 @@
   "candidate_worker_counts": [0, 1, 2, 4],
   "formal_learning_rate": 0.0001,
   "learning_rate_scaled_for_batch_size": false,
-  "num_workers_selected": 4,
+  "formal_sustained_worker_failures": 3,
+  "four_worker_formal_protocol_invalidated": true,
+  "num_workers_selected": 0,
   "pilot_type": "BOUNDED_NON_LEARNING",
   "prefetch_factor_selected": 2,
   "test_records_accessed": 0,
@@ -26,5 +28,6 @@
       "batch64_peak_reserved_vram_bytes": 4928307200
     }
   },
-  "windows_worker_crashes": 0
+  "windows_worker_crashes_in_bounded_pilots": 0,
+  "worker_selection_reason": "Zero workers selected after repeated sustained formal-run exits; all variants must restart under the revised fingerprint."
 }
