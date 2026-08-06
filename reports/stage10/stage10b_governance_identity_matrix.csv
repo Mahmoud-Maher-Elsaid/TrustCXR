@@ -1,0 +1,6 @@
+dataset,image_count,annotation_identifier_count,annotation_match_count,patient_identity_rate,study_identity_rate,unique_patient_count,identity_status,license_status,training_ready
+VinBigData,15000,15000,15000,0.0,0.0,0,PATIENT_TRACKING_UNRESOLVED,HUMAN_REVIEW_REQUIRED,False
+RSNA_Pneumonia,26684,26684,26684,1.0,1.0,26684,PATIENT_TRACKING_RESOLVED,HUMAN_REVIEW_REQUIRED,False
+SIIM_Pneumothorax,3205,12047,0,0.0,0.0,0,PATIENT_TRACKING_UNRESOLVED,HUMAN_REVIEW_REQUIRED,False
+TBX11K,0,8399,0,0.0,0.0,0,PATIENT_TRACKING_UNRESOLVED,HUMAN_REVIEW_REQUIRED,False
+CRD_Masks,0,3311,0,0.0,0.0,0,PATIENT_TRACKING_UNRESOLVED,HUMAN_REVIEW_REQUIRED,False

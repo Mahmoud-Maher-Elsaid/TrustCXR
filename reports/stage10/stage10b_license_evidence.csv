@@ -1,0 +1,3 @@
+dataset,relative_path,sha256,bytes,evidence_status
+RSNA_Pneumonia,TrustCXR-Data/06_RSNA_Pneumonia/rsna-pneumonia-detection-challenge/GCP Credits Request Link - RSNA.txt,b90fef158072c2ba6de078d5adba3cdd3acfd4c18bef8eeebb9a84ffdb8bc162,55,LOCAL_DOCUMENT_REQUIRES_HUMAN_REVIEW
+CRD_Masks,TrustCXR-Data/05_CRD_Masks/archive/README.pdf,ee262690f1282b42369e8c0f7bc3f630c5fbb3b8c2acffc173f4da725a716286,719111,LOCAL_DOCUMENT_REQUIRES_HUMAN_REVIEW

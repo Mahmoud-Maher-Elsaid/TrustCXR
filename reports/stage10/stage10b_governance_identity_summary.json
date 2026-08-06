@@ -1,0 +1,13 @@
+{
+  "datasets_reviewed": 5,
+  "gate": "HOLD_FOR_LICENSE_OR_IDENTITY",
+  "identity_index_tracked": false,
+  "license_approvals": 0,
+  "patient_level_rows_tracked": false,
+  "patient_tracking_resolved": 1,
+  "stage": "10B",
+  "status": "PASSED_RESOLUTION_AUDIT",
+  "test_records_accessed": 0,
+  "training_permitted": false,
+  "training_ready_datasets": 0
+}
