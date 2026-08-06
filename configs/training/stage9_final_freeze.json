@@ -1,0 +1,66 @@
+{
+  "stage": "9_FINAL",
+  "status": "FROZEN_BEFORE_TEST_ACCESS",
+  "selected_variant": "original",
+  "architecture": "DenseNet121",
+  "preprocessing": {
+    "variant": "original",
+    "image_size": 224,
+    "rgb_normalization": "ImageNet",
+    "augmentation": false
+  },
+  "checkpoint": "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt",
+  "checkpoint_sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
+  "thresholds": {
+    "policy": "FIXED_0.5_NO_TEST_TUNING",
+    "value": 0.5
+  },
+  "calibration": {
+    "method": "IDENTITY_NO_CALIBRATION",
+    "fitted": false
+  },
+  "label_order": [
+    "Atelectasis",
+    "Cardiomegaly",
+    "Effusion",
+    "Infiltration",
+    "Mass",
+    "Nodule",
+    "Pneumonia",
+    "Pneumothorax",
+    "Consolidation",
+    "Edema",
+    "Emphysema",
+    "Fibrosis",
+    "Pleural_Thickening",
+    "Hernia"
+  ],
+  "source_commit": "0c29f74c5287c6a07e118cd4d0084badf1a7ca79",
+  "configuration_sha256": "75933fad8f47e7d637596edd935b02f8b8f5ed9d104acacc3e67500a9abdbd69",
+  "stage9c_summary_sha256": "5ba06d2f4052651c7e68fe9219f19cc7e2729d6b25ef846e6c0dbc5afe77ccc9",
+  "selection_rationale": "Original was retained because no candidate satisfied both the paired positive-interval rule and the frozen meaningful-delta threshold.",
+  "test_policy": {
+    "split": "test",
+    "expected_records": 17061,
+    "single_evaluation": true,
+    "post_test_tuning": false,
+    "test_records_accessed_before_freeze": 0
+  },
+  "inference": {
+    "batch_size": 64,
+    "num_workers": 0,
+    "automatic_mixed_precision": true
+  },
+  "bootstrap": {
+    "replicates": 2000,
+    "confidence_level": 0.95,
+    "seed": 20260806
+  },
+  "outputs": {
+    "artifacts": "artifacts/stage9/stage9_final_evaluation",
+    "summary": "reports/stage9/stage9_final_summary.json",
+    "per_label": "reports/stage9/stage9_final_per_label_metrics.csv",
+    "intervals": "reports/stage9/stage9_final_bootstrap_intervals.csv",
+    "report": "reports/stage9/STAGE9_FINAL_EVALUATION_REPORT.md"
+  }
+}

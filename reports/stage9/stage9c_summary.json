@@ -1,0 +1,73 @@
+{
+  "bootstrap_replicates": 2000,
+  "config_sha256": "75933fad8f47e7d637596edd935b02f8b8f5ed9d104acacc3e67500a9abdbd69",
+  "gate": "GO_FOR_STAGE_9_FINAL_FREEZE",
+  "git_commit": "0c29f74c5287c6a07e118cd4d0084badf1a7ca79",
+  "patient_leakage_violations": 0,
+  "selected_variant": "original",
+  "selection_rationale": "Original was retained because no candidate satisfied both the paired positive-interval rule and the frozen meaningful-delta threshold.",
+  "stage": "9C",
+  "stage6_checkpoint_reused": false,
+  "stage9b_fingerprint": "c33553f25bf36f031f6aa17a07cf8f2ec045cc3137c8477bd98383971a2c8dd9",
+  "status": "PASSED",
+  "test_predictions_generated": false,
+  "test_records_accessed": 0,
+  "validation_patients": 1619,
+  "validation_records": 3000,
+  "variants": [
+    {
+      "best_epoch": 8,
+      "early_stopping_epoch": 18,
+      "macro_auprc": 0.17950556079308974,
+      "macro_auroc": 0.7637943739228837,
+      "peak_reserved_vram_bytes": 528482304,
+      "runtime_seconds": 76.34826220000105,
+      "trainable_parameters": 6968206,
+      "variant": "original"
+    },
+    {
+      "best_epoch": 7,
+      "early_stopping_epoch": 17,
+      "macro_auprc": 0.16205858088502081,
+      "macro_auroc": 0.7617510577939519,
+      "peak_reserved_vram_bytes": 528482304,
+      "runtime_seconds": 174.93343789999926,
+      "trainable_parameters": 6968206,
+      "variant": "lung_masked"
+    },
+    {
+      "best_epoch": 7,
+      "early_stopping_epoch": 17,
+      "macro_auprc": 0.1838857888165743,
+      "macro_auroc": 0.7764097865925115,
+      "peak_reserved_vram_bytes": 528482304,
+      "runtime_seconds": 97.35028429999511,
+      "trainable_parameters": 6968206,
+      "variant": "anatomy_crop"
+    },
+    {
+      "best_epoch": 8,
+      "early_stopping_epoch": 18,
+      "macro_auprc": 0.1922577077591951,
+      "macro_auroc": 0.7655523578794243,
+      "peak_reserved_vram_bytes": 528482304,
+      "runtime_seconds": 71.13769719999982,
+      "trainable_parameters": 6977614,
+      "variant": "image_plus_masks"
+    }
+  ],
+  "win_regression_counts": {
+    "anatomy_crop": {
+      "per_label_regressions": 1,
+      "per_label_wins": 3
+    },
+    "image_plus_masks": {
+      "per_label_regressions": 0,
+      "per_label_wins": 2
+    },
+    "lung_masked": {
+      "per_label_regressions": 1,
+      "per_label_wins": 1
+    }
+  }
+}
