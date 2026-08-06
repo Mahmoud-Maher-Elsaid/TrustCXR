@@ -10,10 +10,28 @@ from typing import Any
 import numpy as np
 import torch
 from PIL import Image, ImageDraw
-from scripts.localization.run_stage10f_validation_audit import build_frozen_model, collate
 from torch.utils.data import DataLoader
+from torchvision.models.detection import fasterrcnn_resnet50_fpn_v2
+from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
 from trustcxr.detection.stage10e_rsna import RsnaDetectionDataset, box_iou
+
+
+def collate(batch: list[tuple[torch.Tensor, dict[str, torch.Tensor]]]) -> tuple[list, list]:
+    images, targets = zip(*batch, strict=True)
+    return list(images), list(targets)
+
+
+def build_frozen_model(stage10e: dict[str, Any]) -> torch.nn.Module:
+    model = fasterrcnn_resnet50_fpn_v2(
+        weights=None,
+        weights_backbone=None,
+        min_size=stage10e["model"]["minimum_image_size"],
+        max_size=stage10e["model"]["maximum_image_size"],
+    )
+    features = model.roi_heads.box_predictor.cls_score.in_features
+    model.roi_heads.box_predictor = FastRCNNPredictor(features, 2)
+    return model
 
 
 def sha256(path: Path) -> str:

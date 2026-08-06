@@ -23,6 +23,14 @@ def test_stage10g_contract_is_validation_only_and_test_locked() -> None:
     assert config["training_permitted"] is False
 
 
+def test_stage10g_entrypoint_has_no_scripts_package_dependency() -> None:
+    source = (ROOT / "scripts/localization/run_stage10g_validation_failure_analysis.py").read_text(
+        encoding="utf-8"
+    )
+    assert "from scripts." not in source
+    assert "import scripts." not in source
+
+
 def test_lesion_bins_and_detection_counts() -> None:
     bins = {"small": [0.0, 0.02], "medium": [0.02, 0.1], "large": [0.1, 1.0]}
     assert lesion_bin(0.01, bins) == "small"
