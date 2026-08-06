@@ -18,11 +18,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 10C | Pending closure commit | Go for RSNA patient-safe split design | Conservative identity withholding and human license adjudication registry | Localization governance decision | Original Stage 7 | Complete with CRD withheld | CRD inherited terms unresolved; four datasets identity-withheld | 10D |
 | 10D | Pending closure commit | Go for RSNA localization baseline preparation | Deterministic RSNA-only patient split design | Localization cohort design | Original Stage 7 | Complete | None for baseline preparation | 10E |
 | 10E | Pending closure commit | Go for validation localization audit | RSNA Faster R-CNN lung-opacity detection baseline | Lesion localization baseline | Original Stage 7 | Complete | Final test remains locked | 10F |
-| 10F | Pending | Hold until detailed validation evidence | Frozen-checkpoint validation localization audit | Localization sensitivity and small-lesion analysis | Original Stage 7 | Ready to run | Validation AP50, sensitivity, false positives, and small-lesion analysis | Determined by 10F gate |
+| 10F | Pending closure commit | Go for validation failure analysis | Frozen-checkpoint validation localization audit | Localization sensitivity and small-lesion analysis | Original Stage 7 | Complete with material limitation | Small-lesion sensitivity is 0.036145; final test remains locked | 10G |
+| 10G | Pending | Hold until failure evidence | Validation-only size-stratified failure analysis and local overlays | Localization failure characterization | Original Stage 7 | Ready to run | Size-stratified sensitivity and qualitative validation evidence | Determined by 10G gate |
 
 ## Numbering rule
 
-Stage 10F is the next valid identifier. It evaluates the frozen Stage 10E epoch-1 checkpoint on validation only, adding sensitivity, false positives per image, and small-lesion sensitivity. It performs no training and keeps the final split locked.
+Stage 10G is the next valid identifier. It characterizes the Stage 10F small-lesion failure across frozen validation thresholds and lesion-size strata, and writes a bounded set of qualitative overlays to ignored local artifacts. It does not retrain or unlock the final split.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

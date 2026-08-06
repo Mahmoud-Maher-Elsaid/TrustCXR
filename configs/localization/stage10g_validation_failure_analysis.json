@@ -1,0 +1,22 @@
+{
+  "stage": "10G",
+  "dataset": "RSNA_Pneumonia",
+  "checkpoint": "artifacts/stage10/stage10e_rsna_localization/best_checkpoint.pt",
+  "checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "experiment_fingerprint": "841495da782d14041f2a0f4a1f748f2fdd7fd4af732de7e2f45244930d2a323e",
+  "stage10e_config": "configs/localization/stage10e_rsna_localization_baseline.json",
+  "evaluation_split": "validation",
+  "score_thresholds": [0.1, 0.25, 0.5],
+  "iou_threshold": 0.5,
+  "lesion_area_bins": {
+    "small": [0.0, 0.02],
+    "medium": [0.02, 0.1],
+    "large": [0.1, 1.0]
+  },
+  "local_overlay_count": 24,
+  "local_artifact_root": "artifacts/stage10/stage10g_validation_failure_analysis",
+  "final_test_split_locked": true,
+  "final_test_images_accessed": 0,
+  "training_permitted": false,
+  "withheld_datasets": ["VinBigData", "SIIM_Pneumothorax", "TBX11K", "CRD_Masks"]
+}

@@ -1,0 +1,15 @@
+{
+  "checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "false_positives_per_image": 0.368796992481203,
+  "final_test_images_accessed": 0,
+  "gate": "GO_FOR_STAGE_10G_VALIDATION_FAILURE_ANALYSIS",
+  "primary_limitation": "SMALL_LESION_SENSITIVITY_0.036145",
+  "sensitivity_at_score_0_5": 0.49206349206349204,
+  "small_lesion_sensitivity": 0.03614457831325301,
+  "stage": "10F",
+  "status": "FINALIZED_VALIDATION_LOCALIZATION_AUDIT",
+  "test_predictions_generated": false,
+  "training_performed": false,
+  "validation_ap50": 0.33573875507379763,
+  "validation_records": 2660
+}
