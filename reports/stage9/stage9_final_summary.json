@@ -1,0 +1,15 @@
+{
+  "macro_auprc": 0.1540464037093799,
+  "macro_auroc": 0.7287231942931255,
+  "macro_f1_fixed_0_5": 0.20724964429908121,
+  "peak_reserved_vram_bytes": 528482304,
+  "post_test_tuning": false,
+  "runtime_seconds": 443.8871830000062,
+  "selected_variant": "original",
+  "stage": "9_FINAL",
+  "stage6_checkpoint_reused": false,
+  "status": "PASSED",
+  "test_patients": 4715,
+  "test_records": 17061,
+  "test_records_accessed": 17061
+}

@@ -1,13 +1,13 @@
 # Original Stage 8 — Classification–Segmentation Fusion
 
 - Original stage identifier: `8`
-- Canonical repository mapping: `9A, 9B, 9C`
-- Current status: `CURRENTLY_IN_PROGRESS`
+- Canonical repository mapping: `9A, 9B, 9C, 9 Final`
+- Current status: `PARTIALLY_COMPLETED`
 - Objective: Classification–Segmentation Fusion under a research-only, patient-safe contract.
 - Research question: Can this capability be implemented and evaluated without leakage, unsupported labels, or hidden test selection?
 - Why the stage is required: It supplies the evidence required by the downstream gate without implying clinical deployment.
 - Upstream gate: Actual Stage 9A gate.
-- Required inputs: Stage 9B results, paired patient-cluster Stage 9C comparison, and structured lesion evidence remain.
+- Required inputs: Stage 9 classification/segmentation-guidance evaluation is complete; structured lesion evidence remains.
 - Required datasets: The datasets named in the mapped repository reports and their local manifests.
 - Required annotations: The label or mask contracts recorded by the mapped stage reports.
 - Data-readiness checks: source, license status, exact manifests, corrupt/missing files, identity fields, and split feasibility.
@@ -38,8 +38,8 @@
 - Success criteria: The documented gate passes with required metrics, zero prohibited leakage/test selection, complete reports, passing tests, and reproducible lineage.
 - Failure criteria: Missing inputs, incompatible fingerprints, leakage, test access during selection, invalid metrics, incomplete variants, unsafe outputs, or unsupported claims.
 - Recovery procedure: Preserve exact-fingerprint compatible artifacts; quarantine incompatible state with hashes and a manifest; restart only affected work under the unchanged contract.
-- Known limitations: Stage 9B results, paired patient-cluster Stage 9C comparison, and structured lesion evidence remain.
-- Completed components: Stage 9A is complete; worker-0 Stage 9B contract and execution preparation are frozen.
-- Missing components: Stage 9B results, paired patient-cluster Stage 9C comparison, and structured lesion evidence remain.
-- Evidence commit: `45111d6, 1193326, 2417201, ebe9b5a`
-- Downstream gate: Formal Stage 9 closure gate.
+- Known limitations: Stage 9 used internal NIH evaluation and CheXmask pseudo-masks; structured lesion evidence remains.
+- Completed components: Stage 9A cohort, Stage 9B four-variant ablation, Stage 9C paired comparison, and frozen final Stage 9 evaluation.
+- Missing components: Lesion-localization evidence and structured contradiction handling remain.
+- Evidence commit: `45111d6, 0c29f74, 63462ef, pending Stage 9 closure commit`
+- Downstream gate: Stage 10A lesion-localization readiness.

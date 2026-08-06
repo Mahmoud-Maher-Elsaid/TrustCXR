@@ -1,15 +1,15 @@
 # TrustCXR Project Current Status
 
-- Branch at preparation start: `develop`
-- Commit at preparation start: `ebe9b5a948d58d1f97d8945c515ad4afadf1ef32`
-- Current gate: `GO_FOR_STAGE_9B_SEGMENTATION_GUIDED_CLASSIFICATION_ABLATION`
-- Current incomplete stage: actual Stage 9B, corresponding to part of original roadmap Stage 8.
-- Operational blocker addressed: a normal foreground external PowerShell runner avoids Codex-owned long-process lifetime.
-- Frozen protocol: DenseNet-121, ImageNet initialization, four variants, batch 64, worker 0, 6000/3000 records, validation-only selection, test locked, fingerprint `c33553f25bf36f031f6aa17a07cf8f2ec045cc3137c8477bd98383971a2c8dd9`.
-- Completed actual stages: 0–6 foundations/baseline, 7B–7E representation audit, 8A–8E anatomy segmentation, and 9A cohort readiness, subject to their documented limitations.
-- Incomplete stages: Stage 9B results, Stage 9C paired comparison, final Stage 9 evaluation, and every gated future capability in the complete registry.
-- Local-only artifacts: datasets, SQLite indexes, checkpoints, logs, PID files, profiles, patient-level outputs, embeddings, predictions, and recovery archives.
+- Branch: `develop`
+- Commit before Stage 9 closure: `63462ef76ec606925ed35320f1e7fd26f01796a8`
+- Current gate: `GO_FOR_STAGE_10A_LESION_LOCALIZATION_READINESS`
+- Current stage: Stage 10A metadata-only lesion annotation readiness.
+- Frozen Stage 9 model: original DenseNet-121 checkpoint `bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de`.
+- Stage 9 final metrics: Macro AUPRC `0.154046`, Macro AUROC `0.728723`, and Macro F1 at frozen 0.5 `0.207250`.
+- Completed actual stages include Stage 9A, Stage 9B, Stage 9C, and the frozen final Stage 9 evaluation.
+- Incomplete stages: Stage 10A and all downstream gated capabilities.
+- Local-only artifacts: datasets, SQLite indexes, checkpoints, logs, patient-level outputs, embeddings, predictions, and recovery archives.
 - Known limitations: CheXmask pseudo-masks are not manual ground truth; Stage 8 test reuse is disclosed; RAD-DINO NIH exposure is not external validation; licenses and cross-dataset near-duplicates remain unresolved.
-- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\\scripts\\training\\run_stage9b_external.ps1" -PreflightOnly`.
+- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\localization\run_stage10a_annotation_audit.ps1"`.
 
-Stage 9B and all later stages remain incomplete until their real execution and validation gates pass.
+Stage 9 is complete with documented internal-validation limitations. Stage 10A does not authorize training.

@@ -1,12 +1,12 @@
 # Original Stage 7 — Lesion Segmentation and Detection
 
 - Original stage identifier: `7`
-- Canonical repository mapping: `Unassigned future actual stage`
-- Current status: `WAITING_FOR_UPSTREAM_GATE`
+- Canonical repository mapping: `10A readiness audit; later implementation gated by 10A`
+- Current status: `READY_TO_RUN`
 - Objective: Lesion Segmentation and Detection under a research-only, patient-safe contract.
 - Research question: Can this capability be implemented and evaluated without leakage, unsupported labels, or hidden test selection?
 - Why the stage is required: It supplies the evidence required by the downstream gate without implying clinical deployment.
-- Upstream gate: Original Stage 6 anatomy gate and formal Stage 9 closure.
+- Upstream gate: Original Stage 6 anatomy gate and formal Stage 9 closure; both are satisfied.
 - Required inputs: Requires annotation-format, license, identity, and patient-safe split audit after Stage 9 closure.
 - Required datasets: The datasets named in the mapped repository reports and their local manifests.
 - Required annotations: The label or mask contracts recorded by the mapped stage reports.
@@ -24,14 +24,14 @@
 - Test policy: Locked until architecture, preprocessing, checkpoints, thresholds, and calibration are frozen; no test-based selection.
 - Calibration policy: Fit on validation only and version all parameters; document when calibration is not applicable.
 - Statistical analysis: Patient-cluster paired bootstrap and confidence intervals where patient-level paired outputs exist; do not call intervals containing zero equivalence.
-- Expected source files: no implementation.
+- Expected source files: Stage 10A metadata-only annotation readiness audit.
 - Expected config files: A tracked frozen configuration only after upstream evidence resolves the contract.
-- Expected scripts: A real foreground launcher, monitor/status reader, and completion validator only after implementation exists.
+- Expected scripts: `scripts/localization/run_stage10a_annotation_audit.ps1` for readiness only; no training launcher is authorized.
 - Expected tests: Contracts, labels, leakage, test locking, resume fingerprint, metrics, and failure/refusal behavior.
 - Expected tracked reports: Aggregate metrics, scientific limitations, gate decision, and reproducibility evidence without patient rows.
 - Expected local artifacts: Checkpoints, patient-level predictions, databases, logs, embeddings, and recovery archives remain ignored.
 - Preflight command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\project\\project_preflight.ps1`
-- Long-running command: UNRESOLVED — REQUIRES ANNOTATION AUDIT: command follows a frozen localization contract.
+- Long-running command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\localization\run_stage10a_annotation_audit.ps1` runs metadata readiness only.
 - Monitor command: UNRESOLVED — REQUIRES UPSTREAM RESULT: no runnable monitor is claimed.
 - Resume command: UNRESOLVED — REQUIRES UPSTREAM RESULT: exact-fingerprint resume must be implemented before execution.
 - Validation command: Run the stage-specific validator only after a real implementation is registered.
@@ -39,7 +39,7 @@
 - Failure criteria: Missing inputs, incompatible fingerprints, leakage, test access during selection, invalid metrics, incomplete variants, unsafe outputs, or unsupported claims.
 - Recovery procedure: Preserve exact-fingerprint compatible artifacts; quarantine incompatible state with hashes and a manifest; restart only affected work under the unchanged contract.
 - Known limitations: Requires annotation-format, license, identity, and patient-safe split audit after Stage 9 closure.
-- Completed components: No lesion-localization implementation is claimed.
-- Missing components: Requires annotation-format, license, identity, and patient-safe split audit after Stage 9 closure.
-- Evidence commit: `UNRESOLVED — REQUIRES UPSTREAM RESULT`
+- Completed components: Stage 10A readiness tooling is prepared; no lesion-localization model is claimed.
+- Missing components: License verification, patient identity resolution, patient-safe split contract, baseline selection, and training remain gated.
+- Evidence commit: `Pending Stage 10A preparation commit`
 - Downstream gate: Original Stage 8 evidence-fusion gate.

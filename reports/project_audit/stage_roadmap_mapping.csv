@@ -5,4 +5,7 @@
 "7","pre-45111d6","GO_FOR_STAGE_8","RAD-DINO probes/comparison/spatial audit","representation audit","advanced representation","COMPLETE","no clinical localization claim","8"
 "8","pre-45111d6","GO_FOR_STAGE_9A","CheXmask pseudo-mask anatomy segmentation","anatomy segmentation","segmentation","COMPLETE_WITH_LIMITATIONS","manual-ground-truth external validation","9A"
 "9A","45111d6","GO_FOR_STAGE_9B","shared classification cohort","integration data contract","fusion readiness","COMPLETE","none for cohort gate","9B"
-"9B","1193326;2417201;ebe9b5a","CLOSED","frozen worker-0 segmentation-guided ablation workflow","classification/segmentation integration","fusion","PREPARED_RESULTS_INCOMPLETE","external foreground four-variant run and completion validation","9C after 9B gate"
+"9B","0c29f74","GO_FOR_STAGE_9C","completed four-variant segmentation-guided ablation","classification/segmentation integration","original Stage 8","COMPLETE","none","9C"
+"9C","63462ef","GO_FOR_STAGE_9_FINAL_FREEZE","paired patient-cluster validation comparison","formal ablation selection","original Stage 8","COMPLETE","none","9 Final"
+"9 Final","pending closure commit","GO_FOR_STAGE_10A","frozen one-time internal test evaluation","final Stage 9 evidence","original Stage 8","COMPLETE_WITH_LIMITATIONS","external validation remains","10A"
+"10A","pending","HOLD_FOR_READINESS_EVIDENCE","metadata-only localization annotation audit","lesion-localization readiness","original Stage 7","READY_TO_RUN","license and identity resolution","determined by 10A gate"

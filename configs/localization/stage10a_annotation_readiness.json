@@ -1,0 +1,52 @@
+{
+  "stage": "10A",
+  "task": "lesion_localization_annotation_readiness",
+  "training_permitted": false,
+  "datasets": [
+    {
+      "name": "VinBigData",
+      "metadata": "TrustCXR-Data/02_VinBigData/vinbigdata-chest-xray-abnormalities-detection/train.csv",
+      "annotation_type": "BOUNDING_BOX",
+      "required_columns": ["image_id", "class_name", "class_id", "x_min", "y_min", "x_max", "y_max"],
+      "identity_contract": "IMAGE_ID_ONLY_PATIENT_ID_UNRESOLVED",
+      "license_status": "UNRESOLVED_REQUIRES_LICENSE_VERIFICATION"
+    },
+    {
+      "name": "RSNA_Pneumonia",
+      "metadata": "TrustCXR-Data/06_RSNA_Pneumonia/rsna-pneumonia-detection-challenge/stage_2_train_labels.csv",
+      "annotation_type": "BOUNDING_BOX",
+      "required_columns": ["patientId", "x", "y", "width", "height", "Target"],
+      "identity_contract": "PATIENT_ID_AVAILABLE",
+      "license_status": "UNRESOLVED_REQUIRES_LICENSE_VERIFICATION"
+    },
+    {
+      "name": "SIIM_Pneumothorax",
+      "metadata": "TrustCXR-Data/08_SIIM_Pneumothorax/siim-acr-pneumothorax-segmentation/stage_2_train.csv",
+      "annotation_type": "PIXEL_RLE",
+      "required_columns": ["ImageId", "EncodedPixels"],
+      "identity_contract": "IMAGE_ID_ONLY_PATIENT_ID_UNRESOLVED",
+      "license_status": "UNRESOLVED_REQUIRES_LICENSE_VERIFICATION"
+    },
+    {
+      "name": "TBX11K",
+      "metadata": "TrustCXR-Data/09_TBX11K/archive/tbx11k-simplified/data.csv",
+      "annotation_type": "SERIALIZED_BOUNDING_BOX",
+      "required_columns": ["fname", "source", "bbox", "target", "tb_type"],
+      "identity_contract": "FILENAME_ONLY_PATIENT_ID_UNRESOLVED",
+      "license_status": "UNRESOLVED_REQUIRES_LICENSE_VERIFICATION"
+    },
+    {
+      "name": "CRD_Masks",
+      "metadata": "TrustCXR-Data/05_CRD_Masks/archive/CXR_Selected-Image-Dataset_Log.csv",
+      "annotation_type": "ANATOMY_MASK_NOT_LESION_GROUND_TRUTH",
+      "required_columns": ["Type", "Dataset", "New File Name"],
+      "identity_contract": "SOURCE_DEPENDENT_IDENTITY_UNRESOLVED",
+      "license_status": "UNRESOLVED_REQUIRES_LICENSE_VERIFICATION"
+    }
+  ],
+  "reports": {
+    "summary": "reports/stage10/stage10a_annotation_readiness.json",
+    "matrix": "reports/stage10/stage10a_annotation_matrix.csv",
+    "report": "reports/stage10/STAGE10A_LESION_LOCALIZATION_READINESS_REPORT.md"
+  }
+}
