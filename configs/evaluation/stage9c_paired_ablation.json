@@ -1,0 +1,39 @@
+{
+  "stage": "9C",
+  "stage9b_config": "configs/training/stage9b_segmentation_guided_ablation.json",
+  "stage9b_summary": "reports/stage9/stage9b_summary.json",
+  "stage9b_fingerprint": "c33553f25bf36f031f6aa17a07cf8f2ec045cc3137c8477bd98383971a2c8dd9",
+  "variants": {
+    "original": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
+    "lung_masked": "3b6d87672dea2cf86828d1ef1a66417be23b6795979f6ed8324cf75afb941c19",
+    "anatomy_crop": "ac13818197788aca477dd243f2322e36519ad3887184f82f8ce3e4d5701929e4",
+    "image_plus_masks": "f30955a656021b1d716c781c0aed245b1b2bec040b71b627eff04ea0dbf5c96f"
+  },
+  "inference": {
+    "batch_size": 64,
+    "num_workers": 0,
+    "automatic_mixed_precision": true
+  },
+  "bootstrap": {
+    "replicates": 2000,
+    "confidence_level": 0.95,
+    "seed": 20260806,
+    "minimum_valid_replicates": 1900
+  },
+  "selection": {
+    "reference_variant": "original",
+    "primary_metric": "macro_auprc",
+    "secondary_metric": "macro_auroc",
+    "minimum_meaningful_delta": 0.001,
+    "require_positive_primary_delta_interval": true,
+    "test_records_accessed": 0,
+    "test_split_locked": true
+  },
+  "artifacts": "artifacts/stage9/stage9c_comparison",
+  "reports": {
+    "summary": "reports/stage9/stage9c_summary.json",
+    "per_label": "reports/stage9/stage9c_per_label_metrics.csv",
+    "bootstrap": "reports/stage9/stage9c_bootstrap_intervals.csv",
+    "report": "reports/stage9/STAGE9C_PAIRED_ABLATION_COMPARISON_REPORT.md"
+  }
+}
