@@ -76,6 +76,7 @@ def test_external_launcher_contains_safety_and_recovery_contracts() -> None:
         "Move-Item -LiteralPath $source -Destination $archive",
         "Resume requires at least one exact-fingerprint checkpoint",
         "Current commit is outside the allowed worker-0 Stage 9B lineage",
+        "New-Item -ItemType File -Path $stderr -Force",
     ):
         assert marker in text
     assert "Start-Process" not in text

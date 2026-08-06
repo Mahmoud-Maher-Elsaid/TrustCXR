@@ -61,6 +61,8 @@ $stamp = Get-Date -Format "yyyyMMdd_HHmmss"
 $stdout = Join-Path $runtime "stage9b_${stamp}_stdout.log"
 $stderr = Join-Path $runtime "stage9b_${stamp}_stderr.log"
 $manifestPath = Join-Path $runtime "stage9b_${stamp}_run_manifest.json"
+New-Item -ItemType File -Path $stdout -Force | Out-Null
+New-Item -ItemType File -Path $stderr -Force | Out-Null
 $mode = if ($SmokeTest) { "SMOKE_TEST" } elseif ($Resume) { "RESUME" } else { "FRESH_START" }
 $manifest = [ordered]@{
     stage = "9B"; mode = $mode; status = "RUNNING"; launcher_pid = $PID
