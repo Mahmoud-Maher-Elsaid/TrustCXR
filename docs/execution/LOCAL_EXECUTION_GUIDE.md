@@ -29,6 +29,21 @@ Preparation began on branch `develop` at commit `ebe9b5a948d58d1f97d8945c515ad4a
 
 ## Exact Stage 9B commands
 
+### GPU TDR recovery order
+
+The 2026-08-06 failed run is classified as `FAILED_GPU_TDR` from matching Windows `LiveKernelEvent 141`, `nvlddmkm.sys`, and WATCHDOG evidence. Runtime hardening improves recovery and diagnostic durability but cannot guarantee that a driver reset will not recur. Windows Registry TDR changes and driver changes are outside this workflow.
+
+1. Close Webots, Webots controllers, and unrelated GPU-heavy applications.
+2. Restart Windows after the TDR. The launcher refuses while a 141/117 event exists after the current boot.
+3. Run the Stage 9B preflight.
+4. Run the bounded GPU stability smoke test. It is diagnostic only and cannot prove multi-hour stability.
+5. Run the status checker and confirm `PROVEN_RESUME_ELIGIBLE`.
+6. Run `-Resume` only while the integrity sidecar checksum matches the unchanged checkpoint. The proven epoch-1 checkpoint resumes at epoch 2.
+7. Run the monitor in a second PowerShell window as one-shot snapshots.
+8. Run completion validation only after all four variants finish.
+9. Never use test data for model selection.
+10. Never use `-FreshStart` over recoverable checkpoints without preserving evidence.
+
 ```powershell
 Set-Location -LiteralPath "F:\AI\TrustCXR"
 
@@ -37,8 +52,14 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass \`
     -PreflightOnly
 
 powershell.exe -NoProfile -ExecutionPolicy Bypass \`
+    -File ".\scripts\training\test_stage9b_gpu_stability.ps1"
+
+powershell.exe -NoProfile -ExecutionPolicy Bypass \`
+    -File ".\scripts\training\check_stage9b_status.ps1"
+
+powershell.exe -NoProfile -ExecutionPolicy Bypass \`
     -File ".\scripts\training\run_stage9b_external.ps1" \`
-    -FreshStart
+    -Resume
 ```
 
 In a second PowerShell, run one-shot monitoring whenever needed:
@@ -84,12 +105,13 @@ Only launchers registered by `scripts/project/run_stage.ps1` are real. The compl
 
 ## Troubleshooting
 
-- Python exits with `-1`: preserve logs and checkpoint state; run outside Codex and do not change the scientific protocol.
+- Python exits with `-1`: preserve logs, manifest, event sidecar, and checkpoint state; classify GPU TDR, external termination, and Python failure separately.
+- LiveKernelEvent 141/117: restart Windows, close Webots/GPU applications, then run preflight and the bounded stability smoke before an eligible resume.
 - CUDA OOM: preserve evidence and stop; do not alter only one variant or silently reduce the batch.
 - Fingerprint mismatch: do not resume; archive incompatible state with hashes.
 - Stale PID: the external launcher removes it only when the recorded process is absent.
 - Dirty Git tree: inspect and back up changes; the launcher refuses.
-- Missing checkpoint: completion validation fails; preserve completed compatible variants.
+- Missing checkpoint or integrity sidecar: resume refuses; preserve evidence and rerun the CPU integrity audit before deciding on a fresh start.
 - Worker failure: current contract uses worker 0; do not mix four-worker artifacts.
 - Test access or patient leakage detected: invalidate the gate and preserve evidence.
 - Missing report: run the finalizer only after all four completed summaries exist.

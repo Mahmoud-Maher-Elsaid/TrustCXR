@@ -71,3 +71,53 @@ function Get-Stage9BCheckpointMetadata {
     $lines = & $Paths.Python $probe checkpoints @($files.FullName)
     return @($lines | ForEach-Object { $_ | ConvertFrom-Json })
 }
+
+function Get-Stage9BTdrEvents {
+    param([datetime]$StartTime, [datetime]$EndTime)
+    $events = @()
+    $application = @(Get-WinEvent -FilterHashtable @{LogName="Application";StartTime=$StartTime;EndTime=$EndTime} -ErrorAction SilentlyContinue)
+    foreach ($event in $application) {
+        $message = [string]$event.Message
+        if ($message -notmatch "LiveKernelEvent|nvlddmkm|display driver|WATCHDOG" -and $message -notmatch "P1:\s*(141|117)") { continue }
+        $signature = if ($message -match "P1:\s*(141|117)") { $Matches[1] } else { $null }
+        $driver = if ($message -match "(?i)(nvlddmkm\.sys)") { $Matches[1] } else { $null }
+        $watchdog = if ($message -match "(?im)^\s*(\\\\\?\\[^\r\n]*WATCHDOG[^\r\n]*\.dmp)") { $Matches[1].Trim() } else { $null }
+        $events += [pscustomobject][ordered]@{
+            timestamp=$event.TimeCreated.ToString("o"); provider=$event.ProviderName; event_id=$event.Id
+            problem_signature=$signature; driver_image=$driver; watchdog_dump_path=$watchdog; message=$message
+        }
+    }
+    $system = @(Get-WinEvent -FilterHashtable @{LogName="System";StartTime=$StartTime;EndTime=$EndTime} -ErrorAction SilentlyContinue)
+    foreach ($event in $system) {
+        if ($event.ProviderName -notmatch "nvlddmkm|Display" -and [string]$event.Message -notmatch "display driver|TDR|reset") { continue }
+        $events += [pscustomobject][ordered]@{
+            timestamp=$event.TimeCreated.ToString("o"); provider=$event.ProviderName; event_id=$event.Id
+            problem_signature=$null; driver_image=if($event.ProviderName -match "nvlddmkm"){"nvlddmkm.sys"}else{$null}
+            watchdog_dump_path=$null; message=[string]$event.Message
+        }
+    }
+    return @($events | Sort-Object timestamp -Unique)
+}
+
+function Get-Stage9BGpuSnapshot {
+    $gpu = (& nvidia-smi --query-gpu=name,driver_version,utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader,nounits 2>$null)
+    $compute = @(& nvidia-smi --query-compute-apps=pid,process_name,used_memory --format=csv,noheader,nounits 2>$null)
+    return [ordered]@{gpu=$gpu; active_compute_processes=$compute}
+}
+
+function Assert-Stage9BProcessSafety {
+    $processes = @(Get-CimInstance Win32_Process -ErrorAction SilentlyContinue)
+    $trustCxr = @($processes | Where-Object { $_.Name -match "^python(w)?\.exe$" -and $_.CommandLine -match "TrustCXR|run_stage9b|stage9b_ablation" })
+    if ($trustCxr.Count) { throw "A competing TrustCXR Python process is active. Stop it manually before Stage 9B." }
+    $webots = @($processes | Where-Object { $_.Name -match "^(webots|webots-bin)(\.exe)?$" -or $_.CommandLine -match "(?i)webots.*controller" })
+    if ($webots.Count) { throw "Webots is active. Close Webots and its controllers manually before Stage 9B." }
+    $gpu = Get-Stage9BGpuSnapshot
+    if ($gpu.active_compute_processes.Count) { throw "Another GPU compute process is active: $($gpu.active_compute_processes -join '; '). Stop it manually before Stage 9B." }
+    $boot = (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+    $recentTdr = @(Get-Stage9BTdrEvents -StartTime $boot -EndTime (Get-Date))
+    if ($recentTdr.Count) {
+        $latest = ($recentTdr | Sort-Object timestamp -Descending | Select-Object -First 1).timestamp
+        throw "A GPU TDR event occurred after the latest Windows boot ($latest). Restart Windows before attempting Stage 9B again. Registry TDR changes are not part of this workflow."
+    }
+    return $gpu
+}

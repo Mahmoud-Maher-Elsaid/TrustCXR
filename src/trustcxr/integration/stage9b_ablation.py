@@ -8,6 +8,8 @@ import math
 import random
 import re
 import sqlite3
+import subprocess
+import sys
 import time
 from pathlib import Path
 from typing import Any
@@ -22,7 +24,16 @@ from torchvision.models import DenseNet121_Weights, densenet121
 from torchvision.transforms import InterpolationMode
 from torchvision.transforms import functional as vision_functional
 
+from trustcxr.runtime.stage9b_recovery import (
+    atomic_torch_save,
+    atomic_write_jsonl,
+    print_exception_durably,
+)
 from trustcxr.segmentation.chexmask import CheXmaskRecord, decode_anatomy_masks
+
+FROZEN_STAGE9B_SCIENTIFIC_SOURCE_SHA256 = (
+    "6aa43db86633d866a677ecdc89888fb8b2b8c0b1bde2087ab277e5f800317b52"
+)
 
 LABELS = (
     "Atelectasis",
@@ -680,7 +691,11 @@ def experiment_contract(
         "config_sha256": file_sha256(config_path),
         "cohort_database_sha256": file_sha256(cohort_database),
         "segmentation_database_sha256": file_sha256(segmentation_database),
-        "source_sha256": file_sha256(source_path or Path(__file__)),
+        "source_sha256": (
+            file_sha256(source_path)
+            if source_path is not None
+            else FROZEN_STAGE9B_SCIENTIFIC_SOURCE_SHA256
+        ),
     }
 
 
@@ -708,6 +723,27 @@ def write_csv(
         writer.writerows(rows)
 
 
+def checkpoint_resume_is_eligible(
+    checkpoint_path: Path,
+    checkpoint: dict[str, Any],
+    fingerprint: str,
+) -> bool:
+    if checkpoint.get("config_fingerprint") != fingerprint:
+        return False
+    if checkpoint.get("checkpoint_schema_version", 0) >= 2:
+        return True
+    integrity_path = checkpoint_path.with_suffix(".integrity.json")
+    if not integrity_path.is_file():
+        return False
+    sidecar = json.loads(integrity_path.read_text(encoding="utf-8"))
+    return bool(
+        sidecar.get("status") == "PROVEN_RESUME_ELIGIBLE"
+        and sidecar.get("checkpoint_sha256") == file_sha256(checkpoint_path)
+        and sidecar.get("config_fingerprint") == fingerprint
+        and sidecar.get("resume_epoch") == int(checkpoint["epoch"]) + 1
+    )
+
+
 def train_variant(
     *,
     variant: str,
@@ -715,6 +751,7 @@ def train_variant(
     cohort_index: CohortIndex,
     fingerprint: str,
     contract: dict[str, str],
+    git_commit: str,
     device: torch.device,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     training = config["training"]
@@ -723,6 +760,7 @@ def train_variant(
     completed_path = artifact_root / "completed_summary.json"
     last_checkpoint = artifact_root / "last_checkpoint.pt"
     best_checkpoint = artifact_root / "best_checkpoint.pt"
+    durable_history = artifact_root / "epoch_history.jsonl"
 
     if completed_path.is_file():
         existing = json.loads(completed_path.read_text(encoding="utf-8"))
@@ -794,6 +832,7 @@ def train_variant(
     start_epoch = 1
     best_epoch = 0
     best_auprc = -math.inf
+    best_auroc = -math.inf
     patience = 0
     history: list[dict[str, Any]] = []
     if last_checkpoint.is_file():
@@ -802,7 +841,7 @@ def train_variant(
             map_location="cpu",
             weights_only=False,
         )
-        if checkpoint.get("config_fingerprint") == fingerprint:
+        if checkpoint_resume_is_eligible(last_checkpoint, checkpoint, fingerprint):
             model.load_state_dict(checkpoint["model"])
             optimizer.load_state_dict(checkpoint["optimizer"])
             scheduler.load_state_dict(checkpoint["scheduler"])
@@ -810,11 +849,23 @@ def train_variant(
             start_epoch = int(checkpoint["epoch"]) + 1
             best_epoch = int(checkpoint["best_epoch"])
             best_auprc = float(checkpoint["best_auprc"])
+            best_auroc = float(
+                checkpoint.get(
+                    "best_auroc",
+                    checkpoint["history"][int(checkpoint["best_epoch"]) - 1][
+                        "validation_macro_auroc"
+                    ],
+                )
+            )
             patience = int(checkpoint["patience"])
             history = list(checkpoint["history"])
             print(
                 f"Resuming {variant} from epoch {start_epoch}.",
                 flush=True,
+            )
+        else:
+            raise RuntimeError(
+                f"Resume refused for {variant}: exact checkpoint integrity evidence is missing."
             )
 
     validation_loader = build_loader(
@@ -878,41 +929,47 @@ def train_variant(
             "validation_records": len(validation_identifiers),
         }
         history.append(history_row)
+        atomic_write_jsonl(history, durable_history)
         improved = validation_auprc > (best_auprc + float(training["minimum_improvement"]))
         if improved:
             best_auprc = validation_auprc
+            best_auroc = validation_auroc
             best_epoch = epoch
             patience = 0
-            torch.save(
-                {
-                    "config_fingerprint": fingerprint,
-                    "experiment_contract": contract,
-                    "variant": variant,
-                    "epoch": epoch,
-                    "model": model.state_dict(),
-                    "validation": validation,
-                },
-                best_checkpoint,
-            )
         else:
             patience += 1
-        torch.save(
-            {
-                "config_fingerprint": fingerprint,
-                "experiment_contract": contract,
-                "variant": variant,
-                "epoch": epoch,
-                "best_epoch": best_epoch,
-                "best_auprc": best_auprc,
-                "patience": patience,
-                "model": model.state_dict(),
-                "optimizer": optimizer.state_dict(),
-                "scheduler": scheduler.state_dict(),
-                "scaler": scaler.state_dict(),
-                "history": history,
-            },
-            last_checkpoint,
-        )
+        checkpoint_payload = {
+            "checkpoint_schema_version": 2,
+            "stage": "9B",
+            "config_fingerprint": fingerprint,
+            "experiment_fingerprint": fingerprint,
+            "config_sha256": contract["config_sha256"],
+            "experiment_contract": contract,
+            "runtime_source_sha256": file_sha256(Path(__file__)),
+            "git_commit": git_commit,
+            "variant": variant,
+            "epoch": epoch,
+            "completed_epoch": epoch,
+            "model_architecture": "DenseNet121",
+            "optimizer_contract": "AdamW_lr_0.0001_weight_decay_0.0001",
+            "model": model.state_dict(),
+            "optimizer": optimizer.state_dict(),
+            "scheduler": scheduler.state_dict(),
+            "scaler": scaler.state_dict(),
+            "best_epoch": best_epoch,
+            "best_auprc": best_auprc,
+            "best_auroc": best_auroc,
+            "patience": patience,
+            "seed": seed,
+            "history": history,
+            "test_records_accessed": 0,
+            "stage6_checkpoint_reused": False,
+        }
+        if improved:
+            best_payload = dict(checkpoint_payload)
+            best_payload["validation"] = validation
+            atomic_torch_save(best_payload, best_checkpoint)
+        atomic_torch_save(checkpoint_payload, last_checkpoint)
         print(
             f"{variant} epoch {epoch}/{training['maximum_epochs']} "
             f"loss={train_loss:.5f} "
@@ -1024,7 +1081,6 @@ def run_ablation(
     project_root: Path,
     config_path: Path,
 ) -> dict[str, Any]:
-    del project_root
     config = json.loads(config_path.read_text(encoding="utf-8"))
     cohort_database = Path(config["cohort"]["database_path"])
     segmentation_database = Path(config["cohort"]["segmentation_database_path"])
@@ -1058,6 +1114,10 @@ def run_ablation(
 
     device = torch.device("cuda")
     cohort_index = CohortIndex(cohort_database)
+    git_commit = subprocess.check_output(
+        ["git", "-C", str(project_root), "rev-parse", "HEAD"],
+        text=True,
+    ).strip()
     variants: list[dict[str, Any]] = []
     histories: list[dict[str, Any]] = []
     for variant in config["variants"]:
@@ -1068,6 +1128,7 @@ def run_ablation(
             cohort_index=cohort_index,
             fingerprint=fingerprint,
             contract=contract,
+            git_commit=git_commit,
             device=device,
         )
         variants.append(result)
@@ -1169,13 +1230,23 @@ def run_ablation(
     return summary
 
 
+def run_ablation_guarded(project_root: Path, config_path: Path) -> int:
+    try:
+        run_ablation(project_root, config_path)
+    except Exception as exc:
+        print_exception_durably(exc)
+        if "cuda" in str(exc).lower():
+            print("TRUSTCXR_FAILURE_CLASS=FAILED_CUDA_EXCEPTION", file=sys.stderr, flush=True)
+        return 1
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("train",))
     parser.add_argument("--config", type=Path, required=True)
     arguments = parser.parse_args()
-    run_ablation(Path.cwd(), arguments.config)
-    return 0
+    return run_ablation_guarded(Path.cwd(), arguments.config)
 
 
 if __name__ == "__main__":

@@ -74,13 +74,41 @@ def test_external_launcher_contains_safety_and_recovery_contracts() -> None:
         "Get-Process -Id",
         "Remove-Item -LiteralPath $pidPath",
         "Move-Item -LiteralPath $source -Destination $archive",
-        "Resume requires at least one exact-fingerprint checkpoint",
+        "Resume refused: checkpoint or integrity sidecar is missing",
         "Current commit is outside the allowed worker-0 Stage 9B lineage",
-        "New-Item -ItemType File -Path $stderr -Force",
+        "IO.StreamWriter",
+        "PYTHONUNBUFFERED",
+        "PYTHONFAULTHANDLER",
+        "TORCH_SHOW_CPP_STACKTRACES",
+        "PROVEN_RESUME_ELIGIBLE",
+        "failure_classification",
+        "Diagnostics.ProcessStartInfo",
+        "StandardError.ReadLineAsync",
     ):
         assert marker in text
     assert "Start-Process" not in text
     assert "-WindowStyle Hidden" not in text
+    assert "Stop-Process" not in text
+
+
+def test_preflight_refuses_webots_recent_tdr_and_competing_processes() -> None:
+    helpers = (ROOT / "scripts/project/stage9_helpers.ps1").read_text(encoding="utf-8")
+    assert "Webots is active" in helpers
+    assert "A GPU TDR event occurred after the latest Windows boot" in helpers
+    assert "A competing TrustCXR Python process is active" in helpers
+    assert "Restart Windows before attempting Stage 9B again" in helpers
+    assert "Stop-Process" not in helpers
+
+
+def test_gpu_stability_smoke_is_isolated_and_test_locked() -> None:
+    wrapper = (ROOT / "scripts/training/test_stage9b_gpu_stability.ps1").read_text(encoding="utf-8")
+    python = (ROOT / "scripts/training/stage9b_gpu_stability.py").read_text(encoding="utf-8")
+    assert "cache\\stage9b_gpu_stability_" in wrapper
+    assert "new_tdr_events" in wrapper
+    assert 'cohort.identifiers("train")' in python
+    assert 'cohort.identifiers("validation")' in python
+    assert 'identifiers("test")' not in python
+    assert "formal_checkpoint_created" in python
 
 
 def test_monitor_is_read_only_by_contract() -> None:

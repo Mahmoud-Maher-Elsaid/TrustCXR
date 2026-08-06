@@ -102,6 +102,9 @@
         "Stage 9B checkpoints and logs"
       ],
       "prerequisites": [
+        "Windows restarted after the latest TDR",
+        "bounded GPU stability smoke passed",
+        "PROVEN_RESUME_ELIGIBLE checksum-bound integrity sidecar",
         "exact fingerprint compatibility"
       ],
       "expected_exit_code": 0,
@@ -195,6 +198,40 @@
       "safe_to_resume": false,
       "monitor_command": "",
       "validation_command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\evaluation\\validate_stage9b_completion.ps1\""
+    },
+    {
+      "id": "stage9b_gpu_stability",
+      "stage": "9B",
+      "name": "Bounded GPU stability diagnostic",
+      "script": "scripts/training/test_stage9b_gpu_stability.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\test_stage9b_gpu_stability.ps1\"",
+      "inputs": ["frozen Stage 9B config", "train and validation records only"],
+      "outputs": [],
+      "local_only_outputs": ["cache/stage9b_gpu_stability_*/gpu_stability_report.json"],
+      "prerequisites": ["Windows restarted after TDR", "Webots and competing GPU processes closed"],
+      "expected_exit_code": 0,
+      "long_running": false,
+      "safe_to_resume": false,
+      "monitor_command": "",
+      "validation_command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\check_stage9b_status.ps1\""
+    },
+    {
+      "id": "stage9b_failure_classification",
+      "stage": "9B",
+      "name": "Read-only Windows GPU failure classification",
+      "script": "scripts/training/classify_stage9b_failure.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\classify_stage9b_failure.ps1\" -Manifest <local-run-manifest>",
+      "inputs": ["local run manifest", "stderr log", "Windows event metadata"],
+      "outputs": [],
+      "local_only_outputs": ["versioned recovery classification and event sidecars"],
+      "prerequisites": ["failed local run manifest"],
+      "expected_exit_code": 0,
+      "long_running": false,
+      "safe_to_resume": false,
+      "monitor_command": "",
+      "validation_command": ""
     },
     {
       "id": "stage9c_compare",
