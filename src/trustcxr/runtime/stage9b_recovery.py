@@ -24,6 +24,12 @@ class FailureClassification(StrEnum):
     FAILED_UNKNOWN = "FAILED_UNKNOWN"
 
 
+class CurrentBootTdrStatus(StrEnum):
+    CURRENT_BOOT_CONFIRMED_TDR = "CURRENT_BOOT_CONFIRMED_TDR"
+    STALE_WER_REPORT_REPUBLISHED_AFTER_BOOT = "STALE_WER_REPORT_REPUBLISHED_AFTER_BOOT"
+    NO_CURRENT_BOOT_TDR = "NO_CURRENT_BOOT_TDR"
+
+
 def _parse_time(value: str | datetime) -> datetime:
     return value if isinstance(value, datetime) else datetime.fromisoformat(value)
 
@@ -57,6 +63,50 @@ def nearby_tdr_events(
             enriched["seconds_from_process_end"] = (timestamp - end).total_seconds()
             matches.append(enriched)
     return sorted(matches, key=lambda item: abs(item["seconds_from_process_end"]))
+
+
+def classify_current_boot_tdr(
+    events: list[dict[str, Any]],
+    boot_time: str | datetime,
+    *,
+    dump_match_window_seconds: float = 600.0,
+) -> tuple[CurrentBootTdrStatus, list[dict[str, Any]]]:
+    boot = _parse_time(boot_time)
+    confirmed: list[dict[str, Any]] = []
+    stale_wer: list[dict[str, Any]] = []
+    for event in events:
+        if not event.get("timestamp"):
+            continue
+        event_time = _parse_time(event["timestamp"])
+        if event_time < boot:
+            continue
+        kind = str(event.get("evidence_kind", ""))
+        provider = str(event.get("provider", "")).lower()
+        signature = str(event.get("problem_signature", ""))
+        if kind == "SYSTEM_GPU_EVENT" and (provider == "display" or "nvlddmkm" in provider):
+            confirmed.append(event)
+            continue
+        dump_time_raw = event.get("watchdog_dump_timestamp")
+        dump_time = _parse_time(dump_time_raw) if dump_time_raw else None
+        if kind == "WATCHDOG_FILE" and dump_time and dump_time >= boot:
+            confirmed.append(event)
+            continue
+        if kind != "WER_LIVE_KERNEL_EVENT" or signature not in {"141", "117"}:
+            continue
+        dump_matches = bool(
+            dump_time
+            and dump_time >= boot
+            and abs((dump_time - event_time).total_seconds()) <= dump_match_window_seconds
+        )
+        if dump_matches:
+            confirmed.append(event)
+        else:
+            stale_wer.append(event)
+    if confirmed:
+        return CurrentBootTdrStatus.CURRENT_BOOT_CONFIRMED_TDR, confirmed
+    if stale_wer:
+        return CurrentBootTdrStatus.STALE_WER_REPORT_REPUBLISHED_AFTER_BOOT, stale_wer
+    return CurrentBootTdrStatus.NO_CURRENT_BOOT_TDR, []
 
 
 def classify_failure(

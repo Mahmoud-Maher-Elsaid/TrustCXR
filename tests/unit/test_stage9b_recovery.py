@@ -8,8 +8,10 @@ import torch
 
 from trustcxr.integration.stage9b_ablation import checkpoint_resume_is_eligible
 from trustcxr.runtime.stage9b_recovery import (
+    CurrentBootTdrStatus,
     FailureClassification,
     atomic_torch_save,
+    classify_current_boot_tdr,
     classify_failure,
     nearby_tdr_events,
 )
@@ -43,6 +45,54 @@ def test_event_141_and_117_classify_as_gpu_tdr() -> None:
 
 def test_tdr_event_window_excludes_distant_event() -> None:
     assert nearby_tdr_events([_event("141", 181)], NOW) == []
+
+
+def test_old_crash_republished_by_wer_after_reboot_is_stale() -> None:
+    boot = NOW + timedelta(hours=4)
+    event = _event("141", seconds=4 * 3600 + 20)
+    event["evidence_kind"] = "WER_LIVE_KERNEL_EVENT"
+    event["watchdog_dump_timestamp"] = (NOW - timedelta(minutes=1)).isoformat()
+    status, evidence = classify_current_boot_tdr([event], boot)
+    assert status is CurrentBootTdrStatus.STALE_WER_REPORT_REPUBLISHED_AFTER_BOOT
+    assert evidence == [event]
+
+
+def test_no_system_event_and_no_new_watchdog_is_no_current_boot_tdr() -> None:
+    status, evidence = classify_current_boot_tdr([], NOW)
+    assert status is CurrentBootTdrStatus.NO_CURRENT_BOOT_TDR
+    assert evidence == []
+
+
+def test_genuine_current_boot_event_141_and_117_are_confirmed() -> None:
+    for signature in ("141", "117"):
+        event = _event(signature)
+        event["evidence_kind"] = "WER_LIVE_KERNEL_EVENT"
+        event["watchdog_dump_timestamp"] = (NOW + timedelta(seconds=18)).isoformat()
+        status, evidence = classify_current_boot_tdr([event], NOW - timedelta(seconds=1))
+        assert status is CurrentBootTdrStatus.CURRENT_BOOT_CONFIRMED_TDR
+        assert evidence == [event]
+
+
+def test_matching_and_nonmatching_watchdog_timestamps() -> None:
+    boot = NOW - timedelta(seconds=1)
+    matching = _event("141")
+    matching["evidence_kind"] = "WER_LIVE_KERNEL_EVENT"
+    matching["watchdog_dump_timestamp"] = (NOW + timedelta(seconds=18)).isoformat()
+    status, _ = classify_current_boot_tdr([matching], boot)
+    assert status is CurrentBootTdrStatus.CURRENT_BOOT_CONFIRMED_TDR
+    nonmatching = dict(matching)
+    nonmatching["watchdog_dump_timestamp"] = (NOW + timedelta(hours=1)).isoformat()
+    status, _ = classify_current_boot_tdr([nonmatching], boot)
+    assert status is CurrentBootTdrStatus.STALE_WER_REPORT_REPUBLISHED_AFTER_BOOT
+
+
+def test_system_gpu_event_is_confirmed_without_wer_publication() -> None:
+    event = _event("", seconds=2)
+    event["evidence_kind"] = "SYSTEM_GPU_EVENT"
+    event["provider"] = "Display"
+    status, evidence = classify_current_boot_tdr([event], NOW - timedelta(seconds=1))
+    assert status is CurrentBootTdrStatus.CURRENT_BOOT_CONFIRMED_TDR
+    assert evidence == [event]
 
 
 def test_python_cuda_external_and_unknown_classifications() -> None:

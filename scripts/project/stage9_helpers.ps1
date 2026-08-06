@@ -78,25 +78,58 @@ function Get-Stage9BTdrEvents {
     $application = @(Get-WinEvent -FilterHashtable @{LogName="Application";StartTime=$StartTime;EndTime=$EndTime} -ErrorAction SilentlyContinue)
     foreach ($event in $application) {
         $message = [string]$event.Message
-        if ($message -notmatch "LiveKernelEvent|nvlddmkm|display driver|WATCHDOG" -and $message -notmatch "P1:\s*(141|117)") { continue }
-        $signature = if ($message -match "P1:\s*(141|117)") { $Matches[1] } else { $null }
+        if ($event.ProviderName -ne "Windows Error Reporting" -or $message -notmatch "Event Name:\s*LiveKernelEvent" -or $message -notmatch "P1:\s*(141|117)") { continue }
+        $signature = $Matches[1]
         $driver = if ($message -match "(?i)(nvlddmkm\.sys)") { $Matches[1] } else { $null }
         $watchdog = if ($message -match "(?im)^\s*(\\\\\?\\[^\r\n]*WATCHDOG[^\r\n]*\.dmp)") { $Matches[1].Trim() } else { $null }
+        $watchdogPath = if($watchdog){$watchdog -replace '^\\\\\?\\',''}else{$null}
+        $watchdogItem = if($watchdogPath -and (Test-Path -LiteralPath $watchdogPath)){Get-Item -LiteralPath $watchdogPath}else{$null}
+        $watchdogTimestamp = if($watchdogItem){@($watchdogItem.CreationTime,$watchdogItem.LastWriteTime)|Sort-Object -Descending|Select-Object -First 1}else{$null}
         $events += [pscustomobject][ordered]@{
             timestamp=$event.TimeCreated.ToString("o"); provider=$event.ProviderName; event_id=$event.Id
-            problem_signature=$signature; driver_image=$driver; watchdog_dump_path=$watchdog; message=$message
+            evidence_kind="WER_LIVE_KERNEL_EVENT";problem_signature=$signature;driver_image=$driver
+            watchdog_dump_path=$watchdog;watchdog_dump_creation_time=if($watchdogItem){$watchdogItem.CreationTime.ToString("o")}else{$null}
+            watchdog_dump_last_write_time=if($watchdogItem){$watchdogItem.LastWriteTime.ToString("o")}else{$null}
+            watchdog_dump_timestamp=if($watchdogTimestamp){$watchdogTimestamp.ToString("o")}else{$null};message=$message
         }
     }
     $system = @(Get-WinEvent -FilterHashtable @{LogName="System";StartTime=$StartTime;EndTime=$EndTime} -ErrorAction SilentlyContinue)
     foreach ($event in $system) {
-        if ($event.ProviderName -notmatch "nvlddmkm|Display" -and [string]$event.Message -notmatch "display driver|TDR|reset") { continue }
+        if ($event.ProviderName -notmatch "^(nvlddmkm|Display)$") { continue }
         $events += [pscustomobject][ordered]@{
             timestamp=$event.TimeCreated.ToString("o"); provider=$event.ProviderName; event_id=$event.Id
-            problem_signature=$null; driver_image=if($event.ProviderName -match "nvlddmkm"){"nvlddmkm.sys"}else{$null}
-            watchdog_dump_path=$null; message=[string]$event.Message
+            evidence_kind="SYSTEM_GPU_EVENT";problem_signature=$null;driver_image=if($event.ProviderName -match "nvlddmkm"){"nvlddmkm.sys"}else{$null}
+            watchdog_dump_path=$null;watchdog_dump_creation_time=$null;watchdog_dump_last_write_time=$null;watchdog_dump_timestamp=$null;message=[string]$event.Message
+        }
+    }
+    $watchdogRoot = "C:\Windows\LiveKernelReports\WATCHDOG"
+    foreach($item in @(Get-ChildItem -LiteralPath $watchdogRoot -File -ErrorAction SilentlyContinue)){
+        $timestamp=@($item.CreationTime,$item.LastWriteTime)|Sort-Object -Descending|Select-Object -First 1
+        if($timestamp -lt $StartTime -or $timestamp -gt $EndTime){continue}
+        $events += [pscustomobject][ordered]@{
+            timestamp=$timestamp.ToString("o");provider="WATCHDOG_FILE";event_id=$null;evidence_kind="WATCHDOG_FILE"
+            problem_signature=$null;driver_image=$null;watchdog_dump_path=$item.FullName
+            watchdog_dump_creation_time=$item.CreationTime.ToString("o");watchdog_dump_last_write_time=$item.LastWriteTime.ToString("o")
+            watchdog_dump_timestamp=$timestamp.ToString("o");message="WATCHDOG dump created or modified in the requested window."
         }
     }
     return @($events | Sort-Object timestamp -Unique)
+}
+
+function Get-Stage9BCurrentBootTdrStatus {
+    param([datetime]$BootTime,[datetime]$EndTime=(Get-Date))
+    $events=@(Get-Stage9BTdrEvents -StartTime $BootTime -EndTime $EndTime)
+    $confirmed=@();$stale=@()
+    foreach($event in $events){
+        if($event.evidence_kind -in @("SYSTEM_GPU_EVENT","WATCHDOG_FILE")){$confirmed+=$event;continue}
+        if($event.evidence_kind -ne "WER_LIVE_KERNEL_EVENT"){continue}
+        $dumpTime=if($event.watchdog_dump_timestamp){[datetimeoffset]::Parse($event.watchdog_dump_timestamp).LocalDateTime}else{$null}
+        $eventTime=[datetimeoffset]::Parse($event.timestamp).LocalDateTime
+        if($dumpTime -and $dumpTime -ge $BootTime -and [math]::Abs(($dumpTime-$eventTime).TotalSeconds) -le 600){$confirmed+=$event}else{$stale+=$event}
+    }
+    if($confirmed.Count){return [pscustomobject][ordered]@{status="CURRENT_BOOT_CONFIRMED_TDR";evidence=$confirmed}}
+    if($stale.Count){return [pscustomobject][ordered]@{status="STALE_WER_REPORT_REPUBLISHED_AFTER_BOOT";evidence=$stale}}
+    return [pscustomobject][ordered]@{status="NO_CURRENT_BOOT_TDR";evidence=@()}
 }
 
 function Get-Stage9BGpuSnapshot {
@@ -114,10 +147,11 @@ function Assert-Stage9BProcessSafety {
     $gpu = Get-Stage9BGpuSnapshot
     if ($gpu.active_compute_processes.Count) { throw "Another GPU compute process is active: $($gpu.active_compute_processes -join '; '). Stop it manually before Stage 9B." }
     $boot = (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
-    $recentTdr = @(Get-Stage9BTdrEvents -StartTime $boot -EndTime (Get-Date))
-    if ($recentTdr.Count) {
-        $latest = ($recentTdr | Sort-Object timestamp -Descending | Select-Object -First 1).timestamp
+    $tdrStatus = Get-Stage9BCurrentBootTdrStatus -BootTime $boot -EndTime (Get-Date)
+    if ($tdrStatus.status -eq "CURRENT_BOOT_CONFIRMED_TDR") {
+        $latest = ($tdrStatus.evidence | Sort-Object timestamp -Descending | Select-Object -First 1).timestamp
         throw "A GPU TDR event occurred after the latest Windows boot ($latest). Restart Windows before attempting Stage 9B again. Registry TDR changes are not part of this workflow."
     }
+    $gpu["current_boot_tdr_status"]=$tdrStatus.status
     return $gpu
 }

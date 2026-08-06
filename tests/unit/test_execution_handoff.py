@@ -98,6 +98,9 @@ def test_preflight_refuses_webots_recent_tdr_and_competing_processes() -> None:
     assert "A competing TrustCXR Python process is active" in helpers
     assert "Restart Windows before attempting Stage 9B again" in helpers
     assert "Stop-Process" not in helpers
+    assert 'ProviderName -notmatch "^(nvlddmkm|Display)$"' in helpers
+    assert "STALE_WER_REPORT_REPUBLISHED_AFTER_BOOT" in helpers
+    assert "Microsoft-Windows-UserModePowerService" not in helpers
 
 
 def test_gpu_stability_smoke_is_isolated_and_test_locked() -> None:
