@@ -1,0 +1,45 @@
+# Original Stage 1 — Repository and Engineering Foundation
+
+- Original stage identifier: `1`
+- Canonical repository mapping: `1, 2`
+- Current status: `PARTIALLY_COMPLETED`
+- Objective: Repository and Engineering Foundation under a research-only, patient-safe contract.
+- Research question: Can this capability be implemented and evaluated without leakage, unsupported labels, or hidden test selection?
+- Why the stage is required: It supplies the evidence required by the downstream gate without implying clinical deployment.
+- Upstream gate: Original Stage 0 protocol gate.
+- Required inputs: Type-check and Docker-development gates require a current justified audit.
+- Required datasets: The datasets named in the mapped repository reports and their local manifests.
+- Required annotations: The label or mask contracts recorded by the mapped stage reports.
+- Data-readiness checks: source, license status, exact manifests, corrupt/missing files, identity fields, and split feasibility.
+- Identity and leakage checks: patient, study, image, exact-duplicate, temporal where applicable, and checkpoint-exposure checks must report zero prohibited overlap.
+- Label contract: Preserve mapped labels; unavailable, missing, uncertain, positive, and negative states must remain distinct.
+- Baseline model: Repository-evidenced baseline described in the mapped reports.
+- Advanced candidate: Only repository-evidenced candidates; see mapped reports.
+- Scientific comparison: Same splits, initialization policy, budgets, selection metric, and paired patient-level statistics where feasible.
+- Training plan: No long-running command; run the short project preflight.
+- Maximum training budget: UNRESOLVED — REQUIRES UPSTREAM RESULT: freeze from bounded pilots before any formal run.
+- Early-stopping policy: UNRESOLVED — REQUIRES UPSTREAM RESULT: define before training and never tune on test data.
+- Selection metric: UNRESOLVED — REQUIRES UPSTREAM RESULT: choose from task-valid validation metrics before execution.
+- Secondary metrics: Task-specific discrimination, calibration, failure, runtime, and subgroup metrics defined before execution.
+- Test policy: Locked until architecture, preprocessing, checkpoints, thresholds, and calibration are frozen; no test-based selection.
+- Calibration policy: Fit on validation only and version all parameters; document when calibration is not applicable.
+- Statistical analysis: Patient-cluster paired bootstrap and confidence intervals where patient-level paired outputs exist; do not call intervals containing zero equivalence.
+- Expected source files: pyproject, Ruff, pytest, CLI, GitHub workflows, environment validation.
+- Expected config files: A tracked frozen configuration only after upstream evidence resolves the contract.
+- Expected scripts: A real foreground launcher, monitor/status reader, and completion validator only after implementation exists.
+- Expected tests: Contracts, labels, leakage, test locking, resume fingerprint, metrics, and failure/refusal behavior.
+- Expected tracked reports: Aggregate metrics, scientific limitations, gate decision, and reproducibility evidence without patient rows.
+- Expected local artifacts: Checkpoints, patient-level predictions, databases, logs, embeddings, and recovery archives remain ignored.
+- Preflight command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\project\\project_preflight.ps1`
+- Long-running command: No long-running command; run the short project preflight.
+- Monitor command: UNRESOLVED — REQUIRES UPSTREAM RESULT: no runnable monitor is claimed.
+- Resume command: UNRESOLVED — REQUIRES UPSTREAM RESULT: exact-fingerprint resume must be implemented before execution.
+- Validation command: Run the stage-specific validator only after a real implementation is registered.
+- Success criteria: The documented gate passes with required metrics, zero prohibited leakage/test selection, complete reports, passing tests, and reproducible lineage.
+- Failure criteria: Missing inputs, incompatible fingerprints, leakage, test access during selection, invalid metrics, incomplete variants, unsafe outputs, or unsupported claims.
+- Recovery procedure: Preserve exact-fingerprint compatible artifacts; quarantine incompatible state with hashes and a manifest; restart only affected work under the unchanged contract.
+- Known limitations: Type-check and Docker-development gates require a current justified audit.
+- Completed components: Repository, dependency, lint, test, seed, and CLI foundations exist.
+- Missing components: Type-check and Docker-development gates require a current justified audit.
+- Evidence commit: `6d12ec2, 874529b, 17e9d0c`
+- Downstream gate: Original Stage 2 governance gate.

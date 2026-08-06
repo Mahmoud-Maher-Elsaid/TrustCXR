@@ -1,0 +1,45 @@
+# Original Stage 3 — Data Pipeline and Patient-Level Splits
+
+- Original stage identifier: `3`
+- Canonical repository mapping: `4, 4.1, 4.2, 4.3, 4.4`
+- Current status: `COMPLETED_AND_VERIFIED`
+- Objective: Data Pipeline and Patient-Level Splits under a research-only, patient-safe contract.
+- Research question: Can this capability be implemented and evaluated without leakage, unsupported labels, or hidden test selection?
+- Why the stage is required: It supplies the evidence required by the downstream gate without implying clinical deployment.
+- Upstream gate: Original Stage 2 governance gate.
+- Required inputs: Cross-dataset exact and near-duplicate work remains a governance limitation, not a reopened internal split gate.
+- Required datasets: The datasets named in the mapped repository reports and their local manifests.
+- Required annotations: The label or mask contracts recorded by the mapped stage reports.
+- Data-readiness checks: source, license status, exact manifests, corrupt/missing files, identity fields, and split feasibility.
+- Identity and leakage checks: patient, study, image, exact-duplicate, temporal where applicable, and checkpoint-exposure checks must report zero prohibited overlap.
+- Label contract: Preserve mapped labels; unavailable, missing, uncertain, positive, and negative states must remain distinct.
+- Baseline model: Repository-evidenced baseline described in the mapped reports.
+- Advanced candidate: Only repository-evidenced candidates; see mapped reports.
+- Scientific comparison: Same splits, initialization policy, budgets, selection metric, and paired patient-level statistics where feasible.
+- Training plan: Historical data preparation commands only; no preparation-session long run.
+- Maximum training budget: UNRESOLVED — REQUIRES UPSTREAM RESULT: freeze from bounded pilots before any formal run.
+- Early-stopping policy: UNRESOLVED — REQUIRES UPSTREAM RESULT: define before training and never tune on test data.
+- Selection metric: UNRESOLVED — REQUIRES UPSTREAM RESULT: choose from task-valid validation metrics before execution.
+- Secondary metrics: Task-specific discrimination, calibration, failure, runtime, and subgroup metrics defined before execution.
+- Test policy: Locked until architecture, preprocessing, checkpoints, thresholds, and calibration are frozen; no test-based selection.
+- Calibration policy: Fit on validation only and version all parameters; document when calibration is not applicable.
+- Statistical analysis: Patient-cluster paired bootstrap and confidence intervals where patient-level paired outputs exist; do not call intervals containing zero equivalence.
+- Expected source files: canonical schema, adapters, identity mapping, patient-safe splits.
+- Expected config files: A tracked frozen configuration only after upstream evidence resolves the contract.
+- Expected scripts: A real foreground launcher, monitor/status reader, and completion validator only after implementation exists.
+- Expected tests: Contracts, labels, leakage, test locking, resume fingerprint, metrics, and failure/refusal behavior.
+- Expected tracked reports: Aggregate metrics, scientific limitations, gate decision, and reproducibility evidence without patient rows.
+- Expected local artifacts: Checkpoints, patient-level predictions, databases, logs, embeddings, and recovery archives remain ignored.
+- Preflight command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\project\\project_preflight.ps1`
+- Long-running command: Historical data preparation commands only; no preparation-session long run.
+- Monitor command: UNRESOLVED — REQUIRES UPSTREAM RESULT: no runnable monitor is claimed.
+- Resume command: UNRESOLVED — REQUIRES UPSTREAM RESULT: exact-fingerprint resume must be implemented before execution.
+- Validation command: Run the stage-specific validator only after a real implementation is registered.
+- Success criteria: The documented gate passes with required metrics, zero prohibited leakage/test selection, complete reports, passing tests, and reproducible lineage.
+- Failure criteria: Missing inputs, incompatible fingerprints, leakage, test access during selection, invalid metrics, incomplete variants, unsafe outputs, or unsupported claims.
+- Recovery procedure: Preserve exact-fingerprint compatible artifacts; quarantine incompatible state with hashes and a manifest; restart only affected work under the unchanged contract.
+- Known limitations: Cross-dataset exact and near-duplicate work remains a governance limitation, not a reopened internal split gate.
+- Completed components: Four training-ready datasets, six withheld datasets, and zero detected split leakage are reported.
+- Missing components: Cross-dataset exact and near-duplicate work remains a governance limitation, not a reopened internal split gate.
+- Evidence commit: `25c2f89, 8233c9e, 0dcf30a, 5a94c68, c3c15be`
+- Downstream gate: Original Stage 4 baseline gate.

@@ -1,0 +1,45 @@
+# Original Stage 22 — MLOps and Reproducibility
+
+- Original stage identifier: `22`
+- Canonical repository mapping: `Cross-cutting actual Stages 0–9B plus future actual stage`
+- Current status: `PARTIALLY_COMPLETED`
+- Objective: MLOps and Reproducibility under a research-only, patient-safe contract.
+- Research question: Can this capability be implemented and evaluated without leakage, unsupported labels, or hidden test selection?
+- Why the stage is required: It supplies the evidence required by the downstream gate without implying clinical deployment.
+- Upstream gate: All producing-stage gates.
+- Required inputs: Final model registry, dataset versions, calibration/threshold lineage, Docker decision, and prediction lineage remain.
+- Required datasets: UNRESOLVED — REQUIRES UPSTREAM RESULT: the upstream gate must name authorized datasets and retained splits.
+- Required annotations: UNRESOLVED — REQUIRES ANNOTATION AUDIT: verify task semantics, provenance, missing states, and patient identity.
+- Data-readiness checks: source, license status, exact manifests, corrupt/missing files, identity fields, and split feasibility.
+- Identity and leakage checks: patient, study, image, exact-duplicate, temporal where applicable, and checkpoint-exposure checks must report zero prohibited overlap.
+- Label contract: Preserve mapped labels; unavailable, missing, uncertain, positive, and negative states must remain distinct.
+- Baseline model: UNRESOLVED — REQUIRES UPSTREAM RESULT: select only after the data and annotation contract is frozen.
+- Advanced candidate: UNRESOLVED — REQUIRES UPSTREAM RESULT: compare only a justified candidate against the frozen baseline.
+- Scientific comparison: Same splits, initialization policy, budgets, selection metric, and paired patient-level statistics where feasible.
+- Training plan: Short reproducibility audits are runnable; full closure waits for models.
+- Maximum training budget: UNRESOLVED — REQUIRES UPSTREAM RESULT: freeze from bounded pilots before any formal run.
+- Early-stopping policy: UNRESOLVED — REQUIRES UPSTREAM RESULT: define before training and never tune on test data.
+- Selection metric: UNRESOLVED — REQUIRES UPSTREAM RESULT: choose from task-valid validation metrics before execution.
+- Secondary metrics: Task-specific discrimination, calibration, failure, runtime, and subgroup metrics defined before execution.
+- Test policy: Locked until architecture, preprocessing, checkpoints, thresholds, and calibration are frozen; no test-based selection.
+- Calibration policy: Fit on validation only and version all parameters; document when calibration is not applicable.
+- Statistical analysis: Patient-cluster paired bootstrap and confidence intervals where patient-level paired outputs exist; do not call intervals containing zero equivalence.
+- Expected source files: Git/config/fingerprint/environment-lock foundations.
+- Expected config files: A tracked frozen configuration only after upstream evidence resolves the contract.
+- Expected scripts: A real foreground launcher, monitor/status reader, and completion validator only after implementation exists.
+- Expected tests: Contracts, labels, leakage, test locking, resume fingerprint, metrics, and failure/refusal behavior.
+- Expected tracked reports: Aggregate metrics, scientific limitations, gate decision, and reproducibility evidence without patient rows.
+- Expected local artifacts: Checkpoints, patient-level predictions, databases, logs, embeddings, and recovery archives remain ignored.
+- Preflight command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\project\\project_preflight.ps1`
+- Long-running command: Short reproducibility audits are runnable; full closure waits for models.
+- Monitor command: UNRESOLVED — REQUIRES UPSTREAM RESULT: no runnable monitor is claimed.
+- Resume command: UNRESOLVED — REQUIRES UPSTREAM RESULT: exact-fingerprint resume must be implemented before execution.
+- Validation command: Run the stage-specific validator only after a real implementation is registered.
+- Success criteria: The documented gate passes with required metrics, zero prohibited leakage/test selection, complete reports, passing tests, and reproducible lineage.
+- Failure criteria: Missing inputs, incompatible fingerprints, leakage, test access during selection, invalid metrics, incomplete variants, unsafe outputs, or unsupported claims.
+- Recovery procedure: Preserve exact-fingerprint compatible artifacts; quarantine incompatible state with hashes and a manifest; restart only affected work under the unchanged contract.
+- Known limitations: Final model registry, dataset versions, calibration/threshold lineage, Docker decision, and prediction lineage remain.
+- Completed components: Stage histories, configurations, locks, hashes, and checkpoint fingerprints provide partial lineage.
+- Missing components: Final model registry, dataset versions, calibration/threshold lineage, Docker decision, and prediction lineage remain.
+- Evidence commit: `ebe9b5a`
+- Downstream gate: Original Stage 23 validation gate.

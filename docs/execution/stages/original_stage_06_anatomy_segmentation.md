@@ -1,0 +1,45 @@
+# Original Stage 6 — Anatomy Segmentation
+
+- Original stage identifier: `6`
+- Canonical repository mapping: `8A, 8B, 8C, 8D, 8E`
+- Current status: `COMPLETED_AND_VERIFIED`
+- Objective: Anatomy Segmentation under a research-only, patient-safe contract.
+- Research question: Can this capability be implemented and evaluated without leakage, unsupported labels, or hidden test selection?
+- Why the stage is required: It supplies the evidence required by the downstream gate without implying clinical deployment.
+- Upstream gate: Original Stage 5 representation gate.
+- Required inputs: Pseudo-masks are not manual ground truth; Hausdorff/boundary and external manual-mask evidence remain limited.
+- Required datasets: The datasets named in the mapped repository reports and their local manifests.
+- Required annotations: The label or mask contracts recorded by the mapped stage reports.
+- Data-readiness checks: source, license status, exact manifests, corrupt/missing files, identity fields, and split feasibility.
+- Identity and leakage checks: patient, study, image, exact-duplicate, temporal where applicable, and checkpoint-exposure checks must report zero prohibited overlap.
+- Label contract: Preserve mapped labels; unavailable, missing, uncertain, positive, and negative states must remain distinct.
+- Baseline model: Repository-evidenced baseline described in the mapped reports.
+- Advanced candidate: Only repository-evidenced candidates; see mapped reports.
+- Scientific comparison: Same splits, initialization policy, budgets, selection metric, and paired patient-level statistics where feasible.
+- Training plan: Historical training completed; no preparation-session rerun.
+- Maximum training budget: UNRESOLVED — REQUIRES UPSTREAM RESULT: freeze from bounded pilots before any formal run.
+- Early-stopping policy: UNRESOLVED — REQUIRES UPSTREAM RESULT: define before training and never tune on test data.
+- Selection metric: UNRESOLVED — REQUIRES UPSTREAM RESULT: choose from task-valid validation metrics before execution.
+- Secondary metrics: Task-specific discrimination, calibration, failure, runtime, and subgroup metrics defined before execution.
+- Test policy: Locked until architecture, preprocessing, checkpoints, thresholds, and calibration are frozen; no test-based selection.
+- Calibration policy: Fit on validation only and version all parameters; document when calibration is not applicable.
+- Statistical analysis: Patient-cluster paired bootstrap and confidence intervals where patient-level paired outputs exist; do not call intervals containing zero equivalence.
+- Expected source files: CheXmask readiness, U-Net baseline, continuation, comparison, final evaluation.
+- Expected config files: A tracked frozen configuration only after upstream evidence resolves the contract.
+- Expected scripts: A real foreground launcher, monitor/status reader, and completion validator only after implementation exists.
+- Expected tests: Contracts, labels, leakage, test locking, resume fingerprint, metrics, and failure/refusal behavior.
+- Expected tracked reports: Aggregate metrics, scientific limitations, gate decision, and reproducibility evidence without patient rows.
+- Expected local artifacts: Checkpoints, patient-level predictions, databases, logs, embeddings, and recovery archives remain ignored.
+- Preflight command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\project\\project_preflight.ps1`
+- Long-running command: Historical training completed; no preparation-session rerun.
+- Monitor command: UNRESOLVED — REQUIRES UPSTREAM RESULT: no runnable monitor is claimed.
+- Resume command: UNRESOLVED — REQUIRES UPSTREAM RESULT: exact-fingerprint resume must be implemented before execution.
+- Validation command: Run the stage-specific validator only after a real implementation is registered.
+- Success criteria: The documented gate passes with required metrics, zero prohibited leakage/test selection, complete reports, passing tests, and reproducible lineage.
+- Failure criteria: Missing inputs, incompatible fingerprints, leakage, test access during selection, invalid metrics, incomplete variants, unsafe outputs, or unsupported claims.
+- Recovery procedure: Preserve exact-fingerprint compatible artifacts; quarantine incompatible state with hashes and a manifest; restart only affected work under the unchanged contract.
+- Known limitations: Pseudo-masks are not manual ground truth; Hausdorff/boundary and external manual-mask evidence remain limited.
+- Completed components: Left lung, right lung, and heart pseudo-mask segmentation is evidenced.
+- Missing components: Pseudo-masks are not manual ground truth; Hausdorff/boundary and external manual-mask evidence remain limited.
+- Evidence commit: `66b83a3, 868c0bf, c86e052, 3bec7d1, 2f3e5ad`
+- Downstream gate: Original Stage 7 lesion-localization gate.

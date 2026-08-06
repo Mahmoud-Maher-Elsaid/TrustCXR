@@ -10,11 +10,13 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 7 | Before `45111d6` | Go for Stage 8 | RAD-DINO probes, comparison, spatial audit | Representation analysis | Advanced representation | Complete | No clinical localization claim | 8 |
 | 8 | Before `45111d6` | Go for Stage 9A | CheXmask anatomy segmentation | Anatomy segmentation | Segmentation | Complete with limitations | Manual-ground-truth external validation | 9A |
 | 9A | `45111d6` | Go for Stage 9B | Shared Stage 9 cohort | Integration data contract | Fusion readiness | Complete | None for cohort gate | 9B |
-| 9B | Uncommitted | Closed | Segmentation-guided classification ablation | Classification/segmentation integration | Fusion | Interrupted | Audit, profiling, protocol freeze, fresh four-variant run | 9C after 9B gate |
+| 9B | `1193326`, `2417201`, `ebe9b5a` | Closed | Frozen worker-0 segmentation-guided classification ablation workflow | Classification/segmentation integration | Fusion | Prepared; results incomplete | External foreground four-variant run and completion validation | 9C after 9B gate |
 
 ## Numbering rule
 
 Stage 9C is reserved for the formal paired validation comparison described by the current Stage 9B documentation. Later identifiers must be assigned only after inspecting the gate and handoff produced by the immediately preceding stage.
+
+The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 
 ## Scientific limitations retained
 

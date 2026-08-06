@@ -1,0 +1,45 @@
+# Original Stage 4 — DenseNet Multi-Label Baseline
+
+- Original stage identifier: `4`
+- Canonical repository mapping: `6`
+- Current status: `PARTIALLY_COMPLETED`
+- Objective: DenseNet Multi-Label Baseline under a research-only, patient-safe contract.
+- Research question: Can this capability be implemented and evaluated without leakage, unsupported labels, or hidden test selection?
+- Why the stage is required: It supplies the evidence required by the downstream gate without implying clinical deployment.
+- Upstream gate: Original Stage 3 patient-safe pipeline gate.
+- Required inputs: Full loss-function ablation, calibration baseline completion, and expanded model card audit remain.
+- Required datasets: The datasets named in the mapped repository reports and their local manifests.
+- Required annotations: The label or mask contracts recorded by the mapped stage reports.
+- Data-readiness checks: source, license status, exact manifests, corrupt/missing files, identity fields, and split feasibility.
+- Identity and leakage checks: patient, study, image, exact-duplicate, temporal where applicable, and checkpoint-exposure checks must report zero prohibited overlap.
+- Label contract: Preserve mapped labels; unavailable, missing, uncertain, positive, and negative states must remain distinct.
+- Baseline model: Repository-evidenced baseline described in the mapped reports.
+- Advanced candidate: Only repository-evidenced candidates; see mapped reports.
+- Scientific comparison: Same splits, initialization policy, budgets, selection metric, and paired patient-level statistics where feasible.
+- Training plan: Historical training completed; do not rerun without a new frozen contract.
+- Maximum training budget: UNRESOLVED — REQUIRES UPSTREAM RESULT: freeze from bounded pilots before any formal run.
+- Early-stopping policy: UNRESOLVED — REQUIRES UPSTREAM RESULT: define before training and never tune on test data.
+- Selection metric: UNRESOLVED — REQUIRES UPSTREAM RESULT: choose from task-valid validation metrics before execution.
+- Secondary metrics: Task-specific discrimination, calibration, failure, runtime, and subgroup metrics defined before execution.
+- Test policy: Locked until architecture, preprocessing, checkpoints, thresholds, and calibration are frozen; no test-based selection.
+- Calibration policy: Fit on validation only and version all parameters; document when calibration is not applicable.
+- Statistical analysis: Patient-cluster paired bootstrap and confidence intervals where patient-level paired outputs exist; do not call intervals containing zero equivalence.
+- Expected source files: NIH DenseNet-121 multi-label classifier.
+- Expected config files: A tracked frozen configuration only after upstream evidence resolves the contract.
+- Expected scripts: A real foreground launcher, monitor/status reader, and completion validator only after implementation exists.
+- Expected tests: Contracts, labels, leakage, test locking, resume fingerprint, metrics, and failure/refusal behavior.
+- Expected tracked reports: Aggregate metrics, scientific limitations, gate decision, and reproducibility evidence without patient rows.
+- Expected local artifacts: Checkpoints, patient-level predictions, databases, logs, embeddings, and recovery archives remain ignored.
+- Preflight command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\project\\project_preflight.ps1`
+- Long-running command: Historical training completed; do not rerun without a new frozen contract.
+- Monitor command: UNRESOLVED — REQUIRES UPSTREAM RESULT: no runnable monitor is claimed.
+- Resume command: UNRESOLVED — REQUIRES UPSTREAM RESULT: exact-fingerprint resume must be implemented before execution.
+- Validation command: Run the stage-specific validator only after a real implementation is registered.
+- Success criteria: The documented gate passes with required metrics, zero prohibited leakage/test selection, complete reports, passing tests, and reproducible lineage.
+- Failure criteria: Missing inputs, incompatible fingerprints, leakage, test access during selection, invalid metrics, incomplete variants, unsafe outputs, or unsupported claims.
+- Recovery procedure: Preserve exact-fingerprint compatible artifacts; quarantine incompatible state with hashes and a manifest; restart only affected work under the unchanged contract.
+- Known limitations: Full loss-function ablation, calibration baseline completion, and expanded model card audit remain.
+- Completed components: Fourteen-label baseline, validation-only thresholding, aggregate and per-label metrics are evidenced.
+- Missing components: Full loss-function ablation, calibration baseline completion, and expanded model card audit remain.
+- Evidence commit: `a7bb9aa`
+- Downstream gate: Original Stage 5 representation-comparison gate.

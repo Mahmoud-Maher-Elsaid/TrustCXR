@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "commands": [
+    {
+      "id": "stage9b_preflight",
+      "stage": "9B",
+      "name": "Stage 9B external preflight",
+      "script": "scripts/training/run_stage9b_external.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\run_stage9b_external.ps1\" -PreflightOnly",
+      "inputs": [
+        "configs/training/stage9b_segmentation_guided_ablation.json",
+        "reports/stage9/stage9a_summary.json"
+      ],
+      "outputs": [],
+      "local_only_outputs": [
+        "artifacts/stage9/stage9b_ablation/runtime"
+      ],
+      "prerequisites": [
+        "develop branch",
+        "clean Git",
+        "private repository",
+        "CUDA",
+        "Stage 9A gate"
+      ],
+      "expected_exit_code": 0,
+      "long_running": false,
+      "safe_to_resume": false,
+      "monitor_command": "",
+      "validation_command": ""
+    },
+    {
+      "id": "stage9b_smoke",
+      "stage": "9B",
+      "name": "Bounded non-learning smoke",
+      "script": "scripts/training/run_stage9b_external.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\run_stage9b_external.ps1\" -SmokeTest",
+      "inputs": [
+        "configs/training/stage9b_segmentation_guided_ablation.json"
+      ],
+      "outputs": [],
+      "local_only_outputs": [
+        "artifacts/stage9/stage9b_ablation/runtime/*smoke_profile.json",
+        "artifacts/stage9/stage9b_ablation/runtime/*.log"
+      ],
+      "prerequisites": [
+        "Stage 9B preflight passes"
+      ],
+      "expected_exit_code": 0,
+      "long_running": false,
+      "safe_to_resume": false,
+      "monitor_command": "",
+      "validation_command": ""
+    },
+    {
+      "id": "stage9b_fresh",
+      "stage": "9B",
+      "name": "Formal worker-0 Stage 9B fresh run",
+      "script": "scripts/training/run_stage9b_external.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\run_stage9b_external.ps1\" -FreshStart",
+      "inputs": [
+        "Stage 9A cohort SQLite",
+        "CheXmask index SQLite",
+        "frozen Stage 9B config"
+      ],
+      "outputs": [
+        "reports/stage9/stage9b_summary.json",
+        "reports/stage9/stage9b_history.csv",
+        "reports/stage9/stage9b_variant_metrics.csv",
+        "reports/stage9/STAGE9B_SEGMENTATION_GUIDED_ABLATION_REPORT.md"
+      ],
+      "local_only_outputs": [
+        "artifacts/stage9/stage9b_ablation/*/*.pt",
+        "artifacts/stage9/stage9b_ablation/runtime/*.log"
+      ],
+      "prerequisites": [
+        "Stage 9B preflight passes",
+        "normal user PowerShell outside Codex"
+      ],
+      "expected_exit_code": 0,
+      "long_running": true,
+      "safe_to_resume": true,
+      "monitor_command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\monitor_stage9b.ps1\"",
+      "validation_command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\evaluation\\validate_stage9b_completion.ps1\""
+    },
+    {
+      "id": "stage9b_resume",
+      "stage": "9B",
+      "name": "Exact-fingerprint Stage 9B resume",
+      "script": "scripts/training/run_stage9b_external.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\run_stage9b_external.ps1\" -Resume",
+      "inputs": [
+        "exact-fingerprint active checkpoints"
+      ],
+      "outputs": [
+        "Stage 9B tracked reports"
+      ],
+      "local_only_outputs": [
+        "Stage 9B checkpoints and logs"
+      ],
+      "prerequisites": [
+        "exact fingerprint compatibility"
+      ],
+      "expected_exit_code": 0,
+      "long_running": true,
+      "safe_to_resume": true,
+      "monitor_command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\monitor_stage9b.ps1\"",
+      "validation_command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\evaluation\\validate_stage9b_completion.ps1\""
+    },
+    {
+      "id": "stage9b_monitor",
+      "stage": "9B",
+      "name": "Read-only one-shot monitor",
+      "script": "scripts/training/monitor_stage9b.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\monitor_stage9b.ps1\"",
+      "inputs": [
+        "runtime logs",
+        "PID metadata",
+        "checkpoint file metadata"
+      ],
+      "outputs": [],
+      "local_only_outputs": [],
+      "prerequisites": [],
+      "expected_exit_code": 0,
+      "long_running": false,
+      "safe_to_resume": false,
+      "monitor_command": "",
+      "validation_command": ""
+    },
+    {
+      "id": "stage9b_status",
+      "stage": "9B",
+      "name": "Read-only Stage 9B status",
+      "script": "scripts/training/check_stage9b_status.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\training\\check_stage9b_status.ps1\"",
+      "inputs": [
+        "runtime metadata"
+      ],
+      "outputs": [],
+      "local_only_outputs": [],
+      "prerequisites": [],
+      "expected_exit_code": 0,
+      "long_running": false,
+      "safe_to_resume": false,
+      "monitor_command": "",
+      "validation_command": ""
+    },
+    {
+      "id": "stage9b_validate",
+      "stage": "9B",
+      "name": "Stage 9B completion validator",
+      "script": "scripts/evaluation/validate_stage9b_completion.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\evaluation\\validate_stage9b_completion.ps1\"",
+      "inputs": [
+        "four variant completion summaries",
+        "four checkpoint pairs",
+        "Stage 9B reports"
+      ],
+      "outputs": [],
+      "local_only_outputs": [],
+      "prerequisites": [
+        "Stage 9B completed"
+      ],
+      "expected_exit_code": 0,
+      "long_running": false,
+      "safe_to_resume": false,
+      "monitor_command": "",
+      "validation_command": ""
+    },
+    {
+      "id": "stage9b_finalize",
+      "stage": "9B",
+      "name": "Stage 9B report finalizer",
+      "script": "scripts/evaluation/finalize_stage9b_reports.py",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": ".\\.venv\\Scripts\\python.exe .\\scripts\\evaluation\\finalize_stage9b_reports.py --project-root \"F:\\AI\\TrustCXR\" --config \".\\configs\\training\\stage9b_segmentation_guided_ablation.json\"",
+      "inputs": [
+        "four completed_summary.json artifacts"
+      ],
+      "outputs": [
+        "four Stage 9B reports"
+      ],
+      "local_only_outputs": [],
+      "prerequisites": [
+        "all variants complete with exact fingerprint"
+      ],
+      "expected_exit_code": 0,
+      "long_running": false,
+      "safe_to_resume": false,
+      "monitor_command": "",
+      "validation_command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\evaluation\\validate_stage9b_completion.ps1\""
+    },
+    {
+      "id": "stage9c_compare",
+      "stage": "9C",
+      "name": "Formal paired validation comparison",
+      "script": "scripts/evaluation/run_stage9c_comparison.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\evaluation\\run_stage9c_comparison.ps1\"",
+      "inputs": [
+        "validated Stage 9B artifacts",
+        "paired patient-level validation outputs"
+      ],
+      "outputs": [
+        "future Stage 9C aggregate reports"
+      ],
+      "local_only_outputs": [
+        "patient-level bootstrap inputs and samples"
+      ],
+      "prerequisites": [
+        "Stage 9B gate",
+        "real run_stage9c.py implementation",
+        "paired validation predictions"
+      ],
+      "expected_exit_code": 0,
+      "long_running": true,
+      "safe_to_resume": false,
+      "monitor_command": "",
+      "validation_command": "Stage 9C validator must be added with the scientifically frozen implementation."
+    },
+    {
+      "id": "stage9_final",
+      "stage": "9 final",
+      "name": "Frozen final Stage 9 evaluation",
+      "script": "scripts/evaluation/run_stage9_final_evaluation.ps1",
+      "working_directory": "F:\\AI\\TrustCXR",
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \".\\scripts\\evaluation\\run_stage9_final_evaluation.ps1\"",
+      "inputs": [
+        "Stage 9C summary",
+        "stage9_final_freeze.json",
+        "frozen checkpoint"
+      ],
+      "outputs": [
+        "future final aggregate Stage 9 report"
+      ],
+      "local_only_outputs": [
+        "test predictions and checkpoint"
+      ],
+      "prerequisites": [
+        "Stage 9C complete",
+        "all freeze evidence present",
+        "real final evaluation implementation"
+      ],
+      "expected_exit_code": 0,
+      "long_running": true,
+      "safe_to_resume": false,
+      "monitor_command": "",
+      "validation_command": "Final evaluation validator must accompany the frozen implementation."
+    }
+  ]
+}
