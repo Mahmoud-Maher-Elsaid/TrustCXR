@@ -16,11 +16,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 10A | Pending closure commit | Hold for license and identity resolution | Metadata-only lesion annotation readiness audit | Lesion-localization data contract | Original Stage 7 | Complete | Five license reviews and four identity contracts unresolved | 10B |
 | 10B | `4486120` plus result closure | Hold for license or identity | License evidence and hashed patient-identity resolution | Localization governance and identity | Original Stage 7 | Complete | Five manual license decisions; four datasets lack safe patient identity | 10C |
 | 10C | Pending closure commit | Go for RSNA patient-safe split design | Conservative identity withholding and human license adjudication registry | Localization governance decision | Original Stage 7 | Complete with CRD withheld | CRD inherited terms unresolved; four datasets identity-withheld | 10D |
-| 10D | Pending | Hold until leakage evidence | Deterministic RSNA-only patient split design | Localization cohort design | Original Stage 7 | Ready to run | Split index and zero-leakage validation | Determined by 10D gate |
+| 10D | Pending closure commit | Go for RSNA localization baseline preparation | Deterministic RSNA-only patient split design | Localization cohort design | Original Stage 7 | Complete | None for baseline preparation | 10E |
+| 10E | Pending | Hold until validation-only baseline evidence | RSNA Faster R-CNN lung-opacity detection baseline | Lesion localization baseline | Original Stage 7 | Ready to run | Training and validation metrics | Determined by 10E gate |
 
 ## Numbering rule
 
-Stage 10D is the next valid identifier. It uses only the governance-approved, identity-resolved RSNA training source to build deterministic 80/10/10 patient-level assignments. It does not train or access RSNA final-test images. All other localization datasets remain withheld.
+Stage 10E is the next valid identifier. It trains an RSNA-only Faster R-CNN baseline using Stage 10D train and validation assignments. Validation AP50 selects the checkpoint; the final split is rejected by the dataset API. All other localization datasets remain withheld.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

@@ -1,0 +1,28 @@
+{
+  "dataset": "RSNA_Pneumonia",
+  "final_test_images_accessed": 0,
+  "gate": "GO_FOR_STAGE_10E_RSNA_LOCALIZATION_BASELINE_PREPARATION",
+  "patient_counts": {
+    "test": 2668,
+    "train": 21356,
+    "validation": 2660
+  },
+  "patient_leakage_violations": 0,
+  "patient_level_rows_tracked": false,
+  "patients": 26684,
+  "record_counts": {
+    "test": 2668,
+    "train": 21356,
+    "validation": 2660
+  },
+  "records": 26684,
+  "stage": "10D",
+  "status": "PASSED_PATIENT_SAFE_SPLIT_DESIGN",
+  "training_permitted": false,
+  "withheld_datasets": [
+    "VinBigData",
+    "SIIM_Pneumothorax",
+    "TBX11K",
+    "CRD_Masks"
+  ]
+}
