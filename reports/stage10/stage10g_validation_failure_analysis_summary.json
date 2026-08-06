@@ -1,0 +1,70 @@
+{
+  "checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "final_test_images_accessed": 0,
+  "gate": "GO_FOR_STAGE_10H_VALIDATION_OPERATING_POINT_AUDIT",
+  "local_overlays_generated": 24,
+  "primary_finding": "SMALL_LESIONS_OFTEN_DETECTED_ONLY_AT_LOW_CONFIDENCE",
+  "size_stratified_metrics": {
+    "0.1": {
+      "large": {
+        "detected": 248,
+        "lesions": 262,
+        "sensitivity": 0.9465648854961832
+      },
+      "medium": {
+        "detected": 494,
+        "lesions": 600,
+        "sensitivity": 0.8233333333333334
+      },
+      "small": {
+        "detected": 29,
+        "lesions": 83,
+        "sensitivity": 0.3493975903614458
+      }
+    },
+    "0.25": {
+      "large": {
+        "detected": 229,
+        "lesions": 262,
+        "sensitivity": 0.8740458015267175
+      },
+      "medium": {
+        "detected": 400,
+        "lesions": 600,
+        "sensitivity": 0.6666666666666666
+      },
+      "small": {
+        "detected": 14,
+        "lesions": 83,
+        "sensitivity": 0.1686746987951807
+      }
+    },
+    "0.5": {
+      "large": {
+        "detected": 202,
+        "lesions": 262,
+        "sensitivity": 0.7709923664122137
+      },
+      "medium": {
+        "detected": 260,
+        "lesions": 600,
+        "sensitivity": 0.43333333333333335
+      },
+      "small": {
+        "detected": 3,
+        "lesions": 83,
+        "sensitivity": 0.03614457831325301
+      }
+    }
+  },
+  "small_lesion_sensitivity_by_threshold": {
+    "0.1": 0.3493975903614458,
+    "0.25": 0.1686746987951807,
+    "0.5": 0.03614457831325301
+  },
+  "stage": "10G",
+  "status": "FINALIZED_VALIDATION_FAILURE_ANALYSIS",
+  "test_predictions_generated": false,
+  "training_performed": false,
+  "validation_records": 2660
+}

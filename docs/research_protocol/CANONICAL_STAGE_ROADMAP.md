@@ -19,11 +19,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 10D | Pending closure commit | Go for RSNA localization baseline preparation | Deterministic RSNA-only patient split design | Localization cohort design | Original Stage 7 | Complete | None for baseline preparation | 10E |
 | 10E | Pending closure commit | Go for validation localization audit | RSNA Faster R-CNN lung-opacity detection baseline | Lesion localization baseline | Original Stage 7 | Complete | Final test remains locked | 10F |
 | 10F | Pending closure commit | Go for validation failure analysis | Frozen-checkpoint validation localization audit | Localization sensitivity and small-lesion analysis | Original Stage 7 | Complete with material limitation | Small-lesion sensitivity is 0.036145; final test remains locked | 10G |
-| 10G | Pending | Hold until failure evidence | Validation-only size-stratified failure analysis and local overlays | Localization failure characterization | Original Stage 7 | Ready to run | Size-stratified sensitivity and qualitative validation evidence | Determined by 10G gate |
+| 10G | Pending closure commit | Go for validation operating-point audit | Validation-only size-stratified failure analysis and local overlays | Localization failure characterization | Original Stage 7 | Complete with material limitation | Small lesions often detected only at low confidence | 10H |
+| 10H | Pending | Hold until precision/sensitivity tradeoff evidence | Validation-only operating-point audit | Detection threshold safety analysis | Original Stage 7 | Ready to run | Precision, sensitivity, false positives, and small-lesion sensitivity by threshold | Determined by 10H gate |
 
 ## Numbering rule
 
-Stage 10G is the next valid identifier. It characterizes the Stage 10F small-lesion failure across frozen validation thresholds and lesion-size strata, and writes a bounded set of qualitative overlays to ignored local artifacts. It does not retrain or unlock the final split.
+Stage 10H is the next valid identifier. It quantifies precision, overall sensitivity, small-lesion sensitivity, and false positives per image across validation thresholds. It reports tradeoffs without automatically selecting a threshold, retraining, or unlocking the final split.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 
