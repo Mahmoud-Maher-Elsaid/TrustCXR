@@ -13,11 +13,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 9B | `0c29f74` | Go for Stage 9C | Four-variant segmentation-guided classification ablation | Classification/segmentation integration | Original Stage 8 fusion evaluation | Complete | None | 9C |
 | 9C | `63462ef` | Go for final Stage 9 freeze | Paired validation comparison with patient-cluster bootstrap | Evidence-based ablation selection | Original Stage 8 fusion evaluation | Complete | None | 9 Final |
 | 9 Final | Pending closure commit | Go for Stage 10A | Frozen one-time internal test evaluation | Final Stage 9 classification evidence | Original Stage 8 fusion evaluation | Complete with limitations | External validation remains future work | 10A |
-| 10A | Pending | Hold until readiness evidence | Metadata-only lesion annotation readiness audit | Lesion-localization data contract | Original Stage 7 | Ready to run | License and patient-identity resolution | Determined by 10A gate |
+| 10A | Pending closure commit | Hold for license and identity resolution | Metadata-only lesion annotation readiness audit | Lesion-localization data contract | Original Stage 7 | Complete | Five license reviews and four identity contracts unresolved | 10B |
+| 10B | Pending | Hold until resolution evidence | License evidence and hashed patient-identity resolution | Localization governance and identity | Original Stage 7 | Ready to run | Human license approval and identity gaps may remain | Determined by 10B gate |
 
 ## Numbering rule
 
-Stage 10A is the next valid identifier. It audits lesion-localization annotations and governance without training. A later Stage 10 identifier may be assigned only after the Stage 10A gate resolves licenses, patient identity, and patient-safe splits.
+Stage 10B is the next valid identifier. It records local license evidence for human review and builds an ignored hashed identity index without decoding pixels, training, or test access. It cannot grant legal approval automatically.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

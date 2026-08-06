@@ -1,7 +1,7 @@
 # Original Stage 7 — Lesion Segmentation and Detection
 
 - Original stage identifier: `7`
-- Canonical repository mapping: `10A readiness audit; later implementation gated by 10A`
+- Canonical repository mapping: `10A readiness audit; 10B governance and identity resolution`
 - Current status: `READY_TO_RUN`
 - Objective: Lesion Segmentation and Detection under a research-only, patient-safe contract.
 - Research question: Can this capability be implemented and evaluated without leakage, unsupported labels, or hidden test selection?
@@ -24,14 +24,14 @@
 - Test policy: Locked until architecture, preprocessing, checkpoints, thresholds, and calibration are frozen; no test-based selection.
 - Calibration policy: Fit on validation only and version all parameters; document when calibration is not applicable.
 - Statistical analysis: Patient-cluster paired bootstrap and confidence intervals where patient-level paired outputs exist; do not call intervals containing zero equivalence.
-- Expected source files: Stage 10A metadata-only annotation readiness audit.
+- Expected source files: Stage 10A annotation audit and Stage 10B governance/identity resolution.
 - Expected config files: A tracked frozen configuration only after upstream evidence resolves the contract.
-- Expected scripts: `scripts/localization/run_stage10a_annotation_audit.ps1` for readiness only; no training launcher is authorized.
+- Expected scripts: `scripts/localization/run_stage10b_governance_identity.ps1` for resolution evidence only; no training launcher is authorized.
 - Expected tests: Contracts, labels, leakage, test locking, resume fingerprint, metrics, and failure/refusal behavior.
 - Expected tracked reports: Aggregate metrics, scientific limitations, gate decision, and reproducibility evidence without patient rows.
 - Expected local artifacts: Checkpoints, patient-level predictions, databases, logs, embeddings, and recovery archives remain ignored.
 - Preflight command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\project\\project_preflight.ps1`
-- Long-running command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\localization\run_stage10a_annotation_audit.ps1` runs metadata readiness only.
+- Long-running command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\localization\run_stage10b_governance_identity.ps1` resolves local evidence without training.
 - Monitor command: UNRESOLVED — REQUIRES UPSTREAM RESULT: no runnable monitor is claimed.
 - Resume command: UNRESOLVED — REQUIRES UPSTREAM RESULT: exact-fingerprint resume must be implemented before execution.
 - Validation command: Run the stage-specific validator only after a real implementation is registered.
@@ -39,7 +39,7 @@
 - Failure criteria: Missing inputs, incompatible fingerprints, leakage, test access during selection, invalid metrics, incomplete variants, unsafe outputs, or unsupported claims.
 - Recovery procedure: Preserve exact-fingerprint compatible artifacts; quarantine incompatible state with hashes and a manifest; restart only affected work under the unchanged contract.
 - Known limitations: Requires annotation-format, license, identity, and patient-safe split audit after Stage 9 closure.
-- Completed components: Stage 10A readiness tooling is prepared; no lesion-localization model is claimed.
-- Missing components: License verification, patient identity resolution, patient-safe split contract, baseline selection, and training remain gated.
+- Completed components: Stage 10A metadata audit passed; Stage 10B resolution tooling is prepared; no lesion-localization model is claimed.
+- Missing components: Human license approval, remaining patient identity resolution, patient-safe split contract, baseline selection, and training remain gated.
 - Evidence commit: `Pending Stage 10A preparation commit`
 - Downstream gate: Original Stage 8 evidence-fusion gate.

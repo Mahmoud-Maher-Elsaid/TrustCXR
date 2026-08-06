@@ -1,0 +1,61 @@
+{
+  "stage": "10B",
+  "task": "localization_license_and_patient_identity_resolution",
+  "training_permitted": false,
+  "test_access_permitted": false,
+  "identity_index": "artifacts/stage10/stage10b_governance_identity.sqlite",
+  "datasets": [
+    {
+      "name": "VinBigData",
+      "root": "TrustCXR-Data/02_VinBigData",
+      "image_root": "TrustCXR-Data/02_VinBigData/vinbigdata-chest-xray-abnormalities-detection/train",
+      "metadata": "TrustCXR-Data/02_VinBigData/vinbigdata-chest-xray-abnormalities-detection/train.csv",
+      "metadata_id": "image_id",
+      "image_suffix": ".dicom",
+      "identity_source": "DICOM_PATIENT_ID",
+      "license_decision": null
+    },
+    {
+      "name": "RSNA_Pneumonia",
+      "root": "TrustCXR-Data/06_RSNA_Pneumonia",
+      "image_root": "TrustCXR-Data/06_RSNA_Pneumonia/rsna-pneumonia-detection-challenge/stage_2_train_images",
+      "metadata": "TrustCXR-Data/06_RSNA_Pneumonia/rsna-pneumonia-detection-challenge/stage_2_train_labels.csv",
+      "metadata_id": "patientId",
+      "image_suffix": ".dcm",
+      "identity_source": "DICOM_PATIENT_ID",
+      "license_decision": null
+    },
+    {
+      "name": "SIIM_Pneumothorax",
+      "root": "TrustCXR-Data/08_SIIM_Pneumothorax",
+      "image_root": "TrustCXR-Data/08_SIIM_Pneumothorax/siim-acr-pneumothorax-segmentation/stage_2_images",
+      "metadata": "TrustCXR-Data/08_SIIM_Pneumothorax/siim-acr-pneumothorax-segmentation/stage_2_train.csv",
+      "metadata_id": "ImageId",
+      "image_suffix": ".dcm",
+      "identity_source": "DICOM_PATIENT_ID",
+      "license_decision": null
+    },
+    {
+      "name": "TBX11K",
+      "root": "TrustCXR-Data/09_TBX11K",
+      "metadata": "TrustCXR-Data/09_TBX11K/archive/tbx11k-simplified/data.csv",
+      "metadata_id": "fname",
+      "identity_source": "NO_VERIFIED_PATIENT_FIELD",
+      "license_decision": null
+    },
+    {
+      "name": "CRD_Masks",
+      "root": "TrustCXR-Data/05_CRD_Masks",
+      "metadata": "TrustCXR-Data/05_CRD_Masks/archive/CXR_Selected-Image-Dataset_Log.csv",
+      "metadata_id": "New File Name",
+      "identity_source": "SOURCE_DEPENDENT_UNRESOLVED",
+      "license_decision": null
+    }
+  ],
+  "reports": {
+    "summary": "reports/stage10/stage10b_governance_identity_summary.json",
+    "matrix": "reports/stage10/stage10b_governance_identity_matrix.csv",
+    "license_evidence": "reports/stage10/stage10b_license_evidence.csv",
+    "report": "reports/stage10/STAGE10B_GOVERNANCE_IDENTITY_REPORT.md"
+  }
+}

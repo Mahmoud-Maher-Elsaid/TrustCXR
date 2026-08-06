@@ -1,0 +1,12 @@
+{
+  "datasets_audited": 5,
+  "gate": "HOLD_FOR_LICENSE_AND_IDENTITY_RESOLUTION",
+  "patient_level_rows_tracked": false,
+  "schemas_passed": 5,
+  "stage": "10A",
+  "status": "PASSED_METADATA_AUDIT",
+  "test_records_accessed": 0,
+  "training_permitted": false,
+  "unresolved_identity_count": 4,
+  "unresolved_license_count": 5
+}

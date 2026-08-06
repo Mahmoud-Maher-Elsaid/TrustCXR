@@ -8,4 +8,5 @@
 "9B","0c29f74","GO_FOR_STAGE_9C","completed four-variant segmentation-guided ablation","classification/segmentation integration","original Stage 8","COMPLETE","none","9C"
 "9C","63462ef","GO_FOR_STAGE_9_FINAL_FREEZE","paired patient-cluster validation comparison","formal ablation selection","original Stage 8","COMPLETE","none","9 Final"
 "9 Final","pending closure commit","GO_FOR_STAGE_10A","frozen one-time internal test evaluation","final Stage 9 evidence","original Stage 8","COMPLETE_WITH_LIMITATIONS","external validation remains","10A"
-"10A","pending","HOLD_FOR_READINESS_EVIDENCE","metadata-only localization annotation audit","lesion-localization readiness","original Stage 7","READY_TO_RUN","license and identity resolution","determined by 10A gate"
+"10A","pending closure commit","HOLD_FOR_LICENSE_AND_IDENTITY_RESOLUTION","metadata-only localization annotation audit","lesion-localization readiness","original Stage 7","COMPLETE","five license reviews and four identity contracts unresolved","10B"
+"10B","pending","HOLD_FOR_RESOLUTION_EVIDENCE","license evidence and hashed identity resolution","localization governance and identity","original Stage 7","READY_TO_RUN","human license approval and identity gaps","determined by 10B gate"
