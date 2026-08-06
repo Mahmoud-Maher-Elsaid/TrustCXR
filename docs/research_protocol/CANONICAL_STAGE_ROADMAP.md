@@ -21,11 +21,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 10F | Pending closure commit | Go for validation failure analysis | Frozen-checkpoint validation localization audit | Localization sensitivity and small-lesion analysis | Original Stage 7 | Complete with material limitation | Small-lesion sensitivity is 0.036145; final test remains locked | 10G |
 | 10G | Pending closure commit | Go for validation operating-point audit | Validation-only size-stratified failure analysis and local overlays | Localization failure characterization | Original Stage 7 | Complete with material limitation | Small lesions often detected only at low confidence | 10H |
 | 10H | Pending closure commit | Go for operating-point decision | Validation-only operating-point audit | Detection threshold safety analysis | Original Stage 7 | Complete with adverse tradeoff | Sensitivity gains require large false-positive increases | 10I |
-| 10I | Pending | Hold until explicit operating-point decision | Validation-only decision rule against frozen tradeoff evidence | Localization acceptance gate | Original Stage 7 | Ready to run | Determine whether any threshold meets all safety criteria | Determined by 10I gate |
+| 10I | Pending closure commit | Go for small-lesion baseline repair | Validation-only decision rule against frozen tradeoff evidence | Localization acceptance gate | Original Stage 7 | Complete with hold | No audited threshold met all safety criteria | 10J |
+| 10J | Pending | Hold until repaired validation evidence | Higher-resolution Faster R-CNN with small FPN anchors | Small-lesion localization repair | Original Stage 7 | Ready to run | Repair training and constrained validation selection | Determined by 10J gate |
 
 ## Numbering rule
 
-Stage 10I is the next valid identifier. It applies an explicit validation-only rule requiring overall sensitivity at least 0.70, small-lesion sensitivity at least 0.20, and no more than 1.0 false positive per image. It does not relax criteria automatically, retrain, or unlock the final split.
+Stage 10J is the next valid identifier. It keeps the RSNA patient split fixed and trains one controlled Faster R-CNN repair with 768–1024 pixel inputs and 8–128 pixel FPN anchors. Selection maximizes small-lesion sensitivity only among validation operating points with overall sensitivity at least 0.70 and no more than 1.0 false positive per image. The final split remains locked.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

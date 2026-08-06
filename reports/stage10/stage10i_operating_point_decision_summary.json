@@ -1,0 +1,18 @@
+{
+  "decision": "NO_ACCEPTABLE_OPERATING_POINT",
+  "decision_rule": {
+    "maximum_false_positives_per_image": 1.0,
+    "minimum_overall_sensitivity": 0.7,
+    "minimum_small_lesion_sensitivity": 0.2,
+    "tie_breaker": "HIGHEST_PRECISION"
+  },
+  "eligible_operating_points": 0,
+  "final_test_images_accessed": 0,
+  "gate": "GO_FOR_STAGE_10J_SMALL_LESION_BASELINE_REPAIR",
+  "selected_metrics": null,
+  "selected_threshold": null,
+  "stage": "10I",
+  "status": "FINALIZED_OPERATING_POINT_DECISION",
+  "test_predictions_generated": false,
+  "training_performed": false
+}
