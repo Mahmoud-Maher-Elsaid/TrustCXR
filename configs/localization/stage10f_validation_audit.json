@@ -1,0 +1,17 @@
+{
+  "stage": "10F",
+  "dataset": "RSNA_Pneumonia",
+  "checkpoint": "artifacts/stage10/stage10e_rsna_localization/best_checkpoint.pt",
+  "checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "experiment_fingerprint": "841495da782d14041f2a0f4a1f748f2fdd7fd4af732de7e2f45244930d2a323e",
+  "stage10e_config": "configs/localization/stage10e_rsna_localization_baseline.json",
+  "evaluation_split": "validation",
+  "selection_metric": "validation_ap50",
+  "iou_threshold": 0.5,
+  "score_threshold": 0.5,
+  "small_lesion_area_ratio": 0.02,
+  "final_test_split_locked": true,
+  "final_test_images_accessed": 0,
+  "training_permitted": false,
+  "withheld_datasets": ["VinBigData", "SIIM_Pneumothorax", "TBX11K", "CRD_Masks"]
+}

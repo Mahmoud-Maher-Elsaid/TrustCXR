@@ -1,0 +1,11 @@
+{
+  "best_epoch": 1,
+  "best_validation_ap50": 0.33573875507379763,
+  "completed_epochs": 6,
+  "experiment_fingerprint": "841495da782d14041f2a0f4a1f748f2fdd7fd4af732de7e2f45244930d2a323e",
+  "final_test_images_accessed": 0,
+  "patient_leakage_violations": 0,
+  "stage": "10E",
+  "status": "COMPLETED_VALIDATION_ONLY_BASELINE",
+  "test_predictions_generated": false
+}

@@ -17,11 +17,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 10B | `4486120` plus result closure | Hold for license or identity | License evidence and hashed patient-identity resolution | Localization governance and identity | Original Stage 7 | Complete | Five manual license decisions; four datasets lack safe patient identity | 10C |
 | 10C | Pending closure commit | Go for RSNA patient-safe split design | Conservative identity withholding and human license adjudication registry | Localization governance decision | Original Stage 7 | Complete with CRD withheld | CRD inherited terms unresolved; four datasets identity-withheld | 10D |
 | 10D | Pending closure commit | Go for RSNA localization baseline preparation | Deterministic RSNA-only patient split design | Localization cohort design | Original Stage 7 | Complete | None for baseline preparation | 10E |
-| 10E | Pending | Hold until validation-only baseline evidence | RSNA Faster R-CNN lung-opacity detection baseline | Lesion localization baseline | Original Stage 7 | Ready to run | Training and validation metrics | Determined by 10E gate |
+| 10E | Pending closure commit | Go for validation localization audit | RSNA Faster R-CNN lung-opacity detection baseline | Lesion localization baseline | Original Stage 7 | Complete | Final test remains locked | 10F |
+| 10F | Pending | Hold until detailed validation evidence | Frozen-checkpoint validation localization audit | Localization sensitivity and small-lesion analysis | Original Stage 7 | Ready to run | Validation AP50, sensitivity, false positives, and small-lesion analysis | Determined by 10F gate |
 
 ## Numbering rule
 
-Stage 10E is the next valid identifier. It trains an RSNA-only Faster R-CNN baseline using Stage 10D train and validation assignments. Validation AP50 selects the checkpoint; the final split is rejected by the dataset API. All other localization datasets remain withheld.
+Stage 10F is the next valid identifier. It evaluates the frozen Stage 10E epoch-1 checkpoint on validation only, adding sensitivity, false positives per image, and small-lesion sensitivity. It performs no training and keeps the final split locked.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

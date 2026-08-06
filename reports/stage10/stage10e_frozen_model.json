@@ -1,0 +1,18 @@
+{
+  "best_epoch": 1,
+  "best_validation_ap50": 0.33573875507379763,
+  "checkpoint_bytes": 517819391,
+  "checkpoint_relative_path": "artifacts/stage10/stage10e_rsna_localization/best_checkpoint.pt",
+  "checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "completed_epochs": 6,
+  "config_sha256": "9790262bbbe527af3b7c26481c5b6526dd39ac248445efe1e9c0a4c722569b83",
+  "experiment_fingerprint": "841495da782d14041f2a0f4a1f748f2fdd7fd4af732de7e2f45244930d2a323e",
+  "final_test_images_accessed": 0,
+  "gate": "GO_FOR_STAGE_10F_VALIDATION_LOCALIZATION_AUDIT",
+  "patient_leakage_violations": 0,
+  "selection_split": "validation",
+  "stage": "10E",
+  "status": "FROZEN_VALIDATION_SELECTED_BASELINE",
+  "test_predictions_generated": false,
+  "training_git_commit": "0b53d34eb6a6edacbcdd7010fa18a22f986b5eaf"
+}
