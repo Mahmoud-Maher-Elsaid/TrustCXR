@@ -1,0 +1,15 @@
+{
+  "stage": "10I",
+  "source_report": "reports/stage10/stage10h_operating_point_audit_summary.json",
+  "selection_split": "validation",
+  "decision_rule": {
+    "minimum_overall_sensitivity": 0.7,
+    "minimum_small_lesion_sensitivity": 0.2,
+    "maximum_false_positives_per_image": 1.0,
+    "tie_breaker": "HIGHEST_PRECISION"
+  },
+  "training_permitted": false,
+  "final_test_split_locked": true,
+  "final_test_images_accessed": 0,
+  "automatic_threshold_relaxation_permitted": false
+}

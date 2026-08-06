@@ -1,0 +1,102 @@
+{
+  "checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "final_test_images_accessed": 0,
+  "gate": "GO_FOR_STAGE_10I_OPERATING_POINT_DECISION",
+  "operating_point_selected": false,
+  "operating_points": {
+    "0.05": {
+      "false_positive": 13903,
+      "false_positives_per_image": 5.226691729323308,
+      "lesions": 945,
+      "precision": 0.05665626272221468,
+      "sensitivity": 0.8835978835978836,
+      "small_detected": 40,
+      "small_lesion_sensitivity": 0.4819277108433735,
+      "small_lesions": 83,
+      "true_positive": 835
+    },
+    "0.1": {
+      "false_positive": 7693,
+      "false_positives_per_image": 2.892105263157895,
+      "lesions": 945,
+      "precision": 0.09109168241965973,
+      "sensitivity": 0.8158730158730159,
+      "small_detected": 29,
+      "small_lesion_sensitivity": 0.3493975903614458,
+      "small_lesions": 83,
+      "true_positive": 771
+    },
+    "0.15": {
+      "false_positive": 5256,
+      "false_positives_per_image": 1.97593984962406,
+      "lesions": 945,
+      "precision": 0.12062907813284256,
+      "sensitivity": 0.762962962962963,
+      "small_detected": 21,
+      "small_lesion_sensitivity": 0.25301204819277107,
+      "small_lesions": 83,
+      "true_positive": 721
+    },
+    "0.2": {
+      "false_positive": 3924,
+      "false_positives_per_image": 1.475187969924812,
+      "lesions": 945,
+      "precision": 0.14788273615635178,
+      "sensitivity": 0.7206349206349206,
+      "small_detected": 17,
+      "small_lesion_sensitivity": 0.20481927710843373,
+      "small_lesions": 83,
+      "true_positive": 681
+    },
+    "0.25": {
+      "false_positive": 3051,
+      "false_positives_per_image": 1.1469924812030075,
+      "lesions": 945,
+      "precision": 0.17406605305901462,
+      "sensitivity": 0.6804232804232804,
+      "small_detected": 14,
+      "small_lesion_sensitivity": 0.1686746987951807,
+      "small_lesions": 83,
+      "true_positive": 643
+    },
+    "0.3": {
+      "false_positive": 2401,
+      "false_positives_per_image": 0.9026315789473685,
+      "lesions": 945,
+      "precision": 0.2025905014945201,
+      "sensitivity": 0.6455026455026455,
+      "small_detected": 11,
+      "small_lesion_sensitivity": 0.13253012048192772,
+      "small_lesions": 83,
+      "true_positive": 610
+    },
+    "0.4": {
+      "false_positive": 1542,
+      "false_positives_per_image": 0.5796992481203007,
+      "lesions": 945,
+      "precision": 0.25936599423631124,
+      "sensitivity": 0.5714285714285714,
+      "small_detected": 5,
+      "small_lesion_sensitivity": 0.060240963855421686,
+      "small_lesions": 83,
+      "true_positive": 540
+    },
+    "0.5": {
+      "false_positive": 981,
+      "false_positives_per_image": 0.368796992481203,
+      "lesions": 945,
+      "precision": 0.3215767634854772,
+      "sensitivity": 0.49206349206349204,
+      "small_detected": 3,
+      "small_lesion_sensitivity": 0.03614457831325301,
+      "small_lesions": 83,
+      "true_positive": 465
+    }
+  },
+  "primary_finding": "SENSITIVITY_GAIN_REQUIRES_LARGE_FALSE_POSITIVE_INCREASE",
+  "stage": "10H",
+  "status": "FINALIZED_VALIDATION_OPERATING_POINT_AUDIT",
+  "test_predictions_generated": false,
+  "training_performed": false,
+  "validation_records": 2660
+}
