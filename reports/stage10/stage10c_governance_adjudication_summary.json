@@ -1,0 +1,11 @@
+{
+  "datasets_ready_for_split_design": 1,
+  "datasets_reviewed": 5,
+  "gate": "GO_FOR_STAGE_10D_RSNA_PATIENT_SAFE_SPLIT_DESIGN",
+  "manual_license_decisions_pending": 1,
+  "patient_level_rows_tracked": false,
+  "stage": "10C",
+  "status": "PASSED_GOVERNANCE_ADJUDICATION",
+  "test_records_accessed": 0,
+  "training_permitted": false
+}

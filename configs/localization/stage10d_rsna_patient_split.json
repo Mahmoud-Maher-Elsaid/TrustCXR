@@ -1,0 +1,22 @@
+{
+  "stage": "10D",
+  "dataset": "RSNA_Pneumonia",
+  "source_identity_index": "artifacts/stage10/stage10b_governance_identity.sqlite",
+  "output_split_index": "artifacts/stage10/stage10d_rsna_patient_splits.sqlite",
+  "source_split": "train_source",
+  "split_policy": {
+    "method": "DETERMINISTIC_PATIENT_SHA256",
+    "seed": 20260806,
+    "train_fraction": 0.8,
+    "validation_fraction": 0.1,
+    "test_fraction": 0.1
+  },
+  "final_test_images_access_permitted": false,
+  "training_permitted": false,
+  "withheld_datasets": [
+    "VinBigData",
+    "SIIM_Pneumothorax",
+    "TBX11K",
+    "CRD_Masks"
+  ]
+}

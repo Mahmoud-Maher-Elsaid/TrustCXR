@@ -1,0 +1,6 @@
+dataset,identity_decision,license_decision,license_source,ready_for_split_design,manual_action
+VinBigData,WITHHOLD_UNRESOLVED_PATIENT_IDENTITY,APPROVED_FOR_RESEARCH,https://www.kaggle.com/competitions/vinbigdata-chest-xray-abnormalities-detection/rules,False,None
+RSNA_Pneumonia,ACCEPT_STAGE10B_PATIENT_TRACKING,APPROVED_FOR_RESEARCH,https://www.rsna.org/artificial-intelligence/ai-image-challenge/RSNA-Pneumonia-Detection-Challenge-2018,True,None
+SIIM_Pneumothorax,WITHHOLD_UNRESOLVED_PATIENT_IDENTITY_AND_JOIN,APPROVED_FOR_RESEARCH,https://www.kaggle.com/competitions/siim-acr-pneumothorax-segmentation/rules,False,None
+TBX11K,WITHHOLD_UNRESOLVED_PATIENT_IDENTITY,APPROVED_FOR_RESEARCH,https://github.com/yun-liu/Tuberculosis,False,None
+CRD_Masks,WITHHOLD_UNRESOLVED_PATIENT_IDENTITY,PENDING_MANUAL_REVIEW,https://www.kaggle.com/datasets/mrunalnshah/crd-chest-x-ray-images-with-lung-segmented-masks,False,Review authoritative terms and record approval or rejection

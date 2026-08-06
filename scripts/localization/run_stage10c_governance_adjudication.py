@@ -82,8 +82,8 @@ def main() -> int:
         "stage": "10C",
         "status": "PASSED_GOVERNANCE_ADJUDICATION",
         "gate": (
-            "GO_FOR_STAGE_10D_PATIENT_SAFE_SPLIT_DESIGN"
-            if ready and not pending
+            "GO_FOR_STAGE_10D_RSNA_PATIENT_SAFE_SPLIT_DESIGN"
+            if ready
             else "HOLD_FOR_MANUAL_LICENSE_DECISIONS"
         ),
         "datasets_reviewed": len(rows),
@@ -111,10 +111,10 @@ def main() -> int:
         "- Training permitted: `false`",
         "- Test records accessed: `0`",
         "",
-        "Review each authoritative source in the Stage 10C config. For each dataset, set "
-        "`license_decision` to `APPROVED_FOR_RESEARCH` or `REJECTED`, and record reviewer, "
-        "ISO-8601 review time, and a concise evidence note. This is a human legal/governance "
-        "decision; the script cannot approve terms automatically.",
+        "Any dataset still marked `PENDING_MANUAL_REVIEW` remains withheld. Resolve it only "
+        "after reviewing its authoritative and inherited terms, then record approval or "
+        "rejection, reviewer, ISO-8601 review time, and evidence note. The script cannot "
+        "approve terms automatically.",
         "",
     ]
     for row in rows:
