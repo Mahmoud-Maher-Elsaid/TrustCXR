@@ -21,7 +21,14 @@ def test_stage10c_contract_and_conservative_identity_decisions() -> None:
         if row["identity_decision"] == "ACCEPT_STAGE10B_PATIENT_TRACKING"
     ]
     assert accepted == ["RSNA_Pneumonia"]
-    assert all(row["license_decision"] == "PENDING_MANUAL_REVIEW" for row in config["datasets"])
+    decisions = {row["name"]: row["license_decision"] for row in config["datasets"]}
+    assert decisions == {
+        "VinBigData": "APPROVED_FOR_RESEARCH",
+        "RSNA_Pneumonia": "APPROVED_FOR_RESEARCH",
+        "SIIM_Pneumothorax": "APPROVED_FOR_RESEARCH",
+        "TBX11K": "APPROVED_FOR_RESEARCH",
+        "CRD_Masks": "PENDING_MANUAL_REVIEW",
+    }
 
 
 def test_stage10c_rejects_identity_claim_without_stage10b_evidence() -> None:

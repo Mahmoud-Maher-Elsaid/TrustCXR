@@ -8,40 +8,40 @@
       "identity_decision": "WITHHOLD_UNRESOLVED_PATIENT_IDENTITY",
       "identity_evidence": "Stage 10B: patient_identity_rate=0.0; DICOM and annotation metadata expose no patient or study identifier.",
       "license_source": "https://www.kaggle.com/competitions/vinbigdata-chest-xray-abnormalities-detection/rules",
-      "license_decision": "PENDING_MANUAL_REVIEW",
-      "reviewer": null,
-      "reviewed_at": null,
-      "review_note": null
+      "license_decision": "APPROVED_FOR_RESEARCH",
+      "reviewer": "PROJECT_OWNER",
+      "reviewed_at": "2026-08-06",
+      "review_note": "Approved for research use; dataset remains withheld because patient identity is unresolved."
     },
     {
       "name": "RSNA_Pneumonia",
       "identity_decision": "ACCEPT_STAGE10B_PATIENT_TRACKING",
       "identity_evidence": "Stage 10B: patient_identity_rate=1.0, study_identity_rate=1.0, annotation join complete.",
       "license_source": "https://www.rsna.org/artificial-intelligence/ai-image-challenge/RSNA-Pneumonia-Detection-Challenge-2018",
-      "license_decision": "PENDING_MANUAL_REVIEW",
-      "reviewer": null,
-      "reviewed_at": null,
-      "review_note": null
+      "license_decision": "APPROVED_FOR_RESEARCH",
+      "reviewer": "PROJECT_OWNER",
+      "reviewed_at": "2026-08-06",
+      "review_note": "Approved for research use subject to required attribution."
     },
     {
       "name": "SIIM_Pneumothorax",
       "identity_decision": "WITHHOLD_UNRESOLVED_PATIENT_IDENTITY_AND_JOIN",
       "identity_evidence": "Stage 10B: patient_identity_rate=0.0 and annotation_match_count=0 for the observed image container.",
       "license_source": "https://www.kaggle.com/competitions/siim-acr-pneumothorax-segmentation/rules",
-      "license_decision": "PENDING_MANUAL_REVIEW",
-      "reviewer": null,
-      "reviewed_at": null,
-      "review_note": null
+      "license_decision": "APPROVED_FOR_RESEARCH",
+      "reviewer": "PROJECT_OWNER",
+      "reviewed_at": "2026-08-06",
+      "review_note": "Approved for research use; dataset remains withheld because patient identity and the annotation-image join are unresolved."
     },
     {
       "name": "TBX11K",
       "identity_decision": "WITHHOLD_UNRESOLVED_PATIENT_IDENTITY",
       "identity_evidence": "Stage 10B: filename is the only record identifier; no patient or study mapping is available.",
       "license_source": "https://github.com/yun-liu/Tuberculosis",
-      "license_decision": "PENDING_MANUAL_REVIEW",
-      "reviewer": null,
-      "reviewed_at": null,
-      "review_note": null
+      "license_decision": "APPROVED_FOR_RESEARCH",
+      "reviewer": "PROJECT_OWNER",
+      "reviewed_at": "2026-08-06",
+      "review_note": "Approved for research use under CC BY 4.0; dataset remains withheld because identity is filename-only."
     },
     {
       "name": "CRD_Masks",
@@ -49,9 +49,9 @@
       "identity_evidence": "Stage 10B: source-dependent filenames do not provide a verified patient mapping; masks are anatomy masks, not lesion ground truth.",
       "license_source": "https://www.kaggle.com/datasets/mrunalnshah/crd-chest-x-ray-images-with-lung-segmented-masks",
       "license_decision": "PENDING_MANUAL_REVIEW",
-      "reviewer": null,
-      "reviewed_at": null,
-      "review_note": null
+      "reviewer": "PROJECT_OWNER",
+      "reviewed_at": "2026-08-06",
+      "review_note": "Approval withheld because inherited source-dataset terms remain unresolved."
     }
   ]
 }
