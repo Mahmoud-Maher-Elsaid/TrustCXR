@@ -15,6 +15,102 @@ function Get-TrustCxrPaths {
     }
 }
 
+function Test-Stage9BPathWithinRoot {
+    param([string]$Path, [string]$ApprovedRoot)
+    $resolvedPath = [IO.Path]::GetFullPath($Path).TrimEnd([IO.Path]::DirectorySeparatorChar)
+    $resolvedRoot = [IO.Path]::GetFullPath($ApprovedRoot).TrimEnd([IO.Path]::DirectorySeparatorChar)
+    return $resolvedPath.Equals($resolvedRoot, [StringComparison]::OrdinalIgnoreCase) -or
+        $resolvedPath.StartsWith($resolvedRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)
+}
+
+function Assert-Stage9BApprovedPath {
+    param([string]$Path, [string[]]$ApprovedRoots)
+    foreach ($root in $ApprovedRoots) {
+        if (Test-Stage9BPathWithinRoot -Path $Path -ApprovedRoot $root) { return }
+    }
+    throw "Stage 9B runtime path is outside the approved roots: $Path"
+}
+
+function Get-Stage9BCollisionSafePath {
+    param([string]$Destination)
+    if (-not (Test-Path -LiteralPath $Destination)) { return [IO.Path]::GetFullPath($Destination) }
+    $parent = Split-Path -Parent $Destination
+    $leaf = Split-Path -Leaf $Destination
+    $extension = [IO.Path]::GetExtension($leaf)
+    $stem = if ($extension) { $leaf.Substring(0, $leaf.Length - $extension.Length) } else { $leaf }
+    for ($version = 1; $version -le 9999; $version++) {
+        $candidate = Join-Path $parent ("{0}_v{1:D4}{2}" -f $stem, $version, $extension)
+        if (-not (Test-Path -LiteralPath $candidate)) { return [IO.Path]::GetFullPath($candidate) }
+    }
+    throw "No collision-safe Stage 9B destination is available for: $Destination"
+}
+
+function Move-Stage9BLocalEvidence {
+    param(
+        [string]$Source,
+        [string]$Destination,
+        [string[]]$ApprovedRoots
+    )
+    if (-not (Test-Path -LiteralPath $Source)) { throw "Stage 9B move source is missing: $Source" }
+    Assert-Stage9BApprovedPath -Path $Source -ApprovedRoots $ApprovedRoots
+    Assert-Stage9BApprovedPath -Path $Destination -ApprovedRoots $ApprovedRoots
+    if (Test-Path -LiteralPath $Source -PathType Leaf) {
+        $leaf = Split-Path -Leaf $Source
+        if ($leaf -in @("best_checkpoint.pt", "last_checkpoint.pt") -or $leaf -like "*.integrity.json" -or $leaf -match "(?i)(patient|prediction|checkpoint)") {
+            throw "Protected Stage 9B artifact cannot be moved directly: $Source"
+        }
+    }
+    $safeDestination = Get-Stage9BCollisionSafePath -Destination $Destination
+    $destinationParent = Split-Path -Parent $safeDestination
+    if (-not (Test-Path -LiteralPath $destinationParent -PathType Container)) {
+        New-Item -ItemType Directory -Path $destinationParent -Force | Out-Null
+    }
+    if (Test-Path -LiteralPath $Source -PathType Container) {
+        [IO.Directory]::Move([IO.Path]::GetFullPath($Source), $safeDestination)
+    } else {
+        [IO.File]::Move([IO.Path]::GetFullPath($Source), $safeDestination)
+    }
+    return $safeDestination
+}
+
+function Write-Stage9BAtomicJson {
+    param([object]$Value, [string]$Path, [string[]]$ApprovedRoots)
+    Assert-Stage9BApprovedPath -Path $Path -ApprovedRoots $ApprovedRoots
+    $destination = [IO.Path]::GetFullPath($Path)
+    $parent = Split-Path -Parent $destination
+    if (-not (Test-Path -LiteralPath $parent -PathType Container)) {
+        New-Item -ItemType Directory -Path $parent -Force | Out-Null
+    }
+    $temporary = "$destination.$([guid]::NewGuid().ToString('N')).tmp"
+    $json = ConvertTo-Json -InputObject $Value -Depth 10
+    $encoding = New-Object Text.UTF8Encoding($false)
+    $stream = New-Object IO.FileStream($temporary, [IO.FileMode]::CreateNew, [IO.FileAccess]::Write, [IO.FileShare]::None)
+    try {
+        $writer = New-Object IO.StreamWriter($stream, $encoding)
+        try { $writer.Write($json); $writer.Flush(); $stream.Flush($true) } finally { $writer.Dispose() }
+    } finally {
+        if ($stream) { $stream.Dispose() }
+    }
+    if (Test-Path -LiteralPath $destination) {
+        $historyRoot = Join-Path $parent "manifest_history"
+        if (-not (Test-Path -LiteralPath $historyRoot -PathType Container)) {
+            New-Item -ItemType Directory -Path $historyRoot -Force | Out-Null
+        }
+        $leaf = [IO.Path]::GetFileNameWithoutExtension($destination)
+        $extension = [IO.Path]::GetExtension($destination)
+        $backup = Get-Stage9BCollisionSafePath -Destination (Join-Path $historyRoot ("{0}_{1}{2}" -f $leaf, (Get-Date -Format "yyyyMMdd_HHmmss_fff"), $extension))
+        [IO.File]::Replace($temporary, $destination, $backup)
+    } else {
+        [IO.File]::Move($temporary, $destination)
+    }
+}
+
+function ConvertTo-Stage9BCommandLineArgument {
+    param([string]$Value)
+    if ($Value -notmatch '[\s"]') { return $Value }
+    return '"' + ($Value -replace '(\\*)"', '$1$1\"' -replace '(\\+)$', '$1$1') + '"'
+}
+
 function Get-Stage9BFingerprint {
     param([System.Collections.IDictionary]$Paths)
     $probe = Join-Path $Paths.Root "scripts\project\stage9_runtime_probe.py"

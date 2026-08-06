@@ -73,7 +73,7 @@ def test_external_launcher_contains_safety_and_recovery_contracts() -> None:
         "python_exit_code",
         "Get-Process -Id",
         "Remove-Item -LiteralPath $pidPath",
-        "Move-Item -LiteralPath $source -Destination $archive",
+        "Move-Stage9BLocalEvidence",
         "Resume refused: checkpoint or integrity sidecar is missing",
         "Current commit is outside the allowed worker-0 Stage 9B lineage",
         "IO.StreamWriter",
@@ -86,9 +86,125 @@ def test_external_launcher_contains_safety_and_recovery_contracts() -> None:
         "StandardError.ReadLineAsync",
     ):
         assert marker in text
-    assert "Start-Process" not in text
-    assert "-WindowStyle Hidden" not in text
-    assert "Stop-Process" not in text
+
+
+def test_stage9b_launcher_uses_windows_powershell_51_compatible_apis() -> None:
+    launcher = (ROOT / "scripts/training/run_stage9b_external.ps1").read_text(encoding="utf-8")
+    helpers = (ROOT / "scripts/project/stage9_helpers.ps1").read_text(encoding="utf-8")
+    combined = launcher + helpers
+    assert "File]::Move($temporary, $Path, $true)" not in combined
+    assert "[IO.File]::Move($temporary, $Path, $true)" not in combined
+    assert ".ArgumentList" not in launcher
+    assert ".Environment[" not in launcher
+    assert ".Kill($false)" not in launcher
+    assert "[IO.File]::Replace" in helpers
+    assert "[IO.File]::Move($temporary, $destination)" in helpers
+
+
+def test_stage9b_move_helper_is_collision_safe_and_path_guarded() -> None:
+    helpers = (ROOT / "scripts/project/stage9_helpers.ps1").read_text(encoding="utf-8")
+    assert "Get-Stage9BCollisionSafePath" in helpers
+    assert '"{0}_v{1:D4}{2}"' in helpers
+    assert "Assert-Stage9BApprovedPath" in helpers
+    assert "[IO.Directory]::Move" in helpers
+    assert "[IO.File]::Move([IO.Path]::GetFullPath($Source), $safeDestination)" in helpers
+
+
+def test_stage9b_move_helper_preserves_collision_and_protected_files(
+    tmp_path: Path,
+) -> None:
+    approved = tmp_path / "approved"
+    approved.mkdir()
+    source = approved / "runtime.log"
+    destination = approved / "archive" / "runtime.log"
+    destination.parent.mkdir()
+    source.write_text("new evidence", encoding="utf-8")
+    destination.write_text("existing evidence", encoding="utf-8")
+    protected = approved / "last_checkpoint.pt"
+    protected.write_bytes(b"unchanged checkpoint")
+    helper = ROOT / "scripts/project/stage9_helpers.ps1"
+
+    def quote(path: Path) -> str:
+        return str(path).replace("'", "''")
+
+    command = (
+        f". '{quote(helper)}'; "
+        f"$moved=Move-Stage9BLocalEvidence -Source '{quote(source)}' "
+        f"-Destination '{quote(destination)}' -ApprovedRoots @('{quote(approved)}'); "
+        "Write-Output $moved; "
+        "try { Move-Stage9BLocalEvidence "
+        f"-Source '{quote(protected)}' "
+        f"-Destination '{quote(approved / 'archive' / 'last_checkpoint.pt')}' "
+        f"-ApprovedRoots @('{quote(approved)}') | Out-Null; exit 7 }} "
+        "catch { Write-Output 'PROTECTED' }"
+    )
+    result = subprocess.run(
+        ["powershell.exe", "-NoProfile", "-Command", command],
+        capture_output=True,
+        check=False,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    moved_path = destination.with_name("runtime_v0001.log")
+    assert destination.read_text(encoding="utf-8") == "existing evidence"
+    assert moved_path.read_text(encoding="utf-8") == "new evidence"
+    assert not source.exists()
+    assert protected.read_bytes() == b"unchanged checkpoint"
+    assert "PROTECTED" in result.stdout
+
+
+def test_stage9b_atomic_json_replaces_compatibly_without_three_argument_move(
+    tmp_path: Path,
+) -> None:
+    approved = tmp_path / "runtime"
+    approved.mkdir()
+    target = approved / "manifest.json"
+    helper = ROOT / "scripts/project/stage9_helpers.ps1"
+
+    def quote(path: Path) -> str:
+        return str(path).replace("'", "''")
+
+    command = (
+        f". '{quote(helper)}'; "
+        f"Write-Stage9BAtomicJson -Value @{{status='RUNNING'}} -Path '{quote(target)}' "
+        f"-ApprovedRoots @('{quote(approved)}'); "
+        f"Write-Stage9BAtomicJson -Value @{{status='FAILED';exit_code=1}} -Path '{quote(target)}' "
+        f"-ApprovedRoots @('{quote(approved)}'); "
+        f"Get-Content -LiteralPath '{quote(target)}' -Raw"
+    )
+    result = subprocess.run(
+        ["powershell.exe", "-NoProfile", "-Command", command],
+        capture_output=True,
+        check=False,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    payload = json.loads(result.stdout)
+    assert payload == {"status": "FAILED", "exit_code": 1}
+    assert not list(approved.glob("*.tmp"))
+    backups = list((approved / "manifest_history").glob("manifest_*.json"))
+    assert len(backups) == 1
+    assert json.loads(backups[0].read_text(encoding="utf-8")) == {"status": "RUNNING"}
+
+
+def test_monitor_separates_historical_tdr_from_current_readiness() -> None:
+    monitor = (ROOT / "scripts/training/monitor_stage9b.ps1").read_text(encoding="utf-8")
+    for marker in (
+        "latest_historical_failure",
+        "current_boot_tdr_status",
+        "current_preflight_readiness",
+        "checkpoint_integrity_status",
+        "resume_eligible",
+        "completed_epoch",
+        "next_epoch",
+        "current_safe_action",
+        "READY_TO_RESUME",
+    ):
+        assert marker in monitor
+    assert "STOPPED_AFTER_GPU_TDR" not in monitor
+    assert "Start-Process" not in monitor
+    assert "-WindowStyle Hidden" not in monitor
+    assert "Stop-Process" not in monitor
 
 
 def test_preflight_refuses_webots_recent_tdr_and_competing_processes() -> None:

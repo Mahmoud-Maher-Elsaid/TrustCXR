@@ -11,12 +11,6 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 . (Join-Path $PSScriptRoot "..\project\stage9_helpers.ps1")
 
-function Write-AtomicJson([object]$Value, [string]$Path) {
-    $temporary = "$Path.$([guid]::NewGuid().ToString('N')).tmp"
-    $Value | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $temporary -Encoding utf8
-    [IO.File]::Move($temporary, $Path, $true)
-}
-
 $preflight = Test-Stage9BPreflight -ProjectRoot $ProjectRoot -RequireCleanGit -RequireCuda
 $paths = $preflight.paths
 & git merge-base --is-ancestor ebe9b5a948d58d1f97d8945c515ad4afadf1ef32 HEAD
@@ -28,6 +22,7 @@ if (Get-Command gh -ErrorAction SilentlyContinue) {
 $gpuPreflight = Assert-Stage9BProcessSafety
 $runtime = $paths.RuntimeRoot
 New-Item -ItemType Directory -Force -Path $runtime | Out-Null
+$approvedRuntimeRoots = @($paths.RuntimeRoot, (Join-Path $paths.Root "cache"))
 $pidPath = Join-Path $runtime "stage9b.pid.json"
 if (Test-Path -LiteralPath $pidPath) {
     $oldState = Get-Content -LiteralPath $pidPath -Raw | ConvertFrom-Json
@@ -58,11 +53,13 @@ if ($Resume) {
 }
 if ($FreshStart -and $variantState.Count -gt 0) {
     $stamp = Get-Date -Format "yyyyMMdd_HHmmss"
-    $archive = Join-Path $paths.Root "cache\stage9b_pre_fresh_start_$stamp"
+    $archive = Get-Stage9BCollisionSafePath -Destination (Join-Path $paths.Root "cache\stage9b_pre_fresh_start_$stamp")
     New-Item -ItemType Directory -Force -Path $archive | Out-Null
     foreach ($variant in @("original", "lung_masked", "anatomy_crop", "image_plus_masks")) {
         $source = Join-Path $paths.ArtifactRoot $variant
-        if (Test-Path -LiteralPath $source) { Move-Item -LiteralPath $source -Destination $archive }
+        if (Test-Path -LiteralPath $source) {
+            Move-Stage9BLocalEvidence -Source $source -Destination (Join-Path $archive $variant) -ApprovedRoots @($paths.ArtifactRoot, (Join-Path $paths.Root "cache")) | Out-Null
+        }
     }
     $metadata | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $archive "checkpoint_inventory.json") -Encoding utf8
 }
@@ -94,16 +91,16 @@ $manifest = [ordered]@{
     gpu_preflight=$gpuPreflight;last_completed_epoch=$null;last_checkpoint_timestamp=$null;last_checkpoint_sha256=$null
     test_records_accessed=0;stage6_checkpoint_reused=$false
 }
-Write-AtomicJson $manifest $manifestPath
+Write-Stage9BAtomicJson -Value $manifest -Path $manifestPath -ApprovedRoots $approvedRuntimeRoots
 $stdoutWriter = [IO.StreamWriter]::new($stdout, $false, [Text.UTF8Encoding]::new($false)); $stdoutWriter.AutoFlush = $true
 $stderrWriter = [IO.StreamWriter]::new($stderr, $false, [Text.UTF8Encoding]::new($false)); $stderrWriter.AutoFlush = $true
 $process = [Diagnostics.Process]::new()
 $startInfo = [Diagnostics.ProcessStartInfo]::new()
 $startInfo.FileName = $paths.Python; $startInfo.WorkingDirectory = $paths.Root
 $startInfo.UseShellExecute = $false; $startInfo.RedirectStandardOutput = $true; $startInfo.RedirectStandardError = $true; $startInfo.CreateNoWindow = $false
-foreach ($argument in $arguments) { $startInfo.ArgumentList.Add($argument) }
-$startInfo.Environment["PYTHONUNBUFFERED"] = "1"; $startInfo.Environment["PYTHONFAULTHANDLER"] = "1"; $startInfo.Environment["TORCH_SHOW_CPP_STACKTRACES"] = "1"
-if ($DiagnosticCudaLaunchBlocking) { $startInfo.Environment["CUDA_LAUNCH_BLOCKING"] = "1" }
+$startInfo.Arguments = (($arguments | ForEach-Object { ConvertTo-Stage9BCommandLineArgument $_ }) -join " ")
+$startInfo.EnvironmentVariables["PYTHONUNBUFFERED"] = "1"; $startInfo.EnvironmentVariables["PYTHONFAULTHANDLER"] = "1"; $startInfo.EnvironmentVariables["TORCH_SHOW_CPP_STACKTRACES"] = "1"
+if ($DiagnosticCudaLaunchBlocking) { $startInfo.EnvironmentVariables["CUDA_LAUNCH_BLOCKING"] = "1" }
 $process.StartInfo = $startInfo
 $exitCode = 1
 $startedProcess = $false
@@ -111,8 +108,8 @@ try {
     if (-not $process.Start()) { throw "Python process failed to start." }
     $startedProcess = $true
     $manifest.python_pid = $process.Id
-    Write-AtomicJson ([ordered]@{launcher_pid=$PID;python_pid=$process.Id;manifest=$manifestPath}) $pidPath
-    Write-AtomicJson $manifest $manifestPath
+    Write-Stage9BAtomicJson -Value ([ordered]@{launcher_pid=$PID;python_pid=$process.Id;manifest=$manifestPath}) -Path $pidPath -ApprovedRoots $approvedRuntimeRoots
+    Write-Stage9BAtomicJson -Value $manifest -Path $manifestPath -ApprovedRoots $approvedRuntimeRoots
     $stdoutClosed=$false;$stderrClosed=$false
     $stdoutTask=$process.StandardOutput.ReadLineAsync();$stderrTask=$process.StandardError.ReadLineAsync()
     while(-not ($stdoutClosed -and $stderrClosed)){
@@ -125,9 +122,9 @@ try {
     $exitCode = $process.ExitCode
 } catch {
     $stderrWriter.WriteLine($_.Exception.ToString()); [Console]::Error.WriteLine($_.Exception.ToString())
-    if ($startedProcess -and -not $process.HasExited) { $process.Kill($false); $process.WaitForExit() }
+    if ($startedProcess -and -not $process.HasExited) { $process.Kill(); $process.WaitForExit() }
 } finally {
-    if($startedProcess -and -not $process.HasExited){$process.Kill($false);$process.WaitForExit()}
+    if($startedProcess -and -not $process.HasExited){$process.Kill();$process.WaitForExit()}
     $stdoutWriter.Flush(); $stderrWriter.Flush(); $stdoutWriter.Dispose(); $stderrWriter.Dispose()
     $manifest.end_time = (Get-Date).ToString("o"); $manifest.python_exit_code = $exitCode
     $history = Join-Path $paths.ArtifactRoot "original\epoch_history.jsonl"
@@ -139,13 +136,13 @@ try {
         $end = [datetimeoffset]::Parse($manifest.end_time).LocalDateTime
         $events = @(Get-Stage9BTdrEvents -StartTime $end.AddMinutes(-3) -EndTime $end.AddMinutes(3))
         ConvertTo-Json -InputObject $events -Depth 6 | Set-Content -LiteralPath $eventsPath -Encoding utf8
-        Write-AtomicJson $manifest $manifestPath
+        Write-Stage9BAtomicJson -Value $manifest -Path $manifestPath -ApprovedRoots $approvedRuntimeRoots
         & $paths.Python (Join-Path $paths.Root "scripts\project\stage9_runtime_probe.py") classify --manifest $manifestPath --stderr $stderr --events $eventsPath --output $recoveryPath | Out-Host
         if (Test-Path $recoveryPath) { $recovery=Get-Content $recoveryPath -Raw | ConvertFrom-Json; $manifest.failure_classification=$recovery.classification; $manifest.nearby_gpu_events=$recovery.nearby_gpu_events }
     } catch {
         $manifest.failure_classification="FAILED_UNKNOWN"; $manifest.classification_error=$_.Exception.Message
     } finally {
-        Write-AtomicJson $manifest $manifestPath
+        Write-Stage9BAtomicJson -Value $manifest -Path $manifestPath -ApprovedRoots $approvedRuntimeRoots
         Remove-Item -LiteralPath $pidPath -ErrorAction SilentlyContinue
         $process.Dispose()
     }
