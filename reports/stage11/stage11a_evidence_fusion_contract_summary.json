@@ -1,0 +1,45 @@
+{
+  "classification_labels": [
+    "Atelectasis",
+    "Cardiomegaly",
+    "Effusion",
+    "Infiltration",
+    "Mass",
+    "Nodule",
+    "Pneumonia",
+    "Pneumothorax",
+    "Consolidation",
+    "Edema",
+    "Emphysema",
+    "Fibrosis",
+    "Pleural_Thickening",
+    "Hernia"
+  ],
+  "cross_dataset_record_level_fusion_permitted": false,
+  "downstream_evidence_policy": {
+    "localization_absence_may_contradict_classifier": false,
+    "model_disagreement_must_be_preserved": true,
+    "pseudo_masks_may_be_called_manual_ground_truth": false,
+    "stage10_anatomical_scope": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+    "unsupported_findings": "UNLOCALIZED_OR_UNCERTAIN"
+  },
+  "evidence_statuses": [
+    "SUPPORTED",
+    "PARTIALLY_SUPPORTED",
+    "CONTRADICTED",
+    "UNLOCALIZED",
+    "OUTSIDE_EXPECTED_ANATOMY",
+    "UNCERTAIN",
+    "NOT_APPLICABLE"
+  ],
+  "gate": "GO_FOR_STAGE_11B_FUSION_DATA_CONTRACT_VALIDATION",
+  "localization_supported_labels": [
+    "Pneumonia"
+  ],
+  "locked_test_records_accessed": 0,
+  "shared_fusion_cohort_required": true,
+  "stage": "11A",
+  "status": "FINALIZED_EVIDENCE_FUSION_CONTRACT",
+  "test_predictions_generated": false,
+  "training_performed": false
+}

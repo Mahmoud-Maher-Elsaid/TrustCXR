@@ -1,0 +1,35 @@
+{
+  "stage": "11B",
+  "stage11a_evidence": "reports/stage11/stage11a_evidence_fusion_contract_summary.json",
+  "classification_cohort_evidence": "reports/stage9/stage9a_summary.json",
+  "classification_config": "configs/training/stage9_final_freeze.json",
+  "localization_cohort_evidence": "reports/stage10/stage10d_rsna_patient_split_summary.json",
+  "localization_config": "configs/localization/stage10e_rsna_localization_baseline.json",
+  "component_contracts": {
+    "classification": {
+      "dataset": "NIH_ChestXray14",
+      "identity_namespace": "NIH_CXR_PATIENT",
+      "candidate_label": "Pneumonia"
+    },
+    "localization": {
+      "dataset": "RSNA_Pneumonia",
+      "identity_namespace": "RSNA_PNEUMONIA_PATIENT",
+      "annotation_target": "Lung Opacity"
+    }
+  },
+  "shared_patient_identity_map_available": false,
+  "shared_image_identity_map_available": false,
+  "pneumonia_to_lung_opacity_semantic_mapping_approved": false,
+  "cross_dataset_record_level_fusion_permitted": false,
+  "shared_fusion_cohort_required": true,
+  "downstream_evidence_policy": {
+    "unsupported_findings": "UNLOCALIZED_OR_UNCERTAIN",
+    "localization_absence_may_contradict_classifier": false,
+    "stage10_anatomical_scope": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+    "pseudo_masks_may_be_called_manual_ground_truth": false,
+    "model_disagreement_must_be_preserved": true
+  },
+  "training_permitted": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0
+}

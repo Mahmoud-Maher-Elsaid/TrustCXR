@@ -2,8 +2,8 @@
 
 - Branch: `develop`
 - Commit before Stage 9 closure: `63462ef76ec606925ed35320f1e7fd26f01796a8`
-- Current gate: `GO_FOR_STAGE_11A_EVIDENCE_FUSION_CONTRACT_PREPARATION`
-- Current stage: Stage 11A no-inference evidence-fusion contract.
+- Current gate: `GO_FOR_STAGE_11B_FUSION_DATA_CONTRACT_VALIDATION`
+- Current stage: Stage 11B metadata-only fusion data-contract validation.
 - Frozen Stage 9 model: original DenseNet-121 checkpoint `bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de`.
 - Stage 9 final metrics: Macro AUPRC `0.154046`, Macro AUROC `0.728723`, and Macro F1 at frozen 0.5 `0.207250`.
 - Completed actual stages include Stage 9A, Stage 9B, Stage 9C, and the frozen final Stage 9 evaluation.
@@ -22,9 +22,10 @@
 - Stage 10L result: the original Stage 10E baseline selection is finalized; Stage 10J remains rejected, no operating threshold is frozen, and final-test access remains zero.
 - Stage 10M result: across 2,660 validation records, 1,446 detections at reference score 0.5 included zero degenerate boxes, zero boxes outside image bounds, and six boxes touching the 1% edge margin. This supports image geometry and a thoracic-location proxy only; matched anatomy-mask validation is unavailable.
 - Stage 10N result: Stage 10E is accepted only as a research baseline with mandatory limitations. No operating threshold is frozen, final-test evaluation and clinical localization claims remain unauthorized, and localization absence cannot contradict classifier evidence.
-- Incomplete stages: Stage 11A and all downstream gated capabilities. Cross-dataset record-level fusion and all locked-test access remain prohibited.
+- Stage 11A result: the structured evidence statuses and downstream disagreement policy are frozen. A shared fusion cohort is required, cross-dataset record-level fusion remains prohibited, and only Pneumonia is a candidate for Stage 10 localization evidence pending semantic validation.
+- Incomplete stages: Stage 11B and all downstream gated capabilities. Cross-dataset record-level fusion and all locked-test access remain prohibited.
 - Local-only artifacts: datasets, SQLite indexes, checkpoints, logs, patient-level outputs, embeddings, predictions, and recovery archives.
 - Known limitations: CheXmask pseudo-masks are not manual ground truth; Stage 8 test reuse is disclosed; RAD-DINO NIH exposure is not external validation; licenses and cross-dataset near-duplicates remain unresolved.
-- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\fusion\run_stage11a_evidence_fusion_contract.ps1"`.
+- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\fusion\run_stage11b_fusion_data_contract_validation.ps1"`.
 
-Stage 9 and Stage 10 are complete with documented limitations. Stage 11A performs no inference and preserves all locked-test policies.
+Stage 9, Stage 10, and Stage 11A are complete with documented limitations. Stage 11B performs no inference and preserves all locked-test policies.
