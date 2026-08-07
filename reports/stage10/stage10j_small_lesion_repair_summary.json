@@ -1,0 +1,17 @@
+{
+  "baseline_validation_ap50": 0.33573875507379763,
+  "best_checkpoint_sha256": "c83bf55dff78976d248fb502a5eceec3f67c0b487569a8a3a866e70363999833",
+  "best_constrained_small_lesion_sensitivity": -1.0,
+  "best_epoch": 1,
+  "best_validation_ap50": 0.09830749930168406,
+  "completed_epochs": 6,
+  "experiment_fingerprint": "486a4b4515d744bff8214fd4107c1968f9bb980cd56f3682dc3fa679f37fba85",
+  "final_test_images_accessed": 0,
+  "gate": "GO_FOR_STAGE_10K_PAIRED_VALIDATION_FAILURE_ANALYSIS",
+  "patient_leakage_violations": 0,
+  "replacement_model_selected": false,
+  "stage": "10J",
+  "status": "FINALIZED_UNSUCCESSFUL_SMALL_LESION_REPAIR",
+  "test_predictions_generated": false,
+  "validation_ap50_delta_vs_baseline": -0.23743125577211358
+}

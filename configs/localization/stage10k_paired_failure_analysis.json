@@ -1,0 +1,19 @@
+{
+  "stage": "10K",
+  "dataset": "RSNA_Pneumonia",
+  "baseline_checkpoint": "artifacts/stage10/stage10e_rsna_localization/best_checkpoint.pt",
+  "baseline_checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "repair_checkpoint": "artifacts/stage10/stage10j_small_lesion_repair/best_checkpoint.pt",
+  "repair_checkpoint_sha256": "c83bf55dff78976d248fb502a5eceec3f67c0b487569a8a3a866e70363999833",
+  "baseline_config": "configs/localization/stage10e_rsna_localization_baseline.json",
+  "repair_config": "configs/localization/stage10j_small_lesion_repair.json",
+  "evaluation_split": "validation",
+  "score_thresholds": [0.1, 0.25, 0.5],
+  "paired_comparison_threshold": 0.5,
+  "iou_threshold": 0.5,
+  "small_lesion_area_ratio": 0.02,
+  "training_permitted": false,
+  "final_test_split_locked": true,
+  "final_test_images_accessed": 0,
+  "replacement_selection_permitted": false
+}

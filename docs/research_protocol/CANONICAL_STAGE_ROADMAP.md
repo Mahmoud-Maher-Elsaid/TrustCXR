@@ -22,11 +22,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 10G | Pending closure commit | Go for validation operating-point audit | Validation-only size-stratified failure analysis and local overlays | Localization failure characterization | Original Stage 7 | Complete with material limitation | Small lesions often detected only at low confidence | 10H |
 | 10H | Pending closure commit | Go for operating-point decision | Validation-only operating-point audit | Detection threshold safety analysis | Original Stage 7 | Complete with adverse tradeoff | Sensitivity gains require large false-positive increases | 10I |
 | 10I | Pending closure commit | Go for small-lesion baseline repair | Validation-only decision rule against frozen tradeoff evidence | Localization acceptance gate | Original Stage 7 | Complete with hold | No audited threshold met all safety criteria | 10J |
-| 10J | Pending | Hold until repaired validation evidence | Higher-resolution Faster R-CNN with small FPN anchors | Small-lesion localization repair | Original Stage 7 | Ready to run | Repair training and constrained validation selection | Determined by 10J gate |
+| 10J | Pending closure commit | Go for paired validation failure analysis | Higher-resolution Faster R-CNN with small FPN anchors | Small-lesion localization repair | Original Stage 7 | Complete; unsuccessful | AP50 regressed and no constrained operating point was feasible | 10K |
+| 10K | Pending | Hold until paired failure evidence | Frozen baseline-versus-repair paired validation analysis | Repair failure characterization | Original Stage 7 | Ready to run | Paired validation wins, regressions, and threshold behavior | Determined by 10K gate |
 
 ## Numbering rule
 
-Stage 10J is the next valid identifier. It keeps the RSNA patient split fixed and trains one controlled Faster R-CNN repair with 768–1024 pixel inputs and 8–128 pixel FPN anchors. Selection maximizes small-lesion sensitivity only among validation operating points with overall sensitivity at least 0.70 and no more than 1.0 false positive per image. The final split remains locked.
+Stage 10K is the next valid identifier. It compares the frozen baseline and unsuccessful repair on identical RSNA validation records, reporting aggregate metrics and paired per-image wins, regressions, and ties without tracking patient rows. It performs no training, cannot select the repair as a replacement, and keeps the final split locked.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 
