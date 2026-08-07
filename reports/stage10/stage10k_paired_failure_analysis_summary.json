@@ -1,0 +1,70 @@
+{
+  "baseline": {
+    "operating_points": {
+      "0.1": {
+        "false_positives_per_image": 2.892105263157895,
+        "precision": 0.09109168241965973,
+        "sensitivity": 0.8158730158730159,
+        "small_lesion_sensitivity": 0.3493975903614458
+      },
+      "0.25": {
+        "false_positives_per_image": 1.1469924812030075,
+        "precision": 0.1742895805142084,
+        "sensitivity": 0.6814814814814815,
+        "small_lesion_sensitivity": 0.1686746987951807
+      },
+      "0.5": {
+        "false_positives_per_image": 0.3680451127819549,
+        "precision": 0.3220221606648199,
+        "sensitivity": 0.49206349206349204,
+        "small_lesion_sensitivity": 0.03614457831325301
+      }
+    },
+    "validation_ap50": 0.3357184467955022
+  },
+  "final_test_images_accessed": 0,
+  "paired_at_score_0_5": {
+    "baseline_more_false_positives": 666,
+    "baseline_more_small_detections": 3,
+    "baseline_more_true_positives": 335,
+    "equal_false_positives": 1993,
+    "equal_small_detections": 2657,
+    "equal_true_positives": 2325,
+    "repair_more_false_positives": 1,
+    "repair_more_small_detections": 0,
+    "repair_more_true_positives": 0
+  },
+  "repair": {
+    "operating_points": {
+      "0.1": {
+        "false_positives_per_image": 1.4477443609022556,
+        "precision": 0.09812646370023419,
+        "sensitivity": 0.4433862433862434,
+        "small_lesion_sensitivity": 0.08433734939759036
+      },
+      "0.25": {
+        "false_positives_per_image": 0.27593984962406015,
+        "precision": 0.18715393133997785,
+        "sensitivity": 0.17883597883597885,
+        "small_lesion_sensitivity": 0.024096385542168676
+      },
+      "0.5": {
+        "false_positives_per_image": 0.0030075187969924814,
+        "precision": 0.2727272727272727,
+        "sensitivity": 0.0031746031746031746,
+        "small_lesion_sensitivity": 0.0
+      }
+    },
+    "validation_ap50": 0.09830749930168406
+  },
+  "replacement_model_selected": false,
+  "selected_model": "STAGE_10E_ORIGINAL_BASELINE",
+  "selected_checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "repair_disposition": "REJECTED_AS_REPLACEMENT_RETAINED_AS_NEGATIVE_EVIDENCE",
+  "gate": "GO_FOR_STAGE_10L_BASELINE_SELECTION_FREEZE",
+  "stage": "10K",
+  "status": "FINALIZED_PAIRED_VALIDATION_FAILURE_ANALYSIS",
+  "test_predictions_generated": false,
+  "training_performed": false,
+  "validation_records": 2660
+}

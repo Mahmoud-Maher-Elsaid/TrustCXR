@@ -2,8 +2,8 @@
 
 - Branch: `develop`
 - Commit before Stage 9 closure: `63462ef76ec606925ed35320f1e7fd26f01796a8`
-- Current gate: `GO_FOR_STAGE_10K_PAIRED_VALIDATION_FAILURE_ANALYSIS`
-- Current stage: Stage 10K paired validation failure analysis.
+- Current gate: `GO_FOR_STAGE_10L_BASELINE_SELECTION_FREEZE`
+- Current stage: Stage 10L no-inference baseline selection freeze.
 - Frozen Stage 9 model: original DenseNet-121 checkpoint `bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de`.
 - Stage 9 final metrics: Macro AUPRC `0.154046`, Macro AUROC `0.728723`, and Macro F1 at frozen 0.5 `0.207250`.
 - Completed actual stages include Stage 9A, Stage 9B, Stage 9C, and the frozen final Stage 9 evaluation.
@@ -17,9 +17,11 @@
 - Stage 10H result: threshold 0.5 gives sensitivity `0.492063`, precision `0.321577`, and `0.368797` false positives/image; threshold 0.1 gives sensitivity `0.815873`, precision `0.091092`, and `2.892105` false positives/image.
 - Stage 10I result: `NO_ACCEPTABLE_OPERATING_POINT`; no threshold met overall sensitivity ≥0.70, small-lesion sensitivity ≥0.20, and false positives/image ≤1.0 simultaneously.
 - Stage 10J result: unsuccessful repair; best validation AP50 `0.098307` versus baseline `0.335739`, delta `-0.237431`; no constrained operating point was feasible.
-- Incomplete stages: Stage 10K and all downstream gated capabilities. Final-test evaluation remains closed.
+- Stage 10K result: the Stage 10E baseline achieved validation AP50 `0.335718` versus `0.098307` for the repair. At score 0.5, the baseline had more true positives on `335` validation images while the repair had more on `0`; the repair also had no paired small-detection wins. Stage 10J is rejected as a replacement and retained only as negative evidence.
+- Selected localization model: original Stage 10E baseline checkpoint SHA-256 `11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429`.
+- Incomplete stages: Stage 10L and all downstream gated capabilities. No operating threshold is frozen and final-test evaluation remains closed.
 - Local-only artifacts: datasets, SQLite indexes, checkpoints, logs, patient-level outputs, embeddings, predictions, and recovery archives.
 - Known limitations: CheXmask pseudo-masks are not manual ground truth; Stage 8 test reuse is disclosed; RAD-DINO NIH exposure is not external validation; licenses and cross-dataset near-duplicates remain unresolved.
-- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\localization\run_stage10k_paired_failure_analysis.ps1"`.
+- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\localization\run_stage10l_baseline_selection_freeze.ps1"`.
 
-Stage 9 through Stage 10J are complete with documented limitations. Stage 10K is validation-only and keeps the final test split locked.
+Stage 9 through Stage 10K are complete with documented limitations. Stage 10L performs no inference and keeps the final test split locked.

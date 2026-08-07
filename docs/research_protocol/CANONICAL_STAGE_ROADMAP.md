@@ -23,11 +23,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 10H | Pending closure commit | Go for operating-point decision | Validation-only operating-point audit | Detection threshold safety analysis | Original Stage 7 | Complete with adverse tradeoff | Sensitivity gains require large false-positive increases | 10I |
 | 10I | Pending closure commit | Go for small-lesion baseline repair | Validation-only decision rule against frozen tradeoff evidence | Localization acceptance gate | Original Stage 7 | Complete with hold | No audited threshold met all safety criteria | 10J |
 | 10J | Pending closure commit | Go for paired validation failure analysis | Higher-resolution Faster R-CNN with small FPN anchors | Small-lesion localization repair | Original Stage 7 | Complete; unsuccessful | AP50 regressed and no constrained operating point was feasible | 10K |
-| 10K | Pending | Hold until paired failure evidence | Frozen baseline-versus-repair paired validation analysis | Repair failure characterization | Original Stage 7 | Ready to run | Paired validation wins, regressions, and threshold behavior | Determined by 10K gate |
+| 10K | Pending closure commit | Go for Stage 10L baseline selection freeze | Frozen baseline-versus-repair paired validation analysis | Repair failure characterization | Original Stage 7 | Complete; repair rejected | Stage 10J produced no paired true-positive or small-lesion wins and must not replace Stage 10E | 10L |
+| 10L | Pending | Go for Stage 10M validation anatomical audit | No-inference localization baseline selection freeze | Evidence-based localization model selection | Original Stage 7 | Ready to run | Freeze Stage 10E as the research baseline while leaving the unsafe operating threshold unresolved | 10M |
 
 ## Numbering rule
 
-Stage 10K is the next valid identifier. It compares the frozen baseline and unsuccessful repair on identical RSNA validation records, reporting aggregate metrics and paired per-image wins, regressions, and ties without tracking patient rows. It performs no training, cannot select the repair as a replacement, and keeps the final split locked.
+Stage 10L is the next valid identifier. It performs no training or inference. It freezes the original Stage 10E checkpoint as the selected research localization baseline, records Stage 10J as an unsuccessful repair that cannot replace it, preserves the absence of an acceptable operating threshold, and keeps the final split locked. Its downstream gate is a validation-only anatomical audit in Stage 10M.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 
