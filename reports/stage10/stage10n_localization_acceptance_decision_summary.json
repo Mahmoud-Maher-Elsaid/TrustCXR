@@ -1,0 +1,26 @@
+{
+  "anatomical_conclusion": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+  "clinical_localization_claim_authorized": false,
+  "decision": "ACCEPT_RESEARCH_BASELINE_WITH_MANDATORY_LIMITATIONS",
+  "downstream_evidence_policy": {
+    "localization_absence_may_contradict_classifier": false,
+    "unsupported_findings": "UNLOCALIZED_OR_UNCERTAIN"
+  },
+  "final_test_evaluation_authorized": false,
+  "final_test_images_accessed": 0,
+  "gate": "GO_FOR_STAGE_11A_EVIDENCE_FUSION_CONTRACT_PREPARATION",
+  "limitations": [
+    "SMALL_LESION_SENSITIVITY_0.036145_AT_REFERENCE_SCORE_0.5",
+    "NO_ACCEPTABLE_OPERATING_POINT",
+    "STAGE_10J_REPAIR_FAILED",
+    "NO_MATCHED_ANATOMY_MASK_VALIDATION",
+    "INTERNAL_VALIDATION_ONLY"
+  ],
+  "operating_threshold_frozen": false,
+  "selected_checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "selected_model": "STAGE_10E_ORIGINAL_BASELINE",
+  "stage": "10N",
+  "status": "FINALIZED_LOCALIZATION_ACCEPTANCE_DECISION",
+  "test_predictions_generated": false,
+  "training_performed": false
+}
