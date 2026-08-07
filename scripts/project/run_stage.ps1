@@ -21,6 +21,7 @@ $routes = @{
     "10J" = "scripts\localization\run_stage10j_small_lesion_repair.ps1"
     "10K" = "scripts\localization\run_stage10k_paired_failure_analysis.ps1"
     "10L" = "scripts\localization\run_stage10l_baseline_selection_freeze.ps1"
+    "10M" = "scripts\localization\run_stage10m_validation_anatomical_audit.ps1"
 }
 if (-not $routes.ContainsKey($Stage)) { throw "No real stage-specific launcher is registered for '$Stage'." }
 $script = Join-Path $ProjectRoot $routes[$Stage]

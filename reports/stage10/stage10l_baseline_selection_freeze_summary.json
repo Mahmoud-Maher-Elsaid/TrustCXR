@@ -1,0 +1,21 @@
+{
+  "final_test_images_accessed": 0,
+  "gate": "GO_FOR_STAGE_10M_VALIDATION_ANATOMICAL_AUDIT",
+  "known_limitations": [
+    "SMALL_LESION_SENSITIVITY_0.036145_AT_SCORE_0.5",
+    "NO_THRESHOLD_MET_ALL_STAGE_10I_SAFETY_CRITERIA",
+    "INTERNAL_VALIDATION_ONLY",
+    "NOT_CLINICALLY_VALIDATED"
+  ],
+  "operating_threshold_status": "NOT_FROZEN_NO_ACCEPTABLE_OPERATING_POINT",
+  "rejected_repair": "STAGE_10J_SMALL_ANCHOR_HIGH_RESOLUTION",
+  "rejected_repair_checkpoint_sha256": "c83bf55dff78976d248fb502a5eceec3f67c0b487569a8a3a866e70363999833",
+  "repair_may_replace_baseline": false,
+  "selected_checkpoint": "artifacts/stage10/stage10e_rsna_localization/best_checkpoint.pt",
+  "selected_checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "selected_model": "STAGE_10E_ORIGINAL_BASELINE",
+  "stage": "10L",
+  "status": "FINALIZED_RESEARCH_BASELINE_SELECTION",
+  "test_predictions_generated": false,
+  "training_performed": false
+}

@@ -2,8 +2,8 @@
 
 - Branch: `develop`
 - Commit before Stage 9 closure: `63462ef76ec606925ed35320f1e7fd26f01796a8`
-- Current gate: `GO_FOR_STAGE_10L_BASELINE_SELECTION_FREEZE`
-- Current stage: Stage 10L no-inference baseline selection freeze.
+- Current gate: `GO_FOR_STAGE_10M_VALIDATION_ANATOMICAL_AUDIT`
+- Current stage: Stage 10M validation anatomical-proxy audit.
 - Frozen Stage 9 model: original DenseNet-121 checkpoint `bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de`.
 - Stage 9 final metrics: Macro AUPRC `0.154046`, Macro AUROC `0.728723`, and Macro F1 at frozen 0.5 `0.207250`.
 - Completed actual stages include Stage 9A, Stage 9B, Stage 9C, and the frozen final Stage 9 evaluation.
@@ -19,9 +19,10 @@
 - Stage 10J result: unsuccessful repair; best validation AP50 `0.098307` versus baseline `0.335739`, delta `-0.237431`; no constrained operating point was feasible.
 - Stage 10K result: the Stage 10E baseline achieved validation AP50 `0.335718` versus `0.098307` for the repair. At score 0.5, the baseline had more true positives on `335` validation images while the repair had more on `0`; the repair also had no paired small-detection wins. Stage 10J is rejected as a replacement and retained only as negative evidence.
 - Selected localization model: original Stage 10E baseline checkpoint SHA-256 `11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429`.
-- Incomplete stages: Stage 10L and all downstream gated capabilities. No operating threshold is frozen and final-test evaluation remains closed.
+- Stage 10L result: the original Stage 10E baseline selection is finalized; Stage 10J remains rejected, no operating threshold is frozen, and final-test access remains zero.
+- Incomplete stages: Stage 10M and all downstream gated capabilities. Final-test evaluation remains closed.
 - Local-only artifacts: datasets, SQLite indexes, checkpoints, logs, patient-level outputs, embeddings, predictions, and recovery archives.
 - Known limitations: CheXmask pseudo-masks are not manual ground truth; Stage 8 test reuse is disclosed; RAD-DINO NIH exposure is not external validation; licenses and cross-dataset near-duplicates remain unresolved.
-- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\localization\run_stage10l_baseline_selection_freeze.ps1"`.
+- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\localization\run_stage10m_validation_anatomical_audit.ps1"`.
 
-Stage 9 through Stage 10K are complete with documented limitations. Stage 10L performs no inference and keeps the final test split locked.
+Stage 9 through Stage 10L are complete with documented limitations. Stage 10M is validation-only and keeps the final test split locked.
