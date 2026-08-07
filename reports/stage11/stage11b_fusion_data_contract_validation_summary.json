@@ -1,0 +1,24 @@
+{
+  "classification_dataset": "NIH_ChestXray14",
+  "cross_dataset_record_level_fusion_permitted": false,
+  "decision": "HOLD_FOR_SHARED_COHORT_AND_LABEL_HARMONIZATION",
+  "downstream_evidence_policy": {
+    "localization_absence_may_contradict_classifier": false,
+    "model_disagreement_must_be_preserved": true,
+    "pseudo_masks_may_be_called_manual_ground_truth": false,
+    "stage10_anatomical_scope": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+    "unsupported_findings": "UNLOCALIZED_OR_UNCERTAIN"
+  },
+  "gate": "HOLD_FOR_STAGE_11C_SHARED_COHORT_AND_LABEL_HARMONIZATION",
+  "independent_patient_safe_splits_verified": true,
+  "localization_dataset": "RSNA_Pneumonia",
+  "locked_test_records_accessed": 0,
+  "pneumonia_to_lung_opacity_semantic_mapping_approved": false,
+  "shared_fusion_cohort_required": true,
+  "shared_image_identity_map_available": false,
+  "shared_patient_identity_map_available": false,
+  "stage": "11B",
+  "status": "FINALIZED_FUSION_DATA_CONTRACT_VALIDATION",
+  "test_predictions_generated": false,
+  "training_performed": false
+}

@@ -1,0 +1,32 @@
+{
+  "stage": "11C",
+  "stage11b_evidence": "reports/stage11/stage11b_fusion_data_contract_validation_summary.json",
+  "official_rsna_source": "https://www.rsna.org/education/ai-resources-and-training/ai-image-challenge/RSNA-Pneumonia-Detection-Challenge-2018",
+  "semantic_evidence": {
+    "paper_title": "Augmenting the National Institutes of Health Chest Radiograph Dataset with Expert Annotations of Possible Pneumonia",
+    "doi": "10.1148/ryai.2019180041",
+    "evidence_statement": "RSNA bounding boxes identify pulmonary opacity that may represent pneumonia in the appropriate clinical setting.",
+    "direct_label_equivalence": false,
+    "approved_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+    "permitted_evidence_status": "PARTIALLY_SUPPORTED",
+    "diagnostic_confirmation_permitted": false
+  },
+  "official_mapping_local_path": "artifacts/stage11/identity/rsna_to_nih_official_mapping",
+  "official_mapping_available_locally": false,
+  "mapping_schema_verified": false,
+  "shared_patient_identity_proven": false,
+  "shared_image_identity_proven": false,
+  "split_compatibility_verified": false,
+  "cross_dataset_record_level_fusion_permitted": false,
+  "shared_fusion_cohort_required": true,
+  "downstream_evidence_policy": {
+    "unsupported_findings": "UNLOCALIZED_OR_UNCERTAIN",
+    "localization_absence_may_contradict_classifier": false,
+    "stage10_anatomical_scope": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+    "pseudo_masks_may_be_called_manual_ground_truth": false,
+    "model_disagreement_must_be_preserved": true
+  },
+  "training_permitted": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0
+}
