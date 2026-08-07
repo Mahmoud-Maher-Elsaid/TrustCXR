@@ -2,8 +2,8 @@
 
 - Branch: `develop`
 - Commit before Stage 9 closure: `63462ef76ec606925ed35320f1e7fd26f01796a8`
-- Current gate: `GO_FOR_STAGE_10M_VALIDATION_ANATOMICAL_AUDIT`
-- Current stage: Stage 10M validation anatomical-proxy audit.
+- Current gate: `GO_FOR_STAGE_10N_LOCALIZATION_ACCEPTANCE_DECISION`
+- Current stage: Stage 10N no-inference localization acceptance decision.
 - Frozen Stage 9 model: original DenseNet-121 checkpoint `bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de`.
 - Stage 9 final metrics: Macro AUPRC `0.154046`, Macro AUROC `0.728723`, and Macro F1 at frozen 0.5 `0.207250`.
 - Completed actual stages include Stage 9A, Stage 9B, Stage 9C, and the frozen final Stage 9 evaluation.
@@ -20,9 +20,10 @@
 - Stage 10K result: the Stage 10E baseline achieved validation AP50 `0.335718` versus `0.098307` for the repair. At score 0.5, the baseline had more true positives on `335` validation images while the repair had more on `0`; the repair also had no paired small-detection wins. Stage 10J is rejected as a replacement and retained only as negative evidence.
 - Selected localization model: original Stage 10E baseline checkpoint SHA-256 `11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429`.
 - Stage 10L result: the original Stage 10E baseline selection is finalized; Stage 10J remains rejected, no operating threshold is frozen, and final-test access remains zero.
-- Incomplete stages: Stage 10M and all downstream gated capabilities. Final-test evaluation remains closed.
+- Stage 10M result: across 2,660 validation records, 1,446 detections at reference score 0.5 included zero degenerate boxes, zero boxes outside image bounds, and six boxes touching the 1% edge margin. This supports image geometry and a thoracic-location proxy only; matched anatomy-mask validation is unavailable.
+- Incomplete stages: Stage 10N and all downstream gated capabilities. Final-test evaluation remains closed.
 - Local-only artifacts: datasets, SQLite indexes, checkpoints, logs, patient-level outputs, embeddings, predictions, and recovery archives.
 - Known limitations: CheXmask pseudo-masks are not manual ground truth; Stage 8 test reuse is disclosed; RAD-DINO NIH exposure is not external validation; licenses and cross-dataset near-duplicates remain unresolved.
-- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\localization\run_stage10m_validation_anatomical_audit.ps1"`.
+- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\localization\run_stage10n_localization_acceptance_decision.ps1"`.
 
-Stage 9 through Stage 10L are complete with documented limitations. Stage 10M is validation-only and keeps the final test split locked.
+Stage 9 through Stage 10M are complete with documented limitations. Stage 10N performs no inference and keeps the final test split locked.

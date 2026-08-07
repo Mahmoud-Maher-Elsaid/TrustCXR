@@ -1,0 +1,28 @@
+{
+  "anatomical_claim": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+  "boxes_outside_image": 0,
+  "boxes_touching_edge_margin": 6,
+  "checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+  "degenerate_boxes": 0,
+  "final_test_images_accessed": 0,
+  "gate": "GO_FOR_STAGE_10N_LOCALIZATION_ACCEPTANCE_DECISION",
+  "matched_anatomy_masks_available": false,
+  "predicted_boxes": 1446,
+  "prediction_center_grid": {
+    "lower_center": 12,
+    "lower_left": 48,
+    "lower_right": 25,
+    "middle_center": 434,
+    "middle_left": 466,
+    "middle_right": 398,
+    "upper_center": 24,
+    "upper_left": 17,
+    "upper_right": 22
+  },
+  "reference_score_threshold": 0.5,
+  "stage": "10M",
+  "status": "FINALIZED_VALIDATION_ANATOMICAL_PROXY_AUDIT",
+  "test_predictions_generated": false,
+  "training_performed": false,
+  "validation_records": 2660
+}
