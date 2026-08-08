@@ -1,0 +1,62 @@
+{
+  "additional_dataset_download_required_now": false,
+  "bad_input_stop_contract": {
+    "minimum_evidence": [
+      "versioned mutually exclusive rejection reason taxonomy",
+      "approved labels for corrupt input, unsupported format, non-chest input, inadequate quality, unsupported view, and incomplete anatomy",
+      "patient-safe train and validation partitions for learned components",
+      "validation-only thresholds frozen before locked-test evaluation",
+      "per-reason sensitivity and false-rejection metrics with confidence intervals",
+      "explicit downstream contract proving rejected inputs cannot reach disease inference",
+      "unit and integration tests for every rejection reason and safe fallback"
+    ],
+    "missing": [
+      "versioned mutually exclusive rejection reason taxonomy",
+      "approved labels for corrupt input, unsupported format, non-chest input, inadequate quality, unsupported view, and incomplete anatomy",
+      "patient-safe train and validation partitions for learned components",
+      "validation-only thresholds frozen before locked-test evaluation",
+      "per-reason sensitivity and false-rejection metrics with confidence intervals",
+      "explicit downstream contract proving rejected inputs cannot reach disease inference",
+      "unit and integration tests for every rejection reason and safe fallback"
+    ],
+    "ready": false
+  },
+  "decision": "HOLD_FOR_EXPANDED_VIEW_AND_INPUT_REJECTION_ANNOTATION_PROTOCOL",
+  "device_readiness": {
+    "annotation_scope": "IMAGE_LEVEL",
+    "dataset": "chexpert_small",
+    "independent_presence_label_available": true,
+    "label": "Support Devices",
+    "localization_annotations_available": false,
+    "localization_claim_permitted": false
+  },
+  "frozen_stage5_stage9_stage10_stage11_results_modified": false,
+  "gate": "HOLD_FOR_STAGE_12C_ANNOTATION_AND_DEVICE_SCOPE_ADJUDICATION",
+  "inference_performed": false,
+  "invented_labels": false,
+  "locked_test_records_accessed": 0,
+  "manual_action": "Approve a versioned annotation protocol and reviewed development cohort for OTHER, UNKNOWN, and bad-input rejection reasons. A separate governed dataset with device-location annotations is required only if localization is pursued; CheXpert Support Devices is sufficient only for presence.",
+  "manual_action_required": true,
+  "patient_leakage_violations": 0,
+  "quality_readiness": {
+    "clinical_quality_ground_truth_available": false,
+    "existing_stage5_scope": "DETERMINISTIC_TECHNICAL_PROXY_NOT_CLINICAL_GROUND_TRUTH"
+  },
+  "stage": "12B",
+  "stage5_retraining_performed": false,
+  "status": "COMPLETED_DATA_READINESS_AUDIT",
+  "training_performed": false,
+  "view_readiness": {
+    "available_explicit_labels": [
+      "AP",
+      "LATERAL",
+      "PA"
+    ],
+    "missing_explicit_labels": [
+      "OTHER",
+      "UNKNOWN"
+    ],
+    "missing_metadata_may_be_used_as_unknown_label": false,
+    "other_or_unknown_training_ready": false
+  }
+}

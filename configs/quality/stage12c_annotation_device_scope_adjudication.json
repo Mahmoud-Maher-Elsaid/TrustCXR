@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "stage": "12C",
+  "approved_by": "PROJECT_OWNER",
+  "approval_basis": "Explicit Stage 12C user mandate",
+  "stage12b_evidence": "reports/stage12/stage12b_quality_view_device_data_readiness_summary.json",
+  "view_annotation": {
+    "mutually_exclusive": true,
+    "classes": ["AP", "PA", "LATERAL", "OTHER", "UNKNOWN"],
+    "rules": {
+      "AP": "Assign only when an anteroposterior projection is explicitly supported by reliable metadata or expert review.",
+      "PA": "Assign only when a posteroanterior projection is explicitly supported by reliable metadata or expert review.",
+      "LATERAL": "Assign only when a lateral chest projection is explicitly supported by reliable metadata or expert review.",
+      "OTHER": "Assign when a valid chest radiograph has a known projection outside AP, PA, and LATERAL; record the source projection separately when known.",
+      "UNKNOWN": "Assign when the image is a valid chest radiograph but projection cannot be determined from reliable metadata or expert review. Missing metadata alone does not prove UNKNOWN if other reliable evidence exists."
+    }
+  },
+  "input_disposition": {
+    "mutually_exclusive_primary_reason": true,
+    "accepted_class": "ACCEPTABLE_INPUT",
+    "rejection_classes": [
+      "CORRUPT_INPUT",
+      "UNSUPPORTED_FORMAT",
+      "NON_CHEST_INPUT",
+      "INADEQUATE_QUALITY",
+      "UNSUPPORTED_VIEW",
+      "INCOMPLETE_ANATOMY"
+    ],
+    "precedence": [
+      "CORRUPT_INPUT",
+      "UNSUPPORTED_FORMAT",
+      "NON_CHEST_INPUT",
+      "INCOMPLETE_ANATOMY",
+      "INADEQUATE_QUALITY",
+      "UNSUPPORTED_VIEW",
+      "ACCEPTABLE_INPUT"
+    ],
+    "rules": {
+      "CORRUPT_INPUT": "The file cannot be decoded consistently or fails integrity validation. Do not infer image content.",
+      "UNSUPPORTED_FORMAT": "The file is readable but its format or encoding is outside the versioned ingestion contract.",
+      "NON_CHEST_INPUT": "A readable supported image is not a chest radiograph. This requires explicit source evidence or qualified review; filename inference is prohibited.",
+      "INADEQUATE_QUALITY": "A chest radiograph is too degraded for the downstream task because of exposure, motion, rotation, obscuration, or another documented quality defect, while required anatomy remains sufficiently present to avoid INCOMPLETE_ANATOMY.",
+      "UNSUPPORTED_VIEW": "A valid chest radiograph has a reliably determined view that the downstream model contract does not support. UNKNOWN is not automatically UNSUPPORTED_VIEW.",
+      "INCOMPLETE_ANATOMY": "Required thoracic anatomy is cropped, absent, or not captured sufficiently for the downstream task. Use this before INADEQUATE_QUALITY when missing coverage is the decisive failure.",
+      "ACCEPTABLE_INPUT": "No rejection criterion is met for the versioned downstream task. This does not imply diagnostic normality."
+    },
+    "secondary_flags_permitted": true,
+    "secondary_flags_do_not_replace_primary_reason": true
+  },
+  "device_scope": {
+    "dataset": "chexpert_small",
+    "label": "Support Devices",
+    "permitted_task": "IMAGE_LEVEL_DEVICE_PRESENCE",
+    "localization_permitted": false,
+    "device_type_inference_permitted": false,
+    "new_localization_dataset_permitted": false
+  },
+  "annotation_requirements": {
+    "reviewer_role_recorded": true,
+    "source_evidence_recorded": true,
+    "adjudication_status_recorded": true,
+    "ambiguous_examples_require_second_review": true,
+    "missing_label_is_not_negative": true,
+    "patient_safe_development_split_required": true
+  },
+  "training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0,
+  "frozen_stage5_stage9_stage10_stage11_results_may_be_modified": false
+}
