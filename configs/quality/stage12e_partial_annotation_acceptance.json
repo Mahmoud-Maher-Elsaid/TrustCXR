@@ -1,0 +1,18 @@
+{
+  "stage": "12E",
+  "protocol_version": "1.0.0",
+  "upstream_state": "reports/stage12/stage12d_partial_annotation_state.json",
+  "review_manifest": "artifacts/stage12/annotation_cohort/manual_review_package_v1.0.0/02_input_rejection_review.csv",
+  "required_total_rows": 12,
+  "required_approved_rows": 3,
+  "required_incomplete_rows": 9,
+  "approved_scope": [
+    "train/INCOMPLETE_ANATOMY",
+    "validation/INCOMPLETE_ANATOMY",
+    "validation/INADEQUATE_QUALITY"
+  ],
+  "unsupported_classes_may_be_forced_complete": false,
+  "training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false
+}
