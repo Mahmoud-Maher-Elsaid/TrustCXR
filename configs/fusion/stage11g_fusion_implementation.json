@@ -1,0 +1,73 @@
+{
+  "stage": "11G",
+  "stage11f_evidence": "reports/stage11/stage11f_shared_cohort_fusion_validation_summary.json",
+  "allowed_splits": ["train", "validation"],
+  "locked_splits": ["test"],
+  "semantic_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "maximum_support_status": "PARTIALLY_SUPPORTED",
+  "downstream_evidence_policy": {
+    "unsupported_findings": "UNLOCALIZED_OR_UNCERTAIN",
+    "localization_absence_may_contradict_classifier": false,
+    "stage10_anatomical_scope": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+    "pseudo_masks_may_be_called_manual_ground_truth": false,
+    "model_disagreement_must_be_preserved": true
+  },
+  "contract_cases": [
+    {
+      "name": "classifier_and_localizer_agree",
+      "label": "Pneumonia",
+      "classifier_positive": true,
+      "localization_available": true,
+      "localization_positive": true,
+      "localization_reliable": true,
+      "outside_image_geometry": false,
+      "expected_status": "PARTIALLY_SUPPORTED"
+    },
+    {
+      "name": "classifier_positive_without_reliable_localization",
+      "label": "Pneumonia",
+      "classifier_positive": true,
+      "localization_available": true,
+      "localization_positive": false,
+      "localization_reliable": false,
+      "outside_image_geometry": false,
+      "expected_status": "UNLOCALIZED"
+    },
+    {
+      "name": "localizer_positive_classifier_negative",
+      "label": "Pneumonia",
+      "classifier_positive": false,
+      "localization_available": true,
+      "localization_positive": true,
+      "localization_reliable": true,
+      "outside_image_geometry": false,
+      "expected_status": "CONTRADICTED"
+    },
+    {
+      "name": "outside_image_geometry",
+      "label": "Pneumonia",
+      "classifier_positive": true,
+      "localization_available": true,
+      "localization_positive": true,
+      "localization_reliable": true,
+      "outside_image_geometry": true,
+      "expected_status": "OUTSIDE_EXPECTED_ANATOMY"
+    },
+    {
+      "name": "unsupported_label",
+      "label": "Cardiomegaly",
+      "classifier_positive": true,
+      "localization_available": false,
+      "localization_positive": false,
+      "localization_reliable": false,
+      "outside_image_geometry": false,
+      "expected_status": "NOT_APPLICABLE"
+    }
+  ],
+  "patient_reassignment_permitted": false,
+  "stage9_stage10_frozen_evaluations_may_be_modified": false,
+  "training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0
+}

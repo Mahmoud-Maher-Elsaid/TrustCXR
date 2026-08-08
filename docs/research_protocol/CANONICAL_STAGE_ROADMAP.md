@@ -32,11 +32,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 11C | Pending closure commit | Go for Stage 11D official identity-mapping audit | Conservative label adjudication and official mapping validation | Shared-cohort resolution and label harmonization | Original Stage 8 | Complete with identity scope limitation | Image identity proven; patient grouping and split compatibility remain unproven | 11D |
 | 11D | `00c4bad` plus result closure | Hold for Stage 11E split repair | Metadata-only official identity and split compatibility audit | Shared patient grouping and split safety | Original Stage 8 | Complete with hold | 2,929 original-NIH patients have observed train/validation split conflicts | 11E |
 | 11E | `7b69941` plus result closure | Go for Stage 11F shared-cohort fusion validation | Conservative exclusion of conflict-affected patients without reassignment | Patient-safe train/validation fusion cohort | Original Stage 8 | Complete | 10,049 images from 6,081 patients retained with zero split violations | 11F |
-| 11F | Pending | Go for Stage 11G fusion implementation preparation if validation passes | Metadata-only repaired-cohort integrity and evidence-policy validation | Shared-cohort fusion readiness | Original Stage 8 | Ready to run | Repair Python 3.12 venv, then execute validation without inference | 11G or hold |
+| 11F | `9209e52` plus result closure | Go for Stage 11G fusion implementation preparation | Metadata-only repaired-cohort integrity and evidence-policy validation | Shared-cohort fusion readiness | Original Stage 8 | Complete | Zero leakage and duplicate mapped identities; test remains locked | 11G |
+| 11G | Pending | Go for Stage 11H record-level fusion evaluation preparation if validation passes | Deterministic evidence-rule implementation and contract-case validation | Structured evidence fusion | Original Stage 8 | Ready to run | Execute rule validation without model predictions or inference | 11H or hold |
 
 ## Numbering rule
 
-Stage 11F is the next valid identifier. It validates the repaired train/validation cohort and all downstream evidence policies without training, inference, patient reassignment, or locked-test access. Its success can authorize only preparation of train/validation fusion implementation.
+Stage 11G is the next valid identifier. It validates deterministic evidence-fusion behavior against frozen contract cases without loading models, consuming predictions, training, inference, or locked-test access.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

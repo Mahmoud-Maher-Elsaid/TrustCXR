@@ -1,0 +1,31 @@
+{
+  "downstream_evidence_policy": {
+    "localization_absence_may_contradict_classifier": false,
+    "model_disagreement_must_be_preserved": true,
+    "pseudo_masks_may_be_called_manual_ground_truth": false,
+    "stage10_anatomical_scope": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+    "unsupported_findings": "UNLOCALIZED_OR_UNCERTAIN"
+  },
+  "duplicate_nih_images": 0,
+  "duplicate_rsna_images": 0,
+  "gate": "GO_FOR_STAGE_11G_FUSION_IMPLEMENTATION_PREPARATION",
+  "inference_performed": false,
+  "invalid_split_records": 0,
+  "locked_test_fusion_permitted": false,
+  "locked_test_records_accessed": 0,
+  "patient_reassignments": 0,
+  "patient_split_violations": 0,
+  "patient_values_disclosed": false,
+  "patients": 6081,
+  "permitted_evidence_status": "PARTIALLY_SUPPORTED",
+  "records": 10049,
+  "semantic_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "stage": "11F",
+  "stage9_stage10_frozen_evaluations_modified": false,
+  "status": "COMPLETED_SHARED_COHORT_FUSION_VALIDATION",
+  "test_predictions_generated": false,
+  "train_records": 9941,
+  "train_validation_record_level_fusion_permitted": true,
+  "training_performed": false,
+  "validation_records": 108
+}
