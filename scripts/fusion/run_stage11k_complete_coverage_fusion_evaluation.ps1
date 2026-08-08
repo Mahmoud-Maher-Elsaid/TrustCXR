@@ -7,7 +7,15 @@ if ($summary.gate -ne "GO_FOR_STAGE_11K_COMPLETE_COVERAGE_FUSION_EVALUATION_PREP
     throw "Stage 11K refused: Stage 11J coverage evidence is invalid."
 }
 $python = Join-Path $ProjectRoot ".venv\Scripts\python.exe"
-& $python (Join-Path $ProjectRoot "scripts\fusion\run_stage11k_complete_coverage_fusion_evaluation.py") `
-    --project-root $ProjectRoot `
-    --config (Join-Path $ProjectRoot "configs\fusion\stage11k_complete_coverage_fusion_evaluation.json")
-exit $LASTEXITCODE
+$exitCode = 1
+Push-Location -LiteralPath $ProjectRoot
+try {
+    & $python -m scripts.fusion.run_stage11k_complete_coverage_fusion_evaluation `
+        --project-root $ProjectRoot `
+        --config (Join-Path $ProjectRoot "configs\fusion\stage11k_complete_coverage_fusion_evaluation.json")
+    $exitCode = $LASTEXITCODE
+}
+finally {
+    Pop-Location
+}
+exit $exitCode

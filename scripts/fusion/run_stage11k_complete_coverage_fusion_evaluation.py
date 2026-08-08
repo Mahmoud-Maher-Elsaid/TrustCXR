@@ -8,12 +8,22 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from scripts.fusion.run_stage11h_record_level_fusion_evaluation import (
-    build_localizer,
-    load_image,
-    resolve_rsna_image_paths,
-    shared_validation_rows,
-)
+try:
+    from scripts.fusion.run_stage11h_record_level_fusion_evaluation import (
+        build_localizer,
+        load_image,
+        resolve_rsna_image_paths,
+        shared_validation_rows,
+    )
+except ModuleNotFoundError as error:
+    if error.name != "scripts":
+        raise
+    from run_stage11h_record_level_fusion_evaluation import (  # type: ignore[no-redef]
+        build_localizer,
+        load_image,
+        resolve_rsna_image_paths,
+        shared_validation_rows,
+    )
 
 from trustcxr.fusion.stage11g_fusion import FusionInput, fuse_finding
 
