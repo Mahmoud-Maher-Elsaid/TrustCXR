@@ -1,0 +1,23 @@
+{
+  "stage": "12F",
+  "protocol_version": "1.0.0",
+  "stage12e_evidence": "reports/stage12/stage12e_partial_annotation_acceptance_summary.json",
+  "expanded_view_manifest": "artifacts/stage12/annotation_cohort/expanded_view_annotations.csv",
+  "device_presence_manifest": "artifacts/stage12/annotation_cohort/device_presence_annotations.csv",
+  "input_rejection_review": "artifacts/stage12/annotation_cohort/manual_review_package_v1.0.0/02_input_rejection_review.csv",
+  "required_view_classes": ["AP", "PA", "LATERAL", "OTHER", "UNKNOWN"],
+  "required_rejection_classes": [
+    "CORRUPT_INPUT",
+    "UNSUPPORTED_FORMAT",
+    "NON_CHEST_INPUT",
+    "INCOMPLETE_ANATOMY",
+    "INADEQUATE_QUALITY",
+    "UNSUPPORTED_VIEW"
+  ],
+  "allowed_splits": ["train", "validation"],
+  "unsupported_slots_may_be_promoted": false,
+  "complete_model_training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "frozen_stage5_stage9_stage10_stage11_results_may_be_modified": false
+}

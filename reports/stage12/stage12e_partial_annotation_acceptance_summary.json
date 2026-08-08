@@ -1,0 +1,22 @@
+{
+  "annotations_invented": false,
+  "approved_rows": 3,
+  "approved_scope": [
+    "train/INCOMPLETE_ANATOMY",
+    "validation/INADEQUATE_QUALITY",
+    "validation/INCOMPLETE_ANATOMY"
+  ],
+  "complete_stage12_training_authorized": false,
+  "decision": "PARTIAL_COHORT_ACCEPTED_UNSUPPORTED_CLASSES_REMAIN_WITHHELD",
+  "gate": "HOLD_FOR_GENUINE_EVIDENCE_FOR_NINE_UNSUPPORTED_SLOTS",
+  "incomplete_no_defensible_example_rows": 9,
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "patient_split_preserved": true,
+  "protocol_version": "1.0.0",
+  "stage": "12E",
+  "status": "PASSED_PARTIAL_ANNOTATION_ACCEPTANCE",
+  "total_rows": 12,
+  "training_performed": false,
+  "unsupported_classes_forced_complete": false
+}
