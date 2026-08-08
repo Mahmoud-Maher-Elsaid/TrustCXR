@@ -2,8 +2,8 @@
 
 - Branch: `develop`
 - Commit before Stage 9 closure: `63462ef76ec606925ed35320f1e7fd26f01796a8`
-- Current gate: `HOLD_FOR_STAGE_11C_SHARED_COHORT_AND_LABEL_HARMONIZATION`
-- Current stage: Stage 11C shared-cohort and label-harmonization adjudication.
+- Current gate: `GO_FOR_STAGE_11D_OFFICIAL_IDENTITY_MAPPING_AUDIT`
+- Current stage: Stage 11D metadata-only official identity-mapping audit.
 - Frozen Stage 9 model: original DenseNet-121 checkpoint `bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de`.
 - Stage 9 final metrics: Macro AUPRC `0.154046`, Macro AUROC `0.728723`, and Macro F1 at frozen 0.5 `0.207250`.
 - Completed actual stages include Stage 9A, Stage 9B, Stage 9C, and the frozen final Stage 9 evaluation.
@@ -24,10 +24,10 @@
 - Stage 10N result: Stage 10E is accepted only as a research baseline with mandatory limitations. No operating threshold is frozen, final-test evaluation and clinical localization claims remain unauthorized, and localization absence cannot contradict classifier evidence.
 - Stage 11A result: the structured evidence statuses and downstream disagreement policy are frozen. A shared fusion cohort is required, cross-dataset record-level fusion remains prohibited, and only Pneumonia is a candidate for Stage 10 localization evidence pending semantic validation.
 - Stage 11B result: `HOLD_FOR_SHARED_COHORT_AND_LABEL_HARMONIZATION`; NIH and RSNA have independently safe splits but no proven shared patient/image mapping, and Pneumonia is not yet harmonized with Lung Opacity.
-- Incomplete stages: Stage 11C and all downstream gated capabilities. Cross-dataset record-level fusion and all locked-test access remain prohibited.
+- Stage 11C result: the official 30,000-row RSNA-to-NIH mapping passed schema, completeness, uniqueness, and SHA-256 validation. Image identity is proven; patient grouping and split compatibility remain unproven. RSNA opacity may only partially support, never confirm or equal, NIH Pneumonia.
+- Incomplete stages: Stage 11D and all downstream gated capabilities. Cross-dataset record-level fusion and all locked-test access remain prohibited.
 - Local-only artifacts: datasets, SQLite indexes, checkpoints, logs, patient-level outputs, embeddings, predictions, and recovery archives.
 - Known limitations: CheXmask pseudo-masks are not manual ground truth; Stage 8 test reuse is disclosed; RAD-DINO NIH exposure is not external validation; licenses and cross-dataset near-duplicates remain unresolved.
-- Manual action: obtain the official RSNA-to-original-NIH mapping from the RSNA challenge page and preserve it locally under `artifacts/stage11/identity/rsna_to_nih_official_mapping/`; Stage 11C will report the mapping as absent until this is done.
-- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\fusion\run_stage11c_shared_cohort_label_harmonization.ps1"`.
+- Next user command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\fusion\run_stage11d_official_identity_mapping_audit.ps1"`.
 
-Stage 9, Stage 10, Stage 11A, and Stage 11B are complete with documented limitations. Stage 11C performs no inference and preserves all locked-test policies.
+Stage 9, Stage 10, and Stages 11A–11C are complete with documented limitations. Stage 11D performs no inference and preserves all locked-test policies.

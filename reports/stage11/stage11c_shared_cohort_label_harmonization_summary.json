@@ -1,0 +1,68 @@
+{
+  "approved_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "cross_dataset_record_level_fusion_permitted": false,
+  "decision": "OFFICIAL_IMAGE_MAPPING_VALIDATED_PATIENT_AND_SPLIT_AUDIT_REQUIRED",
+  "diagnostic_confirmation_permitted": false,
+  "downstream_evidence_policy": {
+    "localization_absence_may_contradict_classifier": false,
+    "model_disagreement_must_be_preserved": true,
+    "pseudo_masks_may_be_called_manual_ground_truth": false,
+    "stage10_anatomical_scope": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+    "unsupported_findings": "UNLOCALIZED_OR_UNCERTAIN"
+  },
+  "gate": "GO_FOR_STAGE_11D_OFFICIAL_IDENTITY_MAPPING_AUDIT",
+  "locked_test_records_accessed": 0,
+  "manual_action": null,
+  "manual_action_required": false,
+  "official_mapping_present_locally": true,
+  "official_mapping_validation": {
+    "filename": "pneumonia-challenge-dataset-mappings_2018.json",
+    "identity_field_completeness": {
+      "SOPInstanceUID": 30000,
+      "SeriesInstanceUID": 30000,
+      "StudyInstanceUID": 30000,
+      "img_id": 30000,
+      "instanceId": 30000,
+      "seriesId": 30000,
+      "studyId": 30000,
+      "subset_img_id": 30000
+    },
+    "identity_field_uniqueness": {
+      "SOPInstanceUID": 30000,
+      "SeriesInstanceUID": 30000,
+      "StudyInstanceUID": 30000,
+      "img_id": 30000,
+      "instanceId": 30000,
+      "seriesId": 30000,
+      "studyId": 30000,
+      "subset_img_id": 30000
+    },
+    "patient_values_disclosed": false,
+    "records": 30000,
+    "required_fields": [
+      "SOPInstanceUID",
+      "SeriesInstanceUID",
+      "StudyInstanceUID",
+      "img_id",
+      "instanceId",
+      "orig_labels",
+      "seriesId",
+      "studyId",
+      "subset_group",
+      "subset_img_id",
+      "subset_init_label"
+    ],
+    "sha256": "803ce79e3bc9c66d3631738e91e62e1175730e98ad1415e8dc4d6292ba10bf27",
+    "size_bytes": 17587143
+  },
+  "permitted_evidence_status": "PARTIALLY_SUPPORTED",
+  "semantic_mapping_decision": "PARTIAL_SUPPORT_ONLY_NOT_LABEL_EQUIVALENCE",
+  "shared_fusion_cohort_required": true,
+  "shared_image_identity_proven": true,
+  "shared_patient_identity_proven": false,
+  "split_compatibility_verified": false,
+  "stage": "11C",
+  "status": "FINALIZED_SHARED_COHORT_LABEL_HARMONIZATION_ADJUDICATION",
+  "test_predictions_generated": false,
+  "training_performed": false
+}

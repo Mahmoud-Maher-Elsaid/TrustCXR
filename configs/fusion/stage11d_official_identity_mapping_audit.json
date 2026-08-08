@@ -1,0 +1,17 @@
+{
+  "stage": "11D",
+  "stage11c_evidence": "reports/stage11/stage11c_shared_cohort_label_harmonization_summary.json",
+  "official_mapping": "artifacts/stage11/identity/rsna_to_nih_official_mapping/pneumonia-challenge-dataset-mappings_2018.json",
+  "official_mapping_sha256": "803ce79e3bc9c66d3631738e91e62e1175730e98ad1415e8dc4d6292ba10bf27",
+  "stage9_cohort": "artifacts/stage9/stage9a_shared_cohort/stage9a_shared_cohort.sqlite",
+  "stage10_split_index": "artifacts/stage10/stage10d_rsna_patient_splits.sqlite",
+  "stage10_image_hash_namespace": "RSNA_Pneumonia:image",
+  "allowed_splits": ["train", "validation"],
+  "locked_splits": ["test"],
+  "semantic_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "cross_dataset_record_level_fusion_permitted": false,
+  "shared_fusion_cohort_required": true,
+  "training_permitted": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0
+}

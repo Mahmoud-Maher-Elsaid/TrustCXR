@@ -7,18 +7,50 @@ from pathlib import Path
 from typing import Any
 
 
-def hash_files(path: Path) -> list[dict[str, Any]]:
-    if not path.exists():
-        return []
-    files = [path] if path.is_file() else sorted(item for item in path.rglob("*") if item.is_file())
-    return [
-        {
-            "relative_name": item.relative_to(path.parent).as_posix(),
-            "size_bytes": item.stat().st_size,
-            "sha256": hashlib.sha256(item.read_bytes()).hexdigest(),
-        }
-        for item in files
-    ]
+def validate_mapping(path: Path, config: dict[str, Any]) -> dict[str, Any]:
+    if not path.is_file():
+        raise RuntimeError(f"Official mapping is missing: {path}")
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    if digest != config["official_mapping_sha256"]:
+        raise RuntimeError("Official mapping SHA-256 mismatch.")
+    records = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(records, list) or len(records) != config["official_mapping_expected_records"]:
+        raise RuntimeError("Official mapping record-count contract failed.")
+    required = set(config["official_mapping_required_fields"])
+    if any(not isinstance(record, dict) or set(record) != required for record in records):
+        raise RuntimeError("Official mapping schema is inconsistent.")
+    identity_fields = (
+        "SOPInstanceUID",
+        "SeriesInstanceUID",
+        "StudyInstanceUID",
+        "img_id",
+        "instanceId",
+        "seriesId",
+        "studyId",
+        "subset_img_id",
+    )
+    completeness = {
+        field: sum(record[field] not in (None, "", []) for record in records)
+        for field in identity_fields
+    }
+    uniqueness = {field: len({record[field] for record in records}) for field in identity_fields}
+    expected = len(records)
+    if any(value != expected for value in completeness.values()):
+        raise RuntimeError("Official mapping contains missing identity values.")
+    if any(value != expected for value in uniqueness.values()):
+        raise RuntimeError("Official mapping identity fields are not one-to-one.")
+    if any(not str(record["img_id"]).lower().endswith(".png") for record in records):
+        raise RuntimeError("Official mapping NIH image identifiers are malformed.")
+    return {
+        "filename": path.name,
+        "sha256": digest,
+        "size_bytes": path.stat().st_size,
+        "records": expected,
+        "required_fields": sorted(required),
+        "identity_field_completeness": completeness,
+        "identity_field_uniqueness": uniqueness,
+        "patient_values_disclosed": False,
+    }
 
 
 def main() -> int:
@@ -46,23 +78,16 @@ def main() -> int:
         raise RuntimeError("Stage 11C prohibits training and locked-test access.")
     if config["locked_test_records_accessed"] != 0:
         raise RuntimeError("Stage 11C requires zero locked-test access.")
-    mapping_path = root / config["official_mapping_local_path"]
-    mapping_files = hash_files(mapping_path)
-    mapping_present = bool(mapping_files)
-    identity_proven = all(
-        (
-            config["official_mapping_available_locally"],
-            config["mapping_schema_verified"],
-            config["shared_patient_identity_proven"],
-            config["shared_image_identity_proven"],
-            config["split_compatibility_verified"],
-            mapping_present,
-        )
+    mapping_path = (
+        root / config["official_mapping_local_path"] / config["official_mapping_filename"]
     )
-    if identity_proven:
-        raise RuntimeError(
-            "Stage 11C cannot self-approve identity; a separate mapping audit is required."
-        )
+    mapping_validation = validate_mapping(mapping_path, config)
+    if not config["official_mapping_available_locally"] or not config["mapping_schema_verified"]:
+        raise RuntimeError("Stage 11C mapping availability contract is inconsistent.")
+    if not config["shared_image_identity_proven"]:
+        raise RuntimeError("Stage 11C official image-identity evidence was not acknowledged.")
+    if config["shared_patient_identity_proven"] or config["split_compatibility_verified"]:
+        raise RuntimeError("Stage 11C may not pre-approve patient or split compatibility.")
     summary = {
         "stage": "11C",
         "status": "COMPLETED_SHARED_COHORT_LABEL_HARMONIZATION_ADJUDICATION",
@@ -70,21 +95,18 @@ def main() -> int:
         "approved_relation": semantics["approved_relation"],
         "permitted_evidence_status": "PARTIALLY_SUPPORTED",
         "diagnostic_confirmation_permitted": False,
-        "official_mapping_present_locally": mapping_present,
-        "mapping_file_inventory": mapping_files,
+        "official_mapping_present_locally": True,
+        "official_mapping_validation": mapping_validation,
         "shared_patient_identity_proven": False,
-        "shared_image_identity_proven": False,
+        "shared_image_identity_proven": True,
         "split_compatibility_verified": False,
         "cross_dataset_record_level_fusion_permitted": False,
         "shared_fusion_cohort_required": True,
         "downstream_evidence_policy": config["downstream_evidence_policy"],
-        "decision": "HOLD_FOR_OFFICIAL_MAPPING_ACQUISITION_AND_IDENTITY_AUDIT",
-        "manual_action_required": True,
-        "manual_action": (
-            "Download the official RSNA-to-original-NIH mapping from the configured RSNA "
-            "challenge page into the ignored mapping path, preserving its original filename."
-        ),
-        "gate": "HOLD_FOR_STAGE_11D_OFFICIAL_IDENTITY_MAPPING_AUDIT",
+        "decision": "OFFICIAL_IMAGE_MAPPING_VALIDATED_PATIENT_AND_SPLIT_AUDIT_REQUIRED",
+        "manual_action_required": False,
+        "manual_action": None,
+        "gate": "GO_FOR_STAGE_11D_OFFICIAL_IDENTITY_MAPPING_AUDIT",
         "training_performed": False,
         "locked_test_records_accessed": 0,
         "test_predictions_generated": False,

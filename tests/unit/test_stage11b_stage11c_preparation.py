@@ -22,10 +22,10 @@ def test_stage11c_rejects_direct_label_equivalence() -> None:
 
 def test_stage11c_does_not_invent_identity_or_fusion_permission() -> None:
     stage = config()
-    assert stage["official_mapping_available_locally"] is False
-    assert stage["mapping_schema_verified"] is False
+    assert stage["official_mapping_available_locally"] is True
+    assert stage["mapping_schema_verified"] is True
     assert stage["shared_patient_identity_proven"] is False
-    assert stage["shared_image_identity_proven"] is False
+    assert stage["shared_image_identity_proven"] is True
     assert stage["split_compatibility_verified"] is False
     assert stage["cross_dataset_record_level_fusion_permitted"] is False
     assert stage["shared_fusion_cohort_required"] is True

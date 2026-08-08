@@ -18,10 +18,12 @@ The peer-reviewed dataset paper explains that the bounding boxes represent pulmo
 
 George Shih et al., *Augmenting the National Institutes of Health Chest Radiograph Dataset with Expert Annotations of Possible Pneumonia*, Radiology: Artificial Intelligence, DOI `10.1148/ryai.2019180041`.
 
-## Identity status and manual action
+## Identity status
 
-The official RSNA-to-NIH mapping is not currently present locally. A shared image or patient identity contract therefore remains unproven. Download the official mapping from the RSNA challenge page and preserve its original filename under:
+The official mapping was downloaded from the RSNA challenge page and preserved under:
 
 `F:\AI\TrustCXR\artifacts\stage11\identity\rsna_to_nih_official_mapping\`
 
-This directory is local-only and must remain ignored. Downloading the mapping does not itself authorize fusion. Stage 11D must inspect its real schema, hashes, coverage, duplicates, patient consistency, and split compatibility without opening any locked test data.
+The preserved filename is `pneumonia-challenge-dataset-mappings_2018.json`, and its SHA-256 is `803ce79e3bc9c66d3631738e91e62e1175730e98ad1415e8dc4d6292ba10bf27`. Stage 11C verified 30,000 complete and unique image-identity rows. The directory is local-only and remains ignored.
+
+The mapping proves RSNA-to-original-NIH image identity. It does not by itself prove patient grouping or compatibility between project splits. Stage 11D must audit those relations using train and validation metadata only; locked test rows remain inaccessible.
