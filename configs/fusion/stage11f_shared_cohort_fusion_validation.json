@@ -1,0 +1,22 @@
+{
+  "stage": "11F",
+  "stage11e_evidence": "reports/stage11/stage11e_shared_cohort_split_repair_summary.json",
+  "shared_cohort": "artifacts/stage11/stage11e_shared_fusion_cohort.sqlite",
+  "allowed_splits": ["train", "validation"],
+  "locked_splits": ["test"],
+  "required_semantic_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "permitted_evidence_status": "PARTIALLY_SUPPORTED",
+  "downstream_evidence_policy": {
+    "unsupported_findings": "UNLOCALIZED_OR_UNCERTAIN",
+    "localization_absence_may_contradict_classifier": false,
+    "stage10_anatomical_scope": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+    "pseudo_masks_may_be_called_manual_ground_truth": false,
+    "model_disagreement_must_be_preserved": true
+  },
+  "patient_reassignment_permitted": false,
+  "stage9_stage10_frozen_evaluations_may_be_modified": false,
+  "training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0
+}
