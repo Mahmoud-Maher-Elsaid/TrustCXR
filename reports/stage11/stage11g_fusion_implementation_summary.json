@@ -1,0 +1,53 @@
+{
+  "contract_case_results": [
+    {
+      "name": "classifier_and_localizer_agree",
+      "reason_code": "CLASSIFIER_AND_RESEARCH_LOCALIZER_AGREE",
+      "status": "PARTIALLY_SUPPORTED"
+    },
+    {
+      "name": "classifier_positive_without_reliable_localization",
+      "reason_code": "LOCALIZATION_NOT_RELIABLE_FOR_CONTRADICTION",
+      "status": "UNLOCALIZED"
+    },
+    {
+      "name": "localizer_positive_classifier_negative",
+      "reason_code": "LOCALIZER_POSITIVE_CLASSIFIER_NEGATIVE",
+      "status": "CONTRADICTED"
+    },
+    {
+      "name": "outside_image_geometry",
+      "reason_code": "DETECTION_OUTSIDE_VALID_IMAGE_GEOMETRY",
+      "status": "OUTSIDE_EXPECTED_ANATOMY"
+    },
+    {
+      "name": "unsupported_label",
+      "reason_code": "NO_STAGE10_LOCALIZATION_CONTRACT_FOR_LABEL",
+      "status": "NOT_APPLICABLE"
+    }
+  ],
+  "contract_cases_passed": 5,
+  "downstream_evidence_policy": {
+    "localization_absence_may_contradict_classifier": false,
+    "model_disagreement_must_be_preserved": true,
+    "pseudo_masks_may_be_called_manual_ground_truth": false,
+    "stage10_anatomical_scope": "IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY",
+    "unsupported_findings": "UNLOCALIZED_OR_UNCERTAIN"
+  },
+  "gate": "GO_FOR_STAGE_11H_RECORD_LEVEL_FUSION_EVALUATION_PREPARATION",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "maximum_support_status": "PARTIALLY_SUPPORTED",
+  "model_predictions_consumed": false,
+  "patient_reassignments": 0,
+  "patient_split_violations": 0,
+  "patient_values_disclosed": false,
+  "semantic_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "shared_cohort_patients": 6081,
+  "shared_cohort_records": 10049,
+  "stage": "11G",
+  "stage9_stage10_frozen_evaluations_modified": false,
+  "status": "COMPLETED_DETERMINISTIC_FUSION_IMPLEMENTATION_VALIDATION",
+  "test_predictions_generated": false,
+  "training_performed": false
+}
