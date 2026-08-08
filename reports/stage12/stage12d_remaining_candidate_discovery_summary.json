@@ -1,0 +1,28 @@
+{
+  "stage": "12D",
+  "status": "COMPLETED_DEVELOPMENT_ONLY_CANDIDATE_DISCOVERY",
+  "protocol_version": "1.0.0",
+  "candidate_records": 3,
+  "candidate_slots": [
+    "train/INCOMPLETE_ANATOMY"
+  ],
+  "candidate_labels_approved": 0,
+  "slots_remaining_incomplete": 9,
+  "chexpert_metadata_records_screened": {
+    "train": 178416,
+    "validation": 21900
+  },
+  "chexpert_additional_train_images_screened": 3000,
+  "nih_development_records_inventoried": 93734,
+  "rsna_development_dicom_headers_screened": 5000,
+  "patient_split_preserved": true,
+  "locked_test_records_accessed_by_final_discovery": 0,
+  "superseded_attempt_incident": {
+    "status": "INVALIDATED_AND_QUARANTINED",
+    "description": "A superseded bounded RSNA attempt opened 5000 DICOM headers before split matching. It read no pixels and produced no retained evidence, but some unmatched headers may have belonged to the locked split. The final discovery filters through the official mapping and frozen split index before opening any file.",
+    "recovery_path": "cache/stage12d_discovery_invalid_unmapped_header_scan_20260808_181700"
+  },
+  "training_performed": false,
+  "review_artifacts_local_only": true,
+  "next_gate": "HUMAN_ADJUDICATION_OF_THREE_TRAIN_INCOMPLETE_ANATOMY_CANDIDATES"
+}

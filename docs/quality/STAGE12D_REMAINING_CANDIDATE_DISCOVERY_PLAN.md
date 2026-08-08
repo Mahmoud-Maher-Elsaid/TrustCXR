@@ -1,5 +1,7 @@
 # Stage 12D Remaining Candidate Discovery Plan
 
+Status: `APPROVED_FOR_DEVELOPMENT_ONLY_EXECUTION` on 2026-08-08.
+
 Two validation slots are evidence-approved: one strongest incomplete-anatomy example and the sole inadequate-quality example. Ten slots remain explicitly incomplete; the final manifest must not be promoted.
 
 The next search is limited to existing governed CheXpert, NIH ChestXray14, and RSNA train/validation partitions. It begins with metadata and format inventories, then integrity checks, and decodes only development candidates with relevant evidence. It preserves each dataset's frozen patient split.
