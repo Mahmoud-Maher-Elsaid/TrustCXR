@@ -1,0 +1,33 @@
+{
+  "protocol_version": "1.0.0",
+  "scope": "EXISTING_UNLOCKED_TRAIN_VALIDATION_ONLY",
+  "approved_dataset_sources": ["chexpert_small", "nih_chestxray14", "rsna_pneumonia"],
+  "missing_slots": {
+    "train": ["CORRUPT_INPUT", "UNSUPPORTED_FORMAT", "NON_CHEST_INPUT", "INCOMPLETE_ANATOMY", "INADEQUATE_QUALITY", "UNSUPPORTED_VIEW"],
+    "validation": ["CORRUPT_INPUT", "UNSUPPORTED_FORMAT", "NON_CHEST_INPUT", "UNSUPPORTED_VIEW"]
+  },
+  "evidence_plan": {
+    "CORRUPT_INPUT": "Verify genuine decode, integrity, truncated-file, and malformed-pixel failures; do not create corruption.",
+    "UNSUPPORTED_FORMAT": "Inventory genuine medical-image inputs outside the versioned ingestion contract; exclude archives, licenses, and documentation.",
+    "NON_CHEST_INPUT": "Require trusted source provenance explicitly identifying non-chest content; visual suspicion is insufficient.",
+    "INCOMPLETE_ANATOMY": "Exclude trusted lateral views, screen frontal geometry, and require direct evidence that required thoracic anatomy is materially absent at a boundary.",
+    "INADEQUATE_QUALITY": "Expand the Stage 5 technical-proxy scan and require valid decoding plus objective unusable-quality evidence.",
+    "UNSUPPORTED_VIEW": "Require positive DICOM ViewPosition or trusted source metadata for a known view outside AP, PA, and LATERAL; ambiguous or missing metadata is insufficient."
+  },
+  "split_contracts": {
+    "chexpert_small": "Stage 5 deterministic patient split",
+    "nih_chestxray14": "Frozen Stage 6 patient-safe split",
+    "rsna_pneumonia": "Frozen Stage 10D patient-safe split index"
+  },
+  "search_order": [
+    "metadata and extension census without pixel access",
+    "integrity verification for development records only",
+    "decode only evidence-bearing candidates",
+    "objective geometry and quality measurements",
+    "human adjudication without automatic approval"
+  ],
+  "automatic_labeling_permitted": false,
+  "synthetic_examples_permitted": false,
+  "locked_test_access_permitted": false,
+  "training_permitted": false
+}
