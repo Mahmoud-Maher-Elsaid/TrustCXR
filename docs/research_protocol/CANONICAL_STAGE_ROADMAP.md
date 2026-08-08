@@ -35,11 +35,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 11F | `9209e52` plus result closure | Go for Stage 11G fusion implementation preparation | Metadata-only repaired-cohort integrity and evidence-policy validation | Shared-cohort fusion readiness | Original Stage 8 | Complete | Zero leakage and duplicate mapped identities; test remains locked | 11G |
 | 11G | `d050576` plus result closure | Go for Stage 11H record-level fusion evaluation preparation | Deterministic evidence-rule implementation and contract-case validation | Structured evidence fusion | Original Stage 8 | Complete | Five contract cases passed; maximum support remains partial | 11H |
 | 11H | `840acd5` and `eb557d0` plus result closure | Hold for Stage 11I coverage decision | Validation-only record-level fusion on frozen-prediction overlap | Coverage-limited fusion evaluation | Original Stage 8 | Complete with severe limitation | Only 19/108 records covered; no classifier-positive records | 11I |
-| 11I | Pending | Hold for Stage 11J coverage preparation unless coverage is sufficient | No-inference fusion coverage and informativeness decision | Fusion evidence sufficiency gate | Original Stage 8 | Ready to run | Decide without generating new predictions or accessing test | 11J or hold |
+| 11I | `3190854` plus result closure | Hold for Stage 11J shared-validation coverage preparation | No-inference fusion coverage and informativeness decision | Fusion evidence sufficiency gate | Original Stage 8 | Complete with hold | Only 19/108 covered and zero classifier positives | 11J |
+| 11J | Pending | Go for Stage 11K complete-coverage fusion evaluation preparation | Frozen Stage 9 inference for exactly 89 missing shared-validation records | Validation prediction coverage repair | Original Stage 8 | Ready to run | Generate separate supplemental artifact; preserve frozen outputs | 11K or hold |
 
 ## Numbering rule
 
-Stage 11I is the next valid identifier. It decides whether the 19/108 validation overlap is sufficient for a fusion conclusion without generating predictions, retraining models, changing frozen evaluations, or accessing test data.
+Stage 11J is the next valid identifier. It uses the frozen selected Stage 9 checkpoint to infer exactly the 89 missing shared-validation records into a separate ignored artifact. It cannot train, tune, modify frozen outputs, or access test data.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

@@ -1,0 +1,31 @@
+{
+  "stage": "11J",
+  "stage11i_evidence": "reports/stage11/stage11i_fusion_coverage_decision_summary.json",
+  "shared_cohort": "artifacts/stage11/stage11e_shared_fusion_cohort.sqlite",
+  "shared_cohort_sha256": "63a42143f1c4516a7b06dcf0731423986162d881fdc417ae959dc8a1094d6fc8",
+  "frozen_stage9_predictions": "artifacts/stage9/stage9c_comparison/original_validation_predictions.npz",
+  "frozen_stage9_predictions_sha256": "90d958f6434d108f81624360f87447af13c3a7e587d7500f63d7b6c76643e5fd",
+  "frozen_stage9_checkpoint": "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt",
+  "frozen_stage9_checkpoint_sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
+  "stage9b_config": "configs/training/stage9b_segmentation_guided_ablation.json",
+  "stage9b_fingerprint": "c33553f25bf36f031f6aa17a07cf8f2ec045cc3137c8477bd98383971a2c8dd9",
+  "selected_variant": "original",
+  "expected_shared_validation_records": 108,
+  "expected_existing_predictions": 19,
+  "expected_missing_predictions": 89,
+  "evaluation_split": "validation",
+  "locked_splits": ["test"],
+  "supplemental_output": "artifacts/stage11/stage11j_shared_validation_predictions/original_missing_validation_predictions.npz",
+  "inference": {
+    "batch_size": 64,
+    "num_workers": 0,
+    "automatic_mixed_precision": true,
+    "augmentation": false
+  },
+  "maximum_support_status": "PARTIALLY_SUPPORTED",
+  "training_permitted": false,
+  "threshold_tuning_permitted": false,
+  "stage9_stage10_frozen_evaluations_may_be_modified": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0
+}
