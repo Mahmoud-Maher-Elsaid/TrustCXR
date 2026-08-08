@@ -42,7 +42,7 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 12A | `0dcfa32` plus result closure | Hold for Stage 12B data readiness | Metadata-only Stage 5 reuse and quality/view/device gap audit | Input safety capability readiness | Original Stage 9 | Complete with hold | OTHER/UNKNOWN, device evidence, clinical-quality labels, and stop behavior remain incomplete | 12B |
 | 12B | `e9aea8e` plus result closure | Hold for annotation and device-scope adjudication | Metadata-only dataset readiness audit | Expanded-view, device, and rejection data readiness | Original Stage 9 | Complete with hold | Device presence exists; expanded-view and rejection annotations require protocol | 12C |
 | 12C | `decc375` plus result closure | Go for development-cohort readiness | Versioned annotation and device-scope adjudication | Input-safety annotation contract | Original Stage 9 | Complete | Protocol 1.0.0; image-level device presence only | 12D |
-| 12D | `7df3978` plus readiness result | Hold for reviewed development annotations | Manifest audit and guarded cohort-construction workflow | Patient-safe input-safety cohort readiness | Original Stage 9 | Construction ready | Trusted CheXpert labels only; OTHER/UNKNOWN and rejection labels require review | 12D review then 12E |
+| 12D | `7df3978` plus partial adjudication | Hold for remaining genuine development examples | Manifest audit, guarded cohort construction, and evidence-based partial review | Patient-safe input-safety cohort readiness | Original Stage 9 | Partial annotation state validated | Two validation rejection slots approved; ten slots remain explicitly incomplete | 12D evidence discovery then 12E |
 
 ## Numbering rule
 

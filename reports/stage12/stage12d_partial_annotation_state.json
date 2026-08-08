@@ -1,0 +1,18 @@
+{
+  "stage": "12D",
+  "status": "PARTIAL_ANNOTATION_STATE_VALIDATED",
+  "gate": "HOLD_FOR_REMAINING_GENUINE_DEVELOPMENT_EXAMPLES",
+  "protocol_version": "1.0.0",
+  "total_input_rejection_slots": 12,
+  "approved_slots": 2,
+  "incomplete_no_defensible_example_slots": 10,
+  "approved_scope": [
+    "validation/INCOMPLETE_ANATOMY",
+    "validation/INADEQUATE_QUALITY"
+  ],
+  "annotations_invented": false,
+  "locked_test_records_accessed": 0,
+  "training_performed": false,
+  "final_manifest_ready": false,
+  "next_step": "Search existing unlocked train and validation data for objective evidence supporting the ten incomplete slots under configs/quality/stage12d_remaining_candidate_discovery_plan.json."
+}
