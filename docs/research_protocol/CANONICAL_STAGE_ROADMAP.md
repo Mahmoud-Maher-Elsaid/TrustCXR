@@ -51,7 +51,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 13B | `a480117` plus successful local result | Go for Stage 13C patient-safe pair design | Exact governed metadata-to-study identity resolution | Patient-safe study identity contract | Original Stage 10 | Complete | All development records resolved; zero patient/study split violations | 13C |
 | 13C | `b9dd102` plus successful local result | Go for Stage 13D multi-view baseline | Exact frontal/lateral pair and single-view disposition design | Multi-view cohort contract | Original Stage 10 | Complete | 26,657 exact pairs; zero leakage/reuse; UNKNOWN and OTHER unpaired | 13D |
 | 13D | `8a8f9d6` plus converged local result | Go for Stage 13E paired validation comparison | Frontal-only versus shared-encoder late probability fusion | Multi-view classification baseline | Original Stage 10 | Complete | Both best at epoch 2; point estimates cannot select a winner | 13E |
-| 13E | Prepared after Stage 13D convergence audit | Hold pending paired patient-cluster bootstrap | Frozen-checkpoint paired validation comparison | Evidence-based multi-view selection | Original Stage 10 | Ready to run | No training, threshold tuning, or test access | Evidence-dependent Stage 13F |
+| 13E | `a122655` plus successful local result | Go for Stage 13F selection freeze | Frozen-checkpoint paired validation comparison | Evidence-based multi-view selection | Original Stage 10 | Complete | Late fusion delta negative; 95% CI crosses zero; frontal-only AUROC higher | 13F |
+| 13F | Prepared after Stage 13E result | Hold until selection evidence and checkpoint hash are frozen | No-run multi-view selection freeze | Frozen Stage 13 baseline outcome | Original Stage 10 | Ready to run | No training, inference, tuning, or test access | Evidence-dependent Stage 13G |
 
 ## Numbering rule
 

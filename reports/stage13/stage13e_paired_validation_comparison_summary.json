@@ -1,0 +1,27 @@
+{
+  "candidate_macro_auprc_delta": -0.0010226102008410454,
+  "candidate_macro_auprc_delta_ci": [
+    -0.009176861156809069,
+    0.0071476469217121585
+  ],
+  "frozen_results_modified": false,
+  "gate": "GO_FOR_STAGE_13F_MULTIVIEW_SELECTION_FREEZE",
+  "locked_test_records_accessed": 0,
+  "patient_cluster_bootstrap_replicates": 2000,
+  "selected_variant": "frontal_only",
+  "selection_rule": "candidate requires meaningful positive Macro AUPRC delta and 95% CI entirely above zero",
+  "stage": "13E",
+  "status": "PASSED_PAIRED_VALIDATION_COMPARISON",
+  "threshold_tuning_performed": false,
+  "training_performed": false,
+  "variant_metrics": {
+    "frontal_only": {
+      "macro_auprc": 0.8551140260942606,
+      "macro_auroc": 0.8156675845181807
+    },
+    "late_probability_fusion": {
+      "macro_auprc": 0.8540914158934195,
+      "macro_auroc": 0.7934511728064022
+    }
+  }
+}
