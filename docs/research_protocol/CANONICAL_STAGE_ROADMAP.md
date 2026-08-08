@@ -42,11 +42,11 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 12A | `0dcfa32` plus result closure | Hold for Stage 12B data readiness | Metadata-only Stage 5 reuse and quality/view/device gap audit | Input safety capability readiness | Original Stage 9 | Complete with hold | OTHER/UNKNOWN, device evidence, clinical-quality labels, and stop behavior remain incomplete | 12B |
 | 12B | `e9aea8e` plus result closure | Hold for annotation and device-scope adjudication | Metadata-only dataset readiness audit | Expanded-view, device, and rejection data readiness | Original Stage 9 | Complete with hold | Device presence exists; expanded-view and rejection annotations require protocol | 12C |
 | 12C | `decc375` plus result closure | Go for development-cohort readiness | Versioned annotation and device-scope adjudication | Input-safety annotation contract | Original Stage 9 | Complete | Protocol 1.0.0; image-level device presence only | 12D |
-| 12D | Pending | Hold unless reviewed development manifests pass | Manifest-only annotation cohort readiness audit | Patient-safe input-safety cohort readiness | Original Stage 9 | Ready to run | No annotation creation, image reads, training, or locked-test access | 12E or hold |
+| 12D | `7df3978` plus readiness result | Hold for reviewed development annotations | Manifest audit and guarded cohort-construction workflow | Patient-safe input-safety cohort readiness | Original Stage 9 | Construction ready | Trusted CheXpert labels only; OTHER/UNKNOWN and rejection labels require review | 12D review then 12E |
 
 ## Numbering rule
 
-Stage 12D is the next valid identifier. It checks local development manifests against protocol 1.0.0, required provenance, allowed labels, and patient-safe train/validation separation without creating annotations or reading images.
+Stage 12D annotation cohort construction is the next valid action. It imports trusted CheXpert view and device-presence metadata into local train/validation manifests and creates review templates without assigning OTHER, UNKNOWN, quality, or rejection labels.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

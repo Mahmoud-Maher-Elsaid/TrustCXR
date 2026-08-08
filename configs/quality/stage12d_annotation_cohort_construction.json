@@ -1,0 +1,16 @@
+{
+  "stage": "12D_ANNOTATION_COHORT_CONSTRUCTION",
+  "protocol_version": "1.0.0",
+  "stage12d_evidence": "reports/stage12/stage12d_annotation_cohort_readiness_summary.json",
+  "chexpert_root": "TrustCXR-Data/07_CheXpert_Small",
+  "chexpert_csv_patterns": ["**/train.csv", "**/valid.csv"],
+  "output_root": "artifacts/stage12/annotation_cohort",
+  "development_splits": ["train", "validation"],
+  "trusted_view_labels": ["AP", "PA", "LATERAL"],
+  "device_source_label": "Support Devices",
+  "device_value_mapping": {"0.0": "0", "1.0": "1", "-1.0": "UNCERTAIN"},
+  "training_permitted": false,
+  "image_access_permitted": false,
+  "locked_test_output_permitted": false,
+  "frozen_stage5_stage9_stage10_stage11_results_may_be_modified": false
+}

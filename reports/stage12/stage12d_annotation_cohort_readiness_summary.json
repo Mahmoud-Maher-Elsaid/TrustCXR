@@ -1,0 +1,41 @@
+{
+  "annotations_invented": false,
+  "cohort_ready": false,
+  "decision": "HOLD_FOR_REVIEWED_DEVELOPMENT_ANNOTATIONS",
+  "frozen_stage5_stage9_stage10_stage11_results_modified": false,
+  "gate": "HOLD_FOR_STAGE_12D_ANNOTATION_COHORT_CONSTRUCTION",
+  "inference_performed": false,
+  "invalid_manifests": [],
+  "locked_test_records_accessed": 0,
+  "manifest_results": {
+    "device_presence": {
+      "exists": false,
+      "ready": false,
+      "reason": "MISSING_MANIFEST",
+      "records": 0
+    },
+    "expanded_view": {
+      "exists": false,
+      "ready": false,
+      "reason": "MISSING_MANIFEST",
+      "records": 0
+    },
+    "input_rejection": {
+      "exists": false,
+      "ready": false,
+      "reason": "MISSING_MANIFEST",
+      "records": 0
+    }
+  },
+  "manifest_root": "artifacts/stage12/annotation_cohort",
+  "missing_manifests": [
+    "expanded_view",
+    "input_rejection",
+    "device_presence"
+  ],
+  "patient_leakage_violations": 0,
+  "protocol_version": "1.0.0",
+  "stage": "12D",
+  "status": "COMPLETED_ANNOTATION_COHORT_READINESS_AUDIT",
+  "training_performed": false
+}
