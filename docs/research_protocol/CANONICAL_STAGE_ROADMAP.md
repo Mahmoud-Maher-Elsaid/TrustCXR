@@ -50,7 +50,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 13A | `c321020` plus local hold result | Go for Stage 13B study identity resolution | Metadata-only multi-view identity and pairing readiness audit | Multi-view fusion data contract | Original Stage 10 | Complete with hold | Patient identity cannot substitute for study identity; no pairing or training | 13B |
 | 13B | `a480117` plus successful local result | Go for Stage 13C patient-safe pair design | Exact governed metadata-to-study identity resolution | Patient-safe study identity contract | Original Stage 10 | Complete | All development records resolved; zero patient/study split violations | 13C |
 | 13C | `b9dd102` plus successful local result | Go for Stage 13D multi-view baseline | Exact frontal/lateral pair and single-view disposition design | Multi-view cohort contract | Original Stage 10 | Complete | 26,657 exact pairs; zero leakage/reuse; UNKNOWN and OTHER unpaired | 13D |
-| 13D | Prepared after Stage 13C result | Hold pending fair validation-only baseline comparison | Frontal-only versus shared-encoder late probability fusion | Multi-view classification baseline | Original Stage 10 | Ready to run | CheXpert label contract is separate from frozen NIH contract; no test access | Evidence-dependent Stage 13E |
+| 13D | `8a8f9d6` plus converged local result | Go for Stage 13E paired validation comparison | Frontal-only versus shared-encoder late probability fusion | Multi-view classification baseline | Original Stage 10 | Complete | Both best at epoch 2; point estimates cannot select a winner | 13E |
+| 13E | Prepared after Stage 13D convergence audit | Hold pending paired patient-cluster bootstrap | Frozen-checkpoint paired validation comparison | Evidence-based multi-view selection | Original Stage 10 | Ready to run | No training, threshold tuning, or test access | Evidence-dependent Stage 13F |
 
 ## Numbering rule
 

@@ -1,0 +1,33 @@
+{
+  "stage": "13E",
+  "stage13d_summary": "reports/stage13/stage13d_multiview_baseline_summary.json",
+  "stage13d_config": "configs/multiview/stage13d_multiview_baseline.json",
+  "best_checkpoints": {
+    "frontal_only": {
+      "path": "artifacts/stage13/stage13d_multiview_baseline/frontal_only/best_checkpoint.pt",
+      "sha256": "09a8db4e83861fcc41172d64f29215d6e9d24cd41a8d6b51f825ca6d00fb1c77"
+    },
+    "late_probability_fusion": {
+      "path": "artifacts/stage13/stage13d_multiview_baseline/late_probability_fusion/best_checkpoint.pt",
+      "sha256": "efe2493d23cc4b4317cc1fe021615481f2dd130b51997efb833b62885408b19b"
+    }
+  },
+  "validation_split": "validation",
+  "inference_batch_size": 32,
+  "num_workers": 0,
+  "automatic_mixed_precision": true,
+  "bootstrap_replicates": 2000,
+  "bootstrap_confidence_level": 0.95,
+  "bootstrap_minimum_valid_replicates": 1900,
+  "bootstrap_seed": 20260809,
+  "reference_variant": "frontal_only",
+  "candidate_variant": "late_probability_fusion",
+  "primary_metric": "macro_auprc",
+  "secondary_metric": "macro_auroc",
+  "minimum_meaningful_primary_delta": 0.001,
+  "candidate_requires_positive_primary_delta_interval": true,
+  "locked_test_access_permitted": false,
+  "threshold_tuning_permitted": false,
+  "training_permitted": false,
+  "frozen_results_may_be_modified": false
+}

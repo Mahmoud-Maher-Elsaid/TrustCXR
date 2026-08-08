@@ -1,0 +1,36 @@
+{
+  "additional_training_required": false,
+  "early_stopping_patience": 5,
+  "frozen_previous_results_modified": false,
+  "gate": "GO_FOR_STAGE_13E_PAIRED_VALIDATION_COMPARISON",
+  "locked_test_records_accessed": 0,
+  "maximum_epochs": 30,
+  "minimum_epochs": 5,
+  "minimum_improvement": 0.0002,
+  "patient_leakage_violations": 0,
+  "stage": "13D",
+  "status": "TRAINING_CONVERGED_AND_EARLY_STOPPING_VALID",
+  "validation_evaluated_every_epoch": true,
+  "variants": {
+    "frontal_only": {
+      "all_history_values_finite": true,
+      "best_checkpoint_sha256": "09a8db4e83861fcc41172d64f29215d6e9d24cd41a8d6b51f825ca6d00fb1c77",
+      "best_epoch": 2,
+      "best_validation_macro_auprc": 0.8551140260942606,
+      "history_rows": 7,
+      "last_epoch": 7,
+      "patience": 5,
+      "stop_reason": "EARLY_STOPPING_PATIENCE_REACHED"
+    },
+    "late_probability_fusion": {
+      "all_history_values_finite": true,
+      "best_checkpoint_sha256": "efe2493d23cc4b4317cc1fe021615481f2dd130b51997efb833b62885408b19b",
+      "best_epoch": 2,
+      "best_validation_macro_auprc": 0.8540914158934195,
+      "history_rows": 7,
+      "last_epoch": 7,
+      "patience": 5,
+      "stop_reason": "EARLY_STOPPING_PATIENCE_REACHED"
+    }
+  }
+}
