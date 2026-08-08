@@ -1,0 +1,22 @@
+{
+  "protocol_version": "1.0.0",
+  "dataset_root": "TrustCXR-Data/07_CheXpert_Small",
+  "package_root": "artifacts/stage12/annotation_cohort/manual_review_package_v1.0.0",
+  "max_records_scanned_per_split": 5000,
+  "max_candidates_per_class_split": 3,
+  "supported_extensions": [".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp", ".dcm", ".dicom"],
+  "geometry_aspect_ratio_minimum": 0.70,
+  "geometry_aspect_ratio_maximum": 1.30,
+  "quality_proxy": {
+    "minimum_dimension": 224,
+    "minimum_standard_deviation": 8.0,
+    "minimum_mean": 10.0,
+    "maximum_mean": 245.0
+  },
+  "allowed_splits": ["train", "validation"],
+  "locked_test_access_permitted": false,
+  "automatic_approval_permitted": false,
+  "automatic_label_assignment_permitted": false,
+  "synthetic_corruption_permitted": false,
+  "training_permitted": false
+}
