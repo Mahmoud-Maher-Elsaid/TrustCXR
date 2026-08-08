@@ -1,0 +1,29 @@
+{
+  "development_test_patient_overlap": 0,
+  "duplicate_metadata_paths": 0,
+  "exact_frontal_lateral_pairs": 3046,
+  "explicit_studies": 19705,
+  "frozen_results_modified": false,
+  "gate": "GO_FOR_STAGE_13H_LOCKED_TEST_EVALUATION_FREEZE",
+  "heuristic_pairs_created": 0,
+  "locked_test_metadata_records_audited": 23332,
+  "locked_test_patients": 6523,
+  "selected_epoch": 2,
+  "selected_variant": "frontal_only",
+  "stage": "13G",
+  "status": "PASSED_LOCKED_TEST_PAIR_READINESS",
+  "study_disposition_counts": {
+    "EXACT_FRONTAL_LATERAL_PAIR": 3046,
+    "SINGLE_FRONTAL": 16230,
+    "SINGLE_LATERAL": 1,
+    "WITHHELD_DUPLICATE_OR_AMBIGUOUS_VIEWS": 428
+  },
+  "test_evaluation_performed": false,
+  "test_images_accessed": 0,
+  "test_inference_performed": false,
+  "test_labels_accessed": 0,
+  "threshold_tuning_performed": false,
+  "training_performed": false,
+  "unresolved_explicit_study_identities": 0,
+  "withheld_unknown_or_other_view_records": 0
+}

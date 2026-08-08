@@ -1,0 +1,61 @@
+{
+  "stage": "13H",
+  "stage13f_evidence": "reports/stage13/stage13f_multiview_selection_freeze_summary.json",
+  "stage13g_config": "configs/multiview/stage13g_locked_test_pair_readiness.json",
+  "stage13g_config_canonical_sha256": "594bf8f6a81ba3944d5320350a1abcc0940a634ebe76f804be84032f33066422",
+  "stage13g_evidence": "reports/stage13/stage13g_locked_test_pair_readiness_summary.json",
+  "stage13g_evidence_canonical_sha256": "368805ac21b4709eeaa2f74bfcdce6d0e8b39e72e2322e9a6b86ae453371bfd3",
+  "selected_variant": "frontal_only",
+  "selected_epoch": 2,
+  "selected_checkpoint": "artifacts/stage13/stage13d_multiview_baseline/frontal_only/best_checkpoint.pt",
+  "selected_checkpoint_sha256": "09a8db4e83861fcc41172d64f29215d6e9d24cd41a8d6b51f825ca6d00fb1c77",
+  "locked_test_exact_pair_count": 3046,
+  "cohort_contract": {
+    "patient_split_salt": "trustcxr-stage5",
+    "patient_split_interval": "[0.90,1.00)",
+    "identity_source": "explicit CheXpert patient/study path segments",
+    "required_views": "exactly one AP_or_PA frontal and exactly one LATERAL",
+    "heuristic_duplicate_ambiguous_unknown_other_pairs_permitted": false,
+    "development_test_patient_overlap_required": 0
+  },
+  "label_contract": [
+    "Atelectasis", "Cardiomegaly", "Consolidation", "Edema",
+    "Enlarged Cardiomediastinum", "Fracture", "Lung Lesion", "Lung Opacity",
+    "No Finding", "Pleural Effusion", "Pleural Other", "Pneumonia",
+    "Pneumothorax", "Support Devices"
+  ],
+  "preprocessing": {
+    "image_input": "frontal_only",
+    "image_size": 224,
+    "rgb_normalization": "ImageNet",
+    "augmentation": false,
+    "automatic_mixed_precision": true,
+    "batch_size": 32,
+    "num_workers": 0
+  },
+  "final_metrics": {
+    "primary": "macro_auprc",
+    "secondary": "macro_auroc",
+    "per_label": ["auprc", "auroc", "valid_record_count"],
+    "confidence_intervals": "paired_patient_cluster_bootstrap_95_percent",
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20260809,
+    "threshold_metrics": "EXCLUDED_NO_VALIDATION_FROZEN_THRESHOLDS",
+    "uncertain_and_missing_labels": "MASKED"
+  },
+  "one_time_test_use_policy": {
+    "test_inference_runs_permitted": 1,
+    "post_test_tuning_permitted": false,
+    "post_test_model_selection_permitted": false,
+    "post_test_threshold_selection_permitted": false,
+    "technical_retry_requires_no_metrics_review_and_exact_frozen_fingerprint": true,
+    "patient_level_outputs_tracked": false
+  },
+  "test_image_access_permitted_during_freeze": false,
+  "test_label_access_permitted_during_freeze": false,
+  "test_inference_permitted_during_freeze": false,
+  "test_evaluation_permitted_during_freeze": false,
+  "training_permitted": false,
+  "threshold_tuning_permitted": false,
+  "frozen_results_may_be_modified": false
+}
