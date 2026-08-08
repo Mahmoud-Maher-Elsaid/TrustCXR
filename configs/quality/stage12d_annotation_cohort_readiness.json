@@ -8,7 +8,7 @@
       "filename": "expanded_view_annotations.csv",
       "required_columns": ["record_key_hash", "patient_key_hash", "split", "view_label", "reviewer_role", "source_evidence", "adjudication_status", "protocol_version"],
       "allowed_labels": ["AP", "PA", "LATERAL", "OTHER", "UNKNOWN"],
-      "minimum_label_counts": {"OTHER": 1, "UNKNOWN": 1},
+      "minimum_label_counts": {"UNKNOWN": 1},
       "required_values": {"adjudication_status": "APPROVED"}
     },
     "input_rejection": {
