@@ -1,0 +1,19 @@
+{
+  "stage": "13C",
+  "stage13b_evidence": "reports/stage13/stage13b_study_identity_resolution_summary.json",
+  "study_identity_index": "artifacts/stage13/stage13b_study_identity.sqlite",
+  "output_pair_index": "artifacts/stage13/stage13c_multiview_pairs.sqlite",
+  "allowed_splits": ["train", "validation"],
+  "frontal_views": ["AP", "PA"],
+  "lateral_views": ["LATERAL"],
+  "unknown_views": ["UNKNOWN"],
+  "allowed_identity_evidence": ["CHEXPERT_EXPLICIT_PATIENT_STUDY_PATH_STRUCTURE"],
+  "other_view_withheld": true,
+  "exact_pair_requires_one_frontal_and_one_lateral": true,
+  "heuristic_pairing_permitted": false,
+  "duplicate_view_selection_permitted": false,
+  "training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "frozen_results_may_be_modified": false
+}
