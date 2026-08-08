@@ -1,0 +1,72 @@
+{
+  "cohort_contract": {
+    "development_test_patient_overlap_required": 0,
+    "heuristic_duplicate_ambiguous_unknown_other_pairs_permitted": false,
+    "identity_source": "explicit CheXpert patient/study path segments",
+    "patient_split_interval": "[0.90,1.00)",
+    "patient_split_salt": "trustcxr-stage5",
+    "required_views": "exactly one AP_or_PA frontal and exactly one LATERAL"
+  },
+  "final_metrics": {
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20260809,
+    "confidence_intervals": "paired_patient_cluster_bootstrap_95_percent",
+    "per_label": [
+      "auprc",
+      "auroc",
+      "valid_record_count"
+    ],
+    "primary": "macro_auprc",
+    "secondary": "macro_auroc",
+    "threshold_metrics": "EXCLUDED_NO_VALIDATION_FROZEN_THRESHOLDS",
+    "uncertain_and_missing_labels": "MASKED"
+  },
+  "freeze_fingerprint": "3efeb0ca2588df40eaed3ef3b5f025d50180a0dd9e33c63d4d00f1ba7d0d0d10",
+  "frozen_results_modified": false,
+  "gate": "GO_FOR_STAGE_13I_ONE_TIME_LOCKED_TEST_EVALUATION",
+  "label_contract": [
+    "Atelectasis",
+    "Cardiomegaly",
+    "Consolidation",
+    "Edema",
+    "Enlarged Cardiomediastinum",
+    "Fracture",
+    "Lung Lesion",
+    "Lung Opacity",
+    "No Finding",
+    "Pleural Effusion",
+    "Pleural Other",
+    "Pneumonia",
+    "Pneumothorax",
+    "Support Devices"
+  ],
+  "locked_test_exact_pair_count": 3046,
+  "one_time_test_use_policy": {
+    "patient_level_outputs_tracked": false,
+    "post_test_model_selection_permitted": false,
+    "post_test_threshold_selection_permitted": false,
+    "post_test_tuning_permitted": false,
+    "technical_retry_requires_no_metrics_review_and_exact_frozen_fingerprint": true,
+    "test_inference_runs_permitted": 1
+  },
+  "preprocessing": {
+    "augmentation": false,
+    "automatic_mixed_precision": true,
+    "batch_size": 32,
+    "image_input": "frontal_only",
+    "image_size": 224,
+    "num_workers": 0,
+    "rgb_normalization": "ImageNet"
+  },
+  "selected_checkpoint_sha256": "09a8db4e83861fcc41172d64f29215d6e9d24cd41a8d6b51f825ca6d00fb1c77",
+  "selected_epoch": 2,
+  "selected_variant": "frontal_only",
+  "stage": "13H",
+  "status": "PASSED_LOCKED_TEST_EVALUATION_FREEZE",
+  "test_evaluation_performed": false,
+  "test_images_accessed": 0,
+  "test_inference_performed": false,
+  "test_labels_accessed": 0,
+  "threshold_tuning_performed": false,
+  "training_performed": false
+}

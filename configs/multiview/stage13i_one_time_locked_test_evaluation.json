@@ -1,0 +1,36 @@
+{
+  "stage": "13I",
+  "stage13h_evidence": "reports/stage13/stage13h_locked_test_evaluation_freeze_summary.json",
+  "required_freeze_fingerprint": "3efeb0ca2588df40eaed3ef3b5f025d50180a0dd9e33c63d4d00f1ba7d0d0d10",
+  "stage13g_config": "configs/multiview/stage13g_locked_test_pair_readiness.json",
+  "stage13d_config": "configs/multiview/stage13d_multiview_baseline.json",
+  "selected_variant": "frontal_only",
+  "selected_epoch": 2,
+  "selected_checkpoint": "artifacts/stage13/stage13d_multiview_baseline/frontal_only/best_checkpoint.pt",
+  "selected_checkpoint_sha256": "09a8db4e83861fcc41172d64f29215d6e9d24cd41a8d6b51f825ca6d00fb1c77",
+  "locked_test_exact_pair_count": 3046,
+  "runtime_root": "artifacts/stage13/stage13i_locked_test_evaluation",
+  "reports": {
+    "summary": "reports/stage13/stage13i_locked_test_evaluation_summary.json",
+    "per_label": "reports/stage13/stage13i_per_label_metrics.csv",
+    "bootstrap": "reports/stage13/stage13i_bootstrap_intervals.csv",
+    "report": "reports/stage13/STAGE13I_LOCKED_TEST_EVALUATION_REPORT.md"
+  },
+  "metrics": {
+    "primary": "macro_auprc",
+    "secondary": "macro_auroc",
+    "per_label": ["auprc", "auroc", "valid_record_count"],
+    "bootstrap_replicates": 2000,
+    "bootstrap_confidence_level": 0.95,
+    "bootstrap_minimum_valid_replicates": 1900,
+    "bootstrap_seed": 20260809,
+    "threshold_metrics_permitted": false
+  },
+  "technical_retry_requires_explicit_flag": true,
+  "training_permitted": false,
+  "tuning_permitted": false,
+  "calibration_permitted": false,
+  "model_selection_permitted": false,
+  "threshold_selection_permitted": false,
+  "frozen_results_may_be_modified": false
+}

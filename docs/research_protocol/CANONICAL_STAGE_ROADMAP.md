@@ -54,7 +54,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 13E | `a122655` plus successful local result | Go for Stage 13F selection freeze | Frozen-checkpoint paired validation comparison | Evidence-based multi-view selection | Original Stage 10 | Complete | Late fusion delta negative; 95% CI crosses zero; frontal-only AUROC higher | 13F |
 | 13F | `dedb7aa` plus successful local result | Go for Stage 13G locked-test pair readiness | No-run multi-view selection freeze | Frozen Stage 13 baseline outcome | Original Stage 10 | Complete | Frontal-only epoch 2 frozen; both checkpoints preserved | 13G |
 | 13G | `045ec96` plus successful local result | Go for Stage 13H locked-test evaluation freeze | Locked-test pair readiness without pixel or label access | Test evaluation readiness contract | Original Stage 10 | Complete | 3,046 exact pairs; zero development/test patient overlap | 13H |
-| 13H | Prepared after Stage 13G result | Hold until checkpoint, cohort, metrics, and one-time use are frozen | No-data locked-test evaluation freeze | Immutable final test protocol | Original Stage 10 | Ready to run | No pixel, label, inference, evaluation, tuning, or training access | Evidence-dependent Stage 13I |
+| 13H | `1519b56` plus successful local result | Go for Stage 13I one-time locked-test evaluation | No-data locked-test evaluation freeze | Immutable final test protocol | Original Stage 10 | Complete | Fingerprint `3efeb0ca...`; checkpoint, cohort, metrics, and one-time use frozen | 13I |
+| 13I | Prepared after Stage 13H result | One authorized run under exact freeze fingerprint | Frontal-only final evaluation on 3,046 exact locked-test pairs | Final internal multi-view test evidence | Original Stage 10 | Ready to run | No thresholds, tuning, calibration, retraining, or post-test selection | Evidence-dependent Stage 13J |
 
 ## Numbering rule
 
