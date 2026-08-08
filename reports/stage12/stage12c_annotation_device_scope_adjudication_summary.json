@@ -1,0 +1,41 @@
+{
+  "annotations_created": false,
+  "approval": {
+    "additional_manual_protocol_approval_required": false,
+    "approved_by": "PROJECT_OWNER",
+    "basis": "Explicit Stage 12C user mandate"
+  },
+  "decision": "APPROVE_PROTOCOL_FOR_DEVELOPMENT_COHORT_CONSTRUCTION",
+  "device_dataset": "chexpert_small",
+  "device_label": "Support Devices",
+  "device_localization_permitted": false,
+  "device_presence_scope": "IMAGE_LEVEL_DEVICE_PRESENCE",
+  "frozen_stage5_stage9_stage10_stage11_results_modified": false,
+  "gate": "GO_FOR_STAGE_12D_ANNOTATION_COHORT_READINESS",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "new_device_localization_dataset_introduced": false,
+  "primary_input_dispositions": [
+    "CORRUPT_INPUT",
+    "UNSUPPORTED_FORMAT",
+    "NON_CHEST_INPUT",
+    "INCOMPLETE_ANATOMY",
+    "INADEQUATE_QUALITY",
+    "UNSUPPORTED_VIEW",
+    "ACCEPTABLE_INPUT"
+  ],
+  "primary_rejection_reason_mutually_exclusive": true,
+  "protocol_version": "1.0.0",
+  "stage": "12C",
+  "status": "COMPLETED_ANNOTATION_AND_DEVICE_SCOPE_ADJUDICATION",
+  "training_performed": false,
+  "unknown_is_not_inferred_from_missing_metadata": true,
+  "view_classes": [
+    "AP",
+    "PA",
+    "LATERAL",
+    "OTHER",
+    "UNKNOWN"
+  ],
+  "view_classes_mutually_exclusive": true
+}

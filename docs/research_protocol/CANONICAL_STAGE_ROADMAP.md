@@ -41,11 +41,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 11L | `7cd920f` plus result closure | Go for Stage 12A quality/view/device gap audit | No-inference research fusion acceptance decision | Fusion safety closure | Original Stage 8 | Complete with mandatory limitations | Uncertainty annotation only; no reliable support or contradiction authority | 12A |
 | 12A | `0dcfa32` plus result closure | Hold for Stage 12B data readiness | Metadata-only Stage 5 reuse and quality/view/device gap audit | Input safety capability readiness | Original Stage 9 | Complete with hold | OTHER/UNKNOWN, device evidence, clinical-quality labels, and stop behavior remain incomplete | 12B |
 | 12B | `e9aea8e` plus result closure | Hold for annotation and device-scope adjudication | Metadata-only dataset readiness audit | Expanded-view, device, and rejection data readiness | Original Stage 9 | Complete with hold | Device presence exists; expanded-view and rejection annotations require protocol | 12C |
-| 12C | Pending | Go for development-cohort readiness if protocol validates | Versioned annotation and device-scope adjudication | Input-safety annotation contract | Original Stage 9 | Ready to run | Image-level device presence only; no annotations or training | 12D or hold |
+| 12C | `decc375` plus result closure | Go for development-cohort readiness | Versioned annotation and device-scope adjudication | Input-safety annotation contract | Original Stage 9 | Complete | Protocol 1.0.0; image-level device presence only | 12D |
+| 12D | Pending | Hold unless reviewed development manifests pass | Manifest-only annotation cohort readiness audit | Patient-safe input-safety cohort readiness | Original Stage 9 | Ready to run | No annotation creation, image reads, training, or locked-test access | 12E or hold |
 
 ## Numbering rule
 
-Stage 12C is the next valid identifier. It validates the owner-approved view and input-rejection annotation protocol and limits CheXpert `Support Devices` to image-level presence without creating annotations, training, or inference.
+Stage 12D is the next valid identifier. It checks local development manifests against protocol 1.0.0, required provenance, allowed labels, and patient-safe train/validation separation without creating annotations or reading images.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

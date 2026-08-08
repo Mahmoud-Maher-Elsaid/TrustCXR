@@ -1,0 +1,35 @@
+{
+  "stage": "12D",
+  "protocol_version": "1.0.0",
+  "stage12c_evidence": "reports/stage12/stage12c_annotation_device_scope_adjudication_summary.json",
+  "local_manifest_root": "artifacts/stage12/annotation_cohort",
+  "manifests": {
+    "expanded_view": {
+      "filename": "expanded_view_annotations.csv",
+      "required_columns": ["record_key_hash", "patient_key_hash", "split", "view_label", "reviewer_role", "source_evidence", "adjudication_status", "protocol_version"],
+      "allowed_labels": ["AP", "PA", "LATERAL", "OTHER", "UNKNOWN"],
+      "minimum_label_counts": {"OTHER": 1, "UNKNOWN": 1},
+      "required_values": {"adjudication_status": "APPROVED"}
+    },
+    "input_rejection": {
+      "filename": "input_rejection_annotations.csv",
+      "required_columns": ["record_key_hash", "patient_key_hash", "split", "primary_disposition", "reviewer_role", "source_evidence", "adjudication_status", "protocol_version"],
+      "allowed_labels": ["CORRUPT_INPUT", "UNSUPPORTED_FORMAT", "NON_CHEST_INPUT", "INCOMPLETE_ANATOMY", "INADEQUATE_QUALITY", "UNSUPPORTED_VIEW", "ACCEPTABLE_INPUT"],
+      "minimum_label_counts": {"CORRUPT_INPUT": 1, "UNSUPPORTED_FORMAT": 1, "NON_CHEST_INPUT": 1, "INCOMPLETE_ANATOMY": 1, "INADEQUATE_QUALITY": 1, "UNSUPPORTED_VIEW": 1},
+      "required_values": {"adjudication_status": "APPROVED"}
+    },
+    "device_presence": {
+      "filename": "device_presence_annotations.csv",
+      "required_columns": ["record_key_hash", "patient_key_hash", "split", "support_devices", "source_dataset", "source_label", "protocol_version"],
+      "allowed_labels": ["0", "1", "UNCERTAIN"],
+      "minimum_label_counts": {"0": 1, "1": 1},
+      "required_values": {"source_dataset": "chexpert_small", "source_label": "Support Devices"}
+    }
+  },
+  "allowed_development_splits": ["train", "validation"],
+  "training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0,
+  "frozen_stage5_stage9_stage10_stage11_results_may_be_modified": false
+}
