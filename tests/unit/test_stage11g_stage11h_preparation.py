@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 from scripts.fusion.run_stage11h_record_level_fusion_evaluation import (
+    resolve_rsna_image_paths,
     shared_validation_rows,
     validate_contract,
 )
@@ -49,3 +50,31 @@ def test_stage11h_preserves_partial_support_and_frozen_evaluations() -> None:
     broken = dict(stage11g, locked_test_records_accessed=1)
     with pytest.raises(RuntimeError):
         validate_contract(config, broken)
+
+
+def test_stage11h_resolves_sop_identity_to_subset_filename(tmp_path: Path) -> None:
+    expected = tmp_path / "rsna-file-id.dcm"
+    expected.write_bytes(b"dicom-placeholder")
+    rows = [("nih.png", "1.2.3", "patient")]
+    mapping = [{"SOPInstanceUID": "1.2.3", "subset_img_id": "rsna-file-id"}]
+    resolved = resolve_rsna_image_paths(
+        rows,
+        mapping,
+        tmp_path,
+        identity_field="SOPInstanceUID",
+        filename_field="subset_img_id",
+    )
+    assert resolved == [("nih.png", "1.2.3", "patient", expected)]
+
+
+def test_stage11h_refuses_missing_file_without_dropping_record(tmp_path: Path) -> None:
+    rows = [("nih.png", "1.2.3", "patient")]
+    mapping = [{"SOPInstanceUID": "1.2.3", "subset_img_id": "missing"}]
+    with pytest.raises(FileNotFoundError, match="records will not be dropped"):
+        resolve_rsna_image_paths(
+            rows,
+            mapping,
+            tmp_path,
+            identity_field="SOPInstanceUID",
+            filename_field="subset_img_id",
+        )

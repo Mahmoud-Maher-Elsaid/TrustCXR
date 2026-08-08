@@ -91,6 +91,46 @@ def shared_validation_rows(path: Path) -> list[tuple[str, str, str]]:
         connection.close()
 
 
+def resolve_rsna_image_paths(
+    rows: list[tuple[str, str, str]],
+    mapping: list[dict[str, Any]],
+    image_root: Path,
+    *,
+    identity_field: str,
+    filename_field: str,
+) -> list[tuple[str, str, str, Path]]:
+    filename_by_identity: dict[str, str] = {}
+    for record in mapping:
+        identity = str(record[identity_field])
+        filename = str(record[filename_field])
+        existing = filename_by_identity.setdefault(identity, filename)
+        if existing != filename:
+            raise RuntimeError("Official RSNA mapping contains an ambiguous image identity.")
+    resolved: list[tuple[str, str, str, Path]] = []
+    missing_mapping = 0
+    missing_files: list[str] = []
+    for nih_image, identity, patient in rows:
+        filename = filename_by_identity.get(identity)
+        if filename is None:
+            missing_mapping += 1
+            continue
+        path = image_root / f"{filename}.dcm"
+        if not path.is_file():
+            missing_files.append(hashlib.sha256(identity.encode()).hexdigest())
+            continue
+        resolved.append((nih_image, identity, patient, path))
+    if missing_mapping or missing_files:
+        first_hash = missing_files[0] if missing_files else "NONE"
+        raise FileNotFoundError(
+            "Stage 11H RSNA inventory preflight failed: "
+            f"missing_mapping={missing_mapping}, missing_files={len(missing_files)}, "
+            f"first_missing_identity_sha256={first_hash}. "
+            "Restore the official stage_2_train_images.zip extraction; "
+            "records will not be dropped."
+        )
+    return resolved
+
+
 def main() -> int:
     import numpy as np
     import torch
@@ -104,10 +144,12 @@ def main() -> int:
     stage11g = json.loads((root / config["stage11g_evidence"]).read_text(encoding="utf-8"))
     validate_contract(config, stage11g)
     cohort_path = root / config["shared_cohort"]
+    mapping_path = root / config["official_mapping"]
     predictions_path = root / config["classification_predictions"]
     checkpoint_path = root / config["localization_checkpoint"]
     for path, expected in (
         (cohort_path, config["shared_cohort_sha256"]),
+        (mapping_path, config["official_mapping_sha256"]),
         (predictions_path, config["classification_predictions_sha256"]),
         (checkpoint_path, config["localization_checkpoint_sha256"]),
     ):
@@ -126,9 +168,19 @@ def main() -> int:
     overlap = [row for row in rows if row[0] in probability_by_image]
     if len(overlap) != config["expected_prediction_overlap_records"]:
         raise RuntimeError("Stage 11H frozen validation-prediction overlap changed.")
+    model_config = json.loads((root / config["localization_config"]).read_text(encoding="utf-8"))
+    mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
+    resolved_overlap = resolve_rsna_image_paths(
+        overlap,
+        mapping,
+        root / model_config["image_root"],
+        identity_field=config["identity_join_field"],
+        filename_field=config["rsna_filename_field"],
+    )
+    if len(resolved_overlap) != len(overlap):
+        raise RuntimeError("Stage 11H must not silently drop unresolved records.")
     if not torch.cuda.is_available():
         raise RuntimeError("Stage 11H validation inference requires CUDA.")
-    model_config = json.loads((root / config["localization_config"]).read_text(encoding="utf-8"))
     payload = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
     model = build_localizer(model_config)
     model.load_state_dict(payload["model_state"])
@@ -143,8 +195,8 @@ def main() -> int:
     reference_localizer_positive_count = 0
     try:
         with temporary.open("w", encoding="utf-8") as handle, torch.inference_mode():
-            for nih_image, sop_uid, patient_id in overlap:
-                image = load_image(root / model_config["image_root"] / f"{sop_uid}.dcm")
+            for nih_image, sop_uid, patient_id, image_path in resolved_overlap:
+                image = load_image(image_path)
                 prediction = model([image.to("cuda")])[0]
                 max_score = (
                     float(prediction["scores"].max().cpu()) if len(prediction["scores"]) else 0.0

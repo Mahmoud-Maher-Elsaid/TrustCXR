@@ -5,3 +5,5 @@ Stage 11H performs validation-only inference for the intersection between the re
 The frozen Stage 10E baseline is used without changing its checkpoint. Its score of 0.5 is a reference point, not an accepted operating threshold. Because Stage 10 found no acceptable operating point, localization is not reliable for contradiction; localization absence cannot negate positive classifier evidence.
 
 Patient-level outputs are hashed and remain ignored locally. The tracked output is aggregate only. The stage cannot access test records, change frozen Stage 9/10 evaluations, train a model, or authorize clinical localization. The maximum support status remains `PARTIALLY_SUPPORTED`.
+
+The official mapping uses `SOPInstanceUID` for the NIH-to-RSNA identity join and `subset_img_id` for the RSNA DICOM filename. Stage 11H resolves both fields explicitly and verifies every evaluation DICOM before loading a model. Missing records cause a hard failure and are never silently dropped.
