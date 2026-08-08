@@ -4,11 +4,14 @@ import json
 import sqlite3
 from pathlib import Path
 
+import numpy as np
 import pytest
 from scripts.fusion.run_stage11j_shared_validation_prediction_coverage import (
     missing_identifiers,
+    promote_compatible_temporary,
     shared_validation_patient_map,
     validate_contract,
+    validate_supplemental_npz,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -57,3 +60,20 @@ def test_stage11j_patient_mapping_reads_validation_only(tmp_path: Path) -> None:
     connection.commit()
     connection.close()
     assert shared_validation_patient_map(database) == {"validation-image": "validation-patient"}
+
+
+def test_stage11j_closes_and_atomically_promotes_compatible_npz(tmp_path: Path) -> None:
+    temporary = tmp_path / "predictions.tmp"
+    output = tmp_path / "predictions.npz"
+    with temporary.open("wb") as handle:
+        np.savez_compressed(
+            handle,
+            targets=np.zeros((1, 14), dtype=np.float32),
+            probabilities=np.full((1, 14), 0.5, dtype=np.float32),
+            identifiers=np.asarray(["image"]),
+            patient_ids=np.asarray(["patient"]),
+        )
+    validate_supplemental_npz(temporary, ["image"], ["patient"])
+    promote_compatible_temporary(temporary, output, ["image"], ["patient"])
+    assert output.is_file()
+    assert not temporary.exists()

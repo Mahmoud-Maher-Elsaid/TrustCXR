@@ -71,6 +71,41 @@ def shared_validation_patient_map(path: Path) -> dict[str, str]:
         connection.close()
 
 
+def validate_supplemental_npz(
+    path: Path,
+    expected_identifiers: list[str],
+    expected_patient_ids: list[str],
+) -> None:
+    import numpy as np
+
+    with np.load(path, allow_pickle=False) as payload:
+        if set(payload.files) != {"targets", "probabilities", "identifiers", "patient_ids"}:
+            raise RuntimeError("Stage 11J supplemental artifact fields are incompatible.")
+        expected_shape = (len(expected_identifiers), 14)
+        if payload["targets"].shape != expected_shape:
+            raise RuntimeError("Stage 11J supplemental target shape is incompatible.")
+        if payload["probabilities"].shape != expected_shape:
+            raise RuntimeError("Stage 11J supplemental probability shape is incompatible.")
+        if list(map(str, payload["identifiers"])) != expected_identifiers:
+            raise RuntimeError("Stage 11J supplemental identifiers are incompatible.")
+        if list(map(str, payload["patient_ids"])) != expected_patient_ids:
+            raise RuntimeError("Stage 11J supplemental patient mapping is incompatible.")
+        if not np.isfinite(payload["targets"]).all():
+            raise RuntimeError("Stage 11J supplemental targets contain non-finite values.")
+        if not np.isfinite(payload["probabilities"]).all():
+            raise RuntimeError("Stage 11J supplemental probabilities contain non-finite values.")
+
+
+def promote_compatible_temporary(
+    temporary: Path,
+    output: Path,
+    expected_identifiers: list[str],
+    expected_patient_ids: list[str],
+) -> None:
+    validate_supplemental_npz(temporary, expected_identifiers, expected_patient_ids)
+    os.replace(temporary, output)
+
+
 def main() -> int:
     import numpy as np
     import torch
@@ -103,8 +138,8 @@ def main() -> int:
     shared = sorted(shared_patient_map)
     if len(shared) != config["expected_shared_validation_records"]:
         raise RuntimeError("Stage 11J shared validation count changed.")
-    existing = np.load(predictions_path, allow_pickle=False)
-    existing_ids = set(map(str, existing["identifiers"]))
+    with np.load(predictions_path, allow_pickle=False) as existing:
+        existing_ids = set(map(str, existing["identifiers"]))
     existing_shared = set(shared) & existing_ids
     missing = missing_identifiers(shared, existing_ids)
     if len(existing_shared) != config["expected_existing_predictions"]:
@@ -116,31 +151,40 @@ def main() -> int:
     validation_ids = set(index.identifiers("validation"))
     if not set(missing).issubset(validation_ids):
         raise RuntimeError("Stage 11J found a requested identifier outside Stage 9 validation.")
-    if not torch.cuda.is_available():
-        raise RuntimeError("Stage 11J validation inference requires CUDA.")
-    inference_contract = {
-        "stage9b_fingerprint": config["stage9b_fingerprint"],
-        "inference": {
-            "batch_size": config["inference"]["batch_size"],
-            "num_workers": config["inference"]["num_workers"],
-            "automatic_mixed_precision": config["inference"]["automatic_mixed_precision"],
-        },
-    }
-    targets, probabilities, elapsed, peak_vram = _infer_variant(
-        "original",
-        checkpoint_path,
-        stage9b,
-        missing,
-        torch.device("cuda"),
-        inference_contract,
-    )
     patient_ids = [shared_patient_map[identifier] for identifier in missing]
     output = root / config["supplemental_output"]
     output.parent.mkdir(parents=True, exist_ok=True)
-    if output.exists():
-        raise RuntimeError(f"Stage 11J output exists and will not be overwritten: {output}")
     temporary = output.with_suffix(".tmp")
-    try:
+    recovered_without_reinference = False
+    inference_performed_this_invocation = False
+    elapsed: float | None = None
+    peak_vram: int | None = None
+    if output.exists():
+        validate_supplemental_npz(output, missing, patient_ids)
+        recovered_without_reinference = True
+    elif temporary.exists():
+        promote_compatible_temporary(temporary, output, missing, patient_ids)
+        recovered_without_reinference = True
+    else:
+        if not torch.cuda.is_available():
+            raise RuntimeError("Stage 11J validation inference requires CUDA.")
+        inference_contract = {
+            "stage9b_fingerprint": config["stage9b_fingerprint"],
+            "inference": {
+                "batch_size": config["inference"]["batch_size"],
+                "num_workers": config["inference"]["num_workers"],
+                "automatic_mixed_precision": config["inference"]["automatic_mixed_precision"],
+            },
+        }
+        targets, probabilities, elapsed, peak_vram = _infer_variant(
+            "original",
+            checkpoint_path,
+            stage9b,
+            missing,
+            torch.device("cuda"),
+            inference_contract,
+        )
+        inference_performed_this_invocation = True
         with temporary.open("wb") as handle:
             np.savez_compressed(
                 handle,
@@ -151,12 +195,7 @@ def main() -> int:
             )
             handle.flush()
             os.fsync(handle.fileno())
-        verified = np.load(temporary, allow_pickle=False)
-        if len(verified["identifiers"]) != len(missing):
-            raise RuntimeError("Stage 11J supplemental artifact verification failed.")
-        os.replace(temporary, output)
-    finally:
-        temporary.unlink(missing_ok=True)
+        promote_compatible_temporary(temporary, output, missing, patient_ids)
     if sha256(predictions_path) != config["frozen_stage9_predictions_sha256"]:
         raise RuntimeError("Stage 11J detected modification of frozen Stage 9 predictions.")
     summary = {
@@ -171,6 +210,8 @@ def main() -> int:
         "supplemental_artifact_sha256": sha256(output),
         "inference_seconds": elapsed,
         "peak_reserved_vram_bytes": peak_vram,
+        "artifact_recovered_without_reinference": recovered_without_reinference,
+        "inference_performed_this_invocation": inference_performed_this_invocation,
         "training_performed": False,
         "threshold_tuning_performed": False,
         "inference_split": "validation",
