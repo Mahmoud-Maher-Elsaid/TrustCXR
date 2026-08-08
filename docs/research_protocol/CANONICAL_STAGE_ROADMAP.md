@@ -37,11 +37,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 11H | `840acd5` and `eb557d0` plus result closure | Hold for Stage 11I coverage decision | Validation-only record-level fusion on frozen-prediction overlap | Coverage-limited fusion evaluation | Original Stage 8 | Complete with severe limitation | Only 19/108 records covered; no classifier-positive records | 11I |
 | 11I | `3190854` plus result closure | Hold for Stage 11J shared-validation coverage preparation | No-inference fusion coverage and informativeness decision | Fusion evidence sufficiency gate | Original Stage 8 | Complete with hold | Only 19/108 covered and zero classifier positives | 11J |
 | 11J | `9df23d8` and `2c18f3e` plus result closure | Go for Stage 11K complete-coverage fusion evaluation preparation | Frozen Stage 9 inference for exactly 89 missing shared-validation records | Validation prediction coverage repair | Original Stage 8 | Complete | 108/108 covered; frozen prediction artifact unchanged | 11K |
-| 11K | Pending | Go for Stage 11L fusion acceptance decision if evaluation passes | Complete-coverage validation-only classifier/localizer fusion | Structured evidence evaluation | Original Stage 8 | Ready to run | Evaluate 108 shared validation records without tuning or test access | 11L or hold |
+| 11K | `823bcff` and `508a729` plus result closure | Go for Stage 11L fusion acceptance decision | Complete-coverage validation-only classifier/localizer fusion | Structured evidence evaluation | Original Stage 8 | Complete with adverse evidence | 106 uncertain, 2 unlocalized, and no reliable positive support | 11L |
+| 11L | Pending | Go for Stage 12A gap audit if uncertainty-only acceptance passes | No-inference research fusion acceptance decision | Fusion safety closure | Original Stage 8 | Ready to run | Accept uncertainty annotation only; prohibit contradiction and clinical claims | 12A or hold |
 
 ## Numbering rule
 
-Stage 11K is the next valid identifier. It evaluates fusion across all 108 repaired shared validation records using immutable Stage 9 predictions and the frozen Stage 10 baseline. The localization score remains reference-only and test data stays locked.
+Stage 11L is the next valid identifier. It decides whether the complete but adverse fusion evidence supports research use. The only defensible acceptance is uncertainty annotation with no classifier-contradiction authority or clinical localization claim.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

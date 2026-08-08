@@ -1,0 +1,22 @@
+{
+  "stage": "11L",
+  "stage11k_evidence": "reports/stage11/stage11k_complete_coverage_fusion_evaluation_summary.json",
+  "expected_shared_validation_records": 108,
+  "expected_evidence_status_counts": {
+    "UNCERTAIN": 106,
+    "UNLOCALIZED": 2
+  },
+  "reliable_positive_support_statuses": ["SUPPORTED", "PARTIALLY_SUPPORTED"],
+  "required_reliable_positive_support_records": 1,
+  "semantic_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "maximum_support_status": "PARTIALLY_SUPPORTED",
+  "localization_operating_point_must_be_accepted_for_contradiction": true,
+  "research_uncertainty_annotation_permitted": true,
+  "clinical_localization_claim_permitted": false,
+  "training_permitted": false,
+  "inference_permitted": false,
+  "threshold_tuning_permitted": false,
+  "stage9_stage10_frozen_evaluations_may_be_modified": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0
+}

@@ -1,0 +1,28 @@
+{
+  "classifier_positive_records": 2,
+  "coverage_fraction": 1.0,
+  "evaluated_records": 108,
+  "evidence_status_counts": {
+    "UNCERTAIN": 106,
+    "UNLOCALIZED": 2
+  },
+  "gate": "GO_FOR_STAGE_11L_FUSION_ACCEPTANCE_DECISION",
+  "inference_split": "validation",
+  "localization_operating_point_accepted": false,
+  "localization_reference_score": 0.5,
+  "localization_reliable_for_contradiction": false,
+  "locked_test_records_accessed": 0,
+  "maximum_support_status": "PARTIALLY_SUPPORTED",
+  "patient_reassignments": 0,
+  "patient_split_violations": 0,
+  "patient_values_disclosed": false,
+  "reference_localizer_positive_records": 11,
+  "semantic_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "shared_validation_records": 108,
+  "stage": "11K",
+  "stage9_stage10_frozen_evaluations_modified": false,
+  "status": "COMPLETED_COMPLETE_COVERAGE_FUSION_EVALUATION",
+  "test_predictions_generated": false,
+  "threshold_tuning_performed": false,
+  "training_performed": false
+}
