@@ -1,0 +1,15 @@
+{
+  "stage": "12G",
+  "status": "COMPLETED_ADDITIONAL_DEVELOPMENT_EVIDENCE_SEARCH",
+  "protocol_version": "1.0.0",
+  "candidate_count": 0,
+  "candidate_slots": [],
+  "unsupported_slots_promoted": 0,
+  "other_view_candidates_found": 0,
+  "repeat_search_without_new_governed_source_justified": false,
+  "labels_approved": 0,
+  "locked_test_records_accessed": 0,
+  "training_performed": false,
+  "inference_performed": false,
+  "frozen_results_modified": false
+}

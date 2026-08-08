@@ -1,0 +1,14 @@
+{
+  "stage": "12H",
+  "protocol_version": "1.0.0",
+  "stage12f_evidence": "reports/stage12/stage12f_partial_scope_evidence_freeze_summary.json",
+  "stage12g_evidence": "reports/stage12/stage12g_additional_development_evidence_search_summary.json",
+  "required_unsupported_rejection_slots": 9,
+  "required_missing_view_classes": ["OTHER"],
+  "approved_unknown_view_records": 17,
+  "repeat_search_without_new_governed_source_permitted": false,
+  "complete_stage12_training_permitted": false,
+  "device_localization_permitted": false,
+  "locked_test_access_permitted": false,
+  "frozen_results_may_be_modified": false
+}
