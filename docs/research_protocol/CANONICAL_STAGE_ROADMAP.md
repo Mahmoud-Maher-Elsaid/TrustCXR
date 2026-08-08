@@ -38,11 +38,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 11I | `3190854` plus result closure | Hold for Stage 11J shared-validation coverage preparation | No-inference fusion coverage and informativeness decision | Fusion evidence sufficiency gate | Original Stage 8 | Complete with hold | Only 19/108 covered and zero classifier positives | 11J |
 | 11J | `9df23d8` and `2c18f3e` plus result closure | Go for Stage 11K complete-coverage fusion evaluation preparation | Frozen Stage 9 inference for exactly 89 missing shared-validation records | Validation prediction coverage repair | Original Stage 8 | Complete | 108/108 covered; frozen prediction artifact unchanged | 11K |
 | 11K | `823bcff` and `508a729` plus result closure | Go for Stage 11L fusion acceptance decision | Complete-coverage validation-only classifier/localizer fusion | Structured evidence evaluation | Original Stage 8 | Complete with adverse evidence | 106 uncertain, 2 unlocalized, and no reliable positive support | 11L |
-| 11L | Pending | Go for Stage 12A gap audit if uncertainty-only acceptance passes | No-inference research fusion acceptance decision | Fusion safety closure | Original Stage 8 | Ready to run | Accept uncertainty annotation only; prohibit contradiction and clinical claims | 12A or hold |
+| 11L | `7cd920f` plus result closure | Go for Stage 12A quality/view/device gap audit | No-inference research fusion acceptance decision | Fusion safety closure | Original Stage 8 | Complete with mandatory limitations | Uncertainty annotation only; no reliable support or contradiction authority | 12A |
+| 12A | Pending | Hold for Stage 12B data readiness unless all capabilities exist | Metadata-only Stage 5 reuse and quality/view/device gap audit | Input safety capability readiness | Original Stage 9 | Ready to run | Audit OTHER/UNKNOWN, device evidence, clinical-quality labels, and stop behavior | 12B or hold |
 
 ## Numbering rule
 
-Stage 11L is the next valid identifier. It decides whether the complete but adverse fusion evidence supports research use. The only defensible acceptance is uncertainty annotation with no classifier-contradiction authority or clinical localization claim.
+Stage 12A is the next valid identifier. It audits reuse of the completed Stage 5 AP/PA/LATERAL and technical-quality proxy evidence while identifying missing expanded-view, device, clinical-quality, and bad-input stopping capabilities without retraining or inference.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

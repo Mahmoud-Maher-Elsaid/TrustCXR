@@ -1,0 +1,28 @@
+{
+  "clinical_localization_claim_permitted": false,
+  "decision": "ACCEPT_RESEARCH_FUSION_AS_UNCERTAINTY_ANNOTATION_ONLY",
+  "evidence_status_counts": {
+    "UNCERTAIN": 106,
+    "UNLOCALIZED": 2
+  },
+  "gate": "GO_FOR_STAGE_12A_QUALITY_VIEW_DEVICE_GAP_AUDIT_PREPARATION",
+  "inference_performed": false,
+  "localization_operating_point_accepted": false,
+  "localizer_may_contradict_classifier": false,
+  "locked_test_records_accessed": 0,
+  "maximum_support_status": "PARTIALLY_SUPPORTED",
+  "patient_reassignments": 0,
+  "patient_split_violations": 0,
+  "patient_values_disclosed": false,
+  "reliable_positive_support_demonstrated": false,
+  "reliable_positive_support_records": 0,
+  "research_uncertainty_annotation_permitted": true,
+  "semantic_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "shared_validation_records": 108,
+  "stage": "11L",
+  "stage9_stage10_frozen_evaluations_modified": false,
+  "status": "FINALIZED_FUSION_ACCEPTANCE_DECISION",
+  "test_predictions_generated": false,
+  "threshold_tuning_performed": false,
+  "training_performed": false
+}

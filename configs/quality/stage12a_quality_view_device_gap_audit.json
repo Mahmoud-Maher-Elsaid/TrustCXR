@@ -1,0 +1,16 @@
+{
+  "stage": "12A",
+  "stage11_evidence": "reports/stage11/stage11l_fusion_acceptance_decision_summary.json",
+  "stage5_config": "configs/training/stage5_quality_view.json",
+  "stage5_evidence": "reports/stage5/stage5_summary.json",
+  "required_view_classes": ["AP", "PA", "LATERAL", "OTHER", "UNKNOWN"],
+  "required_quality_scope": "DETERMINISTIC_TECHNICAL_PROXY_NOT_CLINICAL_GROUND_TRUTH",
+  "device_output_must_be_independent": true,
+  "bad_input_must_stop_downstream_inference": true,
+  "stage5_retraining_permitted": false,
+  "training_permitted": false,
+  "inference_permitted": false,
+  "frozen_stage9_stage10_stage11_results_may_be_modified": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0
+}
