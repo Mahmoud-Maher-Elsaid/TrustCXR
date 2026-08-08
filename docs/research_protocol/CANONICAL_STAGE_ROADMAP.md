@@ -39,11 +39,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 11J | `9df23d8` and `2c18f3e` plus result closure | Go for Stage 11K complete-coverage fusion evaluation preparation | Frozen Stage 9 inference for exactly 89 missing shared-validation records | Validation prediction coverage repair | Original Stage 8 | Complete | 108/108 covered; frozen prediction artifact unchanged | 11K |
 | 11K | `823bcff` and `508a729` plus result closure | Go for Stage 11L fusion acceptance decision | Complete-coverage validation-only classifier/localizer fusion | Structured evidence evaluation | Original Stage 8 | Complete with adverse evidence | 106 uncertain, 2 unlocalized, and no reliable positive support | 11L |
 | 11L | `7cd920f` plus result closure | Go for Stage 12A quality/view/device gap audit | No-inference research fusion acceptance decision | Fusion safety closure | Original Stage 8 | Complete with mandatory limitations | Uncertainty annotation only; no reliable support or contradiction authority | 12A |
-| 12A | Pending | Hold for Stage 12B data readiness unless all capabilities exist | Metadata-only Stage 5 reuse and quality/view/device gap audit | Input safety capability readiness | Original Stage 9 | Ready to run | Audit OTHER/UNKNOWN, device evidence, clinical-quality labels, and stop behavior | 12B or hold |
+| 12A | `0dcfa32` plus result closure | Hold for Stage 12B data readiness | Metadata-only Stage 5 reuse and quality/view/device gap audit | Input safety capability readiness | Original Stage 9 | Complete with hold | OTHER/UNKNOWN, device evidence, clinical-quality labels, and stop behavior remain incomplete | 12B |
+| 12B | Pending | Hold for annotation and device-scope adjudication unless evidence is ready | Metadata-only dataset readiness audit | Expanded-view, device, and rejection data readiness | Original Stage 9 | Ready to run | No invented labels, retraining, inference, or locked-test access | 12C or hold |
 
 ## Numbering rule
 
-Stage 12A is the next valid identifier. It audits reuse of the completed Stage 5 AP/PA/LATERAL and technical-quality proxy evidence while identifying missing expanded-view, device, clinical-quality, and bad-input stopping capabilities without retraining or inference.
+Stage 12B is the next valid identifier. It audits governed metadata for explicit expanded-view labels, independent device-presence or localization annotations, and the minimum evidence needed for downstream input rejection without retraining or inference.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 

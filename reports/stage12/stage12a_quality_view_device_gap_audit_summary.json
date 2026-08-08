@@ -1,0 +1,42 @@
+{
+  "bad_input_can_stop_downstream_inference": false,
+  "decision": "HOLD_FOR_DEVICE_EXPANDED_VIEW_AND_INPUT_REJECTION_DATA_READINESS",
+  "device_output_available": false,
+  "device_output_independent": false,
+  "existing_stage5_model": "EfficientNet-B0",
+  "existing_view_classes": [
+    "AP",
+    "PA",
+    "LATERAL"
+  ],
+  "frozen_stage9_stage10_stage11_results_modified": false,
+  "gaps": {
+    "bad_input_downstream_stop_contract": true,
+    "clinically_annotated_quality_ground_truth": true,
+    "device_localization_annotations": true,
+    "independent_device_output": true,
+    "other_view_class": true,
+    "unknown_view_class": true
+  },
+  "gate": "HOLD_FOR_STAGE_12B_QUALITY_VIEW_DEVICE_DATA_READINESS",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "missing_view_classes": [
+    "OTHER",
+    "UNKNOWN"
+  ],
+  "patient_leakage_violations": 0,
+  "quality_is_clinical_ground_truth": false,
+  "quality_output_available": true,
+  "quality_scope": "DETERMINISTIC_TECHNICAL_PROXY_NOT_CLINICAL_GROUND_TRUTH",
+  "stage": "12A",
+  "stage11_localizer_may_contradict_classifier": false,
+  "stage11_maximum_support_status": "PARTIALLY_SUPPORTED",
+  "stage11_uncertainty_only_policy_preserved": true,
+  "stage5_retraining_authorized": false,
+  "stage5_test_balanced_accuracy": 0.9838790646051311,
+  "stage5_test_macro_f1": 0.9861325866206537,
+  "status": "COMPLETED_QUALITY_VIEW_DEVICE_GAP_AUDIT",
+  "test_predictions_generated": false,
+  "training_performed": false
+}

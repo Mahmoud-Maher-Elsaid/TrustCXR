@@ -1,0 +1,45 @@
+{
+  "stage": "12B",
+  "stage12a_evidence": "reports/stage12/stage12a_quality_view_device_gap_audit_summary.json",
+  "adapter_registry": "configs/data/concrete_adapter_registry.json",
+  "training_selection": "configs/data/final_training_selection.json",
+  "required_view_classes": ["AP", "PA", "LATERAL", "OTHER", "UNKNOWN"],
+  "dataset_evidence": {
+    "chexpert_small": {
+      "approved_for_existing_view_task": true,
+      "explicit_view_labels": ["AP", "PA", "LATERAL"],
+      "explicit_other_label": false,
+      "explicit_unknown_label": false,
+      "device_presence_label": "Support Devices",
+      "device_presence_scope": "IMAGE_LEVEL",
+      "device_localization_annotations": false
+    },
+    "nih_chestxray14": {
+      "explicit_other_label": false,
+      "explicit_unknown_label": false,
+      "device_presence_label": null,
+      "device_localization_annotations": false
+    },
+    "rsna_pneumonia": {
+      "explicit_other_label": false,
+      "explicit_unknown_label": false,
+      "device_presence_label": null,
+      "device_localization_annotations": false
+    }
+  },
+  "minimum_bad_input_stop_evidence": [
+    "versioned mutually exclusive rejection reason taxonomy",
+    "approved labels for corrupt input, unsupported format, non-chest input, inadequate quality, unsupported view, and incomplete anatomy",
+    "patient-safe train and validation partitions for learned components",
+    "validation-only thresholds frozen before locked-test evaluation",
+    "per-reason sensitivity and false-rejection metrics with confidence intervals",
+    "explicit downstream contract proving rejected inputs cannot reach disease inference",
+    "unit and integration tests for every rejection reason and safe fallback"
+  ],
+  "stage5_retraining_permitted": false,
+  "training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0,
+  "frozen_stage5_stage9_stage10_stage11_results_may_be_modified": false
+}
