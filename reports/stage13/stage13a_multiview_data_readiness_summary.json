@@ -1,0 +1,30 @@
+{
+  "decision": "HOLD_FOR_STUDY_LEVEL_IDENTITY_AND_PAIRING",
+  "development_patients": 58217,
+  "development_records": 200316,
+  "duplicate_record_violations": 0,
+  "frozen_results_modified": false,
+  "gate": "HOLD_FOR_STAGE_13B_STUDY_IDENTITY_RESOLUTION",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "other_view_withheld": true,
+  "patient_identity_not_used_as_study_identity": true,
+  "patient_leakage_violations": 0,
+  "patients_with_multiple_records": 37698,
+  "stage": "13A",
+  "stage12_limitations_preserved": true,
+  "status": "COMPLETED_MULTIVIEW_DATA_READINESS_AUDIT",
+  "study_identity_available": false,
+  "study_identity_fields_present": [],
+  "training_performed": false,
+  "view_counts": {
+    "train/AP": 128968,
+    "train/LATERAL": 25896,
+    "train/PA": 23536,
+    "train/UNKNOWN": 16,
+    "validation/AP": 15690,
+    "validation/LATERAL": 3257,
+    "validation/PA": 2952,
+    "validation/UNKNOWN": 1
+  }
+}

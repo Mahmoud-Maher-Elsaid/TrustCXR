@@ -1,0 +1,16 @@
+{
+  "stage": "13B",
+  "stage13a_evidence": "reports/stage13/stage13a_multiview_data_readiness_summary.json",
+  "development_view_manifest": "artifacts/stage12/annotation_cohort/expanded_view_annotations.csv",
+  "chexpert_root": "TrustCXR-Data/07_CheXpert_Small",
+  "chexpert_csv_patterns": ["**/train.csv", "**/valid.csv"],
+  "output_index": "artifacts/stage13/stage13b_study_identity.sqlite",
+  "allowed_splits": ["train", "validation"],
+  "study_path_pattern": "(?i)(patient[0-9]+)/(study[0-9]+)",
+  "patient_identity_as_study_identity_permitted": false,
+  "heuristic_view_pairing_permitted": false,
+  "image_access_permitted": false,
+  "training_permitted": false,
+  "locked_test_access_permitted": false,
+  "frozen_results_may_be_modified": false
+}
