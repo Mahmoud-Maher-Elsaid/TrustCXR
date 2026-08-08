@@ -1,0 +1,20 @@
+{
+  "cross_dataset_record_level_fusion_permitted": false,
+  "decision": "HOLD_FOR_SHARED_COHORT_SPLIT_REPAIR",
+  "full_project_split_compatibility_verified": false,
+  "gate": "HOLD_FOR_STAGE_11E_SHARED_COHORT_SPLIT_REPAIR",
+  "locked_test_records_accessed": 0,
+  "matching_split_images": 15190,
+  "patient_split_violations": 2929,
+  "patient_values_disclosed": false,
+  "permitted_evidence_status": "PARTIALLY_SUPPORTED",
+  "semantic_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "shared_original_nih_patients": 9010,
+  "shared_train_validation_images": 20090,
+  "split_mismatch_images": 4900,
+  "stage": "11D",
+  "status": "COMPLETED_OFFICIAL_IDENTITY_MAPPING_AUDIT",
+  "test_predictions_generated": false,
+  "train_validation_split_compatible": false,
+  "training_performed": false
+}

@@ -30,11 +30,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 11A | Pending closure commit | Go for Stage 11B fusion data-contract validation | No-inference structured evidence-fusion contract | Evidence status and disagreement semantics | Original Stage 8 | Complete | Shared cohort remains required; cross-dataset record-level fusion remains prohibited | 11B |
 | 11B | Pending closure commit | Hold for Stage 11C shared-cohort and label harmonization | Metadata-only fusion data-contract validation | Shared-cohort, identity, split, and label compatibility | Original Stage 8 | Complete with hold | No shared identity map; Pneumonia-versus-Lung Opacity semantics unresolved | 11C |
 | 11C | Pending closure commit | Go for Stage 11D official identity-mapping audit | Conservative label adjudication and official mapping validation | Shared-cohort resolution and label harmonization | Original Stage 8 | Complete with identity scope limitation | Image identity proven; patient grouping and split compatibility remain unproven | 11D |
-| 11D | Pending | Determined by train/validation identity audit | Metadata-only official identity and split compatibility audit | Shared patient grouping and split safety | Original Stage 8 | Ready to run | Join official mapping to Stage 9/10 train-validation metadata without querying test rows | 11E or hold |
+| 11D | `00c4bad` plus result closure | Hold for Stage 11E split repair | Metadata-only official identity and split compatibility audit | Shared patient grouping and split safety | Original Stage 8 | Complete with hold | 2,929 original-NIH patients have observed train/validation split conflicts | 11E |
+| 11E | Pending | Go for Stage 11F shared-cohort fusion validation if repair passes | Conservative exclusion of conflict-affected patients without reassignment | Patient-safe train/validation fusion cohort | Original Stage 8 | Ready to run | Execute metadata-only repair; locked test remains untouched | 11F or hold |
 
 ## Numbering rule
 
-Stage 11D is the next valid identifier. It performs a metadata-only join of the official RSNA-to-NIH mapping with Stage 9 and Stage 10 train/validation records. It detects image split mismatches and original-NIH patient grouping violations without emitting identifiers. It never queries locked test rows, performs no training or inference, and cannot authorize full-project record-level fusion.
+Stage 11E is the next valid identifier. It excludes every original NIH patient involved in an observed Stage 9/Stage 10 train-validation conflict, preserving historical assignments rather than reassigning records. It writes identity-bearing rows only to an ignored SQLite artifact and cannot authorize locked-test fusion.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 
