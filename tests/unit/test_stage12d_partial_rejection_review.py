@@ -23,8 +23,8 @@ def test_partial_annotation_state_is_not_promoted() -> None:
         (root / "reports/stage12/stage12d_partial_annotation_state.json").read_text()
     )
     assert state["total_input_rejection_slots"] == 12
-    assert state["approved_slots"] == 2
-    assert state["incomplete_no_defensible_example_slots"] == 10
+    assert state["approved_slots"] == 3
+    assert state["incomplete_no_defensible_example_slots"] == 9
     assert state["protocol_version"] == "1.0.0"
     assert state["annotations_invented"] is False
     assert state["locked_test_records_accessed"] == 0

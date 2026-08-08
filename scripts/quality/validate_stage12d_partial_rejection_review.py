@@ -28,13 +28,14 @@ def validate(path: Path) -> dict[str, object]:
     ]
     approved_pairs = {(row["split"], row["rejection_class"]) for row in approved}
     required_approved = {
+        ("train", "INCOMPLETE_ANATOMY"),
         ("validation", "INCOMPLETE_ANATOMY"),
         ("validation", "INADEQUATE_QUALITY"),
     }
     if approved_pairs != required_approved:
-        errors.append("Only the two defensible validation slots may be approved.")
-    if len(incomplete) != 10:
-        errors.append("Exactly ten slots must remain explicitly incomplete.")
+        errors.append("Only the three evidence-adjudicated slots may be approved.")
+    if len(incomplete) != 9:
+        errors.append("Exactly nine slots must remain explicitly incomplete.")
     for row in approved:
         if (
             not row["image_path_or_identifier"]
