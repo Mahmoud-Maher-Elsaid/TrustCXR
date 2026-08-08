@@ -1,0 +1,30 @@
+{
+  "duplicate_views_selected": 0,
+  "exact_pairs": 26657,
+  "frozen_results_modified": false,
+  "gate": "GO_FOR_STAGE_13D_MULTIVIEW_BASELINE_PREPARATION",
+  "heuristic_pairs_created": 0,
+  "inference_performed": false,
+  "local_pair_index": "F:\\AI\\TrustCXR\\artifacts\\stage13\\stage13c_multiview_pairs.sqlite",
+  "locked_test_records_accessed": 0,
+  "other_view_withheld": true,
+  "pair_split_counts": {
+    "train": 23701,
+    "validation": 2956
+  },
+  "patient_leakage_violations": 0,
+  "record_reuse_violations": 0,
+  "source_records": 200316,
+  "source_studies": 168136,
+  "stage": "13C",
+  "status": "PASSED_PATIENT_SAFE_MULTIVIEW_PAIR_DESIGN",
+  "study_disposition_counts": {
+    "EXACT_FRONTAL_LATERAL_PAIR": 26657,
+    "SINGLE_FRONTAL": 137573,
+    "SINGLE_LATERAL": 12,
+    "WITHHELD_DUPLICATE_OR_AMBIGUOUS_VIEWS": 3877,
+    "WITHHELD_UNKNOWN_VIEW_PRESENT": 17
+  },
+  "training_performed": false,
+  "unknown_views_paired": 0
+}
