@@ -1,0 +1,20 @@
+{
+  "stage": "12G",
+  "protocol_version": "1.0.0",
+  "stage12f_evidence": "reports/stage12/stage12f_partial_scope_evidence_freeze_summary.json",
+  "output_root": "artifacts/stage12/additional_evidence_search",
+  "allowed_datasets": ["chexpert_small", "nih_chestxray14", "rsna_pneumonia"],
+  "allowed_splits": ["train", "validation"],
+  "chexpert_train_pixel_skip": 8000,
+  "chexpert_train_pixel_budget": 5000,
+  "rsna_mapping_skip": 5000,
+  "rsna_header_budget": 5000,
+  "other_view_requires_positive_governed_metadata": true,
+  "automatic_approval_permitted": false,
+  "synthetic_examples_permitted": false,
+  "deliberate_corruption_permitted": false,
+  "complete_model_training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "frozen_results_may_be_modified": false
+}

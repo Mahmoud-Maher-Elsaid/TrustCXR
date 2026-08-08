@@ -113,11 +113,13 @@ def scan_chexpert(
     missing: set[tuple[str, str]],
     rows: list[dict[str, str]],
     seen: set[tuple[str, str, str]],
+    pixel_skip_train: int = 5000,
+    pixel_budget_train: int = 3000,
 ) -> dict[str, Any]:
     dataset = root / "TrustCXR-Data/07_CheXpert_Small"
     counts: Counter[str] = Counter()
-    pixel_budget = {"train": 3000, "validation": 0}
-    pixel_skip = {"train": 5000, "validation": 0}
+    pixel_budget = {"train": pixel_budget_train, "validation": 0}
+    pixel_skip = {"train": pixel_skip_train, "validation": 0}
     eligible_seen = Counter()
     pixel_seen = Counter()
     for metadata_path in sorted(dataset.rglob("*.csv")):
@@ -276,6 +278,8 @@ def scan_rsna(
     missing: set[tuple[str, str]],
     rows: list[dict[str, str]],
     seen: set[tuple[str, str, str]],
+    mapping_skip: int = 0,
+    header_budget: int = 5000,
 ) -> dict[str, Any]:
     image_root = (
         root
@@ -297,7 +301,7 @@ def scan_rsna(
         / "pneumonia-challenge-dataset-mappings_2018.json"
     )
     mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
-    header_budget = 5000
+    eligible_seen = 0
     for item in mapping:
         if counts["headers_screened"] >= header_budget:
             break
@@ -305,6 +309,9 @@ def scan_rsna(
         image_hash = hashlib.sha256(f"RSNA_Pneumonia:image:{sop_uid}".encode()).hexdigest()
         matched = split_rows.get(image_hash)
         if matched is None:
+            continue
+        eligible_seen += 1
+        if eligible_seen <= mapping_skip:
             continue
         path = image_root / f"{item['subset_img_id']}.dcm"
         if not path.is_file():

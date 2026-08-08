@@ -1,0 +1,70 @@
+{
+  "annotations_invented": false,
+  "approved_rejection_rows": 3,
+  "complete_model_training_authorized": false,
+  "decision": "PRESERVE_PARTIAL_EVIDENCE_AND_WITHHOLD_UNSUPPORTED_CAPABILITIES",
+  "device_counts": {
+    "train/0": 5011,
+    "train/1": 92515,
+    "train/UNCERTAIN": 890,
+    "validation/0": 575,
+    "validation/1": 11259,
+    "validation/UNCERTAIN": 103
+  },
+  "device_presence_records": 110353,
+  "device_scope": "IMAGE_LEVEL_PRESENCE_ONLY_NO_LOCALIZATION",
+  "frozen_results_modified": false,
+  "gate": "HOLD_FOR_ADDITIONAL_GENUINE_DEVELOPMENT_EVIDENCE",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "missing_view_classes": [
+    "OTHER"
+  ],
+  "protocol_version": "1.0.0",
+  "rejection_classes_with_both_splits": [
+    "INCOMPLETE_ANATOMY"
+  ],
+  "rejection_counts": {
+    "INADEQUATE_QUALITY": {
+      "validation": 1
+    },
+    "INCOMPLETE_ANATOMY": {
+      "train": 1,
+      "validation": 1
+    }
+  },
+  "stage": "12F",
+  "status": "PASSED_PARTIAL_SCOPE_EVIDENCE_FREEZE",
+  "training_performed": false,
+  "unsupported_slot_count": 9,
+  "unsupported_slots": [
+    "train/CORRUPT_INPUT",
+    "train/INADEQUATE_QUALITY",
+    "train/NON_CHEST_INPUT",
+    "train/UNSUPPORTED_FORMAT",
+    "train/UNSUPPORTED_VIEW",
+    "validation/CORRUPT_INPUT",
+    "validation/NON_CHEST_INPUT",
+    "validation/UNSUPPORTED_FORMAT",
+    "validation/UNSUPPORTED_VIEW"
+  ],
+  "view_counts": {
+    "AP": {
+      "train": 128968,
+      "validation": 15690
+    },
+    "LATERAL": {
+      "train": 25896,
+      "validation": 3257
+    },
+    "PA": {
+      "train": 23536,
+      "validation": 2952
+    },
+    "UNKNOWN": {
+      "train": 16,
+      "validation": 1
+    }
+  },
+  "view_records": 200316
+}
