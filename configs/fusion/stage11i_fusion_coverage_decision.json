@@ -1,0 +1,18 @@
+{
+  "stage": "11I",
+  "stage11h_evidence": "reports/stage11/stage11h_record_level_fusion_evaluation_summary.json",
+  "required_shared_validation_coverage_fraction": 1.0,
+  "minimum_classifier_positive_records_for_support_assessment": 1,
+  "require_accepted_localization_operating_point_for_reliable_contradiction": true,
+  "semantic_relation": "RSNA_POSSIBLE_PNEUMONIA_OPACITY_MAY_PARTIALLY_SUPPORT_NIH_PNEUMONIA",
+  "maximum_support_status": "PARTIALLY_SUPPORTED",
+  "incomplete_coverage_action": "HOLD_FOR_SHARED_VALIDATION_PREDICTION_COVERAGE",
+  "zero_classifier_positive_action": "HOLD_SUPPORT_ASSESSMENT_AS_UNRESOLVED",
+  "unaccepted_localization_operating_point_action": "KEEP_LOCALIZATION_UNRELIABLE_FOR_CONTRADICTION",
+  "new_stage9_predictions_permitted": false,
+  "training_permitted": false,
+  "inference_permitted": false,
+  "stage9_stage10_frozen_evaluations_may_be_modified": false,
+  "locked_test_access_permitted": false,
+  "locked_test_records_accessed": 0
+}

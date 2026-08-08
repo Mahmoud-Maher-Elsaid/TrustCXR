@@ -34,11 +34,12 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 11E | `7b69941` plus result closure | Go for Stage 11F shared-cohort fusion validation | Conservative exclusion of conflict-affected patients without reassignment | Patient-safe train/validation fusion cohort | Original Stage 8 | Complete | 10,049 images from 6,081 patients retained with zero split violations | 11F |
 | 11F | `9209e52` plus result closure | Go for Stage 11G fusion implementation preparation | Metadata-only repaired-cohort integrity and evidence-policy validation | Shared-cohort fusion readiness | Original Stage 8 | Complete | Zero leakage and duplicate mapped identities; test remains locked | 11G |
 | 11G | `d050576` plus result closure | Go for Stage 11H record-level fusion evaluation preparation | Deterministic evidence-rule implementation and contract-case validation | Structured evidence fusion | Original Stage 8 | Complete | Five contract cases passed; maximum support remains partial | 11H |
-| 11H | Pending | Hold for Stage 11I coverage decision after evaluation | Validation-only record-level fusion on frozen-prediction overlap | Coverage-limited fusion evaluation | Original Stage 8 | Ready to run | Evaluate 19/108 shared validation records; test remains locked | 11I or hold |
+| 11H | `840acd5` and `eb557d0` plus result closure | Hold for Stage 11I coverage decision | Validation-only record-level fusion on frozen-prediction overlap | Coverage-limited fusion evaluation | Original Stage 8 | Complete with severe limitation | Only 19/108 records covered; no classifier-positive records | 11I |
+| 11I | Pending | Hold for Stage 11J coverage preparation unless coverage is sufficient | No-inference fusion coverage and informativeness decision | Fusion evidence sufficiency gate | Original Stage 8 | Ready to run | Decide without generating new predictions or accessing test | 11J or hold |
 
 ## Numbering rule
 
-Stage 11H is the next valid identifier. It performs validation-only record-level fusion on the 19 records shared by the repaired validation cohort and frozen Stage 9 validation predictions. It preserves the unaccepted Stage 10 operating-point limitation and cannot access test data.
+Stage 11I is the next valid identifier. It decides whether the 19/108 validation overlap is sufficient for a fusion conclusion without generating predictions, retraining models, changing frozen evaluations, or accessing test data.
 
 The complete mapping of all original roadmap stages 0–24 is maintained separately in `docs/research_protocol/CANONICAL_COMPLETE_STAGE_MAP.md`. It does not rename or replace the identifiers in this historical roadmap.
 
