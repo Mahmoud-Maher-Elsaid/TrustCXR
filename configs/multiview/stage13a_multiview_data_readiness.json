@@ -1,0 +1,17 @@
+{
+  "stage": "13A",
+  "capability": "MULTI_VIEW_FUSION_DATA_READINESS",
+  "stage12_freeze": "reports/stage12/stage12h_partial_scope_capability_freeze_summary.json",
+  "development_view_manifest": "artifacts/stage12/annotation_cohort/expanded_view_annotations.csv",
+  "allowed_splits": ["train", "validation"],
+  "supported_view_labels": ["AP", "PA", "LATERAL", "UNKNOWN"],
+  "withheld_view_labels": ["OTHER"],
+  "required_study_identity_fields": ["study_key_hash", "study_id_hash"],
+  "patient_identity_field": "patient_key_hash",
+  "record_identity_field": "record_key_hash",
+  "study_grouping_from_patient_identity_alone_permitted": false,
+  "training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "frozen_stage5_stage9_stage10_stage11_stage12_results_may_be_modified": false
+}

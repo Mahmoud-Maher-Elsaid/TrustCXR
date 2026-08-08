@@ -1,0 +1,36 @@
+{
+  "annotations_invented": false,
+  "approved_unknown_view_records": 17,
+  "complete_stage12_training_authorized": false,
+  "decision": "ACCEPT_LIMITED_STAGE12_SCOPE_WITH_MANDATORY_WITHHOLDING",
+  "frozen_capabilities": {
+    "device": "IMAGE_LEVEL_PRESENCE_EVIDENCE_ONLY_MODEL_NOT_TRAINED",
+    "device_localization": "PROHIBITED_NO_LOCALIZATION_ANNOTATIONS",
+    "input_rejection": "CONTRACT_AND_PARTIAL_EVIDENCE_ONLY_MODEL_NOT_TRAINED",
+    "other_view": "WITHHELD_NO_POSITIVE_TRUSTED_METADATA",
+    "quality": "STAGE5_DETERMINISTIC_TECHNICAL_PROXY_NOT_CLINICAL_QUALITY",
+    "unknown_view": "ANNOTATION_EVIDENCE_APPROVED_NOT_A_TRAINED_MODEL_CAPABILITY",
+    "view": "STAGE5_AP_PA_LATERAL_ONLY"
+  },
+  "frozen_results_modified": false,
+  "gate": "GO_FOR_NEXT_CANONICAL_STAGE_DATA_READINESS_WITH_STAGE12_LIMITATIONS",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "protocol_version": "1.0.0",
+  "repeat_search_requires_new_governed_source": true,
+  "stage": "12H",
+  "status": "PASSED_PARTIAL_SCOPE_CAPABILITY_FREEZE",
+  "training_performed": false,
+  "unsupported_rejection_slot_count": 9,
+  "unsupported_rejection_slots": [
+    "train/CORRUPT_INPUT",
+    "train/INADEQUATE_QUALITY",
+    "train/NON_CHEST_INPUT",
+    "train/UNSUPPORTED_FORMAT",
+    "train/UNSUPPORTED_VIEW",
+    "validation/CORRUPT_INPUT",
+    "validation/NON_CHEST_INPUT",
+    "validation/UNSUPPORTED_FORMAT",
+    "validation/UNSUPPORTED_VIEW"
+  ]
+}
