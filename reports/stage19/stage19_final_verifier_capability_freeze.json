@@ -1,0 +1,22 @@
+{
+  "stage": "19_FINAL",
+  "status": "FROZEN_DETERMINISTIC_RESEARCH_ONLY_VERIFIER_CAPABILITY",
+  "gate": "GO_FOR_STAGE_20A_ACCEPT_REVISE_DEFER_DATA_READINESS",
+  "stage19b_contract_fingerprint": "b34d11431e84566e890464696fe171ecf705f8f7ef8568b994ba5ef7de7639b3",
+  "stage19d_evidence": "reports/stage19/stage19d_verifier_acceptance_summary.json",
+  "stage19d_evidence_sha256": "a766f84a9462314a76c419ac147d3008d5736700b9593ec1c91ac6d5118ff8d1",
+  "designation": "DETERMINISTIC_RESEARCH_ONLY",
+  "accepted_capabilities": [
+    "EXACT_DETERMINISTIC_TEXTUAL_VERIFICATION",
+    "PROVENANCE_VALIDATION",
+    "LIMITED_PROXY_ANATOMICAL_VERIFICATION"
+  ],
+  "stage11_maximum_support": "PARTIALLY_SUPPORTED",
+  "anatomical_proxy_maximum_status": "PARTIALLY_VERIFIED",
+  "contradicted_requires": "EXPLICIT_ACCEPTED_STRUCTURED_CONFLICT_ON_EXACT_GOVERNED_IDENTITY",
+  "language_model_permitted": false,
+  "image_inference_permitted": false,
+  "training_permitted": false,
+  "real_patient_reports_used": 0,
+  "locked_test_records_accessed": 0
+}

@@ -1,0 +1,66 @@
+{
+  "stage": "20A",
+  "evidence": {
+    "stage17_triage": {
+      "path": "reports/stage17/stage17_final_research_triage_freeze.json",
+      "sha256": "21b6b62d2c6b98ab854fac757270ad283152711d0d6946a4e9be9f2e7b982757"
+    },
+    "stage18_report": {
+      "path": "reports/stage18/stage18_final_grounded_report_capability_freeze.json",
+      "sha256": "8f9439b8d4a0d4451438a1902c680ecea760e5557e95759e22bf05799c01e45c"
+    },
+    "stage19_verifier": {
+      "path": "reports/stage19/stage19_final_verifier_capability_freeze.json",
+      "sha256": "82ee20ab715a637614a0c0bdebfc3294183e95150d0eea3805afce0806b88732"
+    }
+  },
+  "stage19b_contract_fingerprint": "b34d11431e84566e890464696fe171ecf705f8f7ef8568b994ba5ef7de7639b3",
+  "candidate_decisions": [
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW",
+    "REVISE_DETERMINISTICALLY",
+    "DEFER"
+  ],
+  "prospective_status_readiness": {
+    "VERIFIED": "POTENTIALLY_ACCEPT_ELIGIBLE_ONLY_IF_ALL_OTHER_GATES_PASS",
+    "PARTIALLY_VERIFIED": "DEFER_NOT_ACCEPT",
+    "UNVERIFIED": "DETERMINISTIC_REVISION_CANDIDATE_ONLY_WITH_SAME_STRUCTURED_EVIDENCE_ELSE_DEFER",
+    "CONTRADICTED": "DEFER",
+    "NOT_APPLICABLE": "NEUTRAL_ONLY_IF_CAPABILITY_IS_NOT_REQUIRED_ELSE_DEFER",
+    "WITHHELD_INSUFFICIENT_EVIDENCE": "DEFER"
+  },
+  "accept_readiness_requirements": [
+    "ALL_REQUIRED_STATEMENTS_VALID_PROVENANCE",
+    "NO_FORBIDDEN_CAPABILITY",
+    "ALL_REQUIRED_STATEMENTS_VERIFIED",
+    "NO_UNRESOLVED_DEFER_CONDITION",
+    "NO_UNSUPPORTED_ANATOMICAL_OR_TEXTUAL_CLAIM"
+  ],
+  "revision_readiness_requirements": [
+    "SAME_EXISTING_STRUCTURED_EVIDENCE",
+    "FROZEN_CANONICAL_TEMPLATE_AVAILABLE",
+    "NO_NEW_FACTS",
+    "NO_FREE_FORM_REWRITING",
+    "NO_LANGUAGE_MODEL"
+  ],
+  "defer_readiness_conditions": [
+    "INSUFFICIENT_EVIDENCE",
+    "IDENTITY_MISMATCH",
+    "UNSUPPORTED_CAPABILITY",
+    "STAGE11_UNCERTAIN_OR_UNLOCALIZED_WHERE_REQUIRED",
+    "MISSING_ELIGIBLE_INPUT",
+    "FROZEN_RESEARCH_TRIAGE_DEFER",
+    "NO_SAFE_ACCEPT_OR_DETERMINISTIC_REVISION_PATH"
+  ],
+  "policy_activation_permitted": false,
+  "clinical_approval_interpretation_permitted": false,
+  "autonomous_approval_permitted": false,
+  "language_model_permitted": false,
+  "training_permitted": false,
+  "fine_tuning_permitted": false,
+  "report_generation_permitted": false,
+  "image_inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "heuristic_identity_matching_permitted": false,
+  "patient_identifying_information_permitted": false,
+  "next_stage_authorizes_language_model_work": false
+}
