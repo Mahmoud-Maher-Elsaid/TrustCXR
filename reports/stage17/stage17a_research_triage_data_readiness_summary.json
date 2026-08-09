@@ -1,0 +1,34 @@
+{
+  "allowed_future_decisions": [
+    "ROUTINE",
+    "PRIORITY",
+    "URGENT_REVIEW",
+    "CRITICAL_REVIEW",
+    "DEFER",
+    "INPUT_REJECTED"
+  ],
+  "clinical_deployment_claim_permitted": false,
+  "eligible_inputs": [
+    "stage9_original_validation_accepted_reliability",
+    "stage5_ap_pa_lateral_and_technical_quality_proxy",
+    "stage11_uncertainty_annotation_only"
+  ],
+  "gate": "GO_FOR_STAGE_17B_RULE_BASED_TRIAGE_CONTRACT",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "mandatory_withholdings": [
+    "ood_detection",
+    "stage13_selective_prediction",
+    "clinical_quality_claim",
+    "reliable_positive_localization_support",
+    "severity",
+    "temporal_change",
+    "device_localization"
+  ],
+  "reason_code_required": true,
+  "rule_based_first": true,
+  "stage": "17A",
+  "status": "PASSED_RESEARCH_TRIAGE_DATA_READINESS_WITH_WITHHOLDINGS",
+  "training_performed": false,
+  "treatment_advice_permitted": false
+}

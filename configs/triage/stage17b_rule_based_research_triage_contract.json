@@ -1,0 +1,75 @@
+{
+  "stage": "17B",
+  "stage17a_evidence": "reports/stage17/stage17a_research_triage_data_readiness_summary.json",
+  "stage17a_evidence_sha256": "ae1d3a384f14c39fb6120e797391f1de609c9a7fd3c431345e08a2c1bd42476c",
+  "eligible_inputs": [
+    "stage9_original_validation_accepted_reliability",
+    "stage5_ap_pa_lateral_and_technical_quality_proxy",
+    "stage11_uncertainty_annotation_only"
+  ],
+  "mandatory_withholdings": [
+    "ood_detection",
+    "stage13_selective_prediction",
+    "clinical_quality_claim",
+    "reliable_positive_localization_support",
+    "severity",
+    "temporal_change",
+    "device_localization"
+  ],
+  "allowed_decisions": [
+    "ROUTINE",
+    "PRIORITY",
+    "URGENT_REVIEW",
+    "CRITICAL_REVIEW",
+    "DEFER",
+    "INPUT_REJECTED"
+  ],
+  "precedence": ["INPUT_REJECTED", "DEFER", "REVIEW_PRIORITY"],
+  "active_rules": [
+    {
+      "decision": "DEFER",
+      "condition": "stage9_record_predictive_entropy_greater_than_frozen_threshold",
+      "threshold": 0.6917239984806322,
+      "reason_code": "PREDICTIVE_UNCERTAINTY_ABOVE_FROZEN_LIMIT"
+    },
+    {
+      "decision": "DEFER",
+      "condition": "stage5_technical_quality_proxy_failed",
+      "reason_code": "TECHNICAL_QUALITY_PROXY_FAILED_NOT_CLINICAL_QUALITY"
+    },
+    {
+      "decision": "DEFER",
+      "condition": "view_not_confirmed_as_ap_pa_or_lateral",
+      "reason_code": "VIEW_OUTSIDE_FROZEN_STAGE5_CAPABILITY"
+    },
+    {
+      "decision": "DEFER",
+      "condition": "stage11_fusion_status_uncertain_or_unlocalized",
+      "reason_code": "FUSION_EVIDENCE_NOT_RELIABLY_SUPPORTIVE"
+    },
+    {
+      "decision": "DEFER",
+      "condition": "required_eligible_input_missing",
+      "reason_code": "REQUIRED_TRIAGE_EVIDENCE_MISSING"
+    }
+  ],
+  "inactive_decisions": {
+    "INPUT_REJECTED": "WITHHELD_NO_ACCEPTED_AUTOMATED_INPUT_REJECTION_SIGNAL",
+    "ROUTINE": "WITHHELD_REQUIRES_EXPERT_APPROVED_FINDING_PRIORITY_POLICY",
+    "PRIORITY": "WITHHELD_REQUIRES_EXPERT_APPROVED_FINDING_PRIORITY_POLICY",
+    "URGENT_REVIEW": "WITHHELD_REQUIRES_EXPERT_APPROVED_FINDING_PRIORITY_POLICY",
+    "CRITICAL_REVIEW": "WITHHELD_REQUIRES_EXPERT_APPROVED_FINDING_PRIORITY_POLICY"
+  },
+  "localization_absence_may_contradict_classifier": false,
+  "classifier_probability_is_severity": false,
+  "reason_codes_required": true,
+  "rule_based_first": true,
+  "research_use_only": true,
+  "treatment_recommendations_permitted": false,
+  "clinical_deployment_claim_permitted": false,
+  "locked_test_access_permitted": false,
+  "inference_permitted": false,
+  "fitting_permitted": false,
+  "tuning_permitted": false,
+  "training_permitted": false
+}

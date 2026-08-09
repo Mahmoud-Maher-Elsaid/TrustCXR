@@ -69,7 +69,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 16D | Completed validation-only evidence | Go for Stage 16E reliability acceptance decision | Scalar temperature calibration, predictive uncertainty, selective prediction, and patient-cluster bootstrap | Reliability evaluation | Original Stage 13 | Complete | Stage 9 improved all calibration metrics; Stage 13 ECE worsened; OOD withheld | 16E |
 | 16E | Completed conservative decision | Stage 16 reliability capability freeze | Separate calibration, uncertainty, selective-prediction, and OOD decisions per model | Reliability acceptance | Original Stage 13 | Complete | Stage 13 selective prediction not accepted; OOD withheld | 16F |
 | 16F | Current closure | Go for Stage 17A triage data readiness | Frozen model-specific reliability thresholds, decisions, and limitations | Reliability capability freeze | Original Stage 13 | Complete | Predictive only, not epistemic; no governed OOD cohort | 17A |
-| 17A | Prepared after Stage 16 closure | Readiness audit only | Auditable rule-based research-triage input and withholding audit | Research triage readiness | Original Stage 14 | Ready to run | No inference, training, treatment advice, or clinical deployment claim | 17B |
+| 17A | Completed readiness audit | Go for Stage 17B rule-based triage contract | Auditable research-triage input and withholding audit | Research triage readiness | Original Stage 14 | Complete | No inference, training, treatment advice, or clinical deployment claim | 17B |
+| 17B | Prepared after Stage 17A completion | Contract freeze only | Deterministic precedence, reason codes, deferral rules, and unsupported-priority withholding | Research triage contract | Original Stage 14 | Ready to run | Only DEFER activated; priority mapping requires expert approval | Stage 17C or hold |
 
 ## Numbering rule
 
