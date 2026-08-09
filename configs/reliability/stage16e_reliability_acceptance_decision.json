@@ -1,0 +1,53 @@
+{
+  "stage": "16E",
+  "contract_fingerprint": "3bb34f4edd5d4ed1f27120e028efacf92eb7e0e5217dbc6a1d29c59521b9af9e",
+  "stage16d_summary": "reports/stage16/stage16d_validation_reliability_summary.json",
+  "stage16d_summary_sha256": "f78f4940532a028c365e09e0fcfdb8d5b95770f902c6ffc752e6609e794a7b06",
+  "stage16d_evidence_hashes": {
+    "reports/stage16/stage16d_calibration_metrics.csv": "43b63c6658af83dd2a51d1046a28fe78e47f2ad8ca2ccd50b66841df9c30546e",
+    "reports/stage16/stage16d_risk_coverage.csv": "fd2266f4f20275dafd18248966704fb82029fd66ce40800c1e161979b6c2d360",
+    "reports/stage16/stage16d_selective_metrics.csv": "25b778f6f4b03bd63ca7a8b9edff9f5aae50e739adcf17bff71b55ed718b0f4e",
+    "reports/stage16/stage16d_bootstrap_intervals.csv": "b093b09fad0588530a791045ec2b71ba75cea7a38634b7428961fdc318a91159"
+  },
+  "expected_models": {
+    "stage9_original": {
+      "macro_nll_uncalibrated": 0.23810362413147157,
+      "macro_nll_calibrated": 0.23163737159342346,
+      "macro_brier_uncalibrated": 0.06922114900601276,
+      "macro_brier_calibrated": 0.06803408609033502,
+      "macro_ece_uncalibrated": 0.10665272870221075,
+      "macro_ece_calibrated": 0.08911280058975417,
+      "abstention_threshold": 0.6917239984806322,
+      "full_coverage_brier_risk": 0.06803408609033501,
+      "selected_brier_risk": 0.060125034042644854,
+      "selected_coverage": 0.8330827067669173,
+      "calibration_decision": "ACCEPTED_VALIDATION_ONLY",
+      "predictive_uncertainty_decision": "ACCEPTED_DESCRIPTIVE_VALIDATION_ONLY",
+      "selective_prediction_decision": "ACCEPTED_VALIDATION_ONLY"
+    },
+    "stage13_frontal_only": {
+      "macro_nll_uncalibrated": 0.3747484943327732,
+      "macro_nll_calibrated": 0.3705422692497959,
+      "macro_brier_uncalibrated": 0.11743274237132803,
+      "macro_brier_calibrated": 0.11669064443433774,
+      "macro_ece_uncalibrated": 0.08318753583940773,
+      "macro_ece_calibrated": 0.08994586735778506,
+      "abstention_threshold": 0.6928039993196862,
+      "full_coverage_brier_risk": 0.10110283362322087,
+      "selected_brier_risk": 0.10143889875146088,
+      "selected_coverage": 0.8197368421052632,
+      "calibration_decision": "PARTIALLY_ACCEPTED_MIXED_VALIDATION_EVIDENCE",
+      "predictive_uncertainty_decision": "ACCEPTED_DESCRIPTIVE_VALIDATION_ONLY",
+      "selective_prediction_decision": "NOT_ACCEPTED_NO_EVALUATION_RISK_REDUCTION"
+    }
+  },
+  "predictive_uncertainty_claim": "PREDICTIVE_ONLY_NOT_EPISTEMIC",
+  "ood_decision": "WITHHELD_NO_GOVERNED_OOD_COHORT",
+  "cross_model_superiority_comparison_permitted": false,
+  "additional_fitting_permitted": false,
+  "additional_tuning_permitted": false,
+  "additional_inference_permitted": false,
+  "training_permitted": false,
+  "locked_test_access_permitted": false,
+  "checkpoint_modification_permitted": false
+}
