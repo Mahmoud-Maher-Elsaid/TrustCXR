@@ -1,0 +1,17 @@
+{
+  "abstention_thresholds_selected": false,
+  "calibration_parameters_fitted": false,
+  "contract_fingerprint": "3bb34f4edd5d4ed1f27120e028efacf92eb7e0e5217dbc6a1d29c59521b9af9e",
+  "gate": "GO_FOR_STAGE_16D_VALIDATION_RELIABILITY_EVALUATION",
+  "locked_test_records_accessed": 0,
+  "models": {
+    "stage13_frontal_only": {"records": 2956, "patients": 2178, "sha256": "184c8ea6cd0fd14956431048dc782e60374a3cb5ddfafd40f30599017ec9e3de"},
+    "stage9_original": {"records": 3000, "patients": 1619, "sha256": "9412d0b2bf963220f9d79ec05e3185c4a368e464237953b55e9b3f6be7ebee1c"}
+  },
+  "ood_status": "WITHHELD_NO_GOVERNED_OOD_COHORT",
+  "patient_overlap": 0,
+  "reliability_metrics_computed": false,
+  "stage": "16C",
+  "status": "PASSED_VALIDATION_RELIABILITY_PREPARATION",
+  "training_performed": false
+}

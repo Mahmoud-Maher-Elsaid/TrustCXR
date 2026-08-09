@@ -65,7 +65,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 15C | `da2a417` plus completed local audit | Go for Stage 16A reliability data readiness | Severity capability freeze | Severity modeling scientifically withheld | Original Stage 12 | Complete | Reopen only with governed severity evidence | 16A |
 | 16A | `79d4e91` plus completed local audit | Go for Stage 16B reliability contract | Frozen-artifact audit only | Reliability data readiness | Original Stage 13 | Complete | Stage 9 ready; Stage 13 needs validation inference; OOD held | 16B |
 | 16B | `18e782c` plus completed local freeze | Go for Stage 16C validation reliability preparation | Validation-only protocol freeze | Reliability scientific contract | Original Stage 13 | Complete | Fingerprint `3bb34f4e...`; OOD withheld | 16C |
-| 16C | Prepared after Stage 16B result | Validation evidence preparation only | Reuse Stage 9 predictions and run frozen Stage 13 validation inference | Reliability evidence preparation | Original Stage 13 | Ready to run | No metrics, fitting, thresholds, training, OOD, or test access | 16D |
+| 16C | Completed local evidence, finalized in current preparation | Go for Stage 16D validation reliability evaluation | Hash-pinned validation evidence for Stage 9 original and Stage 13 frontal-only | Reliability evidence preparation | Original Stage 13 | Complete | 3,000/1,619 and 2,956/2,178 records/patients; zero partition overlap; no test access | 16D |
+| 16D | Prepared after Stage 16C completion | Validation-only reliability evaluation | Scalar temperature calibration, supported predictive uncertainty, selective prediction, and patient-cluster bootstrap | Reliability evaluation | Original Stage 13 | Ready to run | OOD withheld; models evaluated separately; no test access or retraining | 16E |
 
 ## Numbering rule
 

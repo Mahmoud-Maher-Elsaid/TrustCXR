@@ -1,0 +1,59 @@
+{
+  "stage": "16D",
+  "contract_evidence": "reports/stage16/stage16b_reliability_contract_summary.json",
+  "contract_fingerprint": "3bb34f4edd5d4ed1f27120e028efacf92eb7e0e5217dbc6a1d29c59521b9af9e",
+  "stage16c_evidence": "reports/stage16/stage16c_validation_reliability_preparation_summary.json",
+  "models": {
+    "stage9_original": {
+      "artifact": "artifacts/stage16/stage16c_validation_reliability_preparation/stage9_original_validation_evidence.npz",
+      "sha256": "9412d0b2bf963220f9d79ec05e3185c4a368e464237953b55e9b3f6be7ebee1c",
+      "records": 3000,
+      "patients": 1619
+    },
+    "stage13_frontal_only": {
+      "artifact": "artifacts/stage16/stage16c_validation_reliability_preparation/stage13_frontal_only_validation_evidence.npz",
+      "sha256": "184c8ea6cd0fd14956431048dc782e60374a3cb5ddfafd40f30599017ec9e3de",
+      "records": 2956,
+      "patients": 2178
+    }
+  },
+  "partition_codes": {
+    "calibration_fit": 0,
+    "abstention_selection": 1,
+    "reliability_evaluation": 2
+  },
+  "calibration": {
+    "method": "single_scalar_temperature_per_model",
+    "objective": "masked_binary_cross_entropy",
+    "ece_bins": 15,
+    "probability_to_logit_epsilon": 1e-7,
+    "class_wise_temperatures_permitted": false
+  },
+  "uncertainty": {
+    "measures": ["bernoulli_predictive_entropy", "distance_from_half_confidence"],
+    "record_aggregation": "maximum_entropy_across_labels",
+    "epistemic_claim_permitted": false,
+    "mc_dropout_permitted": false,
+    "synthetic_ensemble_permitted": false
+  },
+  "selective_prediction": {
+    "minimum_selection_coverage": 0.8,
+    "selection_objective": "masked_brier_score",
+    "tie_break": "higher_coverage",
+    "coverage_grid": [1.0, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5],
+    "summary": "area_under_risk_coverage_curve"
+  },
+  "statistics": {
+    "bootstrap_unit": "patient_cluster",
+    "replicates": 2000,
+    "confidence_level": 0.95,
+    "seed": 20260809,
+    "minimum_valid_replicates": 1900,
+    "not_estimable_policy": "NOT_ESTIMABLE"
+  },
+  "ood_status": "WITHHELD_NO_GOVERNED_OOD_COHORT",
+  "cross_model_superiority_comparison_permitted": false,
+  "locked_test_access_permitted": false,
+  "retraining_permitted": false,
+  "checkpoint_modification_permitted": false
+}
