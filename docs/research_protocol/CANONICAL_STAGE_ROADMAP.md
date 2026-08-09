@@ -76,7 +76,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 18A | Completed provenance audit | Go for Stage 18B deterministic report contract | Structured statement grounding and report-dataset identity audit | Grounded report readiness | Original Stage 15 | Complete | Indiana reports withheld; no generation, inference, or test access | 18B |
 | 18B | Completed contract freeze | Go for Stage 18C deterministic template implementation | Deterministic schema, templates, provenance, uncertainty, omission, and privacy rules | Grounded report contract | Original Stage 15 | Complete | Fingerprint `bf83dacb...`; no patient reports or language-model use | 18C |
 | 18C | Completed synthetic implementation validation | Go for Stage 18D template safety validation | Strict schema-driven deterministic renderer | Grounded template implementation | Original Stage 15 | Complete | Frozen synthetic output hash; no patient report generation or inference | 18D |
-| 18D | Prepared after Stage 18C completion | Adversarial synthetic validation only | Fail-closed template, provenance, privacy, and forbidden-claim validation | Grounded template safety | Original Stage 15 | Ready to run | Synthetic fixtures only; Indiana reports withheld | 18E |
+| 18D | Completed adversarial synthetic validation | Go for Stage 18E grounded-report acceptance decision | Fail-closed template, provenance, privacy, and forbidden-claim validation | Grounded template safety | Original Stage 15 | Complete | 21/21 fixtures passed; no patient reports or test access | 18E |
+| 18E | Prepared after Stage 18D completion | Decision and closure only | Conservative research-only deterministic grounded-report acceptance | Grounded report acceptance | Original Stage 15 | Ready to run | No clinical deployment or autonomous use | Stage 19A |
 
 ## Numbering rule
 

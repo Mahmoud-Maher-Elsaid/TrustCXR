@@ -1,0 +1,124 @@
+{
+  "contract_fingerprint": "bf83dacb98bbc0f9e87d4e4a61f014c470a9cf650976044412bdb13418e4d09b",
+  "fail_closed": true,
+  "fixture_results": [
+    {
+      "expected": "OMITTED",
+      "fixture": "missing_provenance",
+      "observed": "OMITTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "malformed_evidence_code",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "fake_evidence_code",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "fake_defer_reason_code",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "unsupported_source_stage",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "free_text_injection",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "diagnosis_wording",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "severity",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "temporal_change",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "treatment",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "patient_history",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "ood",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "device_localization",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "clinical_quality",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "positive_localization",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "localization_negation",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "clinical_certainty",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "unknown_template",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "schema_mismatch",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "REJECTED",
+      "fixture": "patient_identifier",
+      "observed": "REJECTED"
+    },
+    {
+      "expected": "CANONICAL",
+      "fixture": "ordering",
+      "observed": "CANONICAL"
+    }
+  ],
+  "fixtures_failed": 0,
+  "fixtures_passed": 21,
+  "gate": "GO_FOR_STAGE_18E_GROUNDED_REPORT_ACCEPTANCE_DECISION",
+  "indiana_reports_used": false,
+  "inference_performed": false,
+  "language_model_used": false,
+  "locked_test_records_accessed": 0,
+  "real_patient_identifiers_used": 0,
+  "real_patient_reports_generated": 0,
+  "report_schema_sha256": "ea2e4d254a7efc99fa861197001d59d29f92e9b3e8bdd2c508a828594065701c",
+  "stage": "18D",
+  "status": "PASSED_SYNTHETIC_TEMPLATE_SAFETY_VALIDATION",
+  "training_performed": false
+}
