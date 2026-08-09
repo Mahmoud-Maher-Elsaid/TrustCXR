@@ -73,16 +73,17 @@ def validate_contract(config: dict[str, Any], root: Path) -> tuple[dict[str, Any
 
 def prepare_run_manifest(
     config: dict[str, Any], root: Path, technical_retry: bool
-) -> tuple[Path, dict[str, Any]]:
+) -> tuple[Path, dict[str, Any], bool]:
     runtime = root / config["runtime_root"]
     runtime.mkdir(parents=True, exist_ok=True)
     manifest_path = runtime / "run_manifest.json"
     reports_exist = any((root / path).exists() for path in config["reports"].values())
     if manifest_path.exists():
         previous = json.loads(manifest_path.read_text())
+        prior_status = previous.get("status")
         retry_allowed = (
             technical_retry
-            and previous.get("status") == "FAILED_BEFORE_METRICS"
+            and prior_status in {"FAILED_BEFORE_METRICS", "FAILED_AFTER_INFERENCE_BEFORE_METRICS"}
             and previous.get("freeze_fingerprint") == config["required_freeze_fingerprint"]
             and not reports_exist
         )
@@ -94,19 +95,43 @@ def prepare_run_manifest(
         raise RuntimeError("Stage 13I technical retry requested without a failed prior run.")
     elif reports_exist:
         raise RuntimeError("Stage 13I result files already exist; refusing another test run.")
+    predictions_path = runtime / "patient_level_predictions.npz"
+    use_frozen_intermediates = bool(
+        manifest_path.exists()
+        and previous.get("status") == "FAILED_AFTER_INFERENCE_BEFORE_METRICS"
+        and predictions_path.is_file()
+        and previous.get("prediction_sha256") == sha256(predictions_path)
+    )
+    previous_starts = (
+        int(previous.get("test_inference_runs_started", 0)) if manifest_path.exists() else 0
+    )
     manifest = {
         "stage": "13I",
         "status": "STARTED",
-        "mode": "TECHNICAL_RETRY" if technical_retry else "ONE_TIME_AUTHORIZED_RUN",
+        "mode": (
+            "POSTPROCESS_FROZEN_INTERMEDIATES"
+            if use_frozen_intermediates
+            else "TECHNICAL_RETRY_EXACT_REINFERENCE"
+            if technical_retry
+            else "ONE_TIME_AUTHORIZED_RUN"
+        ),
         "freeze_fingerprint": config["required_freeze_fingerprint"],
         "checkpoint_sha256": config["selected_checkpoint_sha256"],
         "metrics_written": False,
-        "test_inference_runs_started": int(previous.get("test_inference_runs_started", 0) + 1)
-        if manifest_path.exists()
-        else 1,
+        "test_inference_runs_started": previous_starts
+        if use_frozen_intermediates
+        else previous_starts + 1,
     }
+    if use_frozen_intermediates:
+        manifest.update(
+            {
+                "inference_complete": True,
+                "cohort_fingerprint": previous["cohort_fingerprint"],
+                "prediction_sha256": previous["prediction_sha256"],
+            }
+        )
     atomic_write_json(manifest, manifest_path)
-    return manifest_path, manifest
+    return manifest_path, manifest, use_frozen_intermediates
 
 
 def build_locked_pairs(
@@ -294,33 +319,59 @@ def bootstrap_intervals(
     for metric, samples in values.items():
         for index, label in enumerate(labels):
             finite = samples[:, index][np.isfinite(samples[:, index])]
-            if len(finite) < metric_config["bootstrap_minimum_valid_replicates"]:
-                raise RuntimeError(f"Insufficient bootstrap support: {metric}/{label}")
-            low, high = np.quantile(finite, [alpha / 2, 1 - alpha / 2])
             rows.append(
-                {
-                    "metric": metric,
-                    "label": label,
-                    "point_estimate": points[index][metric],
-                    "ci_low": float(low),
-                    "ci_high": float(high),
-                    "valid_replicates": len(finite),
-                }
+                finalize_interval(
+                    metric,
+                    label,
+                    points[index][metric],
+                    finite,
+                    metric_config["bootstrap_minimum_valid_replicates"],
+                    alpha,
+                )
             )
         macro = np.nanmean(samples, axis=1)
         finite = macro[np.isfinite(macro)]
-        low, high = np.quantile(finite, [alpha / 2, 1 - alpha / 2])
         rows.append(
-            {
-                "metric": f"macro_{metric}",
-                "label": "ALL_LABELS",
-                "point_estimate": float(np.mean([row[metric] for row in points])),
-                "ci_low": float(low),
-                "ci_high": float(high),
-                "valid_replicates": len(finite),
-            }
+            finalize_interval(
+                f"macro_{metric}",
+                "ALL_LABELS",
+                float(np.mean([row[metric] for row in points])),
+                finite,
+                metric_config["bootstrap_minimum_valid_replicates"],
+                alpha,
+            )
         )
     return rows
+
+
+def finalize_interval(
+    metric: str,
+    label: str,
+    point_estimate: float,
+    finite_replicates: np.ndarray,
+    minimum_valid_replicates: int,
+    alpha: float,
+) -> dict[str, Any]:
+    row: dict[str, Any] = {
+        "metric": metric,
+        "label": label,
+        "point_estimate": point_estimate,
+        "ci_low": None,
+        "ci_high": None,
+        "valid_replicates": len(finite_replicates),
+        "interval_status": "NOT_ESTIMABLE_INSUFFICIENT_VALID_REPLICATES",
+    }
+    if len(finite_replicates) < minimum_valid_replicates:
+        return row
+    low, high = np.quantile(finite_replicates, [alpha / 2, 1 - alpha / 2])
+    row.update(
+        {
+            "ci_low": float(low),
+            "ci_high": float(high),
+            "interval_status": "ESTIMABLE",
+        }
+    )
+    return row
 
 
 def write_csv_atomic(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -365,23 +416,45 @@ def write_predictions_atomic(
 
 def run(config: dict[str, Any], root: Path, technical_retry: bool) -> int:
     training, readiness = validate_contract(config, root)
-    manifest_path, manifest = prepare_run_manifest(config, root, technical_retry)
+    manifest_path, manifest, use_frozen_intermediates = prepare_run_manifest(
+        config, root, technical_retry
+    )
     try:
-        pairs, cohort_fingerprint = build_locked_pairs(
-            training, readiness, root, config["locked_test_exact_pair_count"]
-        )
-        targets, masks, scores = infer(config, training, root, pairs)
-        patients = [pair["patient_key"] for pair in pairs]
+        predictions_path = root / config["runtime_root"] / "patient_level_predictions.npz"
+        if use_frozen_intermediates:
+            with np.load(predictions_path, allow_pickle=False) as payload:
+                targets = payload["targets"].copy()
+                masks = payload["masks"].copy()
+                scores = payload["probabilities"].copy()
+                patients = payload["patient_keys"].astype(str).tolist()
+            cohort_fingerprint = str(manifest["cohort_fingerprint"])
+            pair_count = len(targets)
+        else:
+            pairs, cohort_fingerprint = build_locked_pairs(
+                training, readiness, root, config["locked_test_exact_pair_count"]
+            )
+            targets, masks, scores = infer(config, training, root, pairs)
+            patients = [pair["patient_key"] for pair in pairs]
+            pair_count = len(pairs)
+            write_predictions_atomic(
+                predictions_path,
+                targets,
+                masks,
+                scores,
+                patients,
+            )
+            manifest.update(
+                {
+                    "status": "INFERENCE_COMPLETE_METRICS_PENDING",
+                    "inference_complete": True,
+                    "cohort_fingerprint": cohort_fingerprint,
+                    "prediction_sha256": sha256(predictions_path),
+                }
+            )
+            atomic_write_json(manifest, manifest_path)
         points = calculate_metrics(training["labels"], targets, masks, scores)
         intervals = bootstrap_intervals(
             config, training["labels"], targets, masks, scores, patients, points
-        )
-        write_predictions_atomic(
-            root / config["runtime_root"] / "patient_level_predictions.npz",
-            targets,
-            masks,
-            scores,
-            patients,
         )
         write_csv_atomic(root / config["reports"]["per_label"], points)
         write_csv_atomic(root / config["reports"]["bootstrap"], intervals)
@@ -395,7 +468,7 @@ def run(config: dict[str, Any], root: Path, technical_retry: bool) -> int:
             "selected_variant": "frontal_only",
             "selected_epoch": 2,
             "checkpoint_sha256": config["selected_checkpoint_sha256"],
-            "locked_test_exact_pairs": len(pairs),
+            "locked_test_exact_pairs": pair_count,
             "locked_test_cohort_fingerprint": cohort_fingerprint,
             "macro_auprc": macro_auprc,
             "macro_auroc": macro_auroc,
@@ -405,23 +478,31 @@ def run(config: dict[str, Any], root: Path, technical_retry: bool) -> int:
             "tuning_performed": False,
             "calibration_performed": False,
             "model_selection_performed": False,
-            "test_inference_runs": 1,
+            "test_inference_runs_started": manifest["test_inference_runs_started"],
+            "technical_retry_used": technical_retry,
             "post_test_changes_permitted": False,
         }
+        not_estimable = [
+            f"{row['metric']}/{row['label']}"
+            for row in intervals
+            if row["interval_status"] != "ESTIMABLE"
+        ]
+        summary["not_estimable_intervals"] = not_estimable
         atomic_write_json(summary, root / config["reports"]["summary"])
         report = "\n".join(
             [
                 "# Stage 13I One-Time Locked-Test Evaluation",
                 "",
                 "- Selected model: `frontal_only`, epoch `2`",
-                f"- Exact locked-test pairs: `{len(pairs)}`",
+                f"- Exact locked-test pairs: `{pair_count}`",
                 f"- Macro AUPRC: `{macro_auprc:.6f}`",
                 f"- Macro AUROC: `{macro_auroc:.6f}`",
                 "- Threshold metrics computed: `false`",
                 "- Training/tuning/calibration/model selection: `false`",
+                f"- Not-estimable frozen bootstrap intervals: `{', '.join(not_estimable)}`",
                 "",
-                "This was the single authorized locked-test run. Results are final and cannot "
-                "be used for post-test tuning or selection.",
+                "The authorized locked-test evaluation and any exact technical retry are fully "
+                "recorded. Results are final and cannot be used for post-test tuning or selection.",
                 "",
             ]
         )
@@ -438,7 +519,11 @@ def run(config: dict[str, Any], root: Path, technical_retry: bool) -> int:
         return 0
     except BaseException:
         if not manifest.get("metrics_written"):
-            manifest["status"] = "FAILED_BEFORE_METRICS"
+            manifest["status"] = (
+                "FAILED_AFTER_INFERENCE_BEFORE_METRICS"
+                if manifest.get("inference_complete")
+                else "FAILED_BEFORE_METRICS"
+            )
             atomic_write_json(manifest, manifest_path)
         raise
 

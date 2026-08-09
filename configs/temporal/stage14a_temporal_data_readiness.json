@@ -1,0 +1,19 @@
+{
+  "stage": "14A",
+  "upstream_gate": "GO_FOR_STAGE_14A_TEMPORAL_DATA_READINESS",
+  "stage13j_evidence": "reports/stage13/stage13j_final_multiview_closure_summary.json",
+  "dataset": "CheXpert Small",
+  "dataset_root": "TrustCXR-Data/07_CheXpert_Small",
+  "metadata_patterns": ["**/train.csv", "**/valid.csv"],
+  "path_column": "Path",
+  "identity_pattern": "(?i)(patient[0-9]+)/(study[0-9]+)",
+  "candidate_timestamp_columns": ["StudyDate", "StudyTime", "AcquisitionDate", "AcquisitionTime", "date", "time"],
+  "patient_split_salt": "trustcxr-stage5",
+  "development_splits": ["train", "validation"],
+  "locked_test_metadata_access_permitted": false,
+  "locked_test_pixel_access_permitted": false,
+  "heuristic_temporal_ordering_permitted": false,
+  "patient_identity_as_study_identity_permitted": false,
+  "training_permitted": false,
+  "inference_permitted": false
+}

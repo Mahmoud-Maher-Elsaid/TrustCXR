@@ -4,4 +4,6 @@ Stage 13I is the single authorized test run under freeze fingerprint `3efeb0ca25
 
 The run reports Macro and per-label AUPRC/AUROC, valid-label counts, and 2,000-replicate 95% patient-cluster bootstrap intervals. Missing and uncertain labels remain masked. It computes no threshold metrics and performs no training, tuning, calibration, or model selection.
 
-A local ignored manifest prevents a second run after metrics are written. `-TechnicalRetry` is allowed only after a failure before any report exists, with the exact freeze fingerprint unchanged, and requires confirmation that no test metrics were reviewed. Patient-level predictions remain ignored and untracked.
+A local ignored manifest prevents another run after metrics are written. The authorized technical retry used the unchanged freeze fingerprint and is recorded as a second inference start. Patient-level predictions remain ignored and untracked.
+
+The frozen bootstrap protocol could not estimate the `No Finding` AUPRC or AUROC intervals because fewer than the required valid replicates contained both label classes. Those intervals remain explicitly not estimable; the bootstrap method, seed, replicate count, and minimum-support rule were not changed.

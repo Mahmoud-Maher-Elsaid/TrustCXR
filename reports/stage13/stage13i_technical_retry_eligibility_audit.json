@@ -1,0 +1,16 @@
+{
+  "stage": "13I",
+  "audit": "TECHNICAL_RETRY_ELIGIBILITY",
+  "freeze_fingerprint": "3efeb0ca2588df40eaed3ef3b5f025d50180a0dd9e33c63d4d00f1ba7d0d0d10",
+  "original_test_pixels_consumed": true,
+  "original_test_labels_consumed": true,
+  "original_test_inference_completed": true,
+  "persisted_frozen_inference_intermediates": false,
+  "persisted_metrics_or_partial_reports": false,
+  "performance_values_displayed_in_supplied_console": false,
+  "technical_cause": "NON_STRATIFIED_PATIENT_BOOTSTRAP_SINGLE_CLASS_RESAMPLES",
+  "classification": "GENUINE_ESTIMABILITY_LIMITATION_UNDER_FROZEN_PROTOCOL",
+  "protocol_changed": false,
+  "interval_disposition": "NOT_ESTIMABLE_INSUFFICIENT_VALID_REPLICATES",
+  "retry_status": "TECHNICAL_RETRY_ALLOWED_WITH_EXACT_REINFERENCE"
+}
