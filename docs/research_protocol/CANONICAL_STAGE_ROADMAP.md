@@ -61,7 +61,9 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 14B | `6367644` plus completed local audit | Hold for authoritative chronology source | Metadata and documentation audit without pair construction | Temporal identity and chronology resolution | Original Stage 11 | Complete | Stable study identity; no trusted chronology evidence | 14C withholding freeze |
 | 14C | `6367644` plus completed local audit | Go for Stage 15A severity data readiness | Temporal capability freeze | Temporal modeling scientifically withheld | Original Stage 11 | Complete | Reopen only with authoritative timestamps or chronology documentation | 15A |
 | 15A | `2b91f9b` plus completed local audit | Hold for Stage 15B severity evidence resolution | Governed evidence audit only | Severity data readiness | Original Stage 12 | Complete | No explicit severity annotations or approved quantitative definition found | 15B |
-| 15B | Prepared after Stage 15A hold | Metadata and documentation audit only | Classify ground-truth, validated-proxy, or heuristic severity evidence | Severity evidence and contract resolution | Original Stage 12 | Ready to run | Creates no severity labels; may withhold Stage 15 | Evidence-dependent Stage 15C or 16A |
+| 15B | `da2a417` plus completed local audit | Go for Stage 16A reliability data readiness | Metadata and documentation audit only | Severity evidence and contract resolution | Original Stage 12 | Complete | No valid severity evidence; capability withheld, not failed | 15C freeze |
+| 15C | `da2a417` plus completed local audit | Go for Stage 16A reliability data readiness | Severity capability freeze | Severity modeling scientifically withheld | Original Stage 12 | Complete | Reopen only with governed severity evidence | 16A |
+| 16A | Prepared after Stage 15 withholding freeze | Frozen-artifact audit only | Calibration, uncertainty, OOD, and selective-prediction readiness | Reliability data readiness | Original Stage 13 | Ready to run | No fitting, inference, thresholds, pixels, or locked-test access | Evidence-dependent 16B |
 
 ## Numbering rule
 

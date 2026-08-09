@@ -1,0 +1,13 @@
+{
+  "disposition": "SCIENTIFICALLY_WITHHELD_NO_VALID_SEVERITY_EVIDENCE",
+  "gate": "GO_FOR_STAGE_16A_RELIABILITY_DATA_READINESS",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "pixels_accessed": 0,
+  "reopen_requirement": "Governed radiologist ordinal severity labels, quantitative severity measurements, or a prospectively approved and validated finding-specific definition.",
+  "severity_labels_created": 0,
+  "severity_modeling_status": "WITHHELD_NOT_FAILED",
+  "stage": "15C",
+  "status": "PASSED_SEVERITY_CAPABILITY_FREEZE",
+  "training_performed": false
+}

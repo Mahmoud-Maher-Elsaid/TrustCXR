@@ -1,0 +1,12 @@
+{
+  "stage": "15C",
+  "stage15b_evidence": "reports/stage15/stage15b_severity_evidence_contract_resolution_summary.json",
+  "stage15b_evidence_sha256": "1588c28ffdf25a4e303f6fee6dfff25017ffd250d9db7868bd6faeaf21ba4a58",
+  "disposition": "SCIENTIFICALLY_WITHHELD_NO_VALID_SEVERITY_EVIDENCE",
+  "reopen_requirement": "Governed radiologist ordinal severity labels, quantitative severity measurements, or a prospectively approved and validated finding-specific definition.",
+  "severity_labels_created": 0,
+  "training_permitted": false,
+  "inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "pixel_access_permitted": false
+}
