@@ -63,6 +63,20 @@ DEFER_REASON_CODES = {
     "FUSION_EVIDENCE_NOT_RELIABLY_SUPPORTIVE",
     "REQUIRED_TRIAGE_EVIDENCE_MISSING",
 }
+ALLOWED_SOURCE_STAGES = {"5", "9", "11", "17"}
+EVIDENCE_CODES_FOR_TYPE = {
+    "model_identified_view_ap_pa_or_lateral": {"VIEW_MODEL_OUTPUT"},
+    "technical_quality_proxy_warning_with_nonclinical_qualifier": {
+        "TECHNICAL_QUALITY_PROXY_WARNING"
+    },
+    "research_system_defer_status_with_reason_code": {"RESEARCH_TRIAGE_DEFER"},
+    "stage9_classifier_finding_signal": {"CLASSIFIER_SIGNAL"},
+    "predictive_probability": {"PREDICTIVE_MODEL_SCORE"},
+    "stage11_uncertain_or_unlocalized_fusion_status": {
+        "FUSION_UNCERTAIN",
+        "FUSION_UNLOCALIZED",
+    },
+}
 
 
 def validate_statement(statement: dict[str, Any], contract: dict[str, Any]) -> None:
@@ -95,10 +109,14 @@ def validate_statement(statement: dict[str, Any], contract: dict[str, Any]) -> N
         raise ValueError("Grounding provenance fields must be non-empty.")
     if not re.fullmatch(r"[A-Za-z0-9_.-]+", statement["source_stage"]):
         raise ValueError("Invalid source stage provenance.")
+    if statement["source_stage"] not in ALLOWED_SOURCE_STAGES:
+        raise ValueError("Unsupported source stage provenance.")
     if not re.fullmatch(r"[A-Za-z0-9_.-]+", statement["source_version"]):
         raise ValueError("Invalid source version provenance.")
     if not re.fullmatch(r"[A-Z0-9_]+", statement["evidence_code"]):
         raise ValueError("Invalid evidence code provenance.")
+    if statement["evidence_code"] not in EVIDENCE_CODES_FOR_TYPE[evidence_type]:
+        raise ValueError("Unsupported evidence code provenance.")
     if not re.fullmatch(r"[A-Za-z0-9_./-]+", statement["structured_source_field"]):
         raise ValueError("Invalid structured source field provenance.")
 
@@ -152,6 +170,8 @@ def validate_payload(payload: dict[str, Any], contract: dict[str, Any]) -> None:
             raise ValueError("Omission metadata contains an unknown capability.")
         if not omission.get("reason_code"):
             raise ValueError("Omitted capability requires a reason code.")
+        if not re.fullmatch(r"[A-Z0-9_]+", omission["reason_code"]):
+            raise ValueError("Omission reason code must be a structured code.")
 
 
 def render_report(payload: dict[str, Any], contract: dict[str, Any]) -> dict[str, Any]:
@@ -186,11 +206,23 @@ def render_report(payload: dict[str, Any], contract: dict[str, Any]) -> dict[str
                 "structured_source_field": statement["structured_source_field"],
             }
         )
+    rendered.sort(
+        key=lambda row: (
+            row["source_stage"],
+            row["structured_source_field"],
+            row["evidence_code"],
+            row["text"],
+        )
+    )
+    omissions = sorted(
+        filtered["omitted_capabilities"],
+        key=lambda row: (row["capability"], row["reason_code"]),
+    )
     return {
         "report_identity": filtered["report_identity"],
         "research_use_disclaimer": filtered["research_use_disclaimer"],
         "statements": rendered,
-        "omitted_capabilities": filtered["omitted_capabilities"],
+        "omitted_capabilities": omissions,
     }
 
 

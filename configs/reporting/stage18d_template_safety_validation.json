@@ -1,0 +1,21 @@
+{
+  "stage": "18D",
+  "stage18c_evidence": "reports/stage18/stage18c_deterministic_template_implementation_summary.json",
+  "stage18c_evidence_sha256": "f9816e0f1e653f4f615a92604acf53cb35f5c743b3ae125ea10746a8837b47e6",
+  "stage18b_contract": "reports/stage18/stage18b_deterministic_grounded_report_contract_summary.json",
+  "contract_fingerprint": "bf83dacb98bbc0f9e87d4e4a61f014c470a9cf650976044412bdb13418e4d09b",
+  "report_schema": "configs/reporting/stage18b_grounded_report_schema.json",
+  "report_schema_sha256": "ea2e4d254a7efc99fa861197001d59d29f92e9b3e8bdd2c508a828594065701c",
+  "synthetic_fixture_output_sha256": "184cf28b9bce09cdcf23f1d929e6f116bd9c272869e672fadf2b4771404111b5",
+  "indiana_reports_status": "WITHHELD_PATIENT_IDENTITY_UNRESOLVED",
+  "synthetic_fixtures_only": true,
+  "real_patient_reports_permitted": false,
+  "real_patient_identifiers_permitted": false,
+  "language_model_use_permitted": false,
+  "inference_permitted": false,
+  "training_permitted": false,
+  "fitting_permitted": false,
+  "tuning_permitted": false,
+  "calibration_permitted": false,
+  "locked_test_access_permitted": false
+}

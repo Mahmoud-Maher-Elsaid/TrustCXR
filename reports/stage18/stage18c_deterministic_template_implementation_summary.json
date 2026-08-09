@@ -1,0 +1,15 @@
+{
+  "contract_fingerprint": "bf83dacb98bbc0f9e87d4e4a61f014c470a9cf650976044412bdb13418e4d09b",
+  "gate": "GO_FOR_STAGE_18D_TEMPLATE_SAFETY_VALIDATION",
+  "indiana_reports_status": "WITHHELD_PATIENT_IDENTITY_UNRESOLVED",
+  "inference_performed": false,
+  "language_model_used": false,
+  "locked_test_records_accessed": 0,
+  "real_patient_reports_generated": 0,
+  "report_identity": "AI_GENERATED_RESEARCH_REPORT_DRAFT_FOR_EXPERT_REVIEW",
+  "report_schema_sha256": "ea2e4d254a7efc99fa861197001d59d29f92e9b3e8bdd2c508a828594065701c",
+  "stage": "18C",
+  "status": "PASSED_DETERMINISTIC_TEMPLATE_IMPLEMENTATION_SYNTHETIC_ONLY",
+  "synthetic_fixture_output_sha256": "184cf28b9bce09cdcf23f1d929e6f116bd9c272869e672fadf2b4771404111b5",
+  "training_performed": false
+}
