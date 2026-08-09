@@ -1,0 +1,31 @@
+{
+  "stage": "17C",
+  "stage17b_evidence": "reports/stage17/stage17b_rule_based_research_triage_contract_summary.json",
+  "stage17b_evidence_sha256": "79dd5d1461fb8de3af72cc8893adf123b568559dffa9c381facb6ca2f4d5d460",
+  "stage17b_contract_fingerprint": "16b28935ff1e3a3dbbd64848af757057e10f95a87702c8c65a959af8f596352b",
+  "acceptable_evidence_types": [
+    "expert_approved_project_triage_policy",
+    "formally_governed_clinical_or_radiology_prioritization_protocol",
+    "prospectively_approved_versioned_finding_to_review_priority_mapping"
+  ],
+  "governed_priority_evidence_found": false,
+  "audited_repository_matches": [
+    {
+      "path": "configs/triage/stage17b_rule_based_research_triage_contract.json",
+      "classification": "PROJECT_HOLD_CONTRACT_NOT_AUTHORITY_EVIDENCE"
+    },
+    {
+      "path": "reports/stage17/stage17b_rule_based_research_triage_contract_summary.json",
+      "classification": "PROJECT_HOLD_RESULT_NOT_AUTHORITY_EVIDENCE"
+    }
+  ],
+  "priority_decisions_activated": [],
+  "input_rejected_activated": false,
+  "defer_only_preserved": true,
+  "next_independent_stage": "18A_GROUNDED_REPORT_DATA_READINESS",
+  "locked_test_access_permitted": false,
+  "inference_permitted": false,
+  "fitting_permitted": false,
+  "tuning_permitted": false,
+  "training_permitted": false
+}

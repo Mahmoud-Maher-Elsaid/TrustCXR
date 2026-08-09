@@ -1,0 +1,76 @@
+{
+  "active_rules": [
+    {
+      "condition": "stage9_record_predictive_entropy_greater_than_frozen_threshold",
+      "decision": "DEFER",
+      "reason_code": "PREDICTIVE_UNCERTAINTY_ABOVE_FROZEN_LIMIT",
+      "threshold": 0.6917239984806322
+    },
+    {
+      "condition": "stage5_technical_quality_proxy_failed",
+      "decision": "DEFER",
+      "reason_code": "TECHNICAL_QUALITY_PROXY_FAILED_NOT_CLINICAL_QUALITY"
+    },
+    {
+      "condition": "view_not_confirmed_as_ap_pa_or_lateral",
+      "decision": "DEFER",
+      "reason_code": "VIEW_OUTSIDE_FROZEN_STAGE5_CAPABILITY"
+    },
+    {
+      "condition": "stage11_fusion_status_uncertain_or_unlocalized",
+      "decision": "DEFER",
+      "reason_code": "FUSION_EVIDENCE_NOT_RELIABLY_SUPPORTIVE"
+    },
+    {
+      "condition": "required_eligible_input_missing",
+      "decision": "DEFER",
+      "reason_code": "REQUIRED_TRIAGE_EVIDENCE_MISSING"
+    }
+  ],
+  "allowed_decisions": [
+    "ROUTINE",
+    "PRIORITY",
+    "URGENT_REVIEW",
+    "CRITICAL_REVIEW",
+    "DEFER",
+    "INPUT_REJECTED"
+  ],
+  "contract_fingerprint": "16b28935ff1e3a3dbbd64848af757057e10f95a87702c8c65a959af8f596352b",
+  "eligible_inputs": [
+    "stage9_original_validation_accepted_reliability",
+    "stage5_ap_pa_lateral_and_technical_quality_proxy",
+    "stage11_uncertainty_annotation_only"
+  ],
+  "fitting_performed": false,
+  "gate": "HOLD_FOR_EXPERT_APPROVED_FINDING_PRIORITY_POLICY",
+  "inactive_decisions": {
+    "CRITICAL_REVIEW": "WITHHELD_REQUIRES_EXPERT_APPROVED_FINDING_PRIORITY_POLICY",
+    "INPUT_REJECTED": "WITHHELD_NO_ACCEPTED_AUTOMATED_INPUT_REJECTION_SIGNAL",
+    "PRIORITY": "WITHHELD_REQUIRES_EXPERT_APPROVED_FINDING_PRIORITY_POLICY",
+    "ROUTINE": "WITHHELD_REQUIRES_EXPERT_APPROVED_FINDING_PRIORITY_POLICY",
+    "URGENT_REVIEW": "WITHHELD_REQUIRES_EXPERT_APPROVED_FINDING_PRIORITY_POLICY"
+  },
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "mandatory_withholdings": [
+    "ood_detection",
+    "stage13_selective_prediction",
+    "clinical_quality_claim",
+    "reliable_positive_localization_support",
+    "severity",
+    "temporal_change",
+    "device_localization"
+  ],
+  "precedence": [
+    "INPUT_REJECTED",
+    "DEFER",
+    "REVIEW_PRIORITY"
+  ],
+  "reason_codes_required": true,
+  "research_use_only": true,
+  "rule_based_first": true,
+  "stage": "17B",
+  "status": "PASSED_RULE_BASED_RESEARCH_TRIAGE_CONTRACT_WITH_PRIORITY_HOLD",
+  "training_performed": false,
+  "tuning_performed": false
+}
