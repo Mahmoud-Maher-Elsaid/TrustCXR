@@ -1,0 +1,88 @@
+{
+  "accepted_meanings": {
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW": "RESEARCH_DRAFT_READY_FOR_EXPERT_REVIEW_ONLY",
+    "DEFER": "HIGHEST_PRECEDENCE_SAFETY_DECISION",
+    "REVISE_DETERMINISTICALLY": "DETERMINISTIC_CANONICAL_TEMPLATE_REPAIR_ONLY"
+  },
+  "candidate_decisions": [
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW",
+    "REVISE_DETERMINISTICALLY",
+    "DEFER"
+  ],
+  "currently_planned_llm_authorized_gate": null,
+  "decision_precedence": [
+    "DEFER",
+    "REVISE_DETERMINISTICALLY",
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW"
+  ],
+  "designation": "DETERMINISTIC_RESEARCH_ONLY",
+  "deterministic_stages_before_llm_gate": "NOT_DETERMINABLE_NO_CURRENTLY_AUTHORIZED_LLM_GATE",
+  "gate": "GO_FOR_STAGE_21A_BACKEND_API_AND_GPU_WORKER_DATA_READINESS",
+  "image_inference_performed": false,
+  "language_model_used": false,
+  "locked_test_records_accessed": 0,
+  "mandatory_defer_rules": [
+    "PARTIALLY_VERIFIED_REQUIRED_STATEMENT",
+    "CONTRADICTED",
+    "WITHHELD_INSUFFICIENT_EVIDENCE",
+    "IDENTITY_MISMATCH",
+    "FORBIDDEN_CLAIM",
+    "STAGE11_LIMITED_SUPPORT_WHERE_REQUIRED",
+    "ANATOMICAL_PROXY_OVERREACH",
+    "ACTIVE_STAGE17_DEFER"
+  ],
+  "mandatory_safety_limitations": [
+    "NO_CLINICAL_APPROVAL",
+    "NO_AUTONOMOUS_RELEASE",
+    "NO_CLINICAL_DEPLOYMENT",
+    "NO_CLINICAL_DIAGNOSIS",
+    "NO_SEVERITY",
+    "NO_TEMPORAL_CHANGE",
+    "NO_OOD_CLAIM",
+    "NO_DEVICE_LOCALIZATION",
+    "NO_TREATMENT_RECOMMENDATION",
+    "NO_PATIENT_HISTORY_INFERENCE",
+    "NO_CLINICAL_CERTAINTY_CLAIM",
+    "NO_HEURISTIC_IDENTITY_MATCHING",
+    "NO_PATIENT_IDENTIFYING_INFORMATION"
+  ],
+  "next_canonical_stage": "21A_BACKEND_API_AND_GPU_WORKER_DATA_READINESS",
+  "next_stage_authorizes_language_model_work": false,
+  "patient_identifiers_used": 0,
+  "real_patient_policy_activated": false,
+  "real_patient_reports_generated": 0,
+  "reason_codes": {
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW": [
+      "ALL_REQUIRED_STATEMENTS_VERIFIED",
+      "EXACT_GOVERNED_IDENTITY",
+      "FROZEN_TEMPLATE_CONFORMANT",
+      "NO_ACTIVE_DEFER_CONDITION"
+    ],
+    "DEFER": [
+      "INSUFFICIENT_EVIDENCE",
+      "IDENTITY_MISMATCH",
+      "UNSUPPORTED_CAPABILITY",
+      "PARTIAL_VERIFICATION_NOT_ACCEPTABLE",
+      "EXPLICIT_STRUCTURED_CONTRADICTION",
+      "WITHHELD_EVIDENCE",
+      "ACTIVE_STAGE17_DEFER",
+      "STAGE11_LIMITED_SUPPORT",
+      "MISSING_ELIGIBLE_INPUT",
+      "NO_SAFE_DETERMINISTIC_REVISION",
+      "FORBIDDEN_CLAIM",
+      "ANATOMICAL_PROXY_OVERREACH",
+      "REQUIRED_CAPABILITY_NOT_APPLICABLE"
+    ],
+    "REVISE_DETERMINISTICALLY": [
+      "SAME_STRUCTURED_EVIDENCE",
+      "CANONICAL_TEMPLATE_RECONSTRUCTION_AVAILABLE",
+      "PROVENANCE_PRESERVABLE",
+      "TEXTUAL_REPAIR_ONLY"
+    ]
+  },
+  "revision_may_introduce_new_facts": false,
+  "stage": "20D",
+  "stage20b_contract_fingerprint": "ae38c43d1d959b5b97c369dbc1e6b074db59231c074b030206e2328f0b5193bf",
+  "status": "DETERMINISTIC_RESEARCH_ONLY_ACCEPT_REVISE_DEFER_DECISION_SUPPORT",
+  "training_performed": false
+}
