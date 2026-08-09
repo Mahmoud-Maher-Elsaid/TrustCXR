@@ -202,9 +202,9 @@ def test_stage23b_rejects_execution_scope_expansion(key: str) -> None:
 
 def test_stage23b_validation_does_not_create_output() -> None:
     output = ROOT / "reports/stage23/stage23b_dicom_interoperability_contract_summary.json"
-    assert not output.exists()
+    before = output.read_bytes()
     freeze_contract(CONFIG, ROOT)
-    assert not output.exists()
+    assert output.read_bytes() == before
 
 
 def test_stage23c_authorizes_only_synthetic_creation_and_decoding() -> None:

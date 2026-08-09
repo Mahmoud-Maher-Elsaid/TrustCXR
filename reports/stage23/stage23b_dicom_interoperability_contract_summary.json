@@ -1,0 +1,377 @@
+{
+  "stage": "23B",
+  "status": "PASSED_DICOM_INTEROPERABILITY_CONTRACT_AND_SYNTHETIC_FIXTURE_PROTOCOL",
+  "gate": "GO_FOR_STAGE_23C_SYNTHETIC_DICOM_IMPLEMENTATION_VALIDATION",
+  "contract_fingerprint": "4b57e03cc8e2372afdfcca74147635d24bca4f08f52b4ae09415008e8906b354",
+  "stage23a_summary_sha256": "ff62f29bd97f14d593372f9466241194ea14be1ac55e1dd2e27df28cd154fc20",
+  "stage22_designation": "SYNTHETICALLY_VALIDATED_LOCAL_RESEARCH_UI_EXPERT_REVIEW_REQUIRED",
+  "stage22b_contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
+  "governed_dependency": "pydicom==3.0.2",
+  "contract": {
+    "designation": "PROSPECTIVE_SYNTHETIC_DICOM_INTEROPERABILITY_CONTRACT_ONLY",
+    "object_scope": {
+      "eligible_for_future_validation": [
+        "SYNTHETIC_SINGLE_FRAME_GRAYSCALE"
+      ],
+      "CR": "WITHHELD_PENDING_SOP_CLASS_SPECIFIC_VALIDATION",
+      "DX": "WITHHELD_PENDING_SOP_CLASS_SPECIFIC_VALIDATION",
+      "SECONDARY_CAPTURE": "WITHHELD_PENDING_SOP_CLASS_SPECIFIC_VALIDATION",
+      "MULTI_FRAME": "WITHHELD_UNSUPPORTED",
+      "COMPRESSED": "WITHHELD_PENDING_CODEC_VALIDATION"
+    },
+    "transfer_syntax": {
+      "EXPLICIT_VR_LITTLE_ENDIAN": "ACCEPT_FOR_FUTURE_SYNTHETIC_VALIDATION",
+      "IMPLICIT_VR_LITTLE_ENDIAN": "ACCEPT_FOR_FUTURE_SYNTHETIC_VALIDATION",
+      "COMPRESSED_TRANSFER_SYNTAXES": "WITHHELD_PENDING_CODEC_VALIDATION",
+      "UNKNOWN_OR_UNLISTED": "PROHIBITED_UNSUPPORTED",
+      "metadata_parsing_is_pixel_decoding": false
+    },
+    "photometric_interpretation": {
+      "MONOCHROME1": "ACCEPT_FOR_FUTURE_SYNTHETIC_VALIDATION",
+      "MONOCHROME2": "ACCEPT_FOR_FUTURE_SYNTHETIC_VALIDATION",
+      "ALL_OTHER": "WITHHELD_UNSUPPORTED",
+      "MONOCHROME1_display_rule": "INVERT_DISPLAY_WINDOWED_VALUES_ONLY_AFTER_MODALITY_AND_WINDOW_TRANSFORMS",
+      "MONOCHROME2_display_rule": "PRESERVE_DISPLAY_POLARITY",
+      "raw_stored_values_mutated_by_display_polarity": false
+    },
+    "pixel_fields": {
+      "required": [
+        "Rows",
+        "Columns",
+        "BitsAllocated",
+        "BitsStored",
+        "HighBit",
+        "PixelRepresentation",
+        "SamplesPerPixel",
+        "PhotometricInterpretation",
+        "TransferSyntaxUID",
+        "NumberOfFrames",
+        "PixelData"
+      ],
+      "conditionally_required": {
+        "PlanarConfiguration": "REQUIRED_ONLY_WHEN_SAMPLES_PER_PIXEL_GREATER_THAN_ONE_BUT_SUCH_OBJECTS_ARE_WITHHELD",
+        "RescaleSlope_RescaleIntercept": "BOTH_PRESENT_OR_BOTH_ABSENT",
+        "WindowCenter_WindowWidth": "BOTH_PRESENT_OR_BOTH_ABSENT"
+      },
+      "optional": [
+        "VOILUTSequence",
+        "PixelPaddingValue"
+      ],
+      "valid_initial_combinations": [
+        "ROWS_COLUMNS_POSITIVE_AND_WITHIN_OPERATIONAL_LIMITS",
+        "BITS_ALLOCATED_8_OR_16",
+        "BITS_STORED_BETWEEN_1_AND_BITS_ALLOCATED",
+        "HIGH_BIT_EQUALS_BITS_STORED_MINUS_1",
+        "PIXEL_REPRESENTATION_0_OR_1",
+        "SAMPLES_PER_PIXEL_EQUALS_1",
+        "NUMBER_OF_FRAMES_EQUALS_1"
+      ],
+      "invalid_behavior": "FAILED_SANITIZED_INVALID_PIXEL_METADATA",
+      "missing_mandatory_behavior": "FAIL_CLOSED_NO_GUESSING"
+    },
+    "representations": {
+      "ordered": [
+        "RAW_STORED_PIXEL_VALUES",
+        "MODALITY_TRANSFORMED_VALUES",
+        "DISPLAY_WINDOWED_VALUES",
+        "NORMALIZED_ML_INPUT_TENSOR"
+      ],
+      "raw": "IMMUTABLE_DECODED_STORED_NUMERIC_VALUES",
+      "modality": "RAW_VALUES_WITH_ONLY_GOVERNED_MODALITY_TRANSFORM_APPLIED",
+      "display": "MODALITY_VALUES_WITH_ONLY_GOVERNED_WINDOW_VOI_AND_PHOTOMETRIC_DISPLAY_RULES_APPLIED",
+      "ml": "SEPARATE_MODEL_SPECIFIC_PREPROCESSING_NOT_A_VIEWER_REPRESENTATION",
+      "browser_representation": "DISPLAY_WINDOWED_VALUES_ONLY_AFTER_FUTURE_VALIDATION",
+      "normalized_ml_tensor_for_browser_display": false
+    },
+    "modality_transform": {
+      "both_present": "REQUIRE_FINITE_NUMERIC_VALUES_AND_NONZERO_SLOPE_THEN_APPLY_VALUE_TIMES_SLOPE_PLUS_INTERCEPT",
+      "both_absent": "NO_MODALITY_TRANSFORM_DECLARED_PRESERVE_RAW_VALUES_WITH_DISTINCT_PROVENANCE",
+      "one_missing": "FAILED_SANITIZED_INVALID_PIXEL_METADATA",
+      "malformed_or_nonfinite": "FAILED_SANITIZED_INVALID_PIXEL_METADATA",
+      "silent_defaulting": false
+    },
+    "display_window": {
+      "single_finite_center_positive_finite_width": "ELIGIBLE_FOR_FUTURE_SYNTHETIC_VALIDATION",
+      "one_of_center_or_width_missing": "FAILED_SANITIZED_INVALID_PIXEL_METADATA",
+      "multiple_window_values": "WITHHELD_MULTIPLE_WINDOW_SELECTION_UNGOVERNED",
+      "voi_lut_sequence": "WITHHELD_VOI_LUT_NOT_YET_VALIDATED",
+      "all_window_metadata_missing": "ALLOW_DETERMINISTIC_SYNTHETIC_MIN_MAX_DISPLAY_ONLY",
+      "synthetic_fallback_qualifier": "NON_CLINICAL_SYNTHETIC_DISPLAY_NORMALIZATION_NOT_A_CLINICAL_VOI",
+      "fallback_creates_medical_claims": false
+    },
+    "pixel_padding": {
+      "when_present": "EXCLUDE_PADDING_FROM_DISPLAY_RANGE_ESTIMATION_AND_TRACK_AS_NON_ANATOMICAL_DISPLAY_BACKGROUND",
+      "raw_values_preserved": true,
+      "diagnostic_or_anatomical_evidence": false,
+      "malformed": "FAILED_SANITIZED_INVALID_PIXEL_METADATA"
+    },
+    "frame_contract": {
+      "SINGLE_FRAME": "ACCEPT_FOR_FUTURE_SYNTHETIC_VALIDATION",
+      "MULTI_FRAME": "WITHHELD_UNSUPPORTED",
+      "silently_select_first_frame": false
+    },
+    "view_metadata": {
+      "dicom_fields": [
+        "ViewPosition",
+        "PatientOrientation",
+        "BodyPartExamined"
+      ],
+      "dicom_source": "DICOM_METADATA_DERIVED_VIEW_WITH_INDEPENDENT_PROVENANCE",
+      "model_source": "STAGE5_MODEL_DERIVED_VIEW_WITH_INDEPENDENT_PROVENANCE",
+      "merge_or_overwrite": false,
+      "disagreement": "PRESERVE_EXPLICITLY_NO_CLINICAL_CORRECTNESS_INFERENCE"
+    },
+    "geometry_orientation": {
+      "fields": [
+        "ImageOrientationPatient",
+        "ImagePositionPatient",
+        "PixelSpacing",
+        "PatientOrientation",
+        "Laterality"
+      ],
+      "use_status": "WITHHELD_PENDING_LATER_EXPLICIT_GOVERNANCE",
+      "prohibited_inferences": [
+        "FINDING_LATERALITY",
+        "LESION_POSITION",
+        "SEVERITY",
+        "TEMPORAL_CHANGE",
+        "DIAGNOSIS"
+      ],
+      "policy": "NO_FINDING_LATERALITY_FROM_LOCALIZATION"
+    },
+    "uid_governance": {
+      "fields": [
+        "StudyInstanceUID",
+        "SeriesInstanceUID",
+        "SOPInstanceUID"
+      ],
+      "public_exposure": false,
+      "logging": false,
+      "heuristic_cross_dataset_identity": false,
+      "future_pseudonymous_reference": "ONLY_UNDER_LATER_AUTHORIZED_GOVERNED_IDENTITY_CONTRACT",
+      "synthetic_uid_policy": "DETERMINISTIC_CLEAR_SYNTHETIC_NAMESPACE_NO_REAL_LINKAGE"
+    },
+    "metadata_privacy": {
+      "strategy": "DENY_UNLESS_EXPLICITLY_ALLOWED",
+      "allowlist_for_future_synthetic_validation": [
+        "Rows",
+        "Columns",
+        "BitsAllocated",
+        "BitsStored",
+        "HighBit",
+        "PixelRepresentation",
+        "SamplesPerPixel",
+        "PhotometricInterpretation",
+        "NumberOfFrames",
+        "ViewPosition",
+        "PatientOrientation",
+        "BodyPartExamined",
+        "ImageOrientationPatient",
+        "ImagePositionPatient",
+        "PixelSpacing",
+        "Laterality",
+        "RescaleSlope",
+        "RescaleIntercept",
+        "WindowCenter",
+        "WindowWidth",
+        "VOILUTSequence",
+        "PixelPaddingValue"
+      ],
+      "prohibited_public_or_log_categories": [
+        "PATIENT_IDENTITY",
+        "ACCESSION_IDENTIFIERS",
+        "REFERRING_OR_PERFORMING_PERSONNEL",
+        "INSTITUTION_INFORMATION",
+        "COMMENTS_OR_FREE_TEXT",
+        "UNGOVERNED_STUDY_OR_SERIES_DESCRIPTIONS",
+        "RAW_UIDS",
+        "PRIVATE_TAGS"
+      ],
+      "raw_dataset_or_arbitrary_tag_exposure": false,
+      "unsafe_handling_behavior": "DEFER_UNSAFE_METADATA",
+      "deidentification_implementation_status": "ABSENT_NOT_IMPLEMENTED_IN_STAGE23B"
+    },
+    "result_vocabulary": [
+      "ACCEPTED_SYNTHETIC_DICOM",
+      "WITHHELD_UNSUPPORTED_TRANSFER_SYNTAX",
+      "WITHHELD_UNSUPPORTED_PHOTOMETRIC_INTERPRETATION",
+      "WITHHELD_UNSUPPORTED_MULTI_FRAME",
+      "WITHHELD_UNSUPPORTED_SOP_CLASS",
+      "FAILED_SANITIZED_INVALID_DICOM",
+      "FAILED_SANITIZED_MISSING_PIXEL_DATA",
+      "FAILED_SANITIZED_INVALID_PIXEL_METADATA",
+      "DEFER_UNSAFE_METADATA"
+    ],
+    "fixture_specs": [
+      {
+        "id": "VALID_MONOCHROME2_EXPLICIT",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "VALID_MONOCHROME1_EXPLICIT",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "VIEW_AP",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "VIEW_PA",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "VIEW_LATERAL",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "MISSING_VIEW_POSITION",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "MISSING_WINDOW_METADATA",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "VALID_EXPLICIT_VR_LITTLE_ENDIAN",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "VALID_IMPLICIT_VR_LITTLE_ENDIAN",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "MALFORMED_DICOM",
+        "expected": "FAILED_SANITIZED_INVALID_DICOM"
+      },
+      {
+        "id": "MISSING_PIXEL_DATA",
+        "expected": "FAILED_SANITIZED_MISSING_PIXEL_DATA"
+      },
+      {
+        "id": "INVALID_DIMENSIONS",
+        "expected": "FAILED_SANITIZED_INVALID_PIXEL_METADATA"
+      },
+      {
+        "id": "INVALID_BIT_DEPTH",
+        "expected": "FAILED_SANITIZED_INVALID_PIXEL_METADATA"
+      },
+      {
+        "id": "UNSUPPORTED_TRANSFER_SYNTAX",
+        "expected": "WITHHELD_UNSUPPORTED_TRANSFER_SYNTAX"
+      },
+      {
+        "id": "UNSUPPORTED_COMPRESSED_SYNTAX",
+        "expected": "WITHHELD_UNSUPPORTED_TRANSFER_SYNTAX"
+      },
+      {
+        "id": "UNSUPPORTED_MULTI_FRAME",
+        "expected": "WITHHELD_UNSUPPORTED_MULTI_FRAME"
+      },
+      {
+        "id": "UNSUPPORTED_PHOTOMETRIC",
+        "expected": "WITHHELD_UNSUPPORTED_PHOTOMETRIC_INTERPRETATION"
+      },
+      {
+        "id": "UNSAFE_METADATA",
+        "expected": "DEFER_UNSAFE_METADATA"
+      },
+      {
+        "id": "DETERMINISTIC_SYNTHETIC_UIDS",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "PHI_LIKE_FIELD_REJECTION",
+        "expected": "DEFER_UNSAFE_METADATA"
+      },
+      {
+        "id": "DETERMINISTIC_DISPLAY_OUTPUT",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      },
+      {
+        "id": "DETERMINISTIC_REPEAT",
+        "expected": "ACCEPTED_SYNTHETIC_DICOM"
+      }
+    ],
+    "decoder_boundary": [
+      "SEPARATE_INTEROPERABILITY_LAYER",
+      "NO_CLINICAL_FINDINGS",
+      "NO_AUTOMATIC_STAGE5_9_10_INFERENCE",
+      "NO_AUTOMATIC_REPORT_GENERATION",
+      "NO_AUTOMATIC_STAGE8_10_OVERLAYS",
+      "NO_DIAGNOSIS",
+      "NO_SEVERITY",
+      "NO_TEMPORAL_CHANGE"
+    ],
+    "ui_boundary": {
+      "authorization": "WITHHELD_PENDING_EXPLICIT_LATER_GATE",
+      "required_banner": [
+        "RESEARCH USE ONLY",
+        "NOT A MEDICAL DIAGNOSIS",
+        "EXPERT REVIEW REQUIRED"
+      ],
+      "prohibited_exposure": [
+        "RAW_METADATA_DUMP",
+        "RAW_UIDS",
+        "ARBITRARY_TAGS",
+        "INTERNAL_FILESYSTEM_PATHS",
+        "EXTERNAL_DICOM_URLS"
+      ]
+    },
+    "codec_governance": "WITHHELD_UNTIL_EXACT_DEPENDENCY_VERSION_TRANSFER_SYNTAX_MATRIX_DETERMINISM_FAILURE_AND_REPRODUCIBILITY_ARE_FROZEN",
+    "security": {
+      "prohibited_inputs": [
+        "ARBITRARY_DICOM_PATH",
+        "DIRECTORY_TRAVERSAL",
+        "URL_DICOM_LOADING",
+        "EXTERNAL_NETWORK_FETCH",
+        "ARBITRARY_OUTPUT_PATH",
+        "EXECUTABLE_CONTENT",
+        "UNCONTROLLED_DECOMPRESSION"
+      ],
+      "operational_limits": {
+        "maximum_rows": 4096,
+        "maximum_columns": 4096,
+        "maximum_frames": 1,
+        "maximum_uncompressed_pixel_bytes": 67108864
+      },
+      "limit_rationale": "SYNTHETIC_VALIDATION_RESOURCE_EXHAUSTION_BOUNDARY_NOT_A_CLINICAL_ELIGIBILITY_RULE",
+      "limit_exceeded": "FAILED_SANITIZED_INVALID_PIXEL_METADATA"
+    },
+    "frozen_limitations": [
+      "STAGE11_MAXIMUM_PARTIALLY_SUPPORTED",
+      "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",
+      "NO_LOCALIZATION_ABSENCE_CONTRADICTION",
+      "STAGE13_SELECTIVE_PREDICTION_NOT_ACCEPTED",
+      "OOD_WITHHELD",
+      "STAGE17_DEFER_ONLY",
+      "STAGE18_DETERMINISTIC_REPORTING",
+      "STAGE19_VERIFIER_RESTRICTIONS",
+      "STAGE20_DEFER_HIGHEST_PRECEDENCE",
+      "STAGE22_OVERLAY_HOLD",
+      "NO_SEVERITY",
+      "NO_TEMPORAL_CHANGE",
+      "NO_DEVICE_LOCALIZATION",
+      "NO_DIAGNOSIS",
+      "NO_TREATMENT_RECOMMENDATION",
+      "NO_CLINICAL_APPROVAL",
+      "NO_AUTONOMOUS_RELEASE"
+    ]
+  },
+  "dicom_files_created": 0,
+  "pixeldata_decoded": false,
+  "dicom_displayed": false,
+  "packages_installed": [],
+  "real_patient_files_used": 0,
+  "locked_test_records_accessed": 0,
+  "model_inference_performed": false,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "next_canonical_stage": "23C_SYNTHETIC_DICOM_IMPLEMENTATION_VALIDATION",
+  "next_stage_authorizes_synthetic_dicom_creation": true,
+  "next_stage_authorizes_synthetic_pixeldata_decoding": true,
+  "next_stage_authorizes_dicom_ui_rendering": false,
+  "next_stage_authorizes_real_dicom_display": false,
+  "next_stage_authorizes_real_model_inference": false,
+  "next_stage_authorizes_language_model_work": false
+}
