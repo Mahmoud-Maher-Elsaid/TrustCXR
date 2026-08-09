@@ -101,6 +101,7 @@ $routes = @{
     "25A" = "scripts\reproducibility\run_stage25a_mlops_reproducibility_data_readiness.ps1"
     "25B" = "scripts\reproducibility\run_stage25b_mlops_reproducibility_closure.ps1"
     "26A" = "scripts\external_validation\run_stage26a_external_validation_data_readiness.ps1"
+    "26B" = "scripts\external_validation\run_stage26b_external_validation_withholding_closure.ps1"
 }
 if (-not $routes.ContainsKey($Stage)) { throw "No real stage-specific launcher is registered for '$Stage'." }
 $script = Join-Path $ProjectRoot $routes[$Stage]

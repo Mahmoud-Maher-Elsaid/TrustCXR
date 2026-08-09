@@ -1,0 +1,179 @@
+{
+  "stage": "26A",
+  "status": "PASSED_EXTERNAL_VALIDATION_DATA_READINESS_WITH_NO_ELIGIBLE_COHORT",
+  "gate": "GO_FOR_STAGE_26B_EXTERNAL_VALIDATION_WITHHOLDING_CLOSURE",
+  "disposition": "SCIENTIFICALLY_WITHHELD_NO_GOVERNED_INDEPENDENT_EXTERNAL_VALIDATION_COHORT",
+  "closure_classification": "WITHHELD_NOT_FAILED",
+  "stage25b_summary_sha256": "81c1e927c32b5535a62572d792440c1cd46f8d7f69e11450431f6a37312563d4",
+  "canonical_environment_lock_sha256": "cc63ac8bfb8dd6cc0f15469c4e7dfd6f620ec3747931ebd63c85fb11a8dc0786",
+  "strict_external_validation_definition": [
+    "INDEPENDENT_INSTITUTION_OR_SOURCE",
+    "INDEPENDENT_DATASET_AND_COHORT_CONSTRUCTION",
+    "PROVEN_NO_PATIENT_OVERLAP",
+    "COMPATIBLE_GOVERNED_LABEL_SEMANTICS",
+    "NO_TRAINING_VALIDATION_SELECTION_THRESHOLD_CALIBRATION_OR_POST_TEST_USE",
+    "GOVERNED_LICENSE_IDENTITY_IMAGES_AND_LABELS"
+  ],
+  "candidate_datasets": [
+    {
+      "dataset": "NIH ChestXray14",
+      "target_components": [
+        "STAGE9_CLASSIFIER"
+      ],
+      "status": "INELIGIBLE_NOT_INDEPENDENT",
+      "reasons": [
+        "USED_FOR_CLASSIFIER_TRAINING_VALIDATION_AND_MODEL_DEVELOPMENT"
+      ]
+    },
+    {
+      "dataset": "NIH CheXmask",
+      "target_components": [
+        "STAGE9_CLASSIFIER",
+        "STAGE10_LOCALIZER"
+      ],
+      "status": "INELIGIBLE_NOT_INDEPENDENT",
+      "reasons": [
+        "USED_FOR_STAGE8_AND_STAGE9_DEVELOPMENT",
+        "PSEUDO_ANATOMY_MASKS_ARE_NOT_LESION_LOCALIZATION_GROUND_TRUTH"
+      ]
+    },
+    {
+      "dataset": "RSNA Pneumonia Detection Challenge",
+      "target_components": [
+        "STAGE9_CLASSIFIER",
+        "STAGE10_LOCALIZER",
+        "STAGE16_RELIABILITY"
+      ],
+      "status": "INELIGIBLE_NOT_INDEPENDENT",
+      "reasons": [
+        "USED_FOR_STAGE10_LOCALIZER_DEVELOPMENT_AND_STAGE11_FUSION_EVIDENCE",
+        "PNEUMONIA_LUNG_OPACITY_RELATION_IS_PARTIAL_SUPPORT_ONLY",
+        "NOT_A_FULL_14_LABEL_CLASSIFIER_COHORT"
+      ]
+    },
+    {
+      "dataset": "CheXpert Small",
+      "target_components": [
+        "STAGE5_VIEW_QUALITY",
+        "STAGE9_CLASSIFIER",
+        "STAGE13_FRONTAL_CLASSIFIER",
+        "STAGE16_RELIABILITY"
+      ],
+      "status": "INELIGIBLE_NOT_INDEPENDENT",
+      "reasons": [
+        "USED_FOR_STAGE5_AND_STAGE13_MODEL_DEVELOPMENT",
+        "STAGE9_FROZEN_14_LABEL_CONTRACT_NOT_FULLY_COMPATIBLE",
+        "CROSS_DATASET_PATIENT_NON_OVERLAP_WITH_NIH_NOT_PROVEN"
+      ]
+    },
+    {
+      "dataset": "VinBigData Chest X-ray Abnormalities Detection",
+      "target_components": [
+        "STAGE10_LOCALIZER"
+      ],
+      "status": "INELIGIBLE_IDENTITY_NOT_GOVERNED",
+      "reasons": [
+        "PATIENT_IDENTITY_UNRESOLVED",
+        "PRIOR_WITHHOLDING_REMAINS_ACTIVE"
+      ]
+    },
+    {
+      "dataset": "Indiana University Chest X-ray Reports",
+      "target_components": [
+        "STAGES17_TO_20_DETERMINISTIC_DOWNSTREAM"
+      ],
+      "status": "INELIGIBLE_IDENTITY_NOT_GOVERNED",
+      "reasons": [
+        "PATIENT_IDENTITY_UNRESOLVED",
+        "REPORTS_WITHHELD_FROM_GROUNDING_STYLE_AND_FACTUAL_USE"
+      ]
+    },
+    {
+      "dataset": "Chest Radiography Database Lung Masks",
+      "target_components": [
+        "STAGE10_LOCALIZER"
+      ],
+      "status": "INELIGIBLE_LABEL_INCOMPATIBILITY",
+      "reasons": [
+        "ANATOMY_MASKS_ARE_NOT_LESION_BOUNDING_BOX_GROUND_TRUTH",
+        "INHERITED_LICENSE_AND_PATIENT_IDENTITY_REMAIN_UNRESOLVED"
+      ]
+    },
+    {
+      "dataset": "SIIM-ACR Pneumothorax Segmentation",
+      "target_components": [
+        "STAGE9_CLASSIFIER",
+        "STAGE10_LOCALIZER"
+      ],
+      "status": "INELIGIBLE_IDENTITY_NOT_GOVERNED",
+      "reasons": [
+        "PATIENT_IDENTITY_AND_ANNOTATION_IMAGE_JOIN_UNRESOLVED",
+        "SINGLE_FINDING_MASK_SEMANTICS_DO_NOT_VALIDATE_FULL_14_LABEL_OR_LUNG_OPACITY_CONTRACT"
+      ]
+    },
+    {
+      "dataset": "TBX11K",
+      "target_components": [
+        "STAGE9_CLASSIFIER",
+        "STAGE13_FRONTAL_CLASSIFIER"
+      ],
+      "status": "INELIGIBLE_IDENTITY_NOT_GOVERNED",
+      "reasons": [
+        "IDENTITY_IS_FILENAME_ONLY",
+        "TUBERCULOSIS_LABELS_DO_NOT_MATCH_FROZEN_14_LABEL_CONTRACT"
+      ]
+    },
+    {
+      "dataset": "COVID-19 Radiography Database",
+      "target_components": [
+        "STAGE9_CLASSIFIER",
+        "STAGE13_FRONTAL_CLASSIFIER"
+      ],
+      "status": "INELIGIBLE_IDENTITY_NOT_GOVERNED",
+      "reasons": [
+        "PATIENT_IDENTITY_UNRESOLVED",
+        "COVID_CLASS_LABELS_DO_NOT_MATCH_FROZEN_14_LABEL_CONTRACT"
+      ]
+    }
+  ],
+  "candidate_dataset_count": 10,
+  "eligible_candidate_datasets": [],
+  "externally_validatable_target_components": [],
+  "capability_readiness": {
+    "stage5_view_technical_quality_proxy": "SCIENTIFICALLY_WITHHELD",
+    "stage9_full_14_label_classifier": "SCIENTIFICALLY_WITHHELD",
+    "stage9_partial_label_scope": "SCIENTIFICALLY_WITHHELD_IDENTITY_INDEPENDENCE_NOT_PROVEN",
+    "stage10_localization_research_baseline": "SCIENTIFICALLY_WITHHELD",
+    "stage13_frontal_classifier": "SCIENTIFICALLY_WITHHELD",
+    "stage16_reliability_calibration": "SCIENTIFICALLY_WITHHELD",
+    "stages17_to_20_deterministic_downstream": "SCIENTIFICALLY_WITHHELD_UPSTREAM_EXTERNAL_EVIDENCE_ABSENT"
+  },
+  "governed_independent_patient_identity_sufficient": false,
+  "stage9_full_14_label_external_validation_possible": false,
+  "stage13_external_validation_possible": false,
+  "stage10_localization_external_validation_possible": false,
+  "future_required_evidence": [
+    "GOVERNED_INDEPENDENT_PATIENT_IDENTITY_OR_PROVEN_NON_OVERLAP",
+    "CAPABILITY_COMPATIBLE_LABEL_SEMANTICS_AND_REQUIRED_ARTIFACTS",
+    "APPROVED_LICENSE_AND_SOURCE_VERSION",
+    "PROSPECTIVELY_FROZEN_COHORT_AND_METRICS_BEFORE_INFERENCE"
+  ],
+  "new_dataset_acquired": false,
+  "training_performed": false,
+  "fine_tuning_performed": false,
+  "checkpoints_modified": false,
+  "model_inference_performed": false,
+  "predictions_generated": false,
+  "locked_test_records_accessed": 0,
+  "language_model_used": false,
+  "currently_planned_llm_authorized_gate": null,
+  "language_model_mandatory_for_project_completion": false,
+  "next_canonical_stage": "26B_EXTERNAL_VALIDATION_WITHHOLDING_CLOSURE",
+  "stage26_may_close_with_withheld_not_failed": true,
+  "shortest_remaining_path": [
+    "STAGE26B_EXTERNAL_VALIDATION_WITHHOLDING_CLOSURE",
+    "STAGE27A_PAPER_FINAL_RELEASE_AUDIT"
+  ],
+  "major_conceptual_stages_remaining_including_stage26": 2,
+  "optional_capability_expansion_required": false
+}
