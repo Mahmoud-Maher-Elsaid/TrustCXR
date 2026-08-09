@@ -1,0 +1,71 @@
+{
+  "stage": "22C",
+  "status": "PASSED_SYNTHETIC_RESEARCH_UI_IMPLEMENTATION_VALIDATION",
+  "gate": "GO_FOR_STAGE_22D_BOUNDED_SYNTHETIC_UI_RUNTIME_BROWSER_VALIDATION",
+  "stage22b_contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
+  "stage22b_summary_sha256": "b4a33ce2130d90c4d88d8c8bbcd4f85c438fc0157d2d5d614ff3f46bcb1cc5a7",
+  "implemented_ui_files": [
+    "app.css",
+    "app.js",
+    "fixtures.json",
+    "index.html"
+  ],
+  "implemented_components": [
+    "ACCEPT_REVISE_DEFER_DECISION_PANEL",
+    "CLASSIFIER_SCORE_PANEL",
+    "GLOBAL_RESEARCH_ONLY_BANNER",
+    "JOB_STATUS_PANEL",
+    "LIMITED_FUSION_EVIDENCE_PANEL",
+    "MEDICAL_IMAGE_VIEWER_PANEL",
+    "PROVENANCE_PANEL",
+    "RELIABILITY_UNCERTAINTY_PANEL",
+    "RESEARCH_REPORT_DRAFT_PANEL",
+    "SANITIZED_TECHNICAL_ERROR_PANEL",
+    "VERIFIER_PANEL",
+    "VIEW_TECHNICAL_QUALITY_PANEL"
+  ],
+  "ui_routes": [
+    "GET /ui",
+    "GET /ui/app.css",
+    "GET /ui/app.js",
+    "GET /ui/fixtures.json"
+  ],
+  "synthetic_viewer_fixture_count": 2,
+  "synthetic_viewer_fixture_types": [
+    "PNG",
+    "JPEG"
+  ],
+  "synthetic_viewer_dimensions": {
+    "PNG": [
+      32,
+      24
+    ],
+    "JPEG": [
+      32,
+      24
+    ]
+  },
+  "static_asset_integrity": "PASSED",
+  "html_javascript_safety": "PASSED",
+  "deterministic_rendering_contract": "PASSED",
+  "accessibility_contract": "PASSED",
+  "dependency_changed": false,
+  "browser_started": false,
+  "persistent_server_started": false,
+  "real_images_displayed": 0,
+  "stage8_overlay_activated": false,
+  "stage10_overlay_activated": false,
+  "real_model_loaded": false,
+  "real_inference_performed": false,
+  "gpu_residency_profiling_performed": false,
+  "real_patient_records_used": 0,
+  "locked_test_records_accessed": 0,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "next_canonical_stage": "22D_BOUNDED_SYNTHETIC_UI_RUNTIME_BROWSER_VALIDATION",
+  "next_stage_authorizes_bounded_ui_runtime_browser_validation": true,
+  "next_stage_authorizes_real_image_display": false,
+  "next_stage_authorizes_real_model_inference": false,
+  "next_stage_authorizes_language_model_work": false
+}
