@@ -1,0 +1,96 @@
+{
+  "stage": "24B",
+  "stage24a_summary": "reports/stage24/stage24a_human_feedback_active_learning_readiness.json",
+  "stage24a_summary_sha256": "fc33216899e9b947740a38ddb7cf9871ac7aa5a1eb3b9afa0d35a41291b6139d",
+  "stage24a_status": "PASSED_HUMAN_FEEDBACK_ACTIVE_LEARNING_DATA_READINESS_WITH_EXPERT_FEEDBACK_HOLD",
+  "disposition": "SCIENTIFICALLY_WITHHELD_NO_GOVERNED_EXPERT_FEEDBACK_DATA",
+  "closure_classification": "WITHHELD_NOT_FAILED",
+  "evidence_distinctions": {
+    "dataset_ground_truth": "NOT_PROSPECTIVE_HUMAN_FEEDBACK",
+    "stage12_manual_project_annotations": "STAGE_SPECIFIC_ONLY_NOT_REUSABLE_AS_STAGE24_FEEDBACK",
+    "semantic_governance_adjudication": "NOT_CLINICAL_EXPERT_FEEDBACK",
+    "synthetic_fixtures": "NOT_HUMAN_FEEDBACK",
+    "model_outputs": "NOT_HUMAN_FEEDBACK"
+  },
+  "future_feedback_design": {
+    "status": "DESIGN_ONLY_NOT_ACTIVATED",
+    "allowed_structured_fields": [
+      "PSEUDONYMOUS_CASE_REFERENCE",
+      "SOURCE_COMPONENT_IDENTIFIER",
+      "SOURCE_COMPONENT_VERSION",
+      "ORIGINAL_STRUCTURED_RESULT_IMMUTABLE_REFERENCE",
+      "REVIEWER_PSEUDONYMOUS_ROLE_REFERENCE",
+      "REVIEWER_DISPOSITION",
+      "CORRECTION_CATEGORY",
+      "ACCEPTED_REJECTED_UNCERTAIN",
+      "REASON_CODE",
+      "PROTOCOL_VERSION",
+      "EVENT_TIMESTAMP",
+      "PROVENANCE_REFERENCE"
+    ],
+    "prohibited_fields": [
+      "REVIEWER_NAME",
+      "PATIENT_IDENTIFIER",
+      "RAW_PHI",
+      "FREE_TEXT_CLINICAL_DIAGNOSIS"
+    ],
+    "human_feedback_does_not_automatically_become_training_truth": true
+  },
+  "future_training_feedback_gate": [
+    "GOVERNED_REVIEWER_QUALIFICATION",
+    "EXPLICIT_ANNOTATION_PROTOCOL",
+    "ADJUDICATION_POLICY_WHERE_REQUIRED",
+    "COMPLETE_PROVENANCE",
+    "VERSIONED_REVIEW_MANIFEST",
+    "PATIENT_SAFE_SPLIT_PROTECTION",
+    "LOCKED_TEST_PROTECTION",
+    "EXPLICIT_RETRAINING_MANIFEST_APPROVAL"
+  ],
+  "test_set_policy": [
+    "NO_LOCKED_TEST_FEEDBACK_ACQUISITION",
+    "NO_TEST_CORRECTIONS",
+    "NO_TEST_RELABELING",
+    "NO_ACTIVE_LEARNING_FROM_LOCKED_TEST",
+    "NO_FEEDBACK_DRIVEN_TEST_TUNING"
+  ],
+  "candidate_signals_design_only": [
+    "STAGE16_PREDICTIVE_UNCERTAINTY",
+    "STAGE17_DEFER_REASON_CODES",
+    "STAGE19_VERIFIER_STATUS",
+    "STAGE20_DECISION",
+    "GOVERNED_MODEL_DISAGREEMENT"
+  ],
+  "prohibited_signals": [
+    "OOD_CLAIM",
+    "SEVERITY",
+    "TEMPORAL_CHANGE",
+    "UNSUPPORTED_LOCALIZATION",
+    "STAGE13_SELECTIVE_PREDICTION",
+    "PATIENT_IDENTITY",
+    "PHI_HEURISTIC"
+  ],
+  "active_learning_queue_created": false,
+  "feedback_collection_authorized": false,
+  "feedback_driven_sampling_authorized": false,
+  "active_learning_activation_authorized": false,
+  "training_authorized": false,
+  "fine_tuning_authorized": false,
+  "checkpoint_modification_authorized": false,
+  "dataset_split_modification_authorized": false,
+  "locked_test_access_authorized": false,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "language_model_mandatory_for_project_completion": false,
+  "expected_status": "SCIENTIFICALLY_WITHHELD_NO_GOVERNED_EXPERT_FEEDBACK_DATA",
+  "expected_gate": "GO_FOR_STAGE_25A_MLOPS_REPRODUCIBILITY_DATA_READINESS",
+  "stage24_closed": true,
+  "next_canonical_stage": "25A_MLOPS_REPRODUCIBILITY_DATA_READINESS",
+  "remaining_mandatory_conceptual_stages_after_stage24": [
+    "ORIGINAL_STAGE22_MLOPS_AND_REPRODUCIBILITY",
+    "ORIGINAL_STAGE23_EXTERNAL_VALIDATION_AND_ABLATIONS",
+    "ORIGINAL_STAGE24_PAPER_AND_FINAL_RELEASE"
+  ],
+  "remaining_major_mandatory_conceptual_stage_count": 3,
+  "optional_capability_expansion_required": false
+}
