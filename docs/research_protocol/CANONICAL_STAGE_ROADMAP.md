@@ -89,7 +89,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 20C | Completed synthetic decision validation | Go for Stage 20D deterministic decision acceptance | Deterministic DEFER-first decision engine and safety validation | Accept, revise, or defer implementation | Original Stage 17 | Complete | 17/17 synthetic fixtures passed; no real policy activation | 20D |
 | 20D | Completed deterministic decision acceptance | Go for Stage 21A backend and worker readiness | Conservative deterministic research-only decision-support acceptance | Accept, revise, or defer acceptance | Original Stage 17 | Complete | No LLM, real-patient activation, clinical approval, or test access | 20E |
 | 20E | Current closure | Go for Stage 21A backend and worker readiness | Frozen DEFER-first deterministic research decision support | Accept, revise, or defer freeze | Original Stage 17 | Complete | Canonical-template revision only; no new facts | 21A |
-| 21A | Prepared after Stage 20 closure | Readiness audit only | Frozen pipeline inventory, API schema readiness, GPU worker and privacy contracts | Backend API and GPU worker readiness | Original Stage 18 | Ready to run | No server, worker, inference, patient activation, or LLM endpoint | 21B |
+| 21A | Completed backend and worker readiness | Go for Stage 21B serving contract | Frozen pipeline inventory, API schema readiness, GPU worker and privacy contracts | Backend API and GPU worker readiness | Original Stage 18 | Complete | Implementation and residency holds preserved | 21B |
+| 21B | Prepared after Stage 21A completion | Contract freeze and synthetic fixture preparation only | Versioned schemas, state machine, worker bounds, privacy, failures, and orchestration | Backend API and GPU worker contract | Original Stage 18 | Ready to run | No server, worker, serving dependencies, inference, patient activation, or LLM endpoint | 21C |
 
 ## Numbering rule
 
