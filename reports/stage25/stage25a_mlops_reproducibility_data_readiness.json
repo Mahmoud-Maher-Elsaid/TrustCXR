@@ -1,0 +1,273 @@
+{
+  "stage": "25A",
+  "status": "PASSED_MLOPS_REPRODUCIBILITY_DATA_READINESS_WITH_BOUNDED_CLOSURE_GAPS",
+  "gate": "GO_FOR_STAGE_25B_MLOPS_REPRODUCIBILITY_CLOSURE",
+  "target": "REPRODUCIBLE_RESEARCH_PIPELINE",
+  "stage24b_summary_sha256": "f9d17d58ebc1da7eeaf44e09837976270d024cbaea10b7dfcb87ff08cf5f6224",
+  "repository": {
+    "visibility": "PRIVATE",
+    "branch": "develop",
+    "working_tree": "CLEAN_BEFORE_STAGE_OUTPUT",
+    "upstream": "origin/develop",
+    "divergence": "0/0"
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "pip": "26.2",
+    "torch": "2.12.1+cu130",
+    "torchvision": "0.27.1+cu130",
+    "cuda_runtime": "13.0",
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "numpy": "2.5.1",
+    "pillow": "12.3.0",
+    "scikit_learn": "1.9.0",
+    "pydicom": "3.0.2",
+    "fastapi": "0.116.1",
+    "pydantic": "2.11.7",
+    "uvicorn": "0.35.0"
+  },
+  "environment_reproducibly_governed": "PARTIAL_BLOCKING_FINAL_UNIFIED_LOCK",
+  "dependency_evidence": {
+    "project_manifest": "pyproject.toml",
+    "scientific_lock": "requirements/lock-stage8.txt",
+    "torch_index_manifest": "requirements/torch-cu130.txt",
+    "serving_lock": "requirements/lock-serving-stage21.txt",
+    "serving_lock_sha256": "6b82df6db246280518aec3078f55675e02c41b9afd4e74c104836960b820d782",
+    "dicom_pin_manifest": "requirements/data-audit.txt",
+    "status": "PARTIALLY_GOVERNED_REQUIRES_UNIFIED_FINAL_LOCK",
+    "conflicting_pins_found": [],
+    "ungoverned_runtime_imports_found": [],
+    "blocking_gap": "NO_SINGLE_HASHED_FINAL_ENVIRONMENT_LOCK_AND_INSTALL_PROTOCOL"
+  },
+  "accepted_model_artifacts": [
+    {
+      "component": "stage5_quality_view",
+      "path": "artifacts/stage5/best_quality_view.pt",
+      "sha256": "1ca66fcffe590dac5c4c56d9d1233c29bb51a21000db7da4483673c1f7182a74",
+      "config": "configs/training/stage5_quality_view.json",
+      "config_sha256": "de641a682362b5671c8d761d77c9d507ae907041bb7b3f057489f20581e1021c",
+      "architecture": "EfficientNet-B0 dual view/technical-quality-proxy heads",
+      "preprocessing": "224px governed Stage 5 transform",
+      "label_contract": "AP_PA_LATERAL_AND_NONCLINICAL_TECHNICAL_QUALITY_PROXY",
+      "present_locally": true,
+      "intentionally_git_ignored": true,
+      "integrity_verified": true,
+      "regeneration_path": "TRACKED_CONFIG_STAGE_LAUNCHER_AND_GOVERNED_DATA_LAYOUT"
+    },
+    {
+      "component": "stage6_nih_classifier",
+      "path": "artifacts/stage6/best_model.pt",
+      "sha256": "3d94879aff1d7a88378ed049f9c375aa1390bd47d0bd2611064116282dc12a89",
+      "config": "configs/training/stage6_nih_densenet121.json",
+      "config_sha256": "6351e285dea74fe4a78fea6289cab05cdf27e3665e2317c661061fb1a1ff7025",
+      "architecture": "DenseNet-121",
+      "preprocessing": "governed Stage 6 image transform",
+      "label_contract": "NIH_CHESTXRAY14_FROZEN_14_LABEL_ORDER",
+      "present_locally": true,
+      "intentionally_git_ignored": true,
+      "integrity_verified": true,
+      "regeneration_path": "TRACKED_CONFIG_STAGE_LAUNCHER_AND_GOVERNED_DATA_LAYOUT"
+    },
+    {
+      "component": "stage7_rad_dino_probe",
+      "path": "artifacts/stage7/probes/champion_model.pt",
+      "sha256": "87f7781d6a1fc0afce1fb21d33c483275c13148eb8a47750dcfc1612b926bbb3",
+      "config": "configs/features/stage7b_rad_dino_cls.json",
+      "config_sha256": "f0a987a44d72ff57dea39bfd3948eafb6f05408bcf62b25282b1fb0792c97c00",
+      "architecture": "frozen RAD-DINO feature probe",
+      "preprocessing": "governed Stage 7 transform",
+      "label_contract": "NIH_CHESTXRAY14_FROZEN_14_LABEL_ORDER",
+      "present_locally": true,
+      "intentionally_git_ignored": true,
+      "integrity_verified": true,
+      "regeneration_path": "TRACKED_CONFIG_STAGE_LAUNCHER_AND_GOVERNED_DATA_LAYOUT"
+    },
+    {
+      "component": "stage8_anatomy_segmentation",
+      "path": "artifacts/stage8/final_segmentation_model/trustcxr_stage8_unet_resnet34.pt",
+      "sha256": "f97e6f94ea0ad5f33c98bdeffe3bf19f3d168c0bd41317e083fa08361cba00ba",
+      "config": "configs/training/stage8c_chexmask_coverage_continuation.json",
+      "config_sha256": "2b979ca22abf636a9f8aaa6018603b078412bc39d42979baf348cfa1ee34035a",
+      "architecture": "U-Net ResNet-34",
+      "preprocessing": "256px governed Stage 8 transform",
+      "label_contract": "QUALITY_FILTERED_PSEUDO_LUNG_HEART_ANATOMY_ONLY",
+      "present_locally": true,
+      "intentionally_git_ignored": true,
+      "integrity_verified": true,
+      "regeneration_path": "TRACKED_CONFIG_STAGE_LAUNCHER_AND_GOVERNED_DATA_LAYOUT"
+    },
+    {
+      "component": "stage9_original_classifier",
+      "path": "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt",
+      "sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
+      "config": "configs/training/stage9_final_freeze.json",
+      "config_sha256": "d6c3a19658b8f98c328cbfc4f2693d872d5542bb710e1f5d7564a2b0377eedf5",
+      "architecture": "DenseNet-121 original-image variant",
+      "preprocessing": "224px RGB ImageNet normalization",
+      "label_contract": "FROZEN_14_LABEL_ORDER",
+      "present_locally": true,
+      "intentionally_git_ignored": true,
+      "integrity_verified": true,
+      "regeneration_path": "TRACKED_CONFIG_STAGE_LAUNCHER_AND_GOVERNED_DATA_LAYOUT"
+    },
+    {
+      "component": "stage10_rsna_localizer",
+      "path": "artifacts/stage10/stage10e_rsna_localization/best_checkpoint.pt",
+      "sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+      "config": "configs/localization/stage10n_localization_acceptance_decision.json",
+      "config_sha256": "a905044f6e601f0d0624cc2b215a93283e700e3443a6080733125fc0fc64d47b",
+      "architecture": "Faster R-CNN Stage 10E baseline",
+      "preprocessing": "governed RSNA Stage 10E transform",
+      "label_contract": "LUNG_OPACITY_RESEARCH_BASELINE_WITH_LIMITATIONS",
+      "present_locally": true,
+      "intentionally_git_ignored": true,
+      "integrity_verified": true,
+      "regeneration_path": "TRACKED_CONFIG_STAGE_LAUNCHER_AND_GOVERNED_DATA_LAYOUT"
+    },
+    {
+      "component": "stage13_frontal_only",
+      "path": "artifacts/stage13/stage13d_multiview_baseline/frontal_only/best_checkpoint.pt",
+      "sha256": "09a8db4e83861fcc41172d64f29215d6e9d24cd41a8d6b51f825ca6d00fb1c77",
+      "config": "configs/multiview/stage13f_multiview_selection_freeze.json",
+      "config_sha256": "8ef34e9acff9611d9ae16b252417e57ff720479aec30c0499944053ff80ff8ff",
+      "architecture": "Stage13MultiViewClassifier frontal-only path",
+      "preprocessing": "frozen Stage 13 frontal 224px transform",
+      "label_contract": "FROZEN_CHEXPERT_14_LABEL_MASKING_CONTRACT",
+      "present_locally": true,
+      "intentionally_git_ignored": true,
+      "integrity_verified": true,
+      "regeneration_path": "TRACKED_CONFIG_STAGE_LAUNCHER_AND_GOVERNED_DATA_LAYOUT"
+    }
+  ],
+  "all_accepted_model_checkpoints_have_integrity_evidence": true,
+  "dataset_reconstruction": [
+    {
+      "dataset": "NIH ChestXray14",
+      "local_folder": "TrustCXR-Data/01_NIH_ChestXray14",
+      "governance": "configs/data/final_training_selection.json",
+      "layout": "configs/data/concrete_adapter_registry.json",
+      "split_evidence": "reports/stage6/stage6_summary.json",
+      "patient_safe": true
+    },
+    {
+      "dataset": "NIH CheXmask",
+      "local_folder": "TrustCXR-Data/04_NIH_CheXmask",
+      "governance": "configs/data/final_training_selection.json",
+      "layout": "configs/data/concrete_adapter_registry.json",
+      "split_evidence": "reports/stage8/stage8e_summary.json",
+      "patient_safe": true
+    },
+    {
+      "dataset": "RSNA Pneumonia Detection Challenge",
+      "local_folder": "TrustCXR-Data/06_RSNA_Pneumonia",
+      "governance": "configs/localization/stage10c_governance_adjudication.json",
+      "layout": "configs/localization/stage10e_rsna_localization_baseline.json",
+      "split_evidence": "reports/stage10/stage10d_rsna_patient_split_summary.json",
+      "patient_safe": true
+    },
+    {
+      "dataset": "CheXpert Small",
+      "local_folder": "TrustCXR-Data/07_CheXpert_Small",
+      "governance": "configs/data/final_training_selection.json",
+      "layout": "configs/data/concrete_adapter_registry.json",
+      "split_evidence": "reports/stage13/stage13c_patient_safe_pair_design_summary.json",
+      "patient_safe": true
+    }
+  ],
+  "dataset_split_reconstruction_sufficient": true,
+  "raw_datasets_intentionally_untracked": true,
+  "canonical_evidence_sources": [
+    "docs/research_protocol/CANONICAL_STAGE_ROADMAP.md",
+    "docs/execution/complete_stage_registry.json",
+    "reports/stage20/stage20_final_decision_support_freeze.json",
+    "reports/stage21/stage21h_synthetic_runtime_acceptance_decision_summary.json",
+    "reports/stage22/stage22e_synthetic_ui_acceptance_decision_summary.json",
+    "reports/stage23/stage23d_dicom_interoperability_acceptance_closure.json",
+    "reports/stage24/stage24b_human_feedback_active_learning_closure.json"
+  ],
+  "determinism_evidence": {
+    "patient_safe_splits": true,
+    "recorded_training_seeds": true,
+    "recorded_bootstrap_seeds": true,
+    "synthetic_fixture_determinism": true,
+    "deterministic_reporting_verification_decision": true,
+    "exact_cuda_numerical_reproduction_guaranteed": false,
+    "cuda_limitation": "CUDA training may remain numerically nondeterministic despite frozen seeds and contracts."
+  },
+  "data_leakage_contract": [
+    "PATIENT_SAFE_SPLITS",
+    "ZERO_CROSS_SPLIT_PATIENT_LEAKAGE",
+    "LOCKED_TEST_PROTECTION",
+    "NO_POST_TEST_TUNING",
+    "NO_ACTIVE_LEARNING_OR_FEEDBACK_FROM_TEST",
+    "NO_HEURISTIC_IDENTITY_JOINS"
+  ],
+  "serving_reproducibility": {
+    "contract_fingerprint": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f",
+    "dependency_manifest_sha256": "6b82df6db246280518aec3078f55675e02c41b9afd4e74c104836960b820d782",
+    "implementation_protocol_fingerprint": "57cdfdc6df679ffe9e6ea38c797940423df1cc15af3cb1688d9871f01990fbb7",
+    "synthetic_runtime_summary": "reports/stage21/stage21g_bounded_synthetic_runtime_validation_summary.json"
+  },
+  "ui_reproducibility": {
+    "technology": "STATIC_HTML_CSS_VANILLA_JAVASCRIPT_NO_EXTERNAL_DEPENDENCIES",
+    "contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
+    "runtime_summary": "reports/stage22/stage22d_bounded_synthetic_ui_runtime_browser_summary.json"
+  },
+  "dicom_reproducibility": {
+    "dependency": "pydicom==3.0.2",
+    "contract_fingerprint": "4b57e03cc8e2372afdfcca74147635d24bca4f08f52b4ae09415008e8906b354",
+    "validated_scope": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_EXPLICIT_OR_IMPLICIT_VR_LE_MONOCHROME1_OR_2",
+    "operational_bounds": "4096x4096_ONE_FRAME_67108864_BYTES",
+    "withheld": "COMPRESSED_MULTIFRAME_REAL_PATIENT_AND_UI"
+  },
+  "frozen_limitations": [
+    "STAGE11_MAXIMUM_PARTIALLY_SUPPORTED",
+    "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",
+    "NO_LOCALIZATION_ABSENCE_CONTRADICTION",
+    "STAGE13_SELECTIVE_PREDICTION_NOT_ACCEPTED",
+    "OOD_WITHHELD",
+    "STAGE14_TEMPORAL_WITHHELD",
+    "STAGE15_SEVERITY_WITHHELD",
+    "STAGE17_DEFER_ONLY",
+    "STAGE18_DETERMINISTIC_REPORTING_ONLY",
+    "STAGE19_VERIFIER_RESTRICTIONS",
+    "STAGE20_DEFER_HIGHEST_PRECEDENCE",
+    "STAGE22_REAL_IMAGE_AND_OVERLAY_LIMITS",
+    "STAGE23_SYNTHETIC_ONLY_DICOM",
+    "STAGE24_ACTIVE_LEARNING_WITHHELD"
+  ],
+  "ci_status": "NO_TRACKED_AUTOMATED_WORKFLOW_LOCAL_VALIDATION_IS_GOVERNED",
+  "gap_classification": {
+    "BLOCKING": [
+      "NO_SINGLE_HASHED_FINAL_ENVIRONMENT_LOCK_AND_INSTALL_PROTOCOL"
+    ],
+    "NON_BLOCKING_DOCUMENTATION_GAP": [
+      "NO_AUTOMATED_CI_WORKFLOW_CURRENTLY_TRACKED",
+      "DATASET_DOWNLOAD_VERSION_AND_LAYOUT_GUIDANCE_IS_DISTRIBUTED_ACROSS_GOVERNANCE_FILES",
+      "CANONICAL_STAGE_EVIDENCE_IS_INDEXED_ACROSS_ROADMAP_AND_REGISTRY_RATHER_THAN_ONE_FINAL_RELEASE_INDEX"
+    ],
+    "OPTIONAL_IMPROVEMENT": [
+      "CROSS_PLATFORM_VALIDATION",
+      "PRODUCTION_DEPLOYMENT_INFRASTRUCTURE",
+      "GPU_MULTI_MODEL_RESIDENCY_PROFILING"
+    ]
+  },
+  "production_infrastructure_required": false,
+  "training_performed": false,
+  "model_inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "new_patient_records_processed": 0,
+  "language_model_used": false,
+  "currently_planned_llm_authorized_gate": null,
+  "language_model_mandatory_for_project_completion": false,
+  "next_canonical_stage": "25B_MLOPS_REPRODUCIBILITY_CLOSURE",
+  "stage25_can_likely_close_without_retraining": true,
+  "remaining_mandatory_path_after_stage25": [
+    "ORIGINAL_STAGE23_EXTERNAL_VALIDATION_EVIDENCE_OR_FORMAL_BLOCKER_DISPOSITION",
+    "ORIGINAL_STAGE24_PAPER_FINAL_RELEASE_AUDIT"
+  ],
+  "major_conceptual_stages_remaining_including_stage25": 3,
+  "optional_capability_expansion_required": false
+}

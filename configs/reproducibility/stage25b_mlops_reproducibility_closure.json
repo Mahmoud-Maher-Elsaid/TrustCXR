@@ -1,0 +1,83 @@
+{
+  "stage": "25B",
+  "target": "REPRODUCIBLE_RESEARCH_PIPELINE",
+  "stage25a_summary": "reports/stage25/stage25a_mlops_reproducibility_data_readiness.json",
+  "stage25a_summary_sha256": "4e1d2e01cabaf33f2fa1af6755012000f2117a9f718251c0ea0e6002cb95e2a4",
+  "stage25a_status": "PASSED_MLOPS_REPRODUCIBILITY_DATA_READINESS_WITH_BOUNDED_CLOSURE_GAPS",
+  "canonical_lock": "requirements/lock-final-research-windows-cu130.txt",
+  "canonical_lock_sha256": "cc63ac8bfb8dd6cc0f15469c4e7dfd6f620ec3747931ebd63c85fb11a8dc0786",
+  "locked_dependency_count": 53,
+  "python": "3.12.10",
+  "pip": "26.2",
+  "platform_scope": {
+    "validated": [
+      "WINDOWS_11",
+      "POWERSHELL_5_1_OR_7_ORCHESTRATION",
+      "PYTHON_3_12_10_X64",
+      "PYTORCH_2_12_1_CU130",
+      "CUDA_RUNTIME_13_0",
+      "NVIDIA_GEFORCE_RTX_3070_TI_LAPTOP_GPU"
+    ],
+    "not_validated": [
+      "LINUX",
+      "MACOS",
+      "CPU_ONLY_EQUIVALENCE",
+      "ALTERNATIVE_CUDA_STACKS",
+      "BIT_IDENTICAL_CUDA_TRAINING"
+    ]
+  },
+  "torch_installation_source": "https://download.pytorch.org/whl/cu130",
+  "installation_protocol": "docs/reproducibility/FINAL_WINDOWS_ENVIRONMENT_RECONSTRUCTION.md",
+  "environment_verifier": "scripts/reproducibility/verify_final_environment.py",
+  "historical_locks_preserved": true,
+  "conflicting_governed_pins": [],
+  "known_ungoverned_runtime_imports": [],
+  "accepted_checkpoint_evidence": "reports/stage25/stage25a_mlops_reproducibility_data_readiness.json",
+  "accepted_checkpoint_count": 7,
+  "dataset_split_reconstruction_sufficient": true,
+  "raw_datasets_intentionally_untracked": true,
+  "exact_cuda_numerical_reproduction_guaranteed": false,
+  "data_leakage_contract": [
+    "PATIENT_SAFE_SPLITS",
+    "ZERO_CROSS_SPLIT_PATIENT_LEAKAGE",
+    "LOCKED_TEST_PROTECTION",
+    "NO_POST_TEST_TUNING",
+    "NO_ACTIVE_LEARNING_OR_FEEDBACK_FROM_TEST",
+    "NO_HEURISTIC_IDENTITY_JOINS"
+  ],
+  "non_blocking_gaps_preserved": [
+    "NO_AUTOMATED_CI_WORKFLOW_CURRENTLY_TRACKED",
+    "DATASET_DOWNLOAD_VERSION_AND_LAYOUT_GUIDANCE_IS_DISTRIBUTED_ACROSS_GOVERNANCE_FILES",
+    "CANONICAL_STAGE_EVIDENCE_IS_INDEXED_ACROSS_ROADMAP_AND_REGISTRY_RATHER_THAN_ONE_FINAL_RELEASE_INDEX"
+  ],
+  "optional_improvements_omitted": [
+    "CROSS_PLATFORM_VALIDATION",
+    "PRODUCTION_DEPLOYMENT_INFRASTRUCTURE",
+    "GPU_MULTI_MODEL_RESIDENCY_PROFILING"
+  ],
+  "blocking_gaps_remaining": [],
+  "ci_required_for_closure": false,
+  "production_infrastructure_required": false,
+  "training_authorized": false,
+  "fine_tuning_authorized": false,
+  "checkpoint_modification_authorized": false,
+  "model_inference_authorized": false,
+  "new_patient_processing_authorized": false,
+  "locked_test_access_authorized": false,
+  "active_learning_authorized": false,
+  "gpu_residency_profiling_authorized": false,
+  "language_model_used": false,
+  "currently_planned_llm_authorized_gate": null,
+  "language_model_mandatory_for_project_completion": false,
+  "expected_status": "ACCEPTED_REPRODUCIBLE_RESEARCH_PIPELINE_WINDOWS_SCOPE",
+  "expected_gate": "GO_FOR_STAGE_26A_EXTERNAL_VALIDATION_DATA_READINESS",
+  "stage25_closed": true,
+  "next_canonical_stage": "26A_EXTERNAL_VALIDATION_DATA_READINESS",
+  "remaining_mandatory_path": [
+    "ORIGINAL_STAGE23_EXTERNAL_VALIDATION_EVIDENCE_OR_FORMAL_BLOCKER_DISPOSITION",
+    "ORIGINAL_STAGE24_PAPER_FINAL_RELEASE_AUDIT"
+  ],
+  "major_conceptual_stages_remaining_after_stage25": 2,
+  "optional_capability_expansion_required": false,
+  "retraining_required": false
+}

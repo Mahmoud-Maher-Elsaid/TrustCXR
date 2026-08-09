@@ -99,6 +99,7 @@ $routes = @{
     "24A" = "scripts\feedback\run_stage24a_human_feedback_active_learning_data_readiness.ps1"
     "24B" = "scripts\feedback\run_stage24b_human_feedback_active_learning_withholding_closure.ps1"
     "25A" = "scripts\reproducibility\run_stage25a_mlops_reproducibility_data_readiness.ps1"
+    "25B" = "scripts\reproducibility\run_stage25b_mlops_reproducibility_closure.ps1"
 }
 if (-not $routes.ContainsKey($Stage)) { throw "No real stage-specific launcher is registered for '$Stage'." }
 $script = Join-Path $ProjectRoot $routes[$Stage]
