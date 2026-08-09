@@ -1,0 +1,18 @@
+{
+  "stage": "18_FINAL",
+  "status": "FROZEN_DETERMINISTIC_GROUNDED_RESEARCH_REPORT_CAPABILITY",
+  "gate": "GO_FOR_STAGE_19A_TEXTUAL_AND_ANATOMICAL_VERIFIER_DATA_READINESS",
+  "contract_fingerprint": "bf83dacb98bbc0f9e87d4e4a61f014c470a9cf650976044412bdb13418e4d09b",
+  "report_schema_sha256": "ea2e4d254a7efc99fa861197001d59d29f92e9b3e8bdd2c508a828594065701c",
+  "stage18e_evidence": "reports/stage18/stage18e_grounded_report_acceptance_summary.json",
+  "stage18e_evidence_sha256": "2b3d9a45fa57c555af8644141e8482417a34b591cc82ce8aec17632f8d5f11ec",
+  "designation": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+  "deterministic_only": true,
+  "language_model_generation_permitted": false,
+  "autonomous_clinical_use_permitted": false,
+  "clinical_deployment_permitted": false,
+  "every_statement_provenance_grounded": true,
+  "unsupported_evidence_behavior": ["OMIT", "EXPLICIT_UNCERTAINTY"],
+  "real_patient_reports_generated": 0,
+  "locked_test_records_accessed": 0
+}

@@ -77,7 +77,9 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 18B | Completed contract freeze | Go for Stage 18C deterministic template implementation | Deterministic schema, templates, provenance, uncertainty, omission, and privacy rules | Grounded report contract | Original Stage 15 | Complete | Fingerprint `bf83dacb...`; no patient reports or language-model use | 18C |
 | 18C | Completed synthetic implementation validation | Go for Stage 18D template safety validation | Strict schema-driven deterministic renderer | Grounded template implementation | Original Stage 15 | Complete | Frozen synthetic output hash; no patient report generation or inference | 18D |
 | 18D | Completed adversarial synthetic validation | Go for Stage 18E grounded-report acceptance decision | Fail-closed template, provenance, privacy, and forbidden-claim validation | Grounded template safety | Original Stage 15 | Complete | 21/21 fixtures passed; no patient reports or test access | 18E |
-| 18E | Prepared after Stage 18D completion | Decision and closure only | Conservative research-only deterministic grounded-report acceptance | Grounded report acceptance | Original Stage 15 | Ready to run | No clinical deployment or autonomous use | Stage 19A |
+| 18E | Completed research-only acceptance | Go for Stage 19A verifier data readiness | Conservative deterministic grounded-report acceptance | Grounded report acceptance | Original Stage 15 | Complete | Research-only, expert review required | 18F |
+| 18F | Current closure | Go for Stage 19A verifier data readiness | Frozen deterministic grounded-report capability | Grounded report freeze | Original Stage 15 | Complete | Provenance required; unsupported evidence omitted or uncertain | 19A |
+| 19A | Prepared after Stage 18 closure | Data-readiness audit only | Exact textual provenance and limited anatomical-evidence readiness | Textual and anatomical verifier readiness | Original Stage 16 | Ready to run | No LLM, inference, report generation, heuristic joins, or test access | 19B |
 
 ## Numbering rule
 

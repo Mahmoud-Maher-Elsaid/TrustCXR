@@ -1,0 +1,76 @@
+{
+  "stage": "19A",
+  "evidence": {
+    "stage18": {
+      "path": "reports/stage18/stage18_final_grounded_report_capability_freeze.json",
+      "sha256": "8f9439b8d4a0d4451438a1902c680ecea760e5557e95759e22bf05799c01e45c"
+    },
+    "stage8": {
+      "path": "reports/stage8/stage8e_summary.json",
+      "sha256": "c1afc412e47466f0ac7d06f570e4731969dd86aff4b632dfe3f184e742af510f"
+    },
+    "stage10_anatomy_proxy": {
+      "path": "reports/stage10/stage10m_validation_anatomical_audit_summary.json",
+      "sha256": "b304d650c6dc11aa6786d1586d5aca5da0039b378788256a4b7917b793857a43"
+    },
+    "stage10_acceptance": {
+      "path": "reports/stage10/stage10n_localization_acceptance_decision_summary.json",
+      "sha256": "2beec215d36acfba3800a0c55913044723b6c68db255c859eca7fdbf7883a219"
+    },
+    "stage11": {
+      "path": "reports/stage11/stage11l_fusion_acceptance_decision_summary.json",
+      "sha256": "78eedeca24ca941a9c61ce77af28175f8af792f909af622458981312861839e0"
+    }
+  },
+  "verifier_statuses": [
+    "VERIFIED",
+    "PARTIALLY_VERIFIED",
+    "UNVERIFIED",
+    "CONTRADICTED",
+    "NOT_APPLICABLE",
+    "WITHHELD_INSUFFICIENT_EVIDENCE"
+  ],
+  "textual_verification": {
+    "exact_template_matching": true,
+    "provenance_field_validation": true,
+    "forbidden_terminology_detection": true,
+    "altered_meaning_detection": "DETERMINISTIC_TEMPLATE_OR_PARAMETER_MISMATCH_ONLY",
+    "semantic_paraphrase_acceptance_permitted": false
+  },
+  "anatomical_evidence": {
+    "reliable": ["IMAGE_BOUNDS_AND_EXACT_RECORD_IDENTITY"],
+    "proxy": [
+      "STAGE8_QUALITY_FILTERED_PSEUDO_LUNG_HEART_MASKS",
+      "STAGE10_IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY"
+    ],
+    "withheld": [
+      "RELIABLE_POSITIVE_LESION_LOCALIZATION",
+      "FINDING_LATERALITY_FROM_LOCALIZATION",
+      "NEGATION_FROM_LOCALIZATION_ABSENCE",
+      "BOUNDING_BOX_AS_PIXEL_MASK",
+      "UNGOVERNED_CROSS_SOURCE_ANATOMICAL_JOIN"
+    ]
+  },
+  "identity_policy": {
+    "exact_governed_record_or_study_join_required": true,
+    "heuristic_identity_matching_permitted": false,
+    "stage11_shared_validation_scope_records": 108,
+    "outside_governed_shared_scope_behavior": "WITHHELD_INSUFFICIENT_EVIDENCE"
+  },
+  "unsupported_verification_capabilities": [
+    "severity",
+    "temporal_change",
+    "ood",
+    "device_localization",
+    "treatment",
+    "patient_history",
+    "clinical_certainty",
+    "clinical_diagnosis"
+  ],
+  "patient_identifying_information_permitted": false,
+  "report_generation_permitted": false,
+  "language_model_use_permitted": false,
+  "image_inference_permitted": false,
+  "training_permitted": false,
+  "locked_test_access_permitted": false
+}
