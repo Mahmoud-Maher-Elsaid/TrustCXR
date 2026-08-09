@@ -1,0 +1,19 @@
+{
+  "stage": "19C",
+  "stage19b_contract": "reports/stage19/stage19b_textual_anatomical_verifier_contract_summary.json",
+  "stage19b_contract_sha256": "460e68505260479959acd7ce94c1912d57785f1226bb5ba04a0822dce68fb450",
+  "stage19b_contract_fingerprint": "b34d11431e84566e890464696fe171ecf705f8f7ef8568b994ba5ef7de7639b3",
+  "stage18_report_contract": "reports/stage18/stage18b_deterministic_grounded_report_contract_summary.json",
+  "stage18_report_contract_sha256": "c185ef749bc1afc87f9eadb16e3bef39e50dcd40737d39dc366b744f8553e44d",
+  "synthetic_fixtures_only": true,
+  "real_patient_reports_permitted": false,
+  "patient_identifiers_permitted": false,
+  "language_model_permitted": false,
+  "embedding_similarity_permitted": false,
+  "image_inference_permitted": false,
+  "training_permitted": false,
+  "fitting_permitted": false,
+  "tuning_permitted": false,
+  "locked_test_access_permitted": false,
+  "expected_fixture_count": 17
+}

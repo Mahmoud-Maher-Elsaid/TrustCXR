@@ -23,7 +23,7 @@ def grounded_statement() -> dict:
         "evidence_type": "stage9_classifier_finding_signal",
         "grounding_status": "EXPLICIT_UNCERTAINTY",
         "template_id": "CLASSIFIER_SIGNAL_UNCERTAIN",
-        "template_parameters": {"finding": "Atelectasis", "model_score": "0.42"},
+        "template_parameters": {"finding": "Atelectasis", "model_score": 0.42},
         "source_stage": "9",
         "source_version": "frozen",
         "evidence_code": "CLASSIFIER_SIGNAL",

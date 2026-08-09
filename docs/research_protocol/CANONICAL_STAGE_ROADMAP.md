@@ -80,7 +80,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 18E | Completed research-only acceptance | Go for Stage 19A verifier data readiness | Conservative deterministic grounded-report acceptance | Grounded report acceptance | Original Stage 15 | Complete | Research-only, expert review required | 18F |
 | 18F | Current closure | Go for Stage 19A verifier data readiness | Frozen deterministic grounded-report capability | Grounded report freeze | Original Stage 15 | Complete | Provenance required; unsupported evidence omitted or uncertain | 19A |
 | 19A | Completed verifier readiness audit | Go for Stage 19B verifier contract | Exact textual provenance and limited anatomical-evidence readiness | Textual and anatomical verifier readiness | Original Stage 16 | Complete | Positive localization withheld; proxy anatomy only | 19B |
-| 19B | Prepared after Stage 19A completion | Contract freeze and synthetic fixtures only | Deterministic textual and anatomical verification status rules | Textual and anatomical verifier contract | Original Stage 16 | Ready to run | No LLM, inference, report generation, heuristic joins, or test access | 19C |
+| 19B | Completed deterministic verifier contract | Go for Stage 19C synthetic implementation validation | Deterministic textual and anatomical verification status rules | Textual and anatomical verifier contract | Original Stage 16 | Complete | No LLM, inference, report generation, heuristic joins, or test access | 19C |
+| 19C | Prepared after Stage 19B completion | Synthetic fixtures only | Deterministic verifier implementation safety validation | Textual and anatomical verifier implementation | Original Stage 16 | Ready to run | No patient reports, patient identifiers, images, models, or test access | 19D |
 
 ## Numbering rule
 

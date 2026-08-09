@@ -85,10 +85,10 @@ def verify_anatomical(
         return "WITHHELD_INSUFFICIENT_EVIDENCE"
     if absence_only:
         return "WITHHELD_INSUFFICIENT_EVIDENCE"
-    if explicit_accepted_conflict:
-        return "CONTRADICTED"
     if capability in PROXY_ANATOMICAL:
         return "PARTIALLY_VERIFIED"
     if capability == "IMAGE_BOUNDS_AND_EXACT_RECORD_IDENTITY":
+        if explicit_accepted_conflict:
+            return "CONTRADICTED"
         return "VERIFIED"
     return "WITHHELD_INSUFFICIENT_EVIDENCE"

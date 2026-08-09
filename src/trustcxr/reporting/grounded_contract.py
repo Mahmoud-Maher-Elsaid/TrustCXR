@@ -80,6 +80,8 @@ EVIDENCE_CODES_FOR_TYPE = {
 
 
 def validate_statement(statement: dict[str, Any], contract: dict[str, Any]) -> None:
+    if set(statement) & PATIENT_IDENTIFYING_KEYS:
+        raise ValueError("Patient-identifying statement fields are prohibited.")
     missing = PROVENANCE_FIELDS - set(statement)
     if missing:
         raise ValueError(f"Grounding provenance missing: {sorted(missing)}")
@@ -147,6 +149,12 @@ def _validate_parameters(template_id: str, parameters: dict[str, Any]) -> None:
 
 
 def validate_payload(payload: dict[str, Any], contract: dict[str, Any]) -> None:
+    keys = set(payload)
+    if keys & PATIENT_IDENTIFYING_KEYS:
+        raise ValueError("Patient-identifying fields are prohibited.")
+    for statement in payload.get("statements", []):
+        if set(statement) & PATIENT_IDENTIFYING_KEYS:
+            raise ValueError("Patient-identifying statement fields are prohibited.")
     if set(payload) != {
         "report_identity",
         "research_use_disclaimer",
@@ -158,12 +166,7 @@ def validate_payload(payload: dict[str, Any], contract: dict[str, Any]) -> None:
         raise ValueError("Research report identity changed.")
     if payload.get("research_use_disclaimer") != contract["research_use_disclaimer"]:
         raise ValueError("Research-use disclaimer changed.")
-    keys = set(payload)
-    if keys & PATIENT_IDENTIFYING_KEYS:
-        raise ValueError("Patient-identifying fields are prohibited.")
     for statement in payload.get("statements", []):
-        if set(statement) & PATIENT_IDENTIFYING_KEYS:
-            raise ValueError("Patient-identifying statement fields are prohibited.")
         validate_statement(statement, contract)
     for omission in payload.get("omitted_capabilities", []):
         if omission.get("capability") not in contract["statement_policy"]["must_omit"]:

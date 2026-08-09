@@ -1,0 +1,76 @@
+{
+  "anatomical_policy": {
+    "localization_absence_may_produce_contradicted": false,
+    "proxy": [
+      "STAGE8_QUALITY_FILTERED_PSEUDO_LUNG_HEART_MASKS",
+      "STAGE10_IMAGE_GEOMETRY_AND_THORACIC_LOCATION_PROXY_ONLY"
+    ],
+    "proxy_may_produce_verified_localization": false,
+    "reliable": [
+      "IMAGE_BOUNDS_AND_EXACT_RECORD_IDENTITY"
+    ],
+    "stage11_maximum_support": "PARTIALLY_SUPPORTED",
+    "withheld": [
+      "RELIABLE_POSITIVE_LESION_LOCALIZATION",
+      "FINDING_LATERALITY_FROM_LOCALIZATION",
+      "NEGATION_FROM_LOCALIZATION_ABSENCE",
+      "BOUNDING_BOX_AS_PIXEL_MASK",
+      "UNGOVERNED_CROSS_SOURCE_ANATOMICAL_JOIN"
+    ]
+  },
+  "contract_fingerprint": "b34d11431e84566e890464696fe171ecf705f8f7ef8568b994ba5ef7de7639b3",
+  "gate": "GO_FOR_STAGE_19C_SYNTHETIC_VERIFIER_IMPLEMENTATION_VALIDATION",
+  "identity_policy": {
+    "exact_governed_record_or_study_identity_required": true,
+    "heuristic_identity_matching_permitted": false,
+    "outside_scope_status": "WITHHELD_INSUFFICIENT_EVIDENCE",
+    "stage11_shared_validation_scope_records": 108
+  },
+  "image_inference_performed": false,
+  "language_model_used": false,
+  "locked_test_records_accessed": 0,
+  "patient_identifiers_used": 0,
+  "report_generation_performed": false,
+  "stage": "19B",
+  "status": "PASSED_DETERMINISTIC_TEXTUAL_ANATOMICAL_VERIFIER_CONTRACT",
+  "status_rules": {
+    "CONTRADICTED": "EXPLICIT_ACCEPTED_STRUCTURED_CONFLICT_ON_EXACT_GOVERNED_IDENTITY",
+    "NOT_APPLICABLE": "VERIFICATION_DIMENSION_NOT_APPLICABLE_TO_STATEMENT",
+    "PARTIALLY_VERIFIED": "EXACT_UNCERTAINTY_STATEMENT_OR_PROXY_ANATOMICAL_AGREEMENT_EXACT_IDENTITY",
+    "UNVERIFIED": "RECOGNIZED_SUPPORTED_STATEMENT_WITH_MISSING_INVALID_OR_MISMATCHED_TEXTUAL_EVIDENCE",
+    "VERIFIED": "EXACT_TEMPLATE_VALID_PROVENANCE_ACCEPTED_DIRECT_EVIDENCE_EXACT_IDENTITY",
+    "WITHHELD_INSUFFICIENT_EVIDENCE": "CAPABILITY_OR_IDENTITY_OUTSIDE_FROZEN_GOVERNED_EVIDENCE"
+  },
+  "synthetic_fixtures_only": true,
+  "textual_policy": {
+    "exact_template_and_canonical_wording_required": true,
+    "language_model_or_embedding_similarity_permitted": false,
+    "provenance_fields_required": [
+      "source_stage",
+      "source_version",
+      "evidence_code",
+      "structured_source_field"
+    ],
+    "semantic_paraphrase_acceptance_permitted": false,
+    "synonym_substitution_permitted": false
+  },
+  "training_performed": false,
+  "unsupported_domains": [
+    "severity",
+    "temporal_change",
+    "ood",
+    "device_localization",
+    "treatment",
+    "patient_history",
+    "clinical_certainty",
+    "clinical_diagnosis"
+  ],
+  "verifier_statuses": [
+    "VERIFIED",
+    "PARTIALLY_VERIFIED",
+    "UNVERIFIED",
+    "CONTRADICTED",
+    "NOT_APPLICABLE",
+    "WITHHELD_INSUFFICIENT_EVIDENCE"
+  ]
+}
