@@ -4,6 +4,7 @@ import argparse
 import csv
 import hashlib
 import json
+import sqlite3
 from pathlib import Path
 from typing import Any
 
@@ -14,6 +15,60 @@ def sha256(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def validate_stage13b_identity(
+    config: dict[str, Any], root: Path, evidence: dict[str, Any]
+) -> dict[str, Any]:
+    if (
+        evidence.get("stage") != "13B"
+        or evidence.get("status") != config["stage13b_expected_status"]
+        or evidence.get("gate") != config["stage13b_expected_gate"]
+        or evidence.get("resolved_records") != evidence.get("development_manifest_records")
+        or evidence.get("unresolved_records") != 0
+        or evidence.get("missing_explicit_study_structure") != 0
+        or evidence.get("patient_identity_used_as_study_identity") is not False
+        or evidence.get("patient_leakage_violations") != 0
+        or evidence.get("study_split_violations") != 0
+        or evidence.get("locked_test_records_accessed") != 0
+        or evidence.get("image_records_accessed") != 0
+    ):
+        raise RuntimeError("Frozen Stage 13B study-identity evidence is incompatible.")
+    pinned = (
+        ("stage13b_evidence", "stage13b_evidence_sha256"),
+        ("stage13b_config", "stage13b_config_sha256"),
+        ("stage13b_index", "stage13b_index_sha256"),
+    )
+    for path_key, hash_key in pinned:
+        path = root / config[path_key]
+        if not path.is_file() or sha256(path) != config[hash_key]:
+            raise RuntimeError(f"Frozen Stage 13B artifact missing or changed: {path_key}")
+    index_path = (root / config["stage13b_index"]).resolve()
+    connection = sqlite3.connect(f"file:{index_path.as_posix()}?mode=ro", uri=True)
+    try:
+        table = config["stage13b_index_table"]
+        columns = {row[1] for row in connection.execute(f"PRAGMA table_info({table})").fetchall()}
+        missing = set(config["stage13b_required_index_columns"]) - columns
+        if missing:
+            raise RuntimeError(f"Stage 13B index schema missing columns: {sorted(missing)}")
+        indexed_records = int(connection.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0])
+        invalid_splits = int(
+            connection.execute(
+                f"SELECT COUNT(*) FROM {table} WHERE split NOT IN ('train', 'validation')"
+            ).fetchone()[0]
+        )
+    finally:
+        connection.close()
+    if indexed_records != evidence["resolved_records"] or invalid_splits != 0:
+        raise RuntimeError("Stage 13B index record count or development split contract changed.")
+    return {
+        "evidence_sha256": config["stage13b_evidence_sha256"],
+        "config_sha256": config["stage13b_config_sha256"],
+        "index_sha256": config["stage13b_index_sha256"],
+        "index_table": config["stage13b_index_table"],
+        "index_columns": sorted(columns),
+        "indexed_development_records": indexed_records,
+    }
 
 
 def audit(config: dict[str, Any], root: Path) -> dict[str, Any]:
@@ -34,8 +89,7 @@ def audit(config: dict[str, Any], root: Path) -> dict[str, Any]:
     stage13b = json.loads((root / config["stage13b_evidence"]).read_text())
     if stage14a.get("status") != "HOLD_FOR_TEMPORAL_IDENTITY_OR_TIMESTAMPS":
         raise RuntimeError("Stage 14A hold evidence is missing.")
-    if stage13b.get("gate") != "GO_FOR_STAGE_13C_PATIENT_SAFE_PAIR_DESIGN":
-        raise RuntimeError("Stable study-identity evidence is missing.")
+    identity_validation = validate_stage13b_identity(config, root, stage13b)
 
     dataset_root = root / config["dataset_root"]
     metadata_paths = sorted(
@@ -99,6 +153,7 @@ def audit(config: dict[str, Any], root: Path) -> dict[str, Any]:
         "dataset": config["dataset"],
         "stable_study_identity": True,
         "study_identity_source": "explicit patient/study source-path segments",
+        "stage13b_identity_validation": identity_validation,
         "chronology_classification": classification,
         "explicit_trusted_timestamp_fields": timestamp_fields,
         "deterministic_ordering_fields": ordering_fields,
