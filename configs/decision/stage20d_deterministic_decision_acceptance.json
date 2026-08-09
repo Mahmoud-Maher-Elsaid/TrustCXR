@@ -1,0 +1,58 @@
+{
+  "stage": "20D",
+  "stage20b_contract": "reports/stage20/stage20b_deterministic_decision_contract_summary.json",
+  "stage20b_contract_sha256": "9c62a726f2dd492b475c2d6af5fe2c256dd258d50bcf081cb086c356351576d0",
+  "stage20b_contract_fingerprint": "ae38c43d1d959b5b97c369dbc1e6b074db59231c074b030206e2328f0b5193bf",
+  "stage20c_evidence": "reports/stage20/stage20c_synthetic_decision_validation_summary.json",
+  "stage20c_evidence_sha256": "41a09ed1bf154f4eaf37737a2fd785e43356130ea9a3e0f8fe994b4d2c7fe4c1",
+  "decision": "DETERMINISTIC_RESEARCH_ONLY_ACCEPT_REVISE_DEFER_DECISION_SUPPORT",
+  "decision_precedence": [
+    "DEFER",
+    "REVISE_DETERMINISTICALLY",
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW"
+  ],
+  "accepted_meanings": {
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW": "RESEARCH_DRAFT_READY_FOR_EXPERT_REVIEW_ONLY",
+    "REVISE_DETERMINISTICALLY": "DETERMINISTIC_CANONICAL_TEMPLATE_REPAIR_ONLY",
+    "DEFER": "HIGHEST_PRECEDENCE_SAFETY_DECISION"
+  },
+  "mandatory_defer_rules": [
+    "PARTIALLY_VERIFIED_REQUIRED_STATEMENT",
+    "CONTRADICTED",
+    "WITHHELD_INSUFFICIENT_EVIDENCE",
+    "IDENTITY_MISMATCH",
+    "FORBIDDEN_CLAIM",
+    "STAGE11_LIMITED_SUPPORT_WHERE_REQUIRED",
+    "ANATOMICAL_PROXY_OVERREACH",
+    "ACTIVE_STAGE17_DEFER"
+  ],
+  "revision_may_introduce_new_facts": false,
+  "mandatory_safety_limitations": [
+    "NO_CLINICAL_APPROVAL",
+    "NO_AUTONOMOUS_RELEASE",
+    "NO_CLINICAL_DEPLOYMENT",
+    "NO_CLINICAL_DIAGNOSIS",
+    "NO_SEVERITY",
+    "NO_TEMPORAL_CHANGE",
+    "NO_OOD_CLAIM",
+    "NO_DEVICE_LOCALIZATION",
+    "NO_TREATMENT_RECOMMENDATION",
+    "NO_PATIENT_HISTORY_INFERENCE",
+    "NO_CLINICAL_CERTAINTY_CLAIM",
+    "NO_HEURISTIC_IDENTITY_MATCHING",
+    "NO_PATIENT_IDENTIFYING_INFORMATION"
+  ],
+  "real_patient_policy_activation_permitted": false,
+  "language_model_permitted": false,
+  "training_permitted": false,
+  "fitting_permitted": false,
+  "tuning_permitted": false,
+  "calibration_permitted": false,
+  "image_inference_permitted": false,
+  "real_patient_report_generation_permitted": false,
+  "locked_test_access_permitted": false,
+  "next_canonical_stage": "21A_BACKEND_API_AND_GPU_WORKER_DATA_READINESS",
+  "next_stage_authorizes_language_model_work": false,
+  "currently_planned_llm_authorized_gate": null,
+  "deterministic_stages_before_llm_gate": "NOT_DETERMINABLE_NO_CURRENTLY_AUTHORIZED_LLM_GATE"
+}

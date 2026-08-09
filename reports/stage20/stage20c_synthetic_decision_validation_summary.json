@@ -1,0 +1,205 @@
+{
+  "fixture_results": {
+    "accept_with_defer": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "ACTIVE_STAGE17_DEFER"
+      ]
+    },
+    "clean_accept": {
+      "decision": "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW_NOT_CLINICAL_APPROVAL",
+      "reason_codes": [
+        "ALL_REQUIRED_STATEMENTS_VERIFIED",
+        "EXACT_GOVERNED_IDENTITY",
+        "FROZEN_TEMPLATE_CONFORMANT",
+        "NO_ACTIVE_DEFER_CONDITION"
+      ]
+    },
+    "contradiction": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "EXPLICIT_STRUCTURED_CONTRADICTION"
+      ]
+    },
+    "deterministic_repeat": {
+      "decision": "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW",
+      "evidence_references": [
+        "synthetic/statement/1",
+        "synthetic/statement/2"
+      ],
+      "meaning": "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW_NOT_CLINICAL_APPROVAL",
+      "reason_codes": [
+        "ALL_REQUIRED_STATEMENTS_VERIFIED",
+        "EXACT_GOVERNED_IDENTITY",
+        "FROZEN_TEMPLATE_CONFORMANT",
+        "NO_ACTIVE_DEFER_CONDITION"
+      ]
+    },
+    "forbidden": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "FORBIDDEN_CLAIM"
+      ]
+    },
+    "identity_mismatch": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "IDENTITY_MISMATCH"
+      ]
+    },
+    "missing_evidence": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "INSUFFICIENT_EVIDENCE"
+      ]
+    },
+    "multiple_defers": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "IDENTITY_MISMATCH",
+        "ACTIVE_STAGE17_DEFER",
+        "FORBIDDEN_CLAIM"
+      ]
+    },
+    "nonrequired_not_applicable": {
+      "decision": "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW_NOT_CLINICAL_APPROVAL",
+      "reason_codes": [
+        "ALL_REQUIRED_STATEMENTS_VERIFIED",
+        "EXACT_GOVERNED_IDENTITY",
+        "FROZEN_TEMPLATE_CONFORMANT",
+        "NO_ACTIVE_DEFER_CONDITION"
+      ]
+    },
+    "partial": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "PARTIAL_VERIFICATION_NOT_ACCEPTABLE"
+      ]
+    },
+    "proxy_overreach": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "ANATOMICAL_PROXY_OVERREACH"
+      ]
+    },
+    "required_not_applicable": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "REQUIRED_CAPABILITY_NOT_APPLICABLE"
+      ]
+    },
+    "revision_new_facts": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "NO_SAFE_DETERMINISTIC_REVISION"
+      ]
+    },
+    "stage11_limit": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "STAGE11_LIMITED_SUPPORT"
+      ]
+    },
+    "unsupported": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "UNSUPPORTED_CAPABILITY"
+      ]
+    },
+    "valid_revision": {
+      "decision": "REVISE_DETERMINISTICALLY",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "SAME_STRUCTURED_EVIDENCE",
+        "CANONICAL_TEMPLATE_RECONSTRUCTION_AVAILABLE",
+        "PROVENANCE_PRESERVABLE",
+        "TEXTUAL_REPAIR_ONLY"
+      ]
+    },
+    "withheld_reason": {
+      "decision": "DEFER",
+      "evidence_references": [
+        "synthetic/statement/1"
+      ],
+      "meaning": "RESEARCH_ONLY_EXPERT_REVIEW_REQUIRED",
+      "reason_codes": [
+        "WITHHELD_EVIDENCE"
+      ]
+    }
+  },
+  "fixtures_failed": 0,
+  "fixtures_passed": 17,
+  "gate": "GO_FOR_STAGE_20D_DETERMINISTIC_DECISION_ACCEPTANCE",
+  "image_inference_performed": false,
+  "language_model_used": false,
+  "locked_test_records_accessed": 0,
+  "next_canonical_stage": "20D_DETERMINISTIC_DECISION_ACCEPTANCE",
+  "next_stage_authorizes_language_model_work": false,
+  "patient_identifiers_used": 0,
+  "real_patient_policy_activated": false,
+  "real_patient_reports_generated": 0,
+  "stage": "20C",
+  "stage20b_contract_fingerprint": "ae38c43d1d959b5b97c369dbc1e6b074db59231c074b030206e2328f0b5193bf",
+  "status": "PASSED_SYNTHETIC_DETERMINISTIC_DECISION_IMPLEMENTATION_VALIDATION",
+  "synthetic_fixtures_only": true,
+  "training_performed": false
+}

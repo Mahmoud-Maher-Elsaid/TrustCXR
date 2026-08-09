@@ -86,7 +86,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 19E | Current closure | Go for Stage 20A decision readiness | Frozen deterministic research-only verifier capability | Textual and anatomical verifier freeze | Original Stage 16 | Complete | Exact provenance; limited proxy anatomy; unsupported domains withheld | 20A |
 | 20A | Completed deterministic decision readiness | Go for Stage 20B decision contract | Prospective ACCEPT/REVISE/DEFER evidence and status mapping | Accept, revise, or defer readiness | Original Stage 17 | Complete | Policy remained inactive; no LLM, generation, inference, or test access | 20B |
 | 20B | Completed deterministic decision contract | Go for Stage 20C synthetic decision validation | DEFER-first deterministic decision rules, reason codes, and evidence traceability | Accept, revise, or defer contract | Original Stage 17 | Complete | Fingerprint `ae38c43d...`; policy remained inactive | 20C |
-| 20C | Prepared after Stage 20B completion | Synthetic fixtures only | Deterministic DEFER-first decision engine and safety validation | Accept, revise, or defer implementation | Original Stage 17 | Ready to run | No real policy activation, LLM, patient reports, inference, or test access | 20D |
+| 20C | Completed synthetic decision validation | Go for Stage 20D deterministic decision acceptance | Deterministic DEFER-first decision engine and safety validation | Accept, revise, or defer implementation | Original Stage 17 | Complete | 17/17 synthetic fixtures passed; no real policy activation | 20D |
+| 20D | Prepared after Stage 20C completion | Acceptance and closure only | Conservative deterministic research-only decision-support acceptance | Accept, revise, or defer acceptance | Original Stage 17 | Ready to run | No LLM, real-patient activation, clinical approval, or test access | 21A |
 
 ## Numbering rule
 
