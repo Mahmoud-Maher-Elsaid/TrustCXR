@@ -205,6 +205,8 @@ def test_stage23d_is_the_required_minimum_closure_stage() -> None:
     assert CONFIG["currently_planned_llm_authorized_gate"] is None
 
 
-def test_stage23c_formal_output_does_not_exist_during_preparation() -> None:
+def test_stage23c_final_output_is_immutable_during_validation() -> None:
     output = ROOT / "reports/stage23/stage23c_synthetic_dicom_implementation_summary.json"
-    assert not output.exists()
+    before = output.read_bytes()
+    validate_prerequisites(CONFIG, ROOT)
+    assert output.read_bytes() == before

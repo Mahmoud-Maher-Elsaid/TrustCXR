@@ -1,0 +1,420 @@
+{
+  "stage": "23C",
+  "status": "PASSED_SYNTHETIC_DICOM_IMPLEMENTATION_VALIDATION",
+  "gate": "GO_FOR_STAGE_23D_DICOM_INTEROPERABILITY_ACCEPTANCE_AND_CLOSURE",
+  "stage23b_contract_fingerprint": "4b57e03cc8e2372afdfcca74147635d24bca4f08f52b4ae09415008e8906b354",
+  "governed_dependency": "pydicom==3.0.2",
+  "fixtures_created": 22,
+  "fixtures_passed": 22,
+  "fixtures_failed": 0,
+  "transfer_syntaxes_validated": [
+    "EXPLICIT_VR_LITTLE_ENDIAN",
+    "IMPLICIT_VR_LITTLE_ENDIAN"
+  ],
+  "photometric_interpretations_validated": [
+    "MONOCHROME1",
+    "MONOCHROME2"
+  ],
+  "deterministic_pixeldata_decoding": "PASSED",
+  "deterministic_repeat": "PASSED",
+  "temporary_artifact_cleanup": "COMPLETE",
+  "result_counts": {
+    "ACCEPTED_SYNTHETIC_DICOM": 12,
+    "DEFER_UNSAFE_METADATA": 2,
+    "FAILED_SANITIZED_INVALID_DICOM": 1,
+    "FAILED_SANITIZED_INVALID_PIXEL_METADATA": 2,
+    "FAILED_SANITIZED_MISSING_PIXEL_DATA": 1,
+    "WITHHELD_UNSUPPORTED_MULTI_FRAME": 1,
+    "WITHHELD_UNSUPPORTED_PHOTOMETRIC_INTERPRETATION": 1,
+    "WITHHELD_UNSUPPORTED_SOP_CLASS": 0,
+    "WITHHELD_UNSUPPORTED_TRANSFER_SYNTAX": 2
+  },
+  "fixture_results": [
+    {
+      "fixture_id": "VALID_MONOCHROME2_EXPLICIT",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "2ed20262ebd817df6a6588feaac54d305c49c2aecea04e8ccc5403391353cc92",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "7bea14f2f1f8b7d68d187843c6cf25c9f2e46ab9f96173134fa10517f86854de",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "AP"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    },
+    {
+      "fixture_id": "VALID_MONOCHROME1_EXPLICIT",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "918caa3359b40e11a12b3fc20b2ad0c69b68709d42f4ad4d2da7c4f864b6551b",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "e7b92c670711bb292d90e8b482ddc4070292cff1376300fd620789de01f70f3e",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "AP"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME1"
+      }
+    },
+    {
+      "fixture_id": "VIEW_AP",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "2ed20262ebd817df6a6588feaac54d305c49c2aecea04e8ccc5403391353cc92",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "7bea14f2f1f8b7d68d187843c6cf25c9f2e46ab9f96173134fa10517f86854de",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "AP"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    },
+    {
+      "fixture_id": "VIEW_PA",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "25f3fedaaeae525adc8bbd81efa18b2c9250f4a60bb4804220e609756529da48",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "7bea14f2f1f8b7d68d187843c6cf25c9f2e46ab9f96173134fa10517f86854de",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "PA"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    },
+    {
+      "fixture_id": "VIEW_LATERAL",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "4ef2afd893a026b51fea0be5a9e290da7da76b94b4b91b471b670e4af1a4e1e4",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "7bea14f2f1f8b7d68d187843c6cf25c9f2e46ab9f96173134fa10517f86854de",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "LATERAL"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    },
+    {
+      "fixture_id": "MISSING_VIEW_POSITION",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "e675e8ad7c711b4b0ecfcd614819ad565d93037cef8b4ec484b9513b6149b31f",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "7bea14f2f1f8b7d68d187843c6cf25c9f2e46ab9f96173134fa10517f86854de",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    },
+    {
+      "fixture_id": "MISSING_WINDOW_METADATA",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "cff1f3ef91afa1ad69f8574577f5c6835309a54de3cfdfc4558e285601c358ef",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "51170e01bbf449a9194766d95fa784b26f343f25b969ed1f4e2ed03ce6cac72b",
+        "display_method": "SYNTHETIC_MIN_MAX",
+        "display_qualifier": "NON_CLINICAL_SYNTHETIC_DISPLAY_NORMALIZATION_NOT_A_CLINICAL_VOI",
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "AP"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    },
+    {
+      "fixture_id": "VALID_EXPLICIT_VR_LITTLE_ENDIAN",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "2ed20262ebd817df6a6588feaac54d305c49c2aecea04e8ccc5403391353cc92",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "7bea14f2f1f8b7d68d187843c6cf25c9f2e46ab9f96173134fa10517f86854de",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "AP"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    },
+    {
+      "fixture_id": "VALID_IMPLICIT_VR_LITTLE_ENDIAN",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "055530d56f3f581f0cf1e5da355c975dcc9fc5dde5acf10bbf7667a805f65d1b",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "7bea14f2f1f8b7d68d187843c6cf25c9f2e46ab9f96173134fa10517f86854de",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "AP"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    },
+    {
+      "fixture_id": "MALFORMED_DICOM",
+      "status": "FAILED_SANITIZED_INVALID_DICOM",
+      "reason_code": "DICOM_PARSE_FAILED",
+      "payload_sha256": "4fb73db8ccb7d35cc746e0e323a2f125a5fdfafc94434915d1063e35c02d77de",
+      "evidence": null
+    },
+    {
+      "fixture_id": "MISSING_PIXEL_DATA",
+      "status": "FAILED_SANITIZED_MISSING_PIXEL_DATA",
+      "reason_code": "PIXEL_DATA_MISSING",
+      "payload_sha256": "9d633edf08b38b2bfcd0684f72aca0025c26c5f9031c1cc17a83c22935afb089",
+      "evidence": null
+    },
+    {
+      "fixture_id": "INVALID_DIMENSIONS",
+      "status": "FAILED_SANITIZED_INVALID_PIXEL_METADATA",
+      "reason_code": "PIXEL_METADATA_INVALID",
+      "payload_sha256": "cf1b1f193b2448fdae585c5b8bdf4f0684830a193646a5256e4d37a02393d3de",
+      "evidence": null
+    },
+    {
+      "fixture_id": "INVALID_BIT_DEPTH",
+      "status": "FAILED_SANITIZED_INVALID_PIXEL_METADATA",
+      "reason_code": "PIXEL_METADATA_INVALID",
+      "payload_sha256": "0f06288fc8f715b34c7ff59dff26f787d7c16fb41cf75405510a0629bbe73ae4",
+      "evidence": null
+    },
+    {
+      "fixture_id": "UNSUPPORTED_TRANSFER_SYNTAX",
+      "status": "WITHHELD_UNSUPPORTED_TRANSFER_SYNTAX",
+      "reason_code": "TRANSFER_SYNTAX_OUTSIDE_INITIAL_SCOPE",
+      "payload_sha256": "6616292889059a6452cc994f3162713ba332948d5c7a349fab13932ad398d99d",
+      "evidence": null
+    },
+    {
+      "fixture_id": "UNSUPPORTED_COMPRESSED_SYNTAX",
+      "status": "WITHHELD_UNSUPPORTED_TRANSFER_SYNTAX",
+      "reason_code": "COMPRESSED_TRANSFER_SYNTAX_WITHHELD",
+      "payload_sha256": "580feb74b838a693b3b6ef6b3c7e05997d2b193693c9cab44c42f553659cb87e",
+      "evidence": null
+    },
+    {
+      "fixture_id": "UNSUPPORTED_MULTI_FRAME",
+      "status": "WITHHELD_UNSUPPORTED_MULTI_FRAME",
+      "reason_code": "ONLY_SINGLE_FRAME_IS_GOVERNED",
+      "payload_sha256": "244a7b0f19ae10acecfae3e579fdd06c4978e3ca07b4a40d1f01f2eb166ee410",
+      "evidence": null
+    },
+    {
+      "fixture_id": "UNSUPPORTED_PHOTOMETRIC",
+      "status": "WITHHELD_UNSUPPORTED_PHOTOMETRIC_INTERPRETATION",
+      "reason_code": "PHOTOMETRIC_INTERPRETATION_OUTSIDE_INITIAL_SCOPE",
+      "payload_sha256": "24ab82624d50e03c6f7f202f5dc0b7939d744645436150e4fc441bd9c1524929",
+      "evidence": null
+    },
+    {
+      "fixture_id": "UNSAFE_METADATA",
+      "status": "DEFER_UNSAFE_METADATA",
+      "reason_code": "DENY_UNLESS_ALLOWED_METADATA_VIOLATION",
+      "payload_sha256": "90ea0f2f8116bd617bfa834388a49f05b7430d511458efb6e25eb57e83f37510",
+      "evidence": null
+    },
+    {
+      "fixture_id": "DETERMINISTIC_SYNTHETIC_UIDS",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "2ed20262ebd817df6a6588feaac54d305c49c2aecea04e8ccc5403391353cc92",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "7bea14f2f1f8b7d68d187843c6cf25c9f2e46ab9f96173134fa10517f86854de",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "AP"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    },
+    {
+      "fixture_id": "PHI_LIKE_FIELD_REJECTION",
+      "status": "DEFER_UNSAFE_METADATA",
+      "reason_code": "DENY_UNLESS_ALLOWED_METADATA_VIOLATION",
+      "payload_sha256": "1408ba7860bd3b9372039ec7801505c9fbf02aa124e59ddf127ea76d225d8651",
+      "evidence": null
+    },
+    {
+      "fixture_id": "DETERMINISTIC_DISPLAY_OUTPUT",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "2ed20262ebd817df6a6588feaac54d305c49c2aecea04e8ccc5403391353cc92",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "7bea14f2f1f8b7d68d187843c6cf25c9f2e46ab9f96173134fa10517f86854de",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "AP"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    },
+    {
+      "fixture_id": "DETERMINISTIC_REPEAT",
+      "status": "ACCEPTED_SYNTHETIC_DICOM",
+      "reason_code": "SYNTHETIC_SINGLE_FRAME_GRAYSCALE_ACCEPTED",
+      "payload_sha256": "2ed20262ebd817df6a6588feaac54d305c49c2aecea04e8ccc5403391353cc92",
+      "evidence": {
+        "representations": [
+          "RAW_STORED_PIXEL_VALUES",
+          "MODALITY_TRANSFORMED_VALUES",
+          "DISPLAY_WINDOWED_VALUES"
+        ],
+        "normalized_ml_input_tensor_created": false,
+        "raw_sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+        "modality_sha256": "799eb99a60dd83c57bfe43c1eb5b9e5334fab0ebc120369dee40028729c0004c",
+        "display_sha256": "7bea14f2f1f8b7d68d187843c6cf25c9f2e46ab9f96173134fa10517f86854de",
+        "display_method": "DICOM_LINEAR_WINDOW",
+        "display_qualifier": null,
+        "safe_metadata": {
+          "BodyPartExamined": "CHEST",
+          "ViewPosition": "AP"
+        },
+        "transfer_syntax": "1.2.840.10008.1.2.1",
+        "photometric_interpretation": "MONOCHROME2"
+      }
+    }
+  ],
+  "real_dicom_files_used": 0,
+  "patient_metadata_used": false,
+  "dicom_ui_rendering_performed": false,
+  "real_image_displayed": false,
+  "model_loaded": false,
+  "model_inference_performed": false,
+  "gpu_profiling_performed": false,
+  "locked_test_records_accessed": 0,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "next_canonical_stage": "23D_DICOM_INTEROPERABILITY_ACCEPTANCE_AND_STAGE23_CLOSURE",
+  "next_stage_required_for_stage23_closure": true,
+  "next_stage_authorizes_dicom_ui_rendering": false,
+  "next_stage_authorizes_real_dicom": false,
+  "next_stage_authorizes_model_inference": false,
+  "next_stage_authorizes_language_model_work": false
+}
