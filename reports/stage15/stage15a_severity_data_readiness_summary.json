@@ -1,0 +1,14 @@
+{
+  "approved_quantitative_definition_available": false,
+  "explicit_severity_annotations_available": false,
+  "gate": "HOLD_FOR_STAGE_15B_SEVERITY_CONTRACT",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "pixels_accessed": 0,
+  "required_future_evidence": "Governed ordinal severity annotations or a prospectively approved and validated quantitative definition for a specific finding.",
+  "stage": "15A",
+  "stage10_localization_area_authorized_as_severity": false,
+  "stage12_proxy_quality_authorized_as_severity": false,
+  "status": "HOLD_FOR_VALID_SEVERITY_EVIDENCE",
+  "training_performed": false
+}

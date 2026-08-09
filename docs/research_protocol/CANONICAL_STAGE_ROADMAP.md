@@ -60,7 +60,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 14A | `8d02483` plus completed local audit | Hold for Stage 14B temporal identity/chronology resolution | Development-only metadata readiness audit | Temporal comparison data readiness | Original Stage 11 | Complete | Stable study IDs found; no trusted timestamp columns | 14B |
 | 14B | `6367644` plus completed local audit | Hold for authoritative chronology source | Metadata and documentation audit without pair construction | Temporal identity and chronology resolution | Original Stage 11 | Complete | Stable study identity; no trusted chronology evidence | 14C withholding freeze |
 | 14C | `6367644` plus completed local audit | Go for Stage 15A severity data readiness | Temporal capability freeze | Temporal modeling scientifically withheld | Original Stage 11 | Complete | Reopen only with authoritative timestamps or chronology documentation | 15A |
-| 15A | Prepared after Stage 14 withholding freeze | Governed evidence audit only | Verify severity annotations or validated quantitative definitions | Severity data readiness | Original Stage 12 | Ready to run | No labels may be inferred from probabilities, image labels, or unvalidated lesion area | Evidence-dependent 15B |
+| 15A | `2b91f9b` plus completed local audit | Hold for Stage 15B severity evidence resolution | Governed evidence audit only | Severity data readiness | Original Stage 12 | Complete | No explicit severity annotations or approved quantitative definition found | 15B |
+| 15B | Prepared after Stage 15A hold | Metadata and documentation audit only | Classify ground-truth, validated-proxy, or heuristic severity evidence | Severity evidence and contract resolution | Original Stage 12 | Ready to run | Creates no severity labels; may withhold Stage 15 | Evidence-dependent Stage 15C or 16A |
 
 ## Numbering rule
 

@@ -1,0 +1,29 @@
+{
+  "stage": "15B",
+  "stage15a_evidence": "reports/stage15/stage15a_severity_data_readiness_summary.json",
+  "stage15a_evidence_sha256": "c40caf25ec0ab5416c021b0209ad35697db69ec993fd3e1b32d0cbd3f7a7f475",
+  "metadata_profile": "reports/stage4/metadata_profiles.json",
+  "metadata_profile_sha256": "d9f0f9ebf2f6334333c5f3faaa4970362d01fb3b7ea255cf97ee3dcbcb0d6265",
+  "governed_limitations": [
+    {
+      "path": "reports/stage10/stage10n_localization_acceptance_decision_summary.json",
+      "sha256": "2beec215d36acfba3800a0c55913044723b6c68db255c859eca7fdbf7883a219"
+    },
+    {
+      "path": "reports/stage12/stage12h_partial_scope_capability_freeze_summary.json",
+      "sha256": "386efb62ec122720f03b7c8911c410fcf175c6201a38a3f70f21b765d86de27d"
+    }
+  ],
+  "explicit_severity_field_terms": ["severity", "severity_grade", "severity_score", "ordinal_severity", "radiologist_severity"],
+  "quantitative_measurement_terms": ["affected_lung_percentage", "validated_lesion_area_ratio", "severity_index"],
+  "approved_finding_specific_definitions": [],
+  "evidence_classes": ["EXPLICIT_GROUND_TRUTH_SEVERITY", "VALIDATED_QUANTITATIVE_SEVERITY_PROXY", "UNSUPPORTED_HEURISTIC_SEVERITY"],
+  "stage10_localization_area_as_severity_permitted": false,
+  "stage12_quality_proxy_as_severity_permitted": false,
+  "classifier_probability_as_severity_permitted": false,
+  "severity_label_creation_permitted": false,
+  "locked_test_access_permitted": false,
+  "pixel_access_permitted": false,
+  "training_permitted": false,
+  "inference_permitted": false
+}
