@@ -38,27 +38,26 @@ function renderViewer(image, format) {
   byId("viewer-format").textContent = format;
 }
 
-function renderFixture(data) {
+function renderFixture(data, preservePreview = false) {
   const jobState = data.job.state.toLowerCase();
   byId("header-job-state").textContent = jobState;
   byId("analysis-state").textContent = jobState;
   byId("kpi-view").textContent = data.view.selected;
-  byId("kpi-decision").textContent = data.decisions.precedence[0];
+  byId("kpi-decision").textContent = data.decisions.actual || data.decisions.precedence[0];
 
   const job = byId("job-status-content");
   job.replaceChildren();
   addDataRow(job, "Pseudonymous job", data.job.job_id);
   addDataRow(job, "Workflow", "Synthetic fixture review only");
-  renderViewer(data.synthetic_images.PNG, "PNG");
+  if (!preservePreview) renderViewer(data.synthetic_images.PNG, "PNG");
 
   const view = byId("view-quality-content");
   view.replaceChildren();
   addDataRow(view, "Model-identified view", `${data.view.selected} — not clinical certification`);
-  addDataRow(
-    view,
-    "Technical quality",
-    "Research technical-quality proxy warning; not a clinical image-quality assessment.",
-  );
+  const qualityText = data.technical_quality
+    ? `${data.technical_quality.status} · model score ${Number(data.technical_quality.score).toFixed(6)} · not a clinical image-quality assessment.`
+    : "Research technical-quality proxy warning; not a clinical image-quality assessment.";
+  addDataRow(view, "Technical quality", qualityText);
   addDataRow(view, "Governed states", data.view.states.join(" · "));
 
   const scores = byId("classifier-content");
@@ -87,9 +86,18 @@ function renderFixture(data) {
   const gauge = element("div", "reliability-gauge");
   const gaugeTrack = element("div", "gauge-track");
   gaugeTrack.setAttribute("aria-label", "Predictive uncertainty evidence indicator; no clinical certainty meaning");
-  gaugeTrack.append(element("div", "gauge-fill"));
+  const gaugeFill = element("div", "gauge-fill");
+  if (Number.isFinite(data.reliability.predictive_uncertainty)) {
+    const uncertaintyPercent = Math.min(100, Math.max(0, data.reliability.predictive_uncertainty / Math.log(2) * 100));
+    gaugeFill.style.width = `${uncertaintyPercent}%`;
+    gaugeTrack.setAttribute("aria-label", `Predictive uncertainty ${data.reliability.predictive_uncertainty.toFixed(6)}`);
+  }
+  gaugeTrack.append(gaugeFill);
   gauge.append(gaugeTrack);
   reliability.append(reliabilityCallout, gauge);
+  if (Number.isFinite(data.reliability.predictive_uncertainty)) {
+    addDataRow(reliability, "Maximum Bernoulli predictive entropy", data.reliability.predictive_uncertainty.toFixed(6));
+  }
   addDataRow(reliability, "Calibration", data.reliability.calibration_label);
   addDataRow(reliability, "OOD capability", data.reliability.ood);
   addDataRow(reliability, "Stage 13 selective prediction", data.reliability.stage13_selective_prediction);
@@ -126,10 +134,12 @@ function renderFixture(data) {
   report.append(element("div", "report-identity", data.report.identity));
   const reportCopy = element("div", "report-copy");
   reportCopy.append(element("p", "", "Deterministic research draft generated from governed structured evidence for expert review."));
-  data.report.statements.forEach((statement) => reportCopy.append(element("p", "", statement)));
+  data.report.statements.forEach((statement) => {
+    reportCopy.append(element("p", "", typeof statement === "string" ? statement : statement.text));
+  });
   report.append(
     reportCopy,
-    element("p", "report-disclaimer", "Research use only. Not a medical diagnosis. Expert review is required."),
+    element("p", "report-disclaimer", data.report.disclaimer || "Research use only. Not a medical diagnosis. Expert review is required."),
   );
 
   const decision = byId("decision-content");
@@ -165,12 +175,13 @@ function renderFixture(data) {
   const deferBox = element("article", "failure-box");
   deferBox.append(
     element("strong", "status-defer", "DEFER — safety/evidence limitation"),
-    element("span", "", data.dispositions.defer_reason),
+    element("span", "", Array.isArray(data.dispositions.defer_reason) ? data.dispositions.defer_reason.join(" · ") : data.dispositions.defer_reason),
   );
   const technicalBox = element("article", "failure-box");
+  const failureRecorded = data.dispositions.technical_failure_recorded === true;
   technicalBox.append(
     element("strong", "status-failed", "FAILED_SANITIZED — technical processing failure"),
-    element("span", "", "No sanitized technical failure recorded."),
+    element("span", "", failureRecorded ? data.dispositions.failure_code : "No sanitized technical failure recorded."),
   );
   failureGrid.append(deferBox, technicalBox);
   failure.append(failureGrid);
@@ -178,6 +189,8 @@ function renderFixture(data) {
 
 let fixtureData = null;
 let localPreviewUrl = null;
+let selectedLocalFile = null;
+let reviewInProgress = false;
 
 function releaseLocalPreview() {
   if (localPreviewUrl) {
@@ -192,6 +205,7 @@ function previewLocalFile(file) {
     return;
   }
   releaseLocalPreview();
+  selectedLocalFile = file;
   localPreviewUrl = URL.createObjectURL(file);
   const viewer = byId("synthetic-viewer");
   viewer.src = localPreviewUrl;
@@ -201,6 +215,8 @@ function previewLocalFile(file) {
   byId("viewer-format").textContent = file.type === "image/png" ? "PNG" : "JPEG";
   byId("image-dimensions").textContent = "Reading local preview";
   byId("preview-notice").textContent = "Local browser-memory preview only. This image is not uploaded, stored, or analyzed.";
+  byId("review-mode-badge").textContent = "LOCAL IMAGE REVIEW";
+  byId("run-review").disabled = false;
   viewer.addEventListener("load", () => {
     byId("image-dimensions").textContent = `${viewer.naturalWidth} × ${viewer.naturalHeight} px`;
   }, { once: true });
@@ -226,12 +242,48 @@ function configureLocalPreview() {
     dropZone.classList.remove("is-dragging");
   }));
   dropZone.addEventListener("drop", (event) => previewLocalFile(event.dataTransfer.files[0]));
-  byId("run-review").addEventListener("click", () => {
-    releaseLocalPreview();
-    if (fixtureData) renderFixture(fixtureData);
-    byId("preview-notice").textContent = "Synthetic deterministic review restored. No model inference was performed.";
-  });
+  byId("run-review").addEventListener("click", runLocalReview);
   window.addEventListener("beforeunload", releaseLocalPreview);
+}
+
+async function runLocalReview() {
+  if (!selectedLocalFile || reviewInProgress) {
+    byId("preview-notice").textContent = "Choose a local PNG or JPEG image before running a review.";
+    return;
+  }
+  reviewInProgress = true;
+  const button = byId("run-review");
+  button.disabled = true;
+  const originalLabel = button.lastChild.textContent;
+  button.lastChild.textContent = "Analyzing...";
+  byId("header-job-state").textContent = "analyzing";
+  byId("analysis-state").textContent = "Analyzing...";
+  byId("preview-notice").textContent = "Running the frozen TrustCXR research pipeline locally. No external service is used.";
+  try {
+    const response = await fetch("/ui/research-review", {
+      method: "POST",
+      headers: { "Content-Type": selectedLocalFile.type },
+      body: selectedLocalFile,
+      credentials: "omit",
+      cache: "no-store",
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      const reason = Array.isArray(result.reason_codes) ? result.reason_codes.join(" · ") : "INFERENCE_FAILURE";
+      throw new Error(reason);
+    }
+    renderFixture(result, true);
+    byId("review-mode-badge").textContent = "LOCAL IMAGE REVIEW";
+    byId("preview-notice").textContent = "Local image review completed from the selected image. Research use only.";
+  } catch (error) {
+    byId("header-job-state").textContent = "failed";
+    byId("analysis-state").textContent = "FAILED_SANITIZED";
+    byId("preview-notice").textContent = `Local review failed safely: ${error.message}`;
+  } finally {
+    reviewInProgress = false;
+    button.disabled = selectedLocalFile === null;
+    button.lastChild.textContent = originalLabel;
+  }
 }
 
 configureLocalPreview();

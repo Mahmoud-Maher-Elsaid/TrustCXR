@@ -44,10 +44,11 @@ def _validate_candidate(candidate: dict[str, Any]) -> None:
         not isinstance(references, list)
         or not references
         or any(
-            not isinstance(item, str) or not item.startswith("synthetic/") for item in references
+            not isinstance(item, str) or not item.startswith(("synthetic/", "local-review/"))
+            for item in references
         )
     ):
-        raise ValueError("Synthetic evidence references are missing or invalid.")
+        raise ValueError("Governed evidence references are missing or invalid.")
 
 
 def decide(candidate: dict[str, Any], contract: dict[str, Any]) -> dict[str, Any]:

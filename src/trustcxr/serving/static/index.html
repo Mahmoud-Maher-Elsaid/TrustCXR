@@ -69,12 +69,12 @@
         <div class="viewer-shell" data-region="MEDICAL_IMAGE_VIEWER_PANEL">
           <div class="viewer-grid" aria-hidden="true"></div>
           <img id="synthetic-viewer" alt="Synthetic non-patient grayscale validation fixture">
-          <div class="viewer-badges"><span>SYNTHETIC</span><span>RESEARCH</span></div>
+          <div class="viewer-badges"><span id="review-mode-badge">SYNTHETIC DEMO</span><span>RESEARCH</span></div>
           <span class="viewer-format" id="viewer-format">PNG</span>
         </div>
 
         <div class="format-hold"><strong>DICOM</strong><span>SYNTHETIC-ONLY INTEROPERABILITY</span></div>
-        <button class="primary-action" id="run-review" type="button">
+        <button class="primary-action" id="run-review" type="button" disabled>
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 7 8 5-8 5V7Z"/></svg>
           Run TrustCXR Review
         </button>

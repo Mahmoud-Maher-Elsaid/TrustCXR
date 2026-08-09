@@ -31,7 +31,7 @@ def test_local_image_selection_is_preview_only_and_releases_object_urls() -> Non
     assert "URL.createObjectURL(file)" in javascript
     assert "URL.revokeObjectURL(localPreviewUrl)" in javascript
     assert 'fetch("/ui/fixtures.json"' in javascript
-    assert 'fetch("/v1/' not in javascript
+    assert 'fetch("/ui/research-review"' in javascript
     assert "FormData" not in javascript
     assert "XMLHttpRequest" not in javascript
 

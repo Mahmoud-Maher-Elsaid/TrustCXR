@@ -2,16 +2,31 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
+from starlette.concurrency import run_in_threadpool
 
+from trustcxr.serving.local_inference import (
+    MAX_UPLOAD_BYTES,
+    LocalResearchPipeline,
+    LocalReviewError,
+)
 from trustcxr.serving.runtime import JobStore, sanitized_disposition
-from trustcxr.serving.schemas import HealthResponse, JobStatus, JobSubmission
+from trustcxr.serving.schemas import (
+    HealthResponse,
+    JobStatus,
+    JobSubmission,
+    LocalResearchReviewResponse,
+)
 
 
-def create_app(store: JobStore | None = None) -> FastAPI:
+def create_app(
+    store: JobStore | None = None,
+    local_pipeline: LocalResearchPipeline | None = None,
+) -> FastAPI:
     jobs = store or JobStore()
+    review_pipeline = local_pipeline or LocalResearchPipeline(Path(__file__).resolve().parents[3])
     app = FastAPI(
         title="TrustCXR Research API",
         version="trustcxr-serving-contract-v1",
@@ -41,6 +56,31 @@ def create_app(store: JobStore | None = None) -> FastAPI:
     def health() -> HealthResponse:
         return HealthResponse()
 
+    @app.post("/ui/research-review", response_model=LocalResearchReviewResponse)
+    async def local_research_review(request: Request) -> LocalResearchReviewResponse | JSONResponse:
+        media_type = request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+        if media_type not in {"image/png", "image/jpeg"}:
+            return _local_review_error("UNSUPPORTED_INPUT", 415)
+        content_length = request.headers.get("content-length")
+        if content_length:
+            try:
+                if int(content_length) > MAX_UPLOAD_BYTES:
+                    return _local_review_error("INPUT_TOO_LARGE", 413)
+            except ValueError:
+                return _local_review_error("INVALID_REQUEST", 422)
+        payload = bytearray()
+        async for chunk in request.stream():
+            payload.extend(chunk)
+            if len(payload) > MAX_UPLOAD_BYTES:
+                return _local_review_error("INPUT_TOO_LARGE", 413)
+        try:
+            result = await run_in_threadpool(review_pipeline.review, bytes(payload), media_type)
+        except LocalReviewError as error:
+            return _local_review_error(error.reason_code, error.status_code)
+        except Exception:
+            return _local_review_error("INFERENCE_FAILURE", 500)
+        return LocalResearchReviewResponse.model_validate(result)
+
     static_root = Path(__file__).resolve().parent / "static"
 
     def static_response(filename: str, media_type: str) -> FileResponse:
@@ -66,3 +106,16 @@ def create_app(store: JobStore | None = None) -> FastAPI:
         return static_response("fixtures.json", "application/json")
 
     return app
+
+
+def _local_review_error(reason_code: str, status_code: int) -> JSONResponse:
+    return JSONResponse(
+        status_code=status_code,
+        content={
+            "schema_version": "trustcxr-local-review-v1",
+            "state": "FAILED_SANITIZED",
+            "disposition": "TECHNICAL_FAILURE",
+            "reason_codes": [reason_code],
+            "research_designation": "RESEARCH_USE_ONLY_EXPERT_REVIEW_REQUIRED",
+        },
+    )

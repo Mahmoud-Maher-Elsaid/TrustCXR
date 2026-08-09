@@ -185,3 +185,22 @@ class HealthResponse(StrictContractModel):
     status: Literal["READY_CONTRACT_ONLY"] = "READY_CONTRACT_ONLY"
     research_designation: Literal["RESEARCH_USE_ONLY_EXPERT_REVIEW_REQUIRED"] = RESEARCH_DESIGNATION
     pipeline_version: Literal["trustcxr-frozen-pipeline-v1"] = PIPELINE_VERSION
+
+
+class LocalResearchReviewResponse(StrictContractModel):
+    schema_version: Literal["trustcxr-local-review-v1"] = "trustcxr-local-review-v1"
+    mode: Literal["LOCAL_IMAGE_REVIEW"] = "LOCAL_IMAGE_REVIEW"
+    research_designation: Literal["RESEARCH_USE_ONLY_EXPERT_REVIEW_REQUIRED"] = RESEARCH_DESIGNATION
+    job: dict[str, str]
+    image: dict[str, str | int]
+    view: dict[str, str | list[str]]
+    technical_quality: dict[str, str | float | bool]
+    classifier_scores: list[dict[str, str | float]]
+    reliability: dict[str, str | float | bool]
+    fusion: dict[str, str]
+    report: dict[str, str | list[dict[str, str]]]
+    verifier_statuses: list[dict[str, str]]
+    decisions: dict[str, str | list[str]]
+    dispositions: dict[str, str | list[str] | bool]
+    provenance: dict[str, str]
+    limitations: list[str]
