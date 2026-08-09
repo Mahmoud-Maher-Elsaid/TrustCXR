@@ -1,0 +1,22 @@
+{
+  "stage": "17_FINAL",
+  "status": "FROZEN_DEFER_ONLY_RESEARCH_TRIAGE",
+  "gate": "GO_FOR_STAGE_18A_GROUNDED_REPORT_DATA_READINESS",
+  "stage17b_contract_fingerprint": "16b28935ff1e3a3dbbd64848af757057e10f95a87702c8c65a959af8f596352b",
+  "stage17c_evidence": "reports/stage17/stage17c_expert_priority_policy_evidence_summary.json",
+  "stage17c_evidence_sha256": "1034b7d4ef3eb0f7178d0236e078c301c5a02cfae3a55f00bdfea8dc057212fb",
+  "active_decisions": ["DEFER"],
+  "withheld_decisions": [
+    "INPUT_REJECTED",
+    "ROUTINE",
+    "PRIORITY",
+    "URGENT_REVIEW",
+    "CRITICAL_REVIEW"
+  ],
+  "limitation": "GOVERNANCE_LIMITATION_NOT_MODEL_FAILURE",
+  "training_performed": false,
+  "inference_performed": false,
+  "fitting_performed": false,
+  "tuning_performed": false,
+  "locked_test_records_accessed": 0
+}

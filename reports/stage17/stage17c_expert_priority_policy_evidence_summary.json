@@ -1,0 +1,57 @@
+{
+  "acceptable_future_evidence": [
+    "expert_approved_project_triage_policy",
+    "formally_governed_clinical_or_radiology_prioritization_protocol",
+    "prospectively_approved_versioned_finding_to_review_priority_mapping"
+  ],
+  "active_decisions": [
+    "DEFER"
+  ],
+  "active_rules": [
+    {
+      "condition": "stage9_record_predictive_entropy_greater_than_frozen_threshold",
+      "decision": "DEFER",
+      "reason_code": "PREDICTIVE_UNCERTAINTY_ABOVE_FROZEN_LIMIT",
+      "threshold": 0.6917239984806322
+    },
+    {
+      "condition": "stage5_technical_quality_proxy_failed",
+      "decision": "DEFER",
+      "reason_code": "TECHNICAL_QUALITY_PROXY_FAILED_NOT_CLINICAL_QUALITY"
+    },
+    {
+      "condition": "view_not_confirmed_as_ap_pa_or_lateral",
+      "decision": "DEFER",
+      "reason_code": "VIEW_OUTSIDE_FROZEN_STAGE5_CAPABILITY"
+    },
+    {
+      "condition": "stage11_fusion_status_uncertain_or_unlocalized",
+      "decision": "DEFER",
+      "reason_code": "FUSION_EVIDENCE_NOT_RELIABLY_SUPPORTIVE"
+    },
+    {
+      "condition": "required_eligible_input_missing",
+      "decision": "DEFER",
+      "reason_code": "REQUIRED_TRIAGE_EVIDENCE_MISSING"
+    }
+  ],
+  "authoritative_priority_policy_found": false,
+  "fitting_performed": false,
+  "gate": "GO_FOR_STAGE_18A_GROUNDED_REPORT_DATA_READINESS",
+  "inference_performed": false,
+  "limitation": "GOVERNANCE_LIMITATION_NOT_MODEL_FAILURE",
+  "locked_test_records_accessed": 0,
+  "next_independent_stage": "18A_GROUNDED_REPORT_DATA_READINESS",
+  "stage": "17C",
+  "stage17b_contract_fingerprint": "16b28935ff1e3a3dbbd64848af757057e10f95a87702c8c65a959af8f596352b",
+  "status": "SCIENTIFICALLY_WITHHELD_NO_GOVERNED_PRIORITY_POLICY",
+  "training_performed": false,
+  "tuning_performed": false,
+  "withheld_decisions": [
+    "INPUT_REJECTED",
+    "ROUTINE",
+    "PRIORITY",
+    "URGENT_REVIEW",
+    "CRITICAL_REVIEW"
+  ]
+}

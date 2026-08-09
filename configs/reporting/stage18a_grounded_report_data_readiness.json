@@ -1,0 +1,70 @@
+{
+  "stage": "18A",
+  "objective": "grounded_research_report_data_readiness",
+  "evidence": {
+    "stage9": {
+      "path": "reports/stage9/stage9_final_summary.json",
+      "sha256": "a7a84587aabde23f49d400e7ec64229dca74f8a0b2c0f55e7db77946fcd27479"
+    },
+    "stage11": {
+      "path": "reports/stage11/stage11l_fusion_acceptance_decision_summary.json",
+      "sha256": "78eedeca24ca941a9c61ce77af28175f8af792f909af622458981312861839e0"
+    },
+    "stage12": {
+      "path": "reports/stage12/stage12h_partial_scope_capability_freeze_summary.json",
+      "sha256": "386efb62ec122720f03b7c8911c410fcf175c6201a38a3f70f21b765d86de27d"
+    },
+    "stage16": {
+      "path": "reports/stage16/stage16_final_capability_freeze.json",
+      "sha256": "50250a46a0f2f123f3441290738f160a022c0be8f756d851435097919f07e039"
+    },
+    "stage17": {
+      "path": "reports/stage17/stage17_final_research_triage_freeze.json",
+      "sha256": "21b6b62d2c6b98ab854fac757270ad283152711d0d6946a4e9be9f2e7b982757"
+    },
+    "report_dataset_governance": {
+      "path": "reports/stage4_4/data_readiness_summary.json",
+      "sha256": "4313c85ef85425536b75db2b7d2c68e3707fe0593bb8e63f6eb9cde1880a7ad0"
+    }
+  },
+  "statement_policy": {
+    "direct_structured": [
+      "model_identified_view_ap_pa_or_lateral",
+      "technical_quality_proxy_warning_with_nonclinical_qualifier",
+      "research_system_defer_status_with_reason_code"
+    ],
+    "requires_explicit_uncertainty": [
+      "stage9_classifier_finding_signal",
+      "predictive_probability",
+      "stage11_uncertain_or_unlocalized_fusion_status"
+    ],
+    "must_omit": [
+      "reliable_positive_localization_claim",
+      "classifier_negation_from_localization_absence",
+      "severity",
+      "temporal_change",
+      "ood_status_claim",
+      "device_localization",
+      "clinical_image_quality_diagnosis",
+      "clinical_certainty_from_probability",
+      "patient_history",
+      "treatment_recommendation"
+    ]
+  },
+  "grounding": {
+    "statement_requires_structured_source": true,
+    "statement_requires_evidence_code": true,
+    "statement_requires_source_stage_and_version": true,
+    "unsupported_behavior": ["OMIT", "EXPLICIT_UNCERTAINTY"],
+    "fabrication_permitted": false
+  },
+  "report_identity": "AI_GENERATED_RESEARCH_REPORT_DRAFT_FOR_EXPERT_REVIEW",
+  "radiologist_authored_clinical_report_claim_permitted": false,
+  "report_dataset_identity_alignment_assumed": false,
+  "patient_identifiers_in_tracked_outputs_permitted": false,
+  "locked_test_access_permitted": false,
+  "report_generation_permitted": false,
+  "inference_permitted": false,
+  "language_model_training_permitted": false,
+  "language_model_fine_tuning_permitted": false
+}

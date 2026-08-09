@@ -71,7 +71,9 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 16F | Current closure | Go for Stage 17A triage data readiness | Frozen model-specific reliability thresholds, decisions, and limitations | Reliability capability freeze | Original Stage 13 | Complete | Predictive only, not epistemic; no governed OOD cohort | 17A |
 | 17A | Completed readiness audit | Go for Stage 17B rule-based triage contract | Auditable research-triage input and withholding audit | Research triage readiness | Original Stage 14 | Complete | No inference, training, treatment advice, or clinical deployment claim | 17B |
 | 17B | Completed contract freeze | Hold for expert-approved finding-priority policy | Deterministic precedence, reason codes, deferral rules, and unsupported-priority withholding | Research triage contract | Original Stage 14 | Complete | Only DEFER activated; priority mapping requires expert approval | 17C |
-| 17C | Prepared after Stage 17B completion | Evidence-readiness audit only | Governed priority-policy evidence audit with exact Stage 17B preservation | Research triage governance | Original Stage 14 | Ready to run | No authoritative policy found during preparation; next independent path is 18A | 18A or hold |
+| 17C | Completed evidence audit | Go for Stage 18A grounded-report data readiness | Governed priority-policy evidence audit with exact Stage 17B preservation | Research triage governance | Original Stage 14 | Scientifically withheld | DEFER only; governance limitation, not model failure | 18A |
+| 17D | Current closure | Go for Stage 18A grounded-report data readiness | Frozen DEFER-only research triage | Research triage freeze | Original Stage 14 | Complete | Priority and input rejection withheld | 18A |
+| 18A | Prepared after Stage 17 closure | Provenance and data-readiness audit only | Structured statement grounding and report-dataset identity audit | Grounded report readiness | Original Stage 15 | Ready to run | No report generation, LLM work, inference, or test access | 18B |
 
 ## Numbering rule
 
