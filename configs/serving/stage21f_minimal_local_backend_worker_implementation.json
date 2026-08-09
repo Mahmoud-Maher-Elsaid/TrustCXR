@@ -1,0 +1,51 @@
+{
+  "stage": "21F",
+  "stage21e_summary": "reports/stage21/stage21e_serving_dependency_implementation_protocol_summary.json",
+  "stage21e_summary_sha256": "664a76ac942a0b1a8e73589a31809879d541443786f976c88ad801dc69c42a72",
+  "stage21b_contract_fingerprint": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f",
+  "dependency_manifest_sha256": "6b82df6db246280518aec3078f55675e02c41b9afd4e74c104836960b820d782",
+  "dependency_fingerprint": "b6fa4c0ec10301f9d6018610b4bd18b6a45270955ad7087b5ec62f55c594463f",
+  "implementation_protocol_fingerprint": "57cdfdc6df679ffe9e6ea38c797940423df1cc15af3cb1688d9871f01990fbb7",
+  "required_versions": {
+    "fastapi": "0.116.1",
+    "pydantic": "2.11.7",
+    "uvicorn": "0.35.0"
+  },
+  "public_endpoints": [
+    "POST /v1/jobs",
+    "GET /v1/jobs/{job_id}",
+    "GET /health"
+  ],
+  "frozen_components": [
+    "stage5_quality_view",
+    "stage9_classifier",
+    "stage10_11_limited_localization_fusion",
+    "stage16_reliability",
+    "stage17_triage",
+    "stage18_report_renderer",
+    "stage19_verifier",
+    "stage20_decision_support"
+  ],
+  "runtime_root": "cache/serving_runtime",
+  "persistent_server_permitted": false,
+  "persistent_worker_permitted": false,
+  "real_model_loading_permitted": false,
+  "real_model_inference_permitted": false,
+  "gpu_residency_profiling_permitted": false,
+  "real_patient_processing_permitted": false,
+  "real_patient_report_generation_permitted": false,
+  "locked_test_access_permitted": false,
+  "training_permitted": false,
+  "fine_tuning_permitted": false,
+  "checkpoint_mutation_permitted": false,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "expected_status": "PASSED_MINIMAL_LOCAL_BACKEND_WORKER_IMPLEMENTATION",
+  "expected_gate": "GO_FOR_STAGE_21G_BOUNDED_SYNTHETIC_RUNTIME_API_WORKER_VALIDATION",
+  "next_canonical_stage": "21G_BOUNDED_SYNTHETIC_RUNTIME_API_WORKER_VALIDATION",
+  "next_stage_authorizes_runtime_api_worker_validation": true,
+  "next_stage_authorizes_real_model_inference": false,
+  "next_stage_authorizes_gpu_residency_profiling": false,
+  "next_stage_authorizes_language_model_work": false
+}
