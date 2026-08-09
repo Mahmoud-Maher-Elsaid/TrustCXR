@@ -63,7 +63,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 15A | `2b91f9b` plus completed local audit | Hold for Stage 15B severity evidence resolution | Governed evidence audit only | Severity data readiness | Original Stage 12 | Complete | No explicit severity annotations or approved quantitative definition found | 15B |
 | 15B | `da2a417` plus completed local audit | Go for Stage 16A reliability data readiness | Metadata and documentation audit only | Severity evidence and contract resolution | Original Stage 12 | Complete | No valid severity evidence; capability withheld, not failed | 15C freeze |
 | 15C | `da2a417` plus completed local audit | Go for Stage 16A reliability data readiness | Severity capability freeze | Severity modeling scientifically withheld | Original Stage 12 | Complete | Reopen only with governed severity evidence | 16A |
-| 16A | Prepared after Stage 15 withholding freeze | Frozen-artifact audit only | Calibration, uncertainty, OOD, and selective-prediction readiness | Reliability data readiness | Original Stage 13 | Ready to run | No fitting, inference, thresholds, pixels, or locked-test access | Evidence-dependent 16B |
+| 16A | `79d4e91` plus completed local audit | Go for Stage 16B reliability contract | Frozen-artifact audit only | Reliability data readiness | Original Stage 13 | Complete | Stage 9 ready; Stage 13 needs validation inference; OOD held | 16B |
+| 16B | Prepared after Stage 16A result | Protocol freeze only | Validation-only calibration, predictive uncertainty, and selective prediction | Reliability scientific contract | Original Stage 13 | Ready to run | OOD withheld; no fitting, thresholds, inference, or test access | 16C |
 
 ## Numbering rule
 

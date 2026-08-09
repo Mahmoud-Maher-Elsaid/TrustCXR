@@ -1,0 +1,40 @@
+{
+  "abstention_thresholds_selected": false,
+  "calibration_parameters_fitted": false,
+  "calibration_readiness": "READY_VALIDATION_ONLY",
+  "eligible_frozen_classifiers": [
+    {
+      "checkpoint_sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
+      "id": "stage9_original",
+      "scientifically_eligible": true,
+      "validation_inference_required": false,
+      "validation_prediction_members": [
+        "identifiers.npy",
+        "patient_ids.npy",
+        "probabilities.npy",
+        "targets.npy"
+      ],
+      "validation_predictions_ready": true
+    },
+    {
+      "checkpoint_sha256": "09a8db4e83861fcc41172d64f29215d6e9d24cd41a8d6b51f825ca6d00fb1c77",
+      "id": "stage13_frontal_only",
+      "scientifically_eligible": true,
+      "validation_inference_required": true,
+      "validation_prediction_members": [],
+      "validation_predictions_ready": false
+    }
+  ],
+  "gate": "GO_FOR_STAGE_16B_RELIABILITY_CONTRACT",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "ood_cohorts": [],
+  "ood_readiness": "HOLD_NO_GOVERNED_OOD_COHORT",
+  "patient_safe_splits_preserved": true,
+  "pixels_accessed": 0,
+  "selective_prediction_readiness": "READY_VALIDATION_ONLY",
+  "stage": "16A",
+  "status": "PASSED_RELIABILITY_DATA_READINESS_WITH_OOD_HOLD",
+  "training_performed": false,
+  "uncertainty_readiness": "READY_PREDICTIVE_BASELINES_ONLY"
+}
