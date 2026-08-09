@@ -127,9 +127,9 @@ def test_stage22e_rejects_scope_expansion(key: str) -> None:
 
 def test_stage22e_acceptance_validation_has_no_output_side_effect() -> None:
     output = ROOT / "reports/stage22/stage22e_synthetic_ui_acceptance_decision_summary.json"
-    assert not output.exists()
+    before = output.read_bytes()
     decide_acceptance(CONFIG, ROOT)
-    assert not output.exists()
+    assert output.read_bytes() == before
 
 
 def test_stage22e_next_stage_has_no_runtime_or_llm_authorization() -> None:
