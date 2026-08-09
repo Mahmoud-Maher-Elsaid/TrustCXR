@@ -1,0 +1,181 @@
+{
+  "stage": "22A",
+  "status": "PASSED_RESEARCH_UI_MEDICAL_VIEWER_DATA_READINESS_WITH_DICOM_HOLD",
+  "gate": "GO_FOR_STAGE_22B_RESEARCH_UI_DISPLAY_CONTRACT",
+  "stage21_research_designation": "RESEARCH_USE_ONLY_EXPERT_REVIEW_REQUIRED",
+  "accepted_serving_scope": "MINIMAL_LOCAL_RESEARCH_SERVING_SYNTHETIC_RUNTIME_ONLY",
+  "stage21h_summary_sha256": "ff59a3710e618092ee1e5da6ca4ea136fac02c50ac0ee77b3974f1d1be1f0fb0",
+  "eligible_ui_elements": [
+    {
+      "id": "VIEW_ASSESSMENT",
+      "source_stage": "5",
+      "structured_field": "view_class",
+      "wording": "Model-identified view: AP, PA, or LATERAL.",
+      "numerical_values": false,
+      "qualifier": "RESEARCH_MODEL_OUTPUT",
+      "prohibited": "CLINICAL_VIEW_CERTIFICATION"
+    },
+    {
+      "id": "TECHNICAL_QUALITY_PROXY",
+      "source_stage": "5",
+      "structured_field": "technical_quality_proxy_warning",
+      "wording": "Research technical-quality proxy warning; not a clinical image-quality assessment.",
+      "numerical_values": false,
+      "qualifier": "NONCLINICAL_PROXY_ONLY",
+      "prohibited": "CLINICAL_IMAGE_QUALITY_DIAGNOSIS"
+    },
+    {
+      "id": "CLASSIFIER_SCORES",
+      "source_stage": "9",
+      "structured_field": "scores_by_frozen_14_label_order",
+      "wording": "Research model score; not a diagnosis or clinical certainty.",
+      "numerical_values": true,
+      "qualifier": "FROZEN_14_LABEL_ORDER_AND_STAGE16_LIMITATIONS",
+      "prohibited": "DIAGNOSIS_SEVERITY_OR_UNAPPROVED_THRESHOLD"
+    },
+    {
+      "id": "LIMITED_FUSION",
+      "source_stage": "10/11",
+      "structured_field": "fusion_status",
+      "wording": "Limited fusion evidence status.",
+      "numerical_values": false,
+      "qualifier": "MAXIMUM_PARTIALLY_SUPPORTED_EXACT_GOVERNED_IDENTITY_ONLY",
+      "prohibited": "RELIABLE_LOCALIZATION_LATERALITY_OR_NEGATION"
+    },
+    {
+      "id": "RELIABILITY",
+      "source_stage": "16",
+      "structured_field": "calibration_status_and_predictive_uncertainty",
+      "wording": "Validation-derived calibration status and predictive uncertainty.",
+      "numerical_values": true,
+      "qualifier": "PREDICTIVE_ONLY_NOT_EPISTEMIC_MODEL_SPECIFIC",
+      "prohibited": "EPISTEMIC_OOD_OR_STAGE13_SELECTIVE_PREDICTION_CLAIM"
+    },
+    {
+      "id": "TRIAGE_DEFER",
+      "source_stage": "17",
+      "structured_field": "decision_and_reason_codes",
+      "wording": "Research triage: DEFER.",
+      "numerical_values": false,
+      "qualifier": "DEFER_ONLY_GOVERNANCE_LIMITATION",
+      "prohibited": "ROUTINE_PRIORITY_URGENCY_OR_CLINICAL_TRIAGE"
+    },
+    {
+      "id": "REPORT_DRAFT",
+      "source_stage": "18",
+      "structured_field": "ResearchReportDraft",
+      "wording": "AI-generated research report draft for expert review.",
+      "numerical_values": false,
+      "qualifier": "RESEARCH_USE_ONLY_NOT_A_MEDICAL_DIAGNOSIS_EXPERT_REVIEW_REQUIRED",
+      "prohibited": "FREE_FORM_FACTS_LLM_OR_AUTOMATIC_CLINICAL_APPROVAL"
+    },
+    {
+      "id": "VERIFIER",
+      "source_stage": "19",
+      "structured_field": "statement_results.status_and_evidence_references",
+      "wording": "Deterministic verifier status and governed evidence references.",
+      "numerical_values": false,
+      "qualifier": "PROXY_ANATOMY_AT_MOST_PARTIALLY_VERIFIED",
+      "prohibited": "UPGRADE_WITHHELD_OR_PARTIAL_EVIDENCE"
+    },
+    {
+      "id": "DECISION",
+      "source_stage": "20",
+      "structured_field": "decision_and_reason_codes",
+      "wording": "Research draft disposition for expert review.",
+      "numerical_values": false,
+      "qualifier": "DEFER_PRECEDENCE_ACCEPT_IS_NOT_CLINICAL_APPROVAL",
+      "prohibited": "AUTONOMOUS_RELEASE_OR_CLINICAL_APPROVAL"
+    },
+    {
+      "id": "JOB_AND_FAILURE",
+      "source_stage": "21",
+      "structured_field": "JobStatus.state_or_SanitizedDisposition",
+      "wording": "Research job state, DEFER disposition, or sanitized technical failure.",
+      "numerical_values": false,
+      "qualifier": "DEFER_DISTINCT_FROM_FAILED_SANITIZED",
+      "prohibited": "STACK_TRACE_INTERNAL_PATH_RAW_EXCEPTION_OR_CHECKPOINT_PATH"
+    }
+  ],
+  "viewer_readiness": {
+    "source_image": "PROSPECTIVE_SYNTHETIC_OR_GOVERNED_LOCAL_ONLY",
+    "dimensions": "READY_FROM_DECODED_IMAGE_METADATA",
+    "stage8_overlay": "WITHHELD_UNTIL_EXPLICIT_UI_OVERLAY_AUTHORIZATION_PSEUDO_ANATOMY_ONLY",
+    "stage10_overlay": "WITHHELD_UNTIL_EXPLICIT_UI_OVERLAY_AUTHORIZATION_GEOMETRY_PROXY_ONLY",
+    "structured_evidence_panel": "READY_FOR_CONTRACT_DEFINITION",
+    "positive_lesion_overlay": "WITHHELD_INSUFFICIENT_EVIDENCE"
+  },
+  "overlay_policy": {
+    "stage8": "QUALITY_FILTERED_PSEUDO_ANATOMY_ONLY_WITHHELD_PENDING_AUTHORIZATION",
+    "stage10": "GEOMETRY_THORACIC_LOCATION_PROXY_ONLY_WITHHELD_PENDING_AUTHORIZATION",
+    "stage11_maximum_support": "PARTIALLY_SUPPORTED",
+    "positive_lesion_localization": "WITHHELD_INSUFFICIENT_EVIDENCE",
+    "laterality_from_localization": "PROHIBITED",
+    "negation_from_localization_absence": "PROHIBITED",
+    "box_as_mask": "PROHIBITED",
+    "heuristic_anatomical_join": "PROHIBITED"
+  },
+  "image_format_readiness": {
+    "PNG": "READY_EXISTING_PILLOW_DECODE_PATHS",
+    "JPEG": "READY_EXISTING_PILLOW_DECODE_PATHS",
+    "DICOM": "WITHHELD_NO_GOVERNED_GENERIC_VIEWER_CONTRACT",
+    "TENSOR_INTERNAL": "INTERNAL_ONLY_NOT_A_BROWSER_DISPLAY_CONTRACT"
+  },
+  "ui_technology_recommendation": "LIGHTWEIGHT_STATIC_HTML_CSS_JAVASCRIPT_SERVED_BY_EXISTING_FASTAPI",
+  "new_ui_dependency_required": false,
+  "privacy_rules": [
+    "PSEUDONYMOUS_JOB_ID_ONLY",
+    "NO_PATIENT_IDENTIFYING_INFORMATION",
+    "NO_PHI_IN_LOGS",
+    "NO_PHI_IN_TRACKED_SCREENSHOTS_OR_FIXTURES",
+    "NO_INTERNAL_FILE_PATHS",
+    "NO_BROWSER_PERSISTENCE_UNLESS_GOVERNED_LATER",
+    "NO_TELEMETRY_OR_EXTERNAL_ANALYTICS_BY_DEFAULT",
+    "NO_EXTERNAL_IMAGE_UPLOAD",
+    "LOCAL_RESEARCH_USE_ONLY"
+  ],
+  "accessibility_requirements": [
+    "VISIBLE_RESEARCH_ONLY_BANNER",
+    "VISIBLE_EXPERT_REVIEW_REQUIRED_NOTICE",
+    "VISIBLE_DEFER_STATE",
+    "VISIBLE_PREDICTIVE_UNCERTAINTY",
+    "READABLE_EVIDENCE_PROVENANCE",
+    "DISTINGUISH_MODEL_SIGNAL_FROM_VERIFIED_EVIDENCE",
+    "NO_DIAGNOSTIC_COLOR_SEMANTICS"
+  ],
+  "safety_limitations": [
+    "STAGE11_MAXIMUM_SUPPORT_PARTIALLY_SUPPORTED",
+    "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",
+    "NO_LOCALIZATION_ABSENCE_CONTRADICTION",
+    "STAGE13_SELECTIVE_PREDICTION_NOT_ACCEPTED",
+    "OOD_WITHHELD",
+    "STAGE17_DEFER_ONLY",
+    "STAGE18_DETERMINISTIC_GROUNDED_REPORTING",
+    "STAGE19_VERIFIER_RESTRICTIONS",
+    "STAGE20_DEFER_HIGHEST_PRECEDENCE",
+    "NO_SEVERITY",
+    "NO_TEMPORAL_CHANGE",
+    "NO_DEVICE_LOCALIZATION",
+    "NO_CLINICAL_DIAGNOSIS",
+    "NO_TREATMENT_RECOMMENDATION",
+    "NO_CLINICAL_APPROVAL",
+    "NO_AUTONOMOUS_RELEASE"
+  ],
+  "ui_implemented": false,
+  "browser_ui_started": false,
+  "persistent_server_started": false,
+  "real_images_displayed": 0,
+  "real_model_loaded": false,
+  "real_inference_performed": false,
+  "gpu_residency_profiling_performed": false,
+  "real_patient_records_used": 0,
+  "locked_test_records_accessed": 0,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "next_canonical_stage": "22B_RESEARCH_UI_DISPLAY_CONTRACT",
+  "next_stage_authorizes_ui_implementation": false,
+  "next_stage_authorizes_real_image_display": false,
+  "next_stage_authorizes_real_model_inference": false,
+  "next_stage_authorizes_language_model_work": false
+}
