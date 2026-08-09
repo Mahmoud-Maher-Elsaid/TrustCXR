@@ -46,3 +46,14 @@ def test_stage21b_does_not_authorize_implementation_or_llm() -> None:
     assert contract["currently_planned_llm_authorized_gate"] is None
     assert not contract["next_stage_authorizes_backend_worker_implementation"]
     assert not contract["next_stage_authorizes_language_model_work"]
+
+
+def test_stage21b_launcher_resolves_project_venv_without_obsolete_path() -> None:
+    launcher = (ROOT / "scripts/serving/run_stage21b_backend_api_worker_contract.ps1").read_text(
+        encoding="utf-8"
+    )
+    assert 'Join-Path $ProjectRoot ".venv\\Scripts\\python.exe"' in launcher
+    assert "Resolve-Path -LiteralPath $PythonCandidate" in launcher
+    assert "Project virtual-environment interpreter exists but is not runnable" in launcher
+    assert "C:\\Users\\maher" not in launcher
+    assert '"$Python"' not in launcher
