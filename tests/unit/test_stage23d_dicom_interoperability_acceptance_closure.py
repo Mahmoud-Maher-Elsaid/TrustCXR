@@ -110,11 +110,12 @@ def test_stage23d_rejects_scope_expansion(key: str) -> None:
         decide_acceptance(changed, ROOT)
 
 
-def test_stage23d_validation_does_not_write_closure_output() -> None:
+def test_stage23d_validation_does_not_modify_finalized_closure_output() -> None:
     output = ROOT / "reports/stage23/stage23d_dicom_interoperability_acceptance_closure.json"
-    assert not output.exists()
+    assert output.is_file()
+    before = output.read_bytes()
     decide_acceptance(CONFIG, ROOT)
-    assert not output.exists()
+    assert output.read_bytes() == before
 
 
 def test_stage23d_handoff_preserves_all_remaining_original_stages() -> None:

@@ -96,6 +96,7 @@ $routes = @{
     "23B" = "scripts\interoperability\run_stage23b_dicom_interoperability_contract.ps1"
     "23C" = "scripts\interoperability\run_stage23c_synthetic_dicom_implementation_validation.ps1"
     "23D" = "scripts\interoperability\run_stage23d_dicom_interoperability_acceptance_closure.ps1"
+    "24A" = "scripts\feedback\run_stage24a_human_feedback_active_learning_data_readiness.ps1"
 }
 if (-not $routes.ContainsKey($Stage)) { throw "No real stage-specific launcher is registered for '$Stage'." }
 $script = Join-Path $ProjectRoot $routes[$Stage]

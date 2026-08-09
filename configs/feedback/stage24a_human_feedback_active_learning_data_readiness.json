@@ -1,0 +1,161 @@
+{
+  "stage": "24A",
+  "stage23d_summary": "reports/stage23/stage23d_dicom_interoperability_acceptance_closure.json",
+  "stage23d_summary_sha256": "8280b2d566f3b9eaa1fb9d6d6cb8c34e2c1ba75b2fd4802b0be833b5dd373fa8",
+  "stage23d_status": "ACCEPTED_SYNTHETIC_DICOM_INTEROPERABILITY_RESEARCH_ONLY",
+  "numbering_reconciliation": {
+    "actual_repository_stages_completed": [21, 22, 23],
+    "actual_stage_mappings": {
+      "21": "ORIGINAL_STAGE18_BACKEND_API_AND_GPU_WORKER",
+      "22": "ORIGINAL_STAGE19_RESEARCH_UI_AND_VIEWER",
+      "23": "ORIGINAL_STAGE20_DICOM_INTEROPERABILITY"
+    },
+    "original_conceptual_stages_remaining": [21, 22, 23, 24],
+    "major_mandatory_stage_count_remaining": 4,
+    "history_renumbered_or_replaced": false
+  },
+  "evidence_audit": {
+    "true_governed_expert_feedback": {
+      "status": "ABSENT",
+      "evidence": []
+    },
+    "dataset_ground_truth": {
+      "status": "AVAILABLE_NOT_PROSPECTIVE_FEEDBACK",
+      "evidence": [
+        "docs/localization/STAGE10E_RSNA_LOCALIZATION_BASELINE.md",
+        "reports/stage12/stage12d_annotation_cohort_readiness_summary.json"
+      ]
+    },
+    "manual_project_annotations": {
+      "status": "STAGE_SPECIFIC_ONLY_NOT_REUSABLE_AS_STAGE24_FEEDBACK",
+      "evidence": [
+        "reports/stage12/stage12c_annotation_device_scope_adjudication_summary.json",
+        "reports/stage12/stage12d_partial_annotation_state.json",
+        "reports/stage12/stage12e_partial_annotation_acceptance_summary.json"
+      ],
+      "reason": "PROJECT_OWNER adjudications follow Stage 12 protocol 1.0.0 but have no governed clinical-expert qualification, immutable source-output feedback linkage, or Stage 24 feedback/adjudication contract."
+    },
+    "semantic_governance_adjudication": {
+      "status": "PROJECT_CONTRACT_EVIDENCE_NOT_EXPERT_FEEDBACK",
+      "evidence": [
+        "reports/stage11/stage11c_shared_cohort_label_harmonization_summary.json"
+      ]
+    },
+    "synthetic_fixtures": {
+      "status": "NOT_HUMAN_FEEDBACK",
+      "evidence": [
+        "reports/stage19/stage19c_synthetic_verifier_validation_summary.json",
+        "reports/stage20/stage20c_synthetic_decision_validation_summary.json"
+      ]
+    },
+    "model_outputs": {
+      "status": "NOT_HUMAN_FEEDBACK",
+      "evidence": [
+        "reports/stage16/stage16e_reliability_acceptance_summary.json",
+        "reports/stage19/stage19d_verifier_acceptance_summary.json",
+        "reports/stage20/stage20d_deterministic_decision_acceptance_summary.json"
+      ]
+    },
+    "feedback_schema": "ABSENT",
+    "active_learning_queue": "ABSENT",
+    "expert_reviewer_role_governance": "ABSENT",
+    "feedback_adjudication_policy": "ABSENT"
+  },
+  "future_feedback_record_readiness": {
+    "status": "DESIGN_READY_NOT_ACTIVATED",
+    "allowed_structured_fields": [
+      "PSEUDONYMOUS_CASE_REFERENCE",
+      "SOURCE_COMPONENT_IDENTIFIER",
+      "SOURCE_COMPONENT_VERSION",
+      "ORIGINAL_STRUCTURED_RESULT_IMMUTABLE_REFERENCE",
+      "REVIEWER_PSEUDONYMOUS_ROLE_REFERENCE",
+      "REVIEWER_DISPOSITION",
+      "CORRECTION_CATEGORY",
+      "ACCEPTED_REJECTED_UNCERTAIN",
+      "REASON_CODE",
+      "PROTOCOL_VERSION",
+      "EVENT_TIMESTAMP",
+      "PROVENANCE_REFERENCE"
+    ],
+    "prohibited_fields": [
+      "REVIEWER_NAME",
+      "PATIENT_IDENTIFIER",
+      "RAW_PHI",
+      "FREE_TEXT_CLINICAL_DIAGNOSIS"
+    ],
+    "original_output_immutable": true,
+    "feedback_automatically_becomes_training_truth": false
+  },
+  "allowed_research_feedback_purposes": [
+    "MODEL_SIGNAL_INCORRECT",
+    "MODEL_SIGNAL_UNCERTAIN",
+    "REPORT_WORDING_ISSUE",
+    "PROVENANCE_ISSUE",
+    "VERIFIER_DISAGREEMENT",
+    "DEFER_APPROPRIATE_OR_INAPPROPRIATE",
+    "TECHNICAL_FAILURE",
+    "UNSUPPORTED_CAPABILITY_REQUEST"
+  ],
+  "active_learning_readiness": {
+    "status": "SCIENTIFICALLY_WITHHELD_NO_GOVERNED_EXPERT_FEEDBACK_DATA",
+    "candidate_signals_design_ready": [
+      "STAGE16_PREDICTIVE_UNCERTAINTY",
+      "STAGE17_DEFER_REASON_CODES",
+      "STAGE19_VERIFIER_STATUS",
+      "STAGE20_DECISION",
+      "GOVERNED_MODEL_DISAGREEMENT"
+    ],
+    "prohibited_signals": [
+      "OOD_CLAIM",
+      "SEVERITY",
+      "TEMPORAL_CHANGE",
+      "UNSUPPORTED_LOCALIZATION",
+      "STAGE13_SELECTIVE_PREDICTION",
+      "PATIENT_IDENTITY",
+      "PHI_HEURISTIC"
+    ],
+    "activation_authorized": false
+  },
+  "future_training_feedback_gate": [
+    "GOVERNED_REVIEWER_QUALIFICATION",
+    "EXPLICIT_ANNOTATION_PROTOCOL",
+    "ADJUDICATION_POLICY_WHERE_REQUIRED",
+    "COMPLETE_PROVENANCE",
+    "VERSIONED_REVIEW_MANIFEST",
+    "PATIENT_SAFE_SPLIT_PROTECTION",
+    "LOCKED_TEST_PROTECTION",
+    "EXPLICIT_RETRAINING_MANIFEST_APPROVAL"
+  ],
+  "test_set_policy": [
+    "NO_LOCKED_TEST_FEEDBACK_ACQUISITION",
+    "NO_TEST_CORRECTIONS",
+    "NO_TEST_RELABELING",
+    "NO_ACTIVE_LEARNING_FROM_LOCKED_TEST",
+    "NO_FEEDBACK_DRIVEN_TEST_TUNING"
+  ],
+  "governed_expert_feedback_exists": false,
+  "existing_manual_annotations_reusable_for_stage24_feedback": false,
+  "active_learning_activation_authorized": false,
+  "training_authorized": false,
+  "checkpoint_modification_authorized": false,
+  "dataset_split_change_authorized": false,
+  "new_patient_data_processing_authorized": false,
+  "locked_test_access_authorized": false,
+  "patient_identifier_exposure_authorized": false,
+  "heuristic_patient_join_authorized": false,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "language_model_mandatory_for_project_completion": false,
+  "expected_status": "PASSED_HUMAN_FEEDBACK_ACTIVE_LEARNING_DATA_READINESS_WITH_EXPERT_FEEDBACK_HOLD",
+  "expected_gate": "GO_FOR_STAGE_24B_HUMAN_FEEDBACK_ACTIVE_LEARNING_WITHHOLDING_DECISION",
+  "next_canonical_stage": "24B_HUMAN_FEEDBACK_ACTIVE_LEARNING_WITHHOLDING_DECISION",
+  "stage24_may_close_with_scientifically_withheld_disposition": true,
+  "shortest_mandatory_path": [
+    "ACTUAL_STAGE24_ORIGINAL_STAGE21_HUMAN_FEEDBACK_DISPOSITION",
+    "ORIGINAL_STAGE22_MLOPS_REPRODUCIBILITY_CLOSURE",
+    "ORIGINAL_STAGE23_EXTERNAL_VALIDATION_EVIDENCE_OR_FORMAL_BLOCKER_DISPOSITION",
+    "ORIGINAL_STAGE24_PAPER_FINAL_RELEASE_AUDIT"
+  ],
+  "optional_capability_expansion_may_be_omitted": true
+}
