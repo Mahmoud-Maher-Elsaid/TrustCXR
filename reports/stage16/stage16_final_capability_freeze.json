@@ -1,0 +1,35 @@
+{
+  "stage": "16_FINAL",
+  "status": "FROZEN_RESEARCH_RELIABILITY_CAPABILITY",
+  "gate": "GO_FOR_STAGE_17A_RESEARCH_TRIAGE_DATA_READINESS",
+  "contract_fingerprint": "3bb34f4edd5d4ed1f27120e028efacf92eb7e0e5217dbc6a1d29c59521b9af9e",
+  "stage16e_evidence": "reports/stage16/stage16e_reliability_acceptance_summary.json",
+  "stage16e_evidence_sha256": "20b4b373b33bd3a9d25a3ee82e2e265c5b059d4c1571cd19fcfb70609423095d",
+  "models": {
+    "stage9_original": {
+      "calibration": "ACCEPTED_VALIDATION_ONLY",
+      "predictive_uncertainty": "ACCEPTED_DESCRIPTIVE_VALIDATION_ONLY",
+      "selective_prediction": "ACCEPTED_VALIDATION_ONLY",
+      "abstention_threshold": 0.6917239984806322,
+      "threshold_status": "FROZEN_FROM_VALIDATION_SELECTION",
+      "ood": "WITHHELD_NO_GOVERNED_OOD_COHORT"
+    },
+    "stage13_frontal_only": {
+      "calibration": "PARTIALLY_ACCEPTED_MIXED_VALIDATION_EVIDENCE",
+      "predictive_uncertainty": "ACCEPTED_DESCRIPTIVE_VALIDATION_ONLY",
+      "selective_prediction": "NOT_ACCEPTED_NO_EVALUATION_RISK_REDUCTION",
+      "abstention_threshold": 0.6928039993196862,
+      "threshold_status": "FROZEN_FROM_VALIDATION_SELECTION",
+      "ood": "WITHHELD_NO_GOVERNED_OOD_COHORT"
+    }
+  },
+  "predictive_uncertainty_claim": "PREDICTIVE_ONLY_NOT_EPISTEMIC",
+  "ood_status": "WITHHELD_NO_GOVERNED_OOD_COHORT",
+  "research_use_only": true,
+  "additional_fitting_performed": false,
+  "additional_tuning_performed": false,
+  "additional_inference_performed": false,
+  "training_performed": false,
+  "locked_test_records_accessed": 0,
+  "checkpoints_modified": false
+}
