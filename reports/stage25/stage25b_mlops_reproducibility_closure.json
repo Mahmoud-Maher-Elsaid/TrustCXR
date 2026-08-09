@@ -1,0 +1,139 @@
+{
+  "stage": "25B",
+  "status": "ACCEPTED_REPRODUCIBLE_RESEARCH_PIPELINE_WINDOWS_SCOPE",
+  "gate": "GO_FOR_STAGE_26A_EXTERNAL_VALIDATION_DATA_READINESS",
+  "target": "REPRODUCIBLE_RESEARCH_PIPELINE",
+  "stage25_closed": true,
+  "stage25a_summary_sha256": "4e1d2e01cabaf33f2fa1af6755012000f2117a9f718251c0ea0e6002cb95e2a4",
+  "canonical_lock": "requirements/lock-final-research-windows-cu130.txt",
+  "canonical_lock_sha256": "cc63ac8bfb8dd6cc0f15469c4e7dfd6f620ec3747931ebd63c85fb11a8dc0786",
+  "locked_dependency_count": 53,
+  "environment_verification": {
+    "status": "PASSED_FINAL_ENVIRONMENT_VERIFICATION",
+    "canonical_lock": "requirements/lock-final-research-windows-cu130.txt",
+    "canonical_lock_sha256": "cc63ac8bfb8dd6cc0f15469c4e7dfd6f620ec3747931ebd63c85fb11a8dc0786",
+    "locked_dependencies": 53,
+    "bootstrap_distributions": {
+      "pip": "26.2",
+      "setuptools": "78.1.0",
+      "wheel": "0.47.0"
+    },
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "torch": "2.12.1+cu130",
+    "torchvision": "0.27.1+cu130",
+    "cuda_runtime": "13.0",
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "conflicting_pins": [],
+    "import_audit": {
+      "tracked_third_party_import_roots": {
+        "PIL": [
+          "pillow"
+        ],
+        "fastapi": [
+          "fastapi"
+        ],
+        "h5py": [
+          "h5py"
+        ],
+        "numpy": [
+          "numpy"
+        ],
+        "packaging": [
+          "packaging"
+        ],
+        "pyarrow": [
+          "pyarrow"
+        ],
+        "pydantic": [
+          "pydantic"
+        ],
+        "pydicom": [
+          "pydicom"
+        ],
+        "safetensors": [
+          "safetensors"
+        ],
+        "sklearn": [
+          "scikit-learn"
+        ],
+        "torch": [
+          "torch"
+        ],
+        "torchvision": [
+          "torchvision"
+        ],
+        "transformers": [
+          "transformers"
+        ],
+        "uvicorn": [
+          "uvicorn"
+        ],
+        "yaml": [
+          "pyyaml"
+        ]
+      },
+      "ungoverned_runtime_imports": [],
+      "passed": true
+    },
+    "model_inference_performed": false
+  },
+  "conflicting_governed_pins": [],
+  "known_ungoverned_runtime_imports": [],
+  "installation_protocol": "docs/reproducibility/FINAL_WINDOWS_ENVIRONMENT_RECONSTRUCTION.md",
+  "platform_scope": {
+    "validated": [
+      "WINDOWS_11",
+      "POWERSHELL_5_1_OR_7_ORCHESTRATION",
+      "PYTHON_3_12_10_X64",
+      "PYTORCH_2_12_1_CU130",
+      "CUDA_RUNTIME_13_0",
+      "NVIDIA_GEFORCE_RTX_3070_TI_LAPTOP_GPU"
+    ],
+    "not_validated": [
+      "LINUX",
+      "MACOS",
+      "CPU_ONLY_EQUIVALENCE",
+      "ALTERNATIVE_CUDA_STACKS",
+      "BIT_IDENTICAL_CUDA_TRAINING"
+    ]
+  },
+  "historical_locks_preserved": true,
+  "accepted_checkpoint_count": 7,
+  "all_accepted_checkpoints_integrity_valid": true,
+  "dataset_split_reconstruction_sufficient": true,
+  "raw_datasets_intentionally_untracked": true,
+  "exact_cuda_numerical_reproduction_guaranteed": false,
+  "data_leakage_contract": [
+    "PATIENT_SAFE_SPLITS",
+    "ZERO_CROSS_SPLIT_PATIENT_LEAKAGE",
+    "LOCKED_TEST_PROTECTION",
+    "NO_POST_TEST_TUNING",
+    "NO_ACTIVE_LEARNING_OR_FEEDBACK_FROM_TEST",
+    "NO_HEURISTIC_IDENTITY_JOINS"
+  ],
+  "non_blocking_gaps_preserved": [
+    "NO_AUTOMATED_CI_WORKFLOW_CURRENTLY_TRACKED",
+    "DATASET_DOWNLOAD_VERSION_AND_LAYOUT_GUIDANCE_IS_DISTRIBUTED_ACROSS_GOVERNANCE_FILES",
+    "CANONICAL_STAGE_EVIDENCE_IS_INDEXED_ACROSS_ROADMAP_AND_REGISTRY_RATHER_THAN_ONE_FINAL_RELEASE_INDEX"
+  ],
+  "blocking_gaps_remaining": [],
+  "ci_required_for_closure": false,
+  "production_infrastructure_required": false,
+  "training_performed": false,
+  "model_inference_performed": false,
+  "new_patient_records_processed": 0,
+  "locked_test_records_accessed": 0,
+  "language_model_used": false,
+  "currently_planned_llm_authorized_gate": null,
+  "language_model_mandatory_for_project_completion": false,
+  "next_canonical_stage": "26A_EXTERNAL_VALIDATION_DATA_READINESS",
+  "remaining_mandatory_path": [
+    "ORIGINAL_STAGE23_EXTERNAL_VALIDATION_EVIDENCE_OR_FORMAL_BLOCKER_DISPOSITION",
+    "ORIGINAL_STAGE24_PAPER_FINAL_RELEASE_AUDIT"
+  ],
+  "major_conceptual_stages_remaining_after_stage25": 2,
+  "optional_capability_expansion_required": false,
+  "retraining_required": false
+}
