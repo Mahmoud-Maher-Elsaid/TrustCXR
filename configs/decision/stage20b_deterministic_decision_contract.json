@@ -1,0 +1,129 @@
+{
+  "stage": "20B",
+  "stage20a_evidence": "reports/stage20/stage20a_accept_revise_defer_data_readiness_summary.json",
+  "stage20a_evidence_sha256": "1ab49888dca8a4cfaf5f781babf9f720d3eecf6035c602e75c169f0e6eccf73b",
+  "stage19b_contract_fingerprint": "b34d11431e84566e890464696fe171ecf705f8f7ef8568b994ba5ef7de7639b3",
+  "candidate_decisions": [
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW",
+    "REVISE_DETERMINISTICALLY",
+    "DEFER"
+  ],
+  "accept_meaning": "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW_NOT_CLINICAL_APPROVAL",
+  "decision_precedence": ["DEFER", "REVISE_DETERMINISTICALLY", "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW"],
+  "verifier_status_behavior": {
+    "VERIFIED": "POTENTIALLY_ACCEPT_ELIGIBLE_ONLY_IF_ALL_OTHER_GATES_PASS",
+    "PARTIALLY_VERIFIED": "DEFER_NOT_ACCEPT",
+    "UNVERIFIED": "DETERMINISTIC_REVISION_CANDIDATE_ONLY_WITH_SAME_STRUCTURED_EVIDENCE_ELSE_DEFER",
+    "CONTRADICTED": "DEFER",
+    "NOT_APPLICABLE": "NEUTRAL_ONLY_IF_CAPABILITY_IS_NOT_REQUIRED_ELSE_DEFER",
+    "WITHHELD_INSUFFICIENT_EVIDENCE": "DEFER"
+  },
+  "accept_all_required": [
+    "ALL_REQUIRED_STATEMENTS_VALID_PROVENANCE",
+    "ALL_REQUIRED_STATEMENTS_VERIFIED",
+    "NO_FORBIDDEN_CAPABILITY",
+    "NO_ACTIVE_STAGE17_DEFER",
+    "NO_UNSUPPORTED_ANATOMICAL_OR_TEXTUAL_CLAIM",
+    "NO_REQUIRED_EVIDENCE_MISSING",
+    "EXACT_GOVERNED_IDENTITY",
+    "EXACT_FROZEN_STAGE18_SCHEMA_AND_TEMPLATE_CONFORMANCE"
+  ],
+  "accept_prohibited_meanings": [
+    "CLINICAL_APPROVAL",
+    "DIAGNOSTIC_CORRECTNESS",
+    "AUTONOMOUS_RELEASE",
+    "TREATMENT_AUTHORIZATION"
+  ],
+  "revision_all_required": [
+    "VALID_SUFFICIENT_EXISTING_STRUCTURED_EVIDENCE",
+    "FROZEN_STAGE18_CANONICAL_TEMPLATE_AVAILABLE",
+    "NO_NEW_FACT_INTRODUCED",
+    "EXACT_PROVENANCE_PRESERVED",
+    "TEXTUAL_TEMPLATE_OR_PROVENANCE_REPAIR_ONLY"
+  ],
+  "revision_prohibited_conditions": [
+    "CONTRADICTION",
+    "INSUFFICIENT_EVIDENCE",
+    "UNSUPPORTED_CAPABILITY",
+    "IDENTITY_MISMATCH",
+    "STAGE11_EVIDENCE_LIMITATION",
+    "ANATOMICAL_EVIDENCE_BEYOND_ACCEPTED_PROXY_SCOPE",
+    "SEMANTIC_INTERPRETATION_OR_NEW_CLINICAL_KNOWLEDGE_REQUIRED"
+  ],
+  "defer_conditions": [
+    "INSUFFICIENT_EVIDENCE",
+    "IDENTITY_MISMATCH",
+    "UNSUPPORTED_CAPABILITY",
+    "PARTIALLY_VERIFIED_WHERE_FULL_VERIFICATION_REQUIRED",
+    "CONTRADICTED",
+    "WITHHELD_INSUFFICIENT_EVIDENCE",
+    "ACTIVE_STAGE17_RESEARCH_TRIAGE_DEFER",
+    "STAGE11_UNCERTAIN_OR_UNLOCALIZED_WHERE_REQUIRED",
+    "MISSING_ELIGIBLE_INPUT",
+    "NO_DETERMINISTIC_SAFE_REVISION_PATH",
+    "FORBIDDEN_CLAIM",
+    "ANATOMICAL_CLAIM_OUTSIDE_ACCEPTED_PROXY_CAPABILITY"
+  ],
+  "reason_codes": {
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW": [
+      "ALL_REQUIRED_STATEMENTS_VERIFIED",
+      "EXACT_GOVERNED_IDENTITY",
+      "FROZEN_TEMPLATE_CONFORMANT",
+      "NO_ACTIVE_DEFER_CONDITION"
+    ],
+    "REVISE_DETERMINISTICALLY": [
+      "SAME_STRUCTURED_EVIDENCE",
+      "CANONICAL_TEMPLATE_RECONSTRUCTION_AVAILABLE",
+      "PROVENANCE_PRESERVABLE",
+      "TEXTUAL_REPAIR_ONLY"
+    ],
+    "DEFER": [
+      "INSUFFICIENT_EVIDENCE",
+      "IDENTITY_MISMATCH",
+      "UNSUPPORTED_CAPABILITY",
+      "PARTIAL_VERIFICATION_NOT_ACCEPTABLE",
+      "EXPLICIT_STRUCTURED_CONTRADICTION",
+      "WITHHELD_EVIDENCE",
+      "ACTIVE_STAGE17_DEFER",
+      "STAGE11_LIMITED_SUPPORT",
+      "MISSING_ELIGIBLE_INPUT",
+      "NO_SAFE_DETERMINISTIC_REVISION",
+      "FORBIDDEN_CLAIM",
+      "ANATOMICAL_PROXY_OVERREACH",
+      "REQUIRED_CAPABILITY_NOT_APPLICABLE"
+    ]
+  },
+  "evidence_references_required": true,
+  "mandatory_safety_limitations": [
+    "RESEARCH_ONLY",
+    "EXPERT_REVIEW_REQUIRED",
+    "NO_CLINICAL_DEPLOYMENT",
+    "NO_AUTONOMOUS_APPROVAL",
+    "NO_CLINICAL_DIAGNOSIS",
+    "NO_SEVERITY",
+    "NO_TEMPORAL_CHANGE",
+    "NO_OOD_CLAIM",
+    "NO_DEVICE_LOCALIZATION",
+    "NO_TREATMENT_RECOMMENDATION",
+    "NO_PATIENT_HISTORY_INFERENCE",
+    "NO_CLINICAL_CERTAINTY_CLAIM",
+    "NO_HEURISTIC_IDENTITY_MATCHING",
+    "NO_PATIENT_IDENTIFYING_INFORMATION"
+  ],
+  "policy_activation_permitted": false,
+  "synthetic_fixtures_only": true,
+  "clinical_deployment_permitted": false,
+  "autonomous_approval_permitted": false,
+  "language_model_permitted": false,
+  "embedding_or_semantic_similarity_permitted": false,
+  "free_form_rewriting_permitted": false,
+  "training_permitted": false,
+  "fine_tuning_permitted": false,
+  "report_generation_permitted": false,
+  "image_inference_permitted": false,
+  "locked_test_access_permitted": false,
+  "heuristic_identity_matching_permitted": false,
+  "patient_identifying_information_permitted": false,
+  "next_canonical_stage": "20C_SYNTHETIC_DECISION_IMPLEMENTATION_VALIDATION",
+  "next_stage_authorizes_language_model_work": false
+}

@@ -1,0 +1,51 @@
+{
+  "accept_meaning": "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW_NOT_CLINICAL_APPROVAL",
+  "accept_readiness_requirements": [
+    "ALL_REQUIRED_STATEMENTS_VALID_PROVENANCE",
+    "NO_FORBIDDEN_CAPABILITY",
+    "ALL_REQUIRED_STATEMENTS_VERIFIED",
+    "NO_UNRESOLVED_DEFER_CONDITION",
+    "NO_UNSUPPORTED_ANATOMICAL_OR_TEXTUAL_CLAIM"
+  ],
+  "candidate_decisions": [
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW",
+    "REVISE_DETERMINISTICALLY",
+    "DEFER"
+  ],
+  "defer_readiness_conditions": [
+    "INSUFFICIENT_EVIDENCE",
+    "IDENTITY_MISMATCH",
+    "UNSUPPORTED_CAPABILITY",
+    "STAGE11_UNCERTAIN_OR_UNLOCALIZED_WHERE_REQUIRED",
+    "MISSING_ELIGIBLE_INPUT",
+    "FROZEN_RESEARCH_TRIAGE_DEFER",
+    "NO_SAFE_ACCEPT_OR_DETERMINISTIC_REVISION_PATH"
+  ],
+  "gate": "GO_FOR_STAGE_20B_DETERMINISTIC_DECISION_CONTRACT",
+  "image_inference_performed": false,
+  "language_model_used": false,
+  "locked_test_records_accessed": 0,
+  "next_canonical_stage": "20B_DETERMINISTIC_DECISION_CONTRACT",
+  "next_stage_authorizes_language_model_work": false,
+  "patient_identifiers_used": 0,
+  "policy_activated": false,
+  "prospective_status_readiness": {
+    "CONTRADICTED": "DEFER",
+    "NOT_APPLICABLE": "NEUTRAL_ONLY_IF_CAPABILITY_IS_NOT_REQUIRED_ELSE_DEFER",
+    "PARTIALLY_VERIFIED": "DEFER_NOT_ACCEPT",
+    "UNVERIFIED": "DETERMINISTIC_REVISION_CANDIDATE_ONLY_WITH_SAME_STRUCTURED_EVIDENCE_ELSE_DEFER",
+    "VERIFIED": "POTENTIALLY_ACCEPT_ELIGIBLE_ONLY_IF_ALL_OTHER_GATES_PASS",
+    "WITHHELD_INSUFFICIENT_EVIDENCE": "DEFER"
+  },
+  "report_generation_performed": false,
+  "revision_readiness_requirements": [
+    "SAME_EXISTING_STRUCTURED_EVIDENCE",
+    "FROZEN_CANONICAL_TEMPLATE_AVAILABLE",
+    "NO_NEW_FACTS",
+    "NO_FREE_FORM_REWRITING",
+    "NO_LANGUAGE_MODEL"
+  ],
+  "stage": "20A",
+  "status": "PASSED_ACCEPT_REVISE_DEFER_DATA_READINESS_WITH_POLICY_HOLD",
+  "training_performed": false
+}

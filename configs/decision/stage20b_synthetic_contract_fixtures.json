@@ -1,0 +1,19 @@
+[
+  {"id":"clean_accept_candidate","expected_decision":"ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW","required_reason":"ALL_REQUIRED_STATEMENTS_VERIFIED"},
+  {"id":"verified_with_active_defer","expected_decision":"DEFER","required_reason":"ACTIVE_STAGE17_DEFER"},
+  {"id":"partially_verified_statement","expected_decision":"DEFER","required_reason":"PARTIAL_VERIFICATION_NOT_ACCEPTABLE"},
+  {"id":"deterministic_revision_candidate","expected_decision":"REVISE_DETERMINISTICALLY","required_reason":"CANONICAL_TEMPLATE_RECONSTRUCTION_AVAILABLE"},
+  {"id":"revision_requires_new_fact","expected_decision":"DEFER","required_reason":"NO_SAFE_DETERMINISTIC_REVISION"},
+  {"id":"explicit_contradiction","expected_decision":"DEFER","required_reason":"EXPLICIT_STRUCTURED_CONTRADICTION"},
+  {"id":"missing_evidence","expected_decision":"DEFER","required_reason":"INSUFFICIENT_EVIDENCE"},
+  {"id":"identity_mismatch","expected_decision":"DEFER","required_reason":"IDENTITY_MISMATCH"},
+  {"id":"unsupported_capability","expected_decision":"DEFER","required_reason":"UNSUPPORTED_CAPABILITY"},
+  {"id":"forbidden_claim","expected_decision":"DEFER","required_reason":"FORBIDDEN_CLAIM"},
+  {"id":"stage11_limited_support","expected_decision":"DEFER","required_reason":"STAGE11_LIMITED_SUPPORT"},
+  {"id":"proxy_anatomical_overreach","expected_decision":"DEFER","required_reason":"ANATOMICAL_PROXY_OVERREACH"},
+  {"id":"not_applicable_required","expected_decision":"DEFER","required_reason":"REQUIRED_CAPABILITY_NOT_APPLICABLE"},
+  {"id":"not_applicable_non_required","expected_decision":"ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW","required_reason":"FROZEN_TEMPLATE_CONFORMANT"},
+  {"id":"deterministic_precedence","expected_decision":"DEFER","required_reason":"ACTIVE_STAGE17_DEFER"},
+  {"id":"reason_code_preservation","expected_decision":"DEFER","required_reason":"WITHHELD_EVIDENCE"},
+  {"id":"deterministic_repeat","expected_decision":"ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW","required_reason":"ALL_REQUIRED_STATEMENTS_VERIFIED"}
+]
