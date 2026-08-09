@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 
 from trustcxr.serving.runtime import JobStore, sanitized_disposition
 from trustcxr.serving.schemas import HealthResponse, JobStatus, JobSubmission
@@ -38,5 +40,29 @@ def create_app(store: JobStore | None = None) -> FastAPI:
     @app.get("/health", response_model=HealthResponse)
     def health() -> HealthResponse:
         return HealthResponse()
+
+    static_root = Path(__file__).resolve().parent / "static"
+
+    def static_response(filename: str, media_type: str) -> FileResponse:
+        response = FileResponse(static_root / filename, media_type=media_type)
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        return response
+
+    @app.get("/ui", include_in_schema=False)
+    def research_ui() -> FileResponse:
+        return static_response("index.html", "text/html")
+
+    @app.get("/ui/app.css", include_in_schema=False)
+    def research_ui_css() -> FileResponse:
+        return static_response("app.css", "text/css")
+
+    @app.get("/ui/app.js", include_in_schema=False)
+    def research_ui_javascript() -> FileResponse:
+        return static_response("app.js", "text/javascript")
+
+    @app.get("/ui/fixtures.json", include_in_schema=False)
+    def research_ui_fixtures() -> FileResponse:
+        return static_response("fixtures.json", "application/json")
 
     return app

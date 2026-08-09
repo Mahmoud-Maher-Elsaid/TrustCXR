@@ -187,7 +187,12 @@ def test_stage21f_stage17_stage19_and_stage20_defer_cannot_be_upgraded() -> None
 def test_stage21f_api_surface_is_minimal_and_has_no_llm_endpoint() -> None:
     app = create_app()
     routes = {(method, route.path) for route in app.routes for method in (route.methods or set())}
-    assert routes == {("POST", "/v1/jobs"), ("GET", "/v1/jobs/{job_id}"), ("GET", "/health")}
+    api_routes = {item for item in routes if item[1].startswith("/v1/") or item[1] == "/health"}
+    assert api_routes == {
+        ("POST", "/v1/jobs"),
+        ("GET", "/v1/jobs/{job_id}"),
+        ("GET", "/health"),
+    }
     assert all("chat" not in path and "llm" not in path for _, path in routes)
 
 

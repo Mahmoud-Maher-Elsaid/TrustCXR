@@ -53,6 +53,7 @@ def validate_implementation(config: dict[str, Any], root: Path) -> dict[str, Any
         f"{next(iter(route.methods))} {route.path}"
         for route in app.routes
         if getattr(route, "methods", None)
+        and (route.path.startswith("/v1/") or route.path == "/health")
     )
     if routes != sorted(config["public_endpoints"]):
         raise RuntimeError(f"Unexpected public API endpoints: {routes}")

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>TrustCXR Research UI</title>
+  <link rel="stylesheet" href="/ui/app.css">
+</head>
+<body>
+  <header id="research-banner" data-region="GLOBAL_RESEARCH_ONLY_BANNER" role="banner">
+    <strong>RESEARCH USE ONLY</strong>
+    <span>NOT A MEDICAL DIAGNOSIS</span>
+    <span>EXPERT REVIEW REQUIRED</span>
+  </header>
+  <main id="research-ui" aria-labelledby="page-title">
+    <h1 id="page-title">TrustCXR deterministic research review</h1>
+    <section id="job-status-panel" data-region="JOB_STATUS_PANEL"><h2>Job status</h2><div data-content></div></section>
+    <section id="medical-image-viewer-panel" data-region="MEDICAL_IMAGE_VIEWER_PANEL"><h2>Synthetic medical image viewer</h2><img id="synthetic-image" alt="Synthetic non-patient grayscale validation fixture"><p id="image-dimensions"></p><div data-content></div></section>
+    <section id="view-quality-panel" data-region="VIEW_TECHNICAL_QUALITY_PANEL"><h2>View and technical-quality proxy</h2><div data-content></div></section>
+    <section id="classifier-score-panel" data-region="CLASSIFIER_SCORE_PANEL"><h2>Classifier research model scores</h2><div data-content></div></section>
+    <section id="reliability-panel" data-region="RELIABILITY_UNCERTAINTY_PANEL"><h2>Reliability and predictive uncertainty</h2><div data-content></div></section>
+    <section id="fusion-panel" data-region="LIMITED_FUSION_EVIDENCE_PANEL"><h2>Limited fusion evidence</h2><div data-content></div></section>
+    <section id="report-panel" data-region="RESEARCH_REPORT_DRAFT_PANEL"><h2>AI_GENERATED_RESEARCH_REPORT_DRAFT_FOR_EXPERT_REVIEW</h2><div data-content></div></section>
+    <section id="verifier-panel" data-region="VERIFIER_PANEL"><h2>Deterministic verifier</h2><div data-content></div></section>
+    <section id="decision-panel" data-region="ACCEPT_REVISE_DEFER_DECISION_PANEL"><h2>Research draft decision</h2><div data-content></div></section>
+    <section id="provenance-panel" data-region="PROVENANCE_PANEL"><h2>Safe provenance</h2><div data-content></div></section>
+    <section id="error-panel" data-region="SANITIZED_TECHNICAL_ERROR_PANEL"><h2>Safety and technical disposition</h2><div data-content></div></section>
+  </main>
+  <script src="/ui/app.js" defer></script>
+</body>
+</html>

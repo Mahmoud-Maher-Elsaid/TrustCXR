@@ -1,0 +1,219 @@
+{
+  "stage": "22B",
+  "status": "PASSED_DETERMINISTIC_RESEARCH_UI_DISPLAY_CONTRACT",
+  "gate": "GO_FOR_STAGE_22C_SYNTHETIC_RESEARCH_UI_IMPLEMENTATION_VALIDATION",
+  "contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
+  "stage22a_summary_sha256": "c0b23bc3d25ccef72fd530cf648c40df1c366e6faf33cd666071a09057112fde",
+  "stage21h_summary_sha256": "ff59a3710e618092ee1e5da6ca4ea136fac02c50ac0ee77b3974f1d1be1f0fb0",
+  "research_banner": [
+    "RESEARCH USE ONLY",
+    "NOT A MEDICAL DIAGNOSIS",
+    "EXPERT REVIEW REQUIRED"
+  ],
+  "layout_regions": [
+    "GLOBAL_RESEARCH_ONLY_BANNER",
+    "JOB_STATUS_PANEL",
+    "MEDICAL_IMAGE_VIEWER_PANEL",
+    "VIEW_TECHNICAL_QUALITY_PANEL",
+    "CLASSIFIER_SCORE_PANEL",
+    "RELIABILITY_UNCERTAINTY_PANEL",
+    "LIMITED_FUSION_EVIDENCE_PANEL",
+    "RESEARCH_REPORT_DRAFT_PANEL",
+    "VERIFIER_PANEL",
+    "ACCEPT_REVISE_DEFER_DECISION_PANEL",
+    "PROVENANCE_PANEL",
+    "SANITIZED_TECHNICAL_ERROR_PANEL"
+  ],
+  "image_viewer_contract": {
+    "allowed_formats": [
+      "PNG",
+      "JPEG"
+    ],
+    "allowed_metadata": [
+      "IMAGE_WIDTH",
+      "IMAGE_HEIGHT"
+    ],
+    "source_scope": "LOCAL_GOVERNED_IMAGE_ONLY",
+    "withheld_or_prohibited": [
+      "DICOM",
+      "EXTERNAL_IMAGE_URL",
+      "REMOTE_IMAGE_LOADING",
+      "BROWSER_PERSISTENCE",
+      "UNSUPPORTED_OVERLAY",
+      "ARBITRARY_FILESYSTEM_PATH"
+    ]
+  },
+  "overlay_contract": {
+    "stage8": {
+      "evidence_class": "QUALITY_FILTERED_PSEUDO_ANATOMY_ONLY",
+      "authorization": "WITHHELD_PENDING_EXPLICIT_UI_OVERLAY_AUTHORIZATION",
+      "required_label": "Research pseudo-anatomy overlay; not lesion localization or clinical anatomy ground truth."
+    },
+    "stage10": {
+      "evidence_class": "GEOMETRY_THORACIC_LOCATION_PROXY_ONLY",
+      "authorization": "WITHHELD_PENDING_EXPLICIT_UI_OVERLAY_AUTHORIZATION",
+      "required_label": "Research geometry/thoracic-location proxy; not reliable lesion localization."
+    },
+    "prohibited": [
+      "RELIABLE_POSITIVE_LESION_LOCALIZATION",
+      "FINDING_LATERALITY_FROM_LOCALIZATION",
+      "NEGATION_FROM_LOCALIZATION_ABSENCE",
+      "BOUNDING_BOX_AS_PIXEL_MASK",
+      "HEURISTIC_ANATOMICAL_JOIN"
+    ]
+  },
+  "stage9_label_order": [
+    "Atelectasis",
+    "Cardiomegaly",
+    "Effusion",
+    "Infiltration",
+    "Mass",
+    "Nodule",
+    "Pneumonia",
+    "Pneumothorax",
+    "Consolidation",
+    "Edema",
+    "Emphysema",
+    "Fibrosis",
+    "Pleural_Thickening",
+    "Hernia"
+  ],
+  "verifier_status_wording": {
+    "VERIFIED": "Verified against accepted structured evidence and exact deterministic contract.",
+    "PARTIALLY_VERIFIED": "Partially verified; limited or proxy evidence only. Not equivalent to verified.",
+    "UNVERIFIED": "Unverified; required deterministic verification evidence is absent or invalid.",
+    "CONTRADICTED": "Contradicted by an explicit accepted structured conflict on exact governed identity.",
+    "NOT_APPLICABLE": "Not applicable under the frozen capability contract.",
+    "WITHHELD_INSUFFICIENT_EVIDENCE": "Withheld because governed evidence is insufficient."
+  },
+  "decision_precedence": [
+    "DEFER",
+    "REVISE_DETERMINISTICALLY",
+    "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW"
+  ],
+  "failure_display_contract": {
+    "safety_disposition": {
+      "state": "DEFER",
+      "label": "Deferred because evidence or a safety requirement is unresolved."
+    },
+    "technical_disposition": {
+      "state": "FAILED_SANITIZED",
+      "label": "Technical processing failed. No research result is available."
+    },
+    "failure_codes": [
+      "INVALID_REQUEST",
+      "UNSUPPORTED_INPUT",
+      "DEPENDENCY_UNAVAILABLE",
+      "CHECKPOINT_HASH_MISMATCH",
+      "CUDA_UNAVAILABLE",
+      "CUDA_OOM",
+      "MODEL_LOAD_FAILURE",
+      "INFERENCE_FAILURE",
+      "PROVENANCE_FAILURE",
+      "VERIFIER_FAILURE",
+      "DECISION_POLICY_FAILURE",
+      "CLEANUP_FAILURE"
+    ],
+    "prohibited_output": [
+      "STACK_TRACE",
+      "RAW_EXCEPTION",
+      "INTERNAL_FILESYSTEM_PATH",
+      "CHECKPOINT_PATH"
+    ]
+  },
+  "provenance_contract": {
+    "safe_fields": [
+      "SOURCE_STAGE",
+      "SOURCE_VERSION",
+      "EVIDENCE_CODE",
+      "COMPONENT_IDENTIFIER",
+      "CONFIG_FINGERPRINT",
+      "CHECKPOINT_FINGERPRINT",
+      "VERIFIER_EVIDENCE_REFERENCE"
+    ],
+    "prohibited_fields": [
+      "LOCAL_PATH",
+      "PATIENT_IDENTITY"
+    ]
+  },
+  "visual_semantics": {
+    "colors_represent_ui_state_only": true,
+    "required_non_color_distinction": true,
+    "prohibited": [
+      "RED_EQUALS_DISEASE",
+      "GREEN_EQUALS_HEALTHY",
+      "TRAFFIC_LIGHT_DIAGNOSIS",
+      "SEVERITY_GRADIENT",
+      "DIAGNOSTIC_CONFIDENCE_WORDING"
+    ]
+  },
+  "accessibility": [
+    "SEMANTIC_HEADINGS",
+    "KEYBOARD_ACCESSIBLE_CONTROLS",
+    "TEXT_LABELS_WITH_ICONS",
+    "READABLE_STATUS_WORDING",
+    "VISIBLE_PREDICTIVE_UNCERTAINTY",
+    "VISIBLE_DEFER",
+    "PERSISTENT_RESEARCH_ONLY_BANNER",
+    "DISTINGUISH_MODEL_SIGNAL_FROM_VERIFIED_EVIDENCE"
+  ],
+  "privacy": [
+    "PSEUDONYMOUS_JOB_ID_ONLY",
+    "NO_PATIENT_IDENTIFYING_INFORMATION",
+    "NO_PHI_IN_LOGS",
+    "NO_PHI_IN_TRACKED_FIXTURES_OR_SCREENSHOTS",
+    "NO_INTERNAL_PATHS",
+    "NO_TELEMETRY",
+    "NO_EXTERNAL_ANALYTICS",
+    "NO_EXTERNAL_IMAGE_UPLOAD",
+    "NO_BROWSER_PERSISTENCE_UNLESS_GOVERNED_LATER",
+    "LOCAL_RESEARCH_USE_ONLY"
+  ],
+  "technology": [
+    "STATIC_HTML",
+    "CSS",
+    "VANILLA_JAVASCRIPT",
+    "EXISTING_FASTAPI_STARLETTE",
+    "CONSUME_EXISTING_V1_API",
+    "NO_FRONTEND_FRAMEWORK",
+    "NO_NPM_NODE",
+    "NO_CDN",
+    "NO_CLOUD_ASSETS",
+    "NO_EXTERNAL_ANALYTICS"
+  ],
+  "synthetic_fixture_specs": [
+    "ALL_ELIGIBLE_UI_PANELS",
+    "RESEARCH_ONLY_BANNER",
+    "CLASSIFIER_SCORE_DISPLAY",
+    "PREDICTIVE_UNCERTAINTY_WORDING",
+    "PARTIALLY_SUPPORTED_DISTINCTION",
+    "ALL_VERIFIER_STATUSES",
+    "DECISION_PRECEDENCE",
+    "DEFER_VERSUS_FAILED_SANITIZED",
+    "PROHIBITED_CLINICAL_WORDING",
+    "PROHIBITED_DIAGNOSTIC_COLOR_SEMANTICS",
+    "INTERNAL_PATH_LEAKAGE",
+    "PATIENT_IDENTIFIER_LEAKAGE",
+    "DICOM_WITHHELD",
+    "OVERLAY_WITHHELD",
+    "DETERMINISTIC_RENDERING",
+    "ACCESSIBILITY_REQUIRED_LABELS"
+  ],
+  "ui_implemented": false,
+  "browser_ui_started": false,
+  "synthetic_images_rendered": 0,
+  "real_images_displayed": 0,
+  "real_model_loaded": false,
+  "real_inference_performed": false,
+  "real_patient_records_used": 0,
+  "locked_test_records_accessed": 0,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "next_canonical_stage": "22C_SYNTHETIC_RESEARCH_UI_IMPLEMENTATION_VALIDATION",
+  "next_stage_authorizes_ui_implementation": true,
+  "next_stage_authorizes_synthetic_image_viewer_rendering": true,
+  "next_stage_authorizes_real_image_display": false,
+  "next_stage_authorizes_real_model_inference": false,
+  "next_stage_authorizes_language_model_work": false
+}

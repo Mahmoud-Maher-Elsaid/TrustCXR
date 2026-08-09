@@ -1,0 +1,28 @@
+{
+  "fixture_id": "synthetic-stage22c-v1",
+  "non_patient": true,
+  "job": {"job_id": "job_0123456789abcdef01234567", "state": "COMPLETED"},
+  "synthetic_images": {
+    "PNG": {"data_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAAAAAC+OKDoAAAAeklEQVR4nLWSsRWAIAxEg89BnIbyJnEcJ6FkOh+imJCDxmcKmn/8K5KwyXwW+RpYy3NwltPUkHNsBpHdcaTqHRlQ9MrQDeThPICGeQUUJwa8ehqAwb4CHe8MsHoXgMO2AoQrA7zeBOh3VTHityEjXrsdBerm+YT/j/YE3WIV1Z5YLJ4AAAAASUVORK5CYII=", "width": 32, "height": 24, "alt": "Synthetic non-patient grayscale PNG fixture"},
+    "JPEG": {"data_url": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/wAALCAAYACABAREA/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/9oACAEBAAA/APP/AA/pWlXelarqGqveCGy8nC2pXcd7Ff4h649O9S/8UR/1MP8A5BqSKHwZO5WJPETEDJx5OAPUnsPc1U1/SdOs9P06/wBMkuGt7xpgonYFsRsFzwBjOTxU+i/8iR4o/wC3T/0YawIoA6GSSQRRA43EElj6KO5/IdMkZFEs4dBHHGIogc7QSSx9WPc/kOuAMmt/Wv8AkSPC/wD29/8AowVBoGradZ6fqNhqcdw1veNCWMCgtiNi2OSMZyOatyzeDJ3DSv4iYgYGfJwB6Adh7Co/+KI/6mH/AMg1F4g1XSrvStK0/SkvBDZedlroLuO9g38J9c+nav/Z", "width": 32, "height": 24, "alt": "Synthetic non-patient grayscale JPEG fixture"}
+  },
+  "view": {"selected": "AP", "states": ["AP", "PA", "LATERAL"]},
+  "classifier_scores": [
+    {"label":"Atelectasis","score":0.1100},{"label":"Cardiomegaly","score":0.1200},{"label":"Effusion","score":0.1300},{"label":"Infiltration","score":0.1400},{"label":"Mass","score":0.1500},{"label":"Nodule","score":0.1600},{"label":"Pneumonia","score":0.1700},{"label":"Pneumothorax","score":0.1800},{"label":"Consolidation","score":0.1900},{"label":"Edema","score":0.2000},{"label":"Emphysema","score":0.2100},{"label":"Fibrosis","score":0.2200},{"label":"Pleural_Thickening","score":0.2300},{"label":"Hernia","score":0.2400}
+  ],
+  "reliability": {"calibration_label":"Validation-derived and model-specific calibration information.","ood":"WITHHELD","stage13_selective_prediction":"NOT_ACCEPTED"},
+  "fusion": {"status":"PARTIALLY_SUPPORTED","label":"PARTIALLY_SUPPORTED — limited research evidence; not full verification."},
+  "report": {"identity":"AI_GENERATED_RESEARCH_REPORT_DRAFT_FOR_EXPERT_REVIEW","statements":["Synthetic deterministic statement with governed evidence only."]},
+  "verifier_statuses": [
+    {"status":"VERIFIED","wording":"Verified against accepted structured evidence and exact deterministic contract."},
+    {"status":"PARTIALLY_VERIFIED","wording":"Partially verified; limited or proxy evidence only. Not equivalent to verified."},
+    {"status":"UNVERIFIED","wording":"Unverified; required deterministic verification evidence is absent or invalid."},
+    {"status":"CONTRADICTED","wording":"Contradicted by an explicit accepted structured conflict on exact governed identity."},
+    {"status":"NOT_APPLICABLE","wording":"Not applicable under the frozen capability contract."},
+    {"status":"WITHHELD_INSUFFICIENT_EVIDENCE","wording":"Withheld because governed evidence is insufficient."}
+  ],
+  "decisions": {"precedence":["DEFER","REVISE_DETERMINISTICALLY","ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW"],"defer":"DEFER — no clinical urgency meaning.","revise":"REVISE_DETERMINISTICALLY — DETERMINISTIC CANONICAL TEMPLATE REPAIR ONLY.","accept":"ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW — NOT CLINICAL APPROVAL."},
+  "dispositions": {"defer_reason":"INSUFFICIENT_GOVERNED_EVIDENCE","failure_code":"CUDA_UNAVAILABLE"},
+  "provenance": {"SOURCE_STAGE":"18","SOURCE_VERSION":"synthetic-v1","EVIDENCE_CODE":"SYNTHETIC_GROUNDED","COMPONENT_IDENTIFIER":"stage18_report_renderer","CONFIG_FINGERPRINT":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","CHECKPOINT_FINGERPRINT":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","VERIFIER_EVIDENCE_REFERENCE":"synthetic-reference"},
+  "security_cases": {"malicious_text":"<script src='https://example.invalid/x.js'>alert(1)</script>","patient_identifier_field":"REJECTED","internal_path_field":"REJECTED","dicom":"WITHHELD","stage8_overlay":"WITHHELD","stage10_overlay":"WITHHELD"}
+}
