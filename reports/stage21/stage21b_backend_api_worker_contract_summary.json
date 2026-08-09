@@ -1,0 +1,439 @@
+{
+  "contract_fingerprint": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f",
+  "currently_planned_llm_authorized_gate": null,
+  "eligible_components": [
+    {
+      "artifact_relative_path": "artifacts/stage5/best_quality_view.pt",
+      "artifact_sha256": "1ca66fcffe590dac5c4c56d9d1233c29bb51a21000db7da4483673c1f7182a74",
+      "compute": "GPU_PREFERRED_CPU_FALLBACK_REQUIRES_PERFORMANCE_VALIDATION",
+      "config_path": "configs/training/stage5_quality_view.json",
+      "config_sha256": "de641a682362b5671c8d761d77c9d507ae907041bb7b3f057489f20581e1021c",
+      "entry_point": "trustcxr.quality.model.EfficientNetQualityView",
+      "id": "stage5_quality_view",
+      "limitations": [
+        "TECHNICAL_QUALITY_IS_NONCLINICAL_PROXY",
+        "OTHER_AND_UNKNOWN_NOT_SUPPORTED"
+      ],
+      "structured_input": "VALIDATED_CHEST_IMAGE_TENSOR",
+      "structured_output": "AP_PA_LATERAL_LOGITS_AND_TECHNICAL_QUALITY_PROXY"
+    },
+    {
+      "artifact_relative_path": "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt",
+      "artifact_sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
+      "compute": "GPU_PREFERRED_CPU_FALLBACK_REQUIRES_PERFORMANCE_VALIDATION",
+      "config_path": "configs/training/stage9_final_freeze.json",
+      "config_sha256": "d6c3a19658b8f98c328cbfc4f2693d872d5542bb710e1f5d7564a2b0377eedf5",
+      "entry_point": "trustcxr.integration.stage9b_ablation.build_model",
+      "id": "stage9_classifier",
+      "limitations": [
+        "RESEARCH_CLASSIFIER_SIGNAL_NOT_DIAGNOSIS",
+        "FROZEN_LABEL_ORDER_REQUIRED"
+      ],
+      "structured_input": "FROZEN_224_RGB_IMAGENET_NORMALIZED_TENSOR",
+      "structured_output": "FROZEN_14_LABEL_MODEL_SCORES"
+    },
+    {
+      "artifact_relative_path": "artifacts/stage10/stage10e_rsna_localization/best_checkpoint.pt",
+      "artifact_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+      "compute": "GPU_LOCALIZER_THEN_CPU_DETERMINISTIC_FUSION",
+      "config_path": "configs/localization/stage10n_localization_acceptance_decision.json",
+      "config_sha256": "a905044f6e601f0d0624cc2b215a93283e700e3443a6080733125fc0fc64d47b",
+      "entry_point": "trustcxr.detection.stage10e_rsna.build_model;trustcxr.fusion.stage11g_fusion.fuse_finding",
+      "id": "stage10_11_limited_localization_fusion",
+      "limitations": [
+        "MAXIMUM_PARTIALLY_SUPPORTED",
+        "NO_RELIABLE_POSITIVE_LOCALIZATION",
+        "LOCALIZER_MAY_NOT_CONTRADICT_CLASSIFIER"
+      ],
+      "structured_input": "EXACT_GOVERNED_IDENTITY_PLUS_CLASSIFIER_AND_LOCALIZER_EVIDENCE",
+      "structured_output": "UNCERTAIN_OR_UNLOCALIZED_FUSION_ANNOTATION"
+    },
+    {
+      "artifact_relative_path": null,
+      "artifact_sha256": null,
+      "compute": "CPU_POSTPROCESSING",
+      "config_path": "configs/reliability/stage16e_reliability_acceptance_decision.json",
+      "config_sha256": "3198bedbf385c5f5ee29242490f2b867d6145f4aaf678c21dba5e97e34558003",
+      "entry_point": "trustcxr.reliability.stage16d_evaluation",
+      "id": "stage16_reliability",
+      "limitations": [
+        "PREDICTIVE_ONLY_NOT_EPISTEMIC",
+        "OOD_WITHHELD",
+        "STAGE13_SELECTIVE_PREDICTION_NOT_ACCEPTED"
+      ],
+      "structured_input": "FROZEN_MODEL_SCORES_AND_MODEL_SPECIFIC_RELIABILITY_CONTRACT",
+      "structured_output": "CALIBRATION_PREDICTIVE_UNCERTAINTY_AND_MODEL_SPECIFIC_SELECTIVE_DECISION"
+    },
+    {
+      "artifact_relative_path": null,
+      "artifact_sha256": null,
+      "compute": "CPU_DETERMINISTIC",
+      "config_path": "configs/triage/stage17b_rule_based_research_triage_contract.json",
+      "config_sha256": "9a8d4e29b418209d597602e3c891f91da1b4f6ada792566f78e337b8f545015e",
+      "entry_point": "FROZEN_DEFER_ONLY_RULE_CONTRACT",
+      "id": "stage17_triage",
+      "limitations": [
+        "DEFER_ONLY",
+        "NO_PRIORITY_OR_INPUT_REJECTED_ACTIVATION"
+      ],
+      "structured_input": "ACCEPTED_FROZEN_EVIDENCE_AND_REASON_CODES",
+      "structured_output": "DEFER_WITH_DETERMINISTIC_REASON_CODES"
+    },
+    {
+      "artifact_relative_path": null,
+      "artifact_sha256": null,
+      "compute": "CPU_DETERMINISTIC",
+      "config_path": "configs/reporting/stage18b_deterministic_grounded_report_contract.json",
+      "config_sha256": "6c1519eac1fa4512d7875174e99e62e988d19b27a95c03c5cb4e6cb70368b411",
+      "entry_point": "trustcxr.reporting.grounded_contract.render_report",
+      "id": "stage18_report_renderer",
+      "limitations": [
+        "NO_LLM",
+        "NO_FREE_FORM_GENERATION",
+        "UNSUPPORTED_EVIDENCE_OMIT_OR_EXPLICIT_UNCERTAINTY"
+      ],
+      "structured_input": "PROVENANCE_GROUNDED_STRUCTURED_STATEMENTS",
+      "structured_output": "AI_GENERATED_RESEARCH_REPORT_DRAFT_FOR_EXPERT_REVIEW"
+    },
+    {
+      "artifact_relative_path": null,
+      "artifact_sha256": null,
+      "compute": "CPU_DETERMINISTIC",
+      "config_path": "configs/verification/stage19b_textual_anatomical_verifier_contract.json",
+      "config_sha256": "6ed63dc371bd64fb5ff634357f4aea99ce42d132e5a22db968cc7f1310cb16dd",
+      "entry_point": "trustcxr.verification.deterministic_verifier",
+      "id": "stage19_verifier",
+      "limitations": [
+        "PROXY_ANATOMY_AT_MOST_PARTIALLY_VERIFIED",
+        "NO_LOCALIZATION_ABSENCE_CONTRADICTION",
+        "NO_HEURISTIC_JOIN"
+      ],
+      "structured_input": "RENDERED_STATEMENTS_PROVENANCE_AND_EXACT_GOVERNED_IDENTITY",
+      "structured_output": "FROZEN_VERIFIER_STATUSES_WITH_EVIDENCE"
+    },
+    {
+      "artifact_relative_path": null,
+      "artifact_sha256": null,
+      "compute": "CPU_DETERMINISTIC",
+      "config_path": "configs/decision/stage20b_deterministic_decision_contract.json",
+      "config_sha256": "82620654069e307960d1d8e83f3b474cbe3d9f0745705493b27851ffe6338dea",
+      "entry_point": "trustcxr.decision.deterministic_policy.decide",
+      "id": "stage20_decision_support",
+      "limitations": [
+        "DEFER_HIGHEST_PRECEDENCE",
+        "NO_REAL_PATIENT_ACTIVATION_YET",
+        "NO_CLINICAL_APPROVAL"
+      ],
+      "structured_input": "FROZEN_VERIFIER_STATUSES_DEFER_CONDITIONS_AND_EVIDENCE_REFERENCES",
+      "structured_output": "DEFER_REVISE_OR_RESEARCH_DRAFT_ACCEPT_WITH_REASON_CODES"
+    }
+  ],
+  "failure_semantics": {
+    "CHECKPOINT_HASH_MISMATCH": "FAILED_SANITIZED",
+    "CLEANUP_FAILURE": "FAILED_SANITIZED",
+    "CUDA_OOM": "FAILED_SANITIZED",
+    "CUDA_UNAVAILABLE": "FAILED_SANITIZED",
+    "DECISION_POLICY_FAILURE": "FAILED_SANITIZED",
+    "INFERENCE_FAILURE": "FAILED_SANITIZED",
+    "INVALID_REQUEST": "FAILED_SANITIZED",
+    "MODEL_LOAD_FAILURE": "FAILED_SANITIZED",
+    "PROVENANCE_FAILURE": "DEFERRED",
+    "UNSUPPORTED_IMAGE_OR_INPUT": "DEFERRED",
+    "VERIFIER_FAILURE": "DEFERRED"
+  },
+  "gate": "GO_FOR_STAGE_21C_SYNTHETIC_API_WORKER_CONTRACT_VALIDATION",
+  "job_state_machine": {
+    "deferred_is_successful_safety_disposition": true,
+    "initial": "SUBMITTED",
+    "partial_success_after_safety_failure_permitted": false,
+    "states": [
+      "SUBMITTED",
+      "VALIDATING",
+      "QUEUED",
+      "GPU_PROCESSING",
+      "CPU_POSTPROCESSING",
+      "VERIFYING",
+      "DECIDING",
+      "COMPLETED",
+      "DEFERRED",
+      "FAILED_SANITIZED"
+    ],
+    "transitions": {
+      "COMPLETED": [],
+      "CPU_POSTPROCESSING": [
+        "VERIFYING",
+        "DEFERRED",
+        "FAILED_SANITIZED"
+      ],
+      "DECIDING": [
+        "COMPLETED",
+        "DEFERRED",
+        "FAILED_SANITIZED"
+      ],
+      "DEFERRED": [],
+      "FAILED_SANITIZED": [],
+      "GPU_PROCESSING": [
+        "CPU_POSTPROCESSING",
+        "DEFERRED",
+        "FAILED_SANITIZED"
+      ],
+      "QUEUED": [
+        "GPU_PROCESSING",
+        "FAILED_SANITIZED"
+      ],
+      "SUBMITTED": [
+        "VALIDATING"
+      ],
+      "VALIDATING": [
+        "QUEUED",
+        "DEFERRED",
+        "FAILED_SANITIZED"
+      ],
+      "VERIFYING": [
+        "DECIDING",
+        "DEFERRED",
+        "FAILED_SANITIZED"
+      ]
+    }
+  },
+  "language_model_endpoint_prepared": false,
+  "language_model_used": false,
+  "locked_test_records_accessed": 0,
+  "model_inference_performed": false,
+  "next_canonical_stage": "21C_SYNTHETIC_API_WORKER_CONTRACT_VALIDATION",
+  "next_stage_authorizes_backend_worker_implementation": false,
+  "next_stage_authorizes_language_model_work": false,
+  "orchestration_limitations": [
+    "STAGE17_DEFER_ONLY",
+    "STAGE11_MAXIMUM_PARTIALLY_SUPPORTED",
+    "NO_RELIABLE_POSITIVE_LOCALIZATION",
+    "NO_LOCALIZATION_ABSENCE_CONTRADICTION",
+    "STAGE13_SELECTIVE_PREDICTION_NOT_ACCEPTED",
+    "OOD_WITHHELD",
+    "NO_SEVERITY",
+    "NO_TEMPORAL_CHANGE",
+    "NO_DEVICE_LOCALIZATION"
+  ],
+  "orchestration_order": [
+    "stage5_quality_view",
+    "stage9_classifier",
+    "stage10_11_limited_localization_fusion_IF_EXACT_GOVERNED_IDENTITY",
+    "stage16_reliability",
+    "stage17_triage",
+    "stage18_report_renderer",
+    "stage19_verifier",
+    "stage20_decision_support"
+  ],
+  "patient_identifiers_used": 0,
+  "privacy_temporary_artifacts": {
+    "cleanup": "DETERMINISTIC_ON_COMPLETION_DEFER_FAILURE_AND_STARTUP_CRASH_RECOVERY",
+    "internal_paths_in_responses_permitted": false,
+    "job_ids": "SERVER_GENERATED_PSEUDONYMOUS",
+    "patient_identifying_tracked_artifacts_permitted": false,
+    "phi_in_logs_permitted": false,
+    "provenance_without_identity_disclosure_required": true,
+    "request_isolation_required": true,
+    "sanitized_errors_required": true,
+    "storage": "REQUEST_SCOPED_IGNORED_LOCAL_DIRECTORY"
+  },
+  "real_patient_processing_activated": false,
+  "research_designation": "RESEARCH_USE_ONLY_EXPERT_REVIEW_REQUIRED",
+  "response_prohibitions": [
+    "CLINICAL_APPROVAL",
+    "AUTONOMOUS_RELEASE_AUTHORIZATION",
+    "TREATMENT_RECOMMENDATION",
+    "CLINICAL_DIAGNOSIS",
+    "SEVERITY",
+    "TEMPORAL_CHANGE",
+    "OOD_CLAIM",
+    "UNSUPPORTED_LOCALIZATION",
+    "CLINICAL_CERTAINTY_FROM_PROBABILITY"
+  ],
+  "schema_version": "trustcxr-serving-contract-v1",
+  "schemas": {
+    "decision_result": {
+      "decision_enum": [
+        "DEFER",
+        "REVISE_DETERMINISTICALLY",
+        "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW"
+      ],
+      "required": [
+        "schema_version",
+        "job_id",
+        "decision",
+        "reason_codes",
+        "evidence_references",
+        "research_designation"
+      ]
+    },
+    "job_status": {
+      "forbidden": [
+        "internal_path",
+        "stack_trace",
+        "patient_id",
+        "raw_error"
+      ],
+      "required": [
+        "schema_version",
+        "job_id",
+        "state",
+        "research_designation",
+        "reason_codes"
+      ]
+    },
+    "job_submission": {
+      "forbidden": [
+        "patient_id",
+        "patient_name",
+        "mrn",
+        "path",
+        "url",
+        "checkpoint",
+        "model_name",
+        "model_version",
+        "free_text",
+        "prompt"
+      ],
+      "required": [
+        "schema_version",
+        "input_token",
+        "pipeline_version",
+        "idempotency_key"
+      ],
+      "server_generated": [
+        "job_id",
+        "component_versions"
+      ]
+    },
+    "research_report_draft": {
+      "forbidden": [
+        "patient_id",
+        "clinical_approval",
+        "autonomous_release",
+        "unrestricted_free_text"
+      ],
+      "required": [
+        "schema_version",
+        "job_id",
+        "report_identity",
+        "research_use_disclaimer",
+        "statements",
+        "omitted_capabilities"
+      ]
+    },
+    "sanitized_failure_or_defer": {
+      "disposition_enum": [
+        "SAFETY_DEFER",
+        "TECHNICAL_FAILURE"
+      ],
+      "forbidden": [
+        "stack_trace",
+        "internal_path",
+        "checkpoint_path",
+        "raw_exception",
+        "patient_id"
+      ],
+      "required": [
+        "schema_version",
+        "job_id",
+        "state",
+        "disposition",
+        "reason_codes",
+        "research_designation"
+      ]
+    },
+    "structured_pipeline_evidence": {
+      "forbidden": [
+        "patient_id",
+        "internal_path",
+        "checkpoint_path",
+        "free_text_model_output"
+      ],
+      "required": [
+        "schema_version",
+        "job_id",
+        "pipeline_version",
+        "component_provenance",
+        "structured_evidence",
+        "limitations"
+      ]
+    },
+    "verifier_result": {
+      "required": [
+        "schema_version",
+        "job_id",
+        "statement_results",
+        "evidence_references",
+        "limitations"
+      ],
+      "status_enum": [
+        "VERIFIED",
+        "PARTIALLY_VERIFIED",
+        "UNVERIFIED",
+        "CONTRADICTED",
+        "NOT_APPLICABLE",
+        "WITHHELD_INSUFFICIENT_EVIDENCE"
+      ]
+    }
+  },
+  "server_started": false,
+  "serving_dependencies": {
+    "architecture": "STANDARD_LIBRARY_CONTRACT_ONLY_NO_SERVER_IMPLEMENTATION",
+    "celery": "PROHIBITED_NOT_REQUIRED",
+    "cloud_service": "PROHIBITED_NOT_REQUIRED",
+    "database": "PROHIBITED_NOT_REQUIRED",
+    "docker_orchestration": "PROHIBITED_NOT_REQUIRED",
+    "fastapi": "NOT_PROPOSED_OR_INSTALLED",
+    "message_broker": "PROHIBITED_NOT_REQUIRED",
+    "pydantic": "NOT_PROPOSED_OR_INSTALLED",
+    "redis": "PROHIBITED_NOT_REQUIRED"
+  },
+  "stage": "21B",
+  "status": "PASSED_BACKEND_API_AND_GPU_WORKER_CONTRACT",
+  "synthetic_contract_fixtures_prepared": 12,
+  "worker_contract": {
+    "checkpoint_mutation_permitted": false,
+    "component_ids": [
+      "stage5_quality_view",
+      "stage9_classifier",
+      "stage10_11_limited_localization_fusion"
+    ],
+    "cuda_check_before_model_load": true,
+    "exact_frozen_preprocessing_and_label_order_required": true,
+    "fail_closed": true,
+    "forbidden_inputs": [
+      "python_code",
+      "path",
+      "checkpoint_path",
+      "url",
+      "model_name",
+      "arbitrary_arguments"
+    ],
+    "maximum_resident_gpu_models": 1,
+    "request_required": [
+      "schema_version",
+      "job_id",
+      "component_id",
+      "input_token",
+      "server_model_version",
+      "request_fingerprint"
+    ],
+    "response_required": [
+      "schema_version",
+      "job_id",
+      "component_id",
+      "status",
+      "structured_output",
+      "provenance",
+      "reason_codes"
+    ],
+    "response_statuses": [
+      "SUCCESS",
+      "DEFERRED",
+      "FAILED_SANITIZED"
+    ],
+    "retry_requires_exact_request_and_frozen_version": true,
+    "sha256_before_deserialization_or_gpu_transfer": true
+  },
+  "worker_started": false
+}
