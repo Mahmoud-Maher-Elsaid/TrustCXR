@@ -1,0 +1,18 @@
+{
+  "stage": "18C",
+  "stage18b_evidence": "reports/stage18/stage18b_deterministic_grounded_report_contract_summary.json",
+  "stage18b_evidence_sha256": "c185ef749bc1afc87f9eadb16e3bef39e50dcd40737d39dc366b744f8553e44d",
+  "contract_fingerprint": "bf83dacb98bbc0f9e87d4e4a61f014c470a9cf650976044412bdb13418e4d09b",
+  "report_schema": "configs/reporting/stage18b_grounded_report_schema.json",
+  "report_schema_sha256": "ea2e4d254a7efc99fa861197001d59d29f92e9b3e8bdd2c508a828594065701c",
+  "report_identity": "AI_GENERATED_RESEARCH_REPORT_DRAFT_FOR_EXPERT_REVIEW",
+  "research_use_disclaimer": "Research use only. Not a medical diagnosis. Expert review is required.",
+  "indiana_reports_status": "WITHHELD_PATIENT_IDENTITY_UNRESOLVED",
+  "real_patient_report_generation_permitted": false,
+  "free_form_generation_permitted": false,
+  "language_model_use_permitted": false,
+  "inference_permitted": false,
+  "training_permitted": false,
+  "fine_tuning_permitted": false,
+  "locked_test_access_permitted": false
+}
