@@ -13,11 +13,11 @@ import numpy as np
 import torch
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
-from torchvision.models import densenet121
 from torchvision.transforms import InterpolationMode
 from torchvision.transforms import functional as vision_functional
 
 from trustcxr.multiview.stage13d_baseline import (
+    MultiViewBaseline,
     load_pairs,
     parse_targets,
     require_finite_tensor,
@@ -220,6 +220,25 @@ def load_stage13_validation_metadata(
     return metadata
 
 
+def load_frozen_stage13_model(
+    checkpoint_path: Path, training: dict[str, Any], stage13: dict[str, Any]
+) -> MultiViewBaseline:
+    checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+    if (
+        checkpoint.get("stage") != "13D"
+        or checkpoint.get("variant") != "frontal_only"
+        or checkpoint.get("completed_epoch") != stage13["selected_epoch"]
+        or checkpoint.get("config") != training
+        or checkpoint.get("test_records_accessed") != 0
+    ):
+        raise RuntimeError("Frozen Stage 13 checkpoint metadata mismatch.")
+    model = MultiViewBaseline(len(training["labels"]))
+    model.load_state_dict(checkpoint["model_state"], strict=True)
+    if model.encoder.classifier.out_features != len(training["labels"]):
+        raise RuntimeError("Frozen Stage 13 classifier dimension mismatch.")
+    return model
+
+
 def prepare_stage13(config: dict[str, Any], root: Path, output: Path) -> dict[str, Any]:
     stage13 = config["stage13"]
     for key, hash_key in (
@@ -246,17 +265,8 @@ def prepare_stage13(config: dict[str, Any], root: Path, output: Path) -> dict[st
     )
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required for Stage 13 validation inference.")
-    checkpoint = torch.load(root / stage13["checkpoint"], map_location="cpu", weights_only=False)
-    if (
-        checkpoint.get("variant") != "frontal_only"
-        or checkpoint.get("completed_epoch") != stage13["selected_epoch"]
-        or checkpoint.get("test_records_accessed") != 0
-    ):
-        raise RuntimeError("Frozen Stage 13 checkpoint metadata mismatch.")
     device = torch.device("cuda")
-    model = densenet121(weights=None)
-    model.classifier = torch.nn.Linear(model.classifier.in_features, len(training["labels"]))
-    model.load_state_dict(checkpoint["model_state"])
+    model = load_frozen_stage13_model(root / stage13["checkpoint"], training, stage13)
     model.to(device).eval()
     values, masks, logits_rows, probability_rows, patients, records = [], [], [], [], [], []
     with torch.no_grad():
@@ -264,7 +274,7 @@ def prepare_stage13(config: dict[str, Any], root: Path, output: Path) -> dict[st
             context = {"stage": "16C", "split": "validation", "batch": batch_index}
             require_finite_tensor(images, "frontal_input", **context)
             with torch.autocast("cuda", enabled=stage13["automatic_mixed_precision"]):
-                logits = model(images.to(device, non_blocking=True))
+                logits = model.encoder(images.to(device, non_blocking=True))
             require_finite_tensor(logits, "validation_logits", **context)
             probabilities = torch.sigmoid(logits.float())
             require_finite_tensor(probabilities, "validation_probabilities", **context)

@@ -1,9 +1,14 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
-from scripts.reliability.run_stage16c_validation_reliability_preparation import partition
+import pytest
+from scripts.reliability.run_stage16c_validation_reliability_preparation import (
+    load_frozen_stage13_model,
+    partition,
+)
 
 
 def test_stage16c_preserves_frozen_validation_only_contract() -> None:
@@ -35,3 +40,18 @@ def test_stage16c_patient_partition_is_deterministic_and_disjoint() -> None:
     assignments = [partition(f"patient-{index}", salt) for index in range(100)]
     assert assignments == [partition(f"patient-{index}", salt) for index in range(100)]
     assert set(assignments) == {0, 1, 2}
+
+
+def test_stage16c_loads_exact_frozen_stage13_wrapper_checkpoint() -> None:
+    root = Path(__file__).resolve().parents[2]
+    config = json.loads(
+        (root / "configs/reliability/stage16c_validation_reliability_preparation.json").read_text()
+    )
+    stage13 = config["stage13"]
+    training = json.loads((root / stage13["training_config"]).read_text())
+    checkpoint = root / stage13["checkpoint"]
+    if not checkpoint.is_file():
+        pytest.skip("Local-only frozen Stage 13 checkpoint is unavailable.")
+    assert hashlib.sha256(checkpoint.read_bytes()).hexdigest() == stage13["checkpoint_sha256"]
+    model = load_frozen_stage13_model(checkpoint, training, stage13)
+    assert model.encoder.classifier.out_features == len(training["labels"])
