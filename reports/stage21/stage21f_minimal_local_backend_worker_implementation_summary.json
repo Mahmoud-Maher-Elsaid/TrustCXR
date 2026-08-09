@@ -1,0 +1,46 @@
+{
+  "stage": "21F",
+  "status": "PASSED_MINIMAL_LOCAL_BACKEND_WORKER_IMPLEMENTATION",
+  "gate": "GO_FOR_STAGE_21G_BOUNDED_SYNTHETIC_RUNTIME_API_WORKER_VALIDATION",
+  "stage21b_contract_fingerprint": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f",
+  "dependency_manifest_sha256": "6b82df6db246280518aec3078f55675e02c41b9afd4e74c104836960b820d782",
+  "dependency_fingerprint": "b6fa4c0ec10301f9d6018610b4bd18b6a45270955ad7087b5ec62f55c594463f",
+  "implementation_protocol_fingerprint": "57cdfdc6df679ffe9e6ea38c797940423df1cc15af3cb1688d9871f01990fbb7",
+  "installed_serving_dependencies": {
+    "fastapi": "0.116.1",
+    "pydantic": "2.11.7",
+    "uvicorn": "0.35.0"
+  },
+  "implemented_components": [
+    "PYDANTIC_CONTRACT_SCHEMAS",
+    "MINIMAL_FASTAPI_APPLICATION",
+    "DETERMINISTIC_JOB_STATE_MACHINE",
+    "IMMUTABLE_FROZEN_COMPONENT_REGISTRY",
+    "BOUNDED_SYNTHETIC_WORKER_INTERFACE",
+    "REQUEST_SCOPED_TEMPORARY_ARTIFACT_MANAGER",
+    "SANITIZED_FAILURE_MAPPING",
+    "DETERMINISTIC_IDEMPOTENCY"
+  ],
+  "public_endpoints": [
+    "POST /v1/jobs",
+    "GET /v1/jobs/{job_id}",
+    "GET /health"
+  ],
+  "frozen_component_count": 8,
+  "server_started": false,
+  "persistent_worker_started": false,
+  "real_model_loaded": false,
+  "real_model_inference_performed": false,
+  "gpu_residency_profiled": false,
+  "real_patient_records_used": 0,
+  "real_patient_reports_generated": 0,
+  "locked_test_records_accessed": 0,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "next_canonical_stage": "21G_BOUNDED_SYNTHETIC_RUNTIME_API_WORKER_VALIDATION",
+  "next_stage_authorizes_runtime_api_worker_validation": true,
+  "next_stage_authorizes_real_model_inference": false,
+  "next_stage_authorizes_gpu_residency_profiling": false,
+  "next_stage_authorizes_language_model_work": false
+}
