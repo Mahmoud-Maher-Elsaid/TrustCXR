@@ -1,0 +1,17 @@
+{
+  "disposition": "SCIENTIFICALLY_WITHHELD_PENDING_AUTHORITATIVE_TEMPORAL_EVIDENCE",
+  "gate": "GO_FOR_STAGE_15A_SEVERITY_DATA_READINESS",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "pixels_accessed": 0,
+  "required_future_evidence": "Authorized patient-study acquisition/study timestamps or authoritative CheXpert documentation explicitly defining study identifier chronology, with provenance and checksum.",
+  "stable_study_identity_preserved": true,
+  "stage": "14C",
+  "stage13b_evidence_sha256": "500510d2e1662ca8c3583ae299b748f94714632262c5e8612635531e9335e94d",
+  "stage13b_index_sha256": "fff0a7f563100046a5b4ad584bd36c56c3c5a6c3f6b28fc502f1b47c0ea30ce0",
+  "status": "PASSED_TEMPORAL_CAPABILITY_FREEZE",
+  "temporal_modeling_status": "WITHHELD_NOT_FAILED",
+  "temporal_pairs_created": 0,
+  "training_performed": false,
+  "unsupported_ordering_used": false
+}

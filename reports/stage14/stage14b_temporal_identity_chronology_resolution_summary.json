@@ -1,0 +1,89 @@
+{
+  "authoritative_chronology_evidence": [],
+  "chronology_classification": "UNSUPPORTED_HEURISTIC_ORDERING_ONLY",
+  "dataset": "CheXpert Small",
+  "deterministic_ordering_fields": [],
+  "downloaded_documentation_inventory": [],
+  "explicit_trusted_timestamp_fields": [],
+  "file_timestamp_used_as_chronology": false,
+  "gate": "HOLD_FOR_STAGE_14C_TEMPORAL_PAIR_DESIGN",
+  "inference_performed": false,
+  "locked_test_records_accessed": 0,
+  "metadata_inventory": [
+    {
+      "columns": [
+        "Path",
+        "Sex",
+        "Age",
+        "Frontal/Lateral",
+        "AP/PA",
+        "No Finding",
+        "Enlarged Cardiomediastinum",
+        "Cardiomegaly",
+        "Lung Opacity",
+        "Lung Lesion",
+        "Edema",
+        "Consolidation",
+        "Pneumonia",
+        "Atelectasis",
+        "Pneumothorax",
+        "Pleural Effusion",
+        "Pleural Other",
+        "Fracture",
+        "Support Devices"
+      ],
+      "relative_path": "TrustCXR-Data/07_CheXpert_Small/archive/train.csv",
+      "sha256": "b4bcd3d7942de23349bbe922a2389185d639cb06a24e700efb4980caae80b8e8"
+    },
+    {
+      "columns": [
+        "Path",
+        "Sex",
+        "Age",
+        "Frontal/Lateral",
+        "AP/PA",
+        "No Finding",
+        "Enlarged Cardiomediastinum",
+        "Cardiomegaly",
+        "Lung Opacity",
+        "Lung Lesion",
+        "Edema",
+        "Consolidation",
+        "Pneumonia",
+        "Atelectasis",
+        "Pneumothorax",
+        "Pleural Effusion",
+        "Pleural Other",
+        "Fracture",
+        "Support Devices"
+      ],
+      "relative_path": "TrustCXR-Data/07_CheXpert_Small/archive/valid.csv",
+      "sha256": "aa43403f7bb183a35ae3bb9152896c1fe9a5b297635e0b541e363b776830ec4a"
+    }
+  ],
+  "pixels_accessed": 0,
+  "required_additional_governed_source": "An authorized patient-study metadata export containing explicit acquisition/study timestamps or an authoritative CheXpert source document that explicitly defines the chronological meaning of study identifiers, with provenance and checksum.",
+  "row_order_used_as_chronology": false,
+  "stable_study_identity": true,
+  "stage": "14B",
+  "stage13b_identity_validation": {
+    "config_sha256": "2f75f378f80da01c42b448baec73c1e2e77081cb8ee250047c5d6dd19f1ec7b5",
+    "evidence_sha256": "500510d2e1662ca8c3583ae299b748f94714632262c5e8612635531e9335e94d",
+    "index_columns": [
+      "identity_evidence",
+      "patient_key_hash",
+      "record_key_hash",
+      "split",
+      "study_key_hash",
+      "view_label"
+    ],
+    "index_sha256": "fff0a7f563100046a5b4ad584bd36c56c3c5a6c3f6b28fc502f1b47c0ea30ce0",
+    "index_table": "study_records",
+    "indexed_development_records": 200316
+  },
+  "status": "HOLD_FOR_AUTHORITATIVE_CHRONOLOGY_SOURCE",
+  "study_directory_number_used_as_chronology": false,
+  "study_identity_source": "explicit patient/study source-path segments",
+  "temporal_pairs_created": 0,
+  "training_performed": false
+}
