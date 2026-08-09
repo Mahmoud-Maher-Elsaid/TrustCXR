@@ -9,3 +9,7 @@ Calibration reports masked NLL, Brier score, and 15-bin equal-width ECE before a
 Selective prediction minimizes masked Brier risk subject to validation coverage of at least 0.80, with higher coverage as the tie-break. Patient-cluster bootstrap uses 2,000 replicates, seed `20260809`, 95% intervals, and a minimum of 1,900 valid replicates. Unsupported intervals are reported as `NOT_ESTIMABLE` without changing the protocol.
 
 OOD remains `WITHHELD_NO_GOVERNED_OOD_COHORT`. Locked test access, retraining, checkpoint modification, cross-model ranking, test-driven calibration, and test-driven abstention selection are prohibited.
+
+## NumPy compatibility
+
+The project environment contains NumPy 2.5.1, where the removed `numpy.trapz` alias is unavailable. AURC therefore uses `numpy.trapezoid`, its mathematically identical supported replacement. The risk definition, coverage grid, ordering, integration domain, and normalization are unchanged.

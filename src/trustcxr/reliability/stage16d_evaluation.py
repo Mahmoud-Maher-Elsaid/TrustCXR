@@ -178,7 +178,7 @@ def risk_curve(
         )
     ordered = sorted(rows, key=lambda row: row["coverage"])
     aurc = float(
-        np.trapz(
+        np.trapezoid(
             [row["masked_brier_risk"] for row in ordered], [row["coverage"] for row in ordered]
         )
     )
