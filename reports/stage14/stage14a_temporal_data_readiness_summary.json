@@ -1,0 +1,21 @@
+{
+  "current_blocker": "Trusted chronological timestamps and exact study identity are required.",
+  "dataset": "CheXpert Small",
+  "development_patients": 58217,
+  "development_patients_with_multiple_studies": 27794,
+  "development_records_by_split": {
+    "train": 178416,
+    "validation": 21900
+  },
+  "gate": "HOLD_FOR_STAGE_14B_TEMPORAL_PAIR_DESIGN",
+  "heuristic_pairs_created": 0,
+  "inference_performed": false,
+  "invalid_study_identity_records": 0,
+  "locked_test_records_accessed": 0,
+  "metadata_files": 2,
+  "pixels_accessed": 0,
+  "stage": "14A",
+  "status": "HOLD_FOR_TEMPORAL_IDENTITY_OR_TIMESTAMPS",
+  "training_performed": false,
+  "trusted_timestamp_columns": []
+}

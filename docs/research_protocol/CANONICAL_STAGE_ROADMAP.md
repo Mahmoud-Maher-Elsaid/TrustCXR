@@ -57,7 +57,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 13H | `1519b56` plus successful local result | Go for Stage 13I one-time locked-test evaluation | No-data locked-test evaluation freeze | Immutable final test protocol | Original Stage 10 | Complete | Fingerprint `3efeb0ca...`; checkpoint, cohort, metrics, and one-time use frozen | 13I |
 | 13I | `39825b5` plus successful exact technical retry | Go for Stage 13J final multi-view closure | Frontal-only final evaluation on 3,046 exact locked-test pairs | Final internal multi-view test evidence | Original Stage 10 | Complete | `No Finding` AUPRC/AUROC intervals not estimable under frozen bootstrap protocol | 13J |
 | 13J | Prepared after Stage 13I result | Go for Stage 14A temporal data readiness | Closure-only immutable Stage 13 evidence freeze | Final multi-view closure | Original Stage 10 | Ready to run | No further test inference or post-test adaptation | 14A |
-| 14A | Prepared after Stage 13J closure | Development metadata audit only | Exact patient/study identity and trusted timestamp readiness | Temporal comparison data readiness | Original Stage 11 | Ready to run | No pixels, heuristic pairing, training, inference, or locked-test access | Evidence-dependent 14B |
+| 14A | `8d02483` plus completed local audit | Hold for Stage 14B temporal identity/chronology resolution | Development-only metadata readiness audit | Temporal comparison data readiness | Original Stage 11 | Complete | Stable study IDs found; no trusted timestamp columns | 14B |
+| 14B | Prepared after Stage 14A hold | Metadata and documentation audit only | Resolve authoritative chronology evidence without pair construction | Temporal identity and chronology resolution | Original Stage 11 | Ready to run | Study directory numbering, row order, and file timestamps are prohibited heuristics | Evidence-dependent 14C |
 
 ## Numbering rule
 
