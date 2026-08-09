@@ -1,0 +1,32 @@
+{
+  "stage": "21C",
+  "status": "PASSED_SYNTHETIC_API_WORKER_CONTRACT_VALIDATION",
+  "gate": "GO_FOR_STAGE_21D_BACKEND_API_AND_WORKER_IMPLEMENTATION_READINESS_DECISION",
+  "stage21b_contract_fingerprint": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f",
+  "stage21b_summary_sha256": "649a046c31499bb1a280bff09793045683cb4f0fb760cfb72b56672c1c7d3d82",
+  "fixtures_passed": 83,
+  "fixtures_failed": 0,
+  "fixture_categories": [
+    "API_REQUEST_VALIDATION",
+    "JOB_STATE_MACHINE",
+    "GPU_WORKER_CONTRACT",
+    "PIPELINE_ORCHESTRATION",
+    "PRIVACY",
+    "TEMPORARY_ARTIFACT_LIFECYCLE",
+    "FAILURE_SEMANTICS",
+    "DETERMINISM_AND_IDEMPOTENCY"
+  ],
+  "synthetic_non_patient_fixtures_only": true,
+  "server_started": false,
+  "worker_started": false,
+  "model_loaded": false,
+  "model_inference_performed": false,
+  "gpu_residency_profiled": false,
+  "real_patient_records_used": 0,
+  "locked_test_records_accessed": 0,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "next_stage_authorizes_backend_worker_implementation": false,
+  "next_stage_authorizes_language_model_work": false
+}
