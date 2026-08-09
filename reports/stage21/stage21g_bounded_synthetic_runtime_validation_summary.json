@@ -1,0 +1,60 @@
+{
+  "stage": "21G",
+  "status": "PASSED_BOUNDED_SYNTHETIC_RUNTIME_API_WORKER_VALIDATION",
+  "gate": "GO_FOR_STAGE_21H_SYNTHETIC_RUNTIME_ACCEPTANCE_DECISION",
+  "stage21b_contract_fingerprint": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f",
+  "stage21f_summary_sha256": "02a07278b6ccbdf773749733b448cf80129de93a40bedbf6d867c400f29219c3",
+  "runtime_case_counts": {
+    "API_RUNTIME": {
+      "passed": 2,
+      "failed": 0
+    },
+    "CLEANUP": {
+      "passed": 1,
+      "failed": 0
+    },
+    "IDEMPOTENCY": {
+      "passed": 1,
+      "failed": 0
+    },
+    "PRIVACY": {
+      "passed": 1,
+      "failed": 0
+    },
+    "REGISTRY": {
+      "passed": 1,
+      "failed": 0
+    },
+    "SAFETY_PROPAGATION": {
+      "passed": 1,
+      "failed": 0
+    },
+    "STATE_MACHINE": {
+      "passed": 1,
+      "failed": 0
+    },
+    "WORKER_RUNTIME": {
+      "passed": 1,
+      "failed": 0
+    }
+  },
+  "runtime_cases_passed": 9,
+  "runtime_cases_failed": 0,
+  "server_process_started": false,
+  "server_process_cleanup_status": "NOT_APPLICABLE_IN_PROCESS_ASGI_ONLY",
+  "persistent_worker_started": false,
+  "temporary_artifacts_cleanup_status": "COMPLETE",
+  "real_model_loaded": false,
+  "real_inference_performed": false,
+  "gpu_residency_profiling_performed": false,
+  "real_patient_records_used": 0,
+  "locked_test_records_accessed": 0,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "next_canonical_stage": "21H_SYNTHETIC_RUNTIME_ACCEPTANCE_DECISION",
+  "next_stage_authorizes_real_model_loading": false,
+  "next_stage_authorizes_bounded_real_inference": false,
+  "next_stage_authorizes_gpu_residency_profiling": false,
+  "next_stage_authorizes_language_model_work": false
+}
