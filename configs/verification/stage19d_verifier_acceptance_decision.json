@@ -1,0 +1,40 @@
+{
+  "stage": "19D",
+  "stage19c_evidence": "reports/stage19/stage19c_synthetic_verifier_validation_summary.json",
+  "stage19c_evidence_sha256": "eb51be1586ab3aa12e20e035410e9208e929810f8ab590eae19da397977ea754",
+  "stage19b_contract_fingerprint": "b34d11431e84566e890464696fe171ecf705f8f7ef8568b994ba5ef7de7639b3",
+  "decision": "ACCEPTED_DETERMINISTIC_RESEARCH_ONLY_VERIFIER_CAPABILITY",
+  "accepted_capabilities": [
+    "EXACT_DETERMINISTIC_TEXTUAL_VERIFICATION",
+    "PROVENANCE_VALIDATION",
+    "LIMITED_PROXY_ANATOMICAL_VERIFICATION"
+  ],
+  "mandatory_limitations": [
+    "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",
+    "NO_LATERALITY_INFERENCE",
+    "NO_CONTRADICTION_FROM_LOCALIZATION_ABSENCE",
+    "NO_HEURISTIC_IDENTITY_MATCHING",
+    "NO_SEVERITY_VERIFICATION",
+    "NO_TEMPORAL_CHANGE_VERIFICATION",
+    "NO_OOD_VERIFICATION",
+    "NO_DEVICE_LOCALIZATION_VERIFICATION",
+    "NO_TREATMENT_VERIFICATION",
+    "NO_PATIENT_HISTORY_VERIFICATION",
+    "NO_CLINICAL_CERTAINTY_VERIFICATION",
+    "NO_CLINICAL_DIAGNOSIS_VERIFICATION"
+  ],
+  "stage11_maximum_support": "PARTIALLY_SUPPORTED",
+  "anatomical_proxy_maximum_status": "PARTIALLY_VERIFIED",
+  "contradicted_requires": "EXPLICIT_ACCEPTED_STRUCTURED_CONFLICT_ON_EXACT_GOVERNED_IDENTITY",
+  "research_only": true,
+  "language_model_permitted": false,
+  "image_inference_permitted": false,
+  "training_permitted": false,
+  "fitting_permitted": false,
+  "tuning_permitted": false,
+  "calibration_permitted": false,
+  "real_patient_reports_permitted": false,
+  "locked_test_access_permitted": false,
+  "next_canonical_stage": "20A_ACCEPT_REVISE_DEFER_DATA_READINESS",
+  "next_stage_authorizes_language_model_work": false
+}
