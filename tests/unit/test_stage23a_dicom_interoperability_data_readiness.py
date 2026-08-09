@@ -208,9 +208,9 @@ def test_stage23a_audit_has_no_real_data_or_output_side_effect() -> None:
     ).read_text(encoding="utf-8")
     assert "pydicom.dcmread(" not in script
     output = ROOT / "reports/stage23/stage23a_dicom_interoperability_data_readiness_summary.json"
-    assert not output.exists()
+    before = output.read_bytes()
     audit_readiness(CONFIG, ROOT)
-    assert not output.exists()
+    assert output.read_bytes() == before
 
 
 def test_stage23b_is_contract_only_with_no_new_authorization() -> None:

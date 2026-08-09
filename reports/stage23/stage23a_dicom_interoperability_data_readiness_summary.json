@@ -1,0 +1,153 @@
+{
+  "stage": "23A",
+  "status": "PASSED_DICOM_INTEROPERABILITY_DATA_READINESS_WITH_GENERIC_VIEWER_HOLD",
+  "gate": "GO_FOR_STAGE_23B_DICOM_INTEROPERABILITY_CONTRACT",
+  "stage22_designation": "SYNTHETICALLY_VALIDATED_LOCAL_RESEARCH_UI_EXPERT_REVIEW_REQUIRED",
+  "stage22b_contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
+  "stage22c_summary_sha256": "043c021240d097e6c3547191c24800c35646762871409cb86009ad3e953182f9",
+  "stage22d_summary_sha256": "fbec3c05e2b8846d807aa78ef733ccaf2ac4cbeaa433163bf5a3afa16b99bda4",
+  "generic_dicom_decoding_already_exists": false,
+  "current_handling": "DATASET_SPECIFIC_AND_METADATA_PREPROCESSING_ONLY",
+  "repository_capability_evidence": {
+    "metadata_only": [
+      "src/trustcxr/data/identity_mapping.py",
+      "src/trustcxr/data/stage4_3_resolution.py",
+      "src/trustcxr/data/concrete_adapters.py",
+      "scripts/localization/run_stage10b_governance_identity.py",
+      "scripts/quality/run_stage12d_remaining_candidate_discovery.py"
+    ],
+    "dataset_specific_pixel_decoding": [
+      "src/trustcxr/detection/stage10e_rsna.py",
+      "scripts/fusion/run_stage11h_record_level_fusion_evaluation.py"
+    ],
+    "generic_decoder": [],
+    "browser_viewer": [],
+    "deidentification": []
+  },
+  "installed_dicom_dependencies": {
+    "pydicom": "3.0.2",
+    "pylibjpeg": null,
+    "pylibjpeg-libjpeg": null,
+    "pylibjpeg-openjpeg": null,
+    "python-gdcm": null
+  },
+  "governed_dependency_evidence": {
+    "expected_version": "3.0.2",
+    "status": "INSTALLED_AND_GOVERNED_FOR_EXISTING_DATA_WORKFLOWS",
+    "governed_manifests": [
+      "requirements/data-audit.txt",
+      "requirements/lock-stage3.txt",
+      "requirements/lock-stage4.txt",
+      "requirements/lock-stage4_1.txt",
+      "requirements/lock-stage4_2.txt",
+      "requirements/lock-stage4_3.txt",
+      "requirements/lock-stage4_4.txt",
+      "requirements/lock-stage6.txt",
+      "requirements/lock-stage7.txt",
+      "requirements/lock-stage8.txt"
+    ]
+  },
+  "pixel_handler_availability": {
+    "Numpy": true,
+    "GDCM": false,
+    "Pillow": true,
+    "JPEG-LS": false,
+    "pylibjpeg": false,
+    "RLE Lossless": true
+  },
+  "object_scope": {
+    "CR": "WITHHELD_NOT_GOVERNED_GENERICALLY",
+    "DX": "WITHHELD_NOT_GOVERNED_GENERICALLY",
+    "SECONDARY_CAPTURE": "WITHHELD_NOT_GOVERNED",
+    "SINGLE_FRAME_GRAYSCALE": "RSNA_DATASET_SPECIFIC_PIXEL_DECODING_ONLY_NOT_GENERIC_SUPPORT",
+    "MULTI_FRAME": "WITHHELD_UNSUPPORTED",
+    "COMPRESSED": "WITHHELD_NO_GOVERNED_CODEC_MATRIX",
+    "UNCOMPRESSED": "WITHHELD_AS_GENERIC_CAPABILITY_DATASET_SPECIFIC_EVIDENCE_ONLY"
+  },
+  "transfer_syntax_scope": {
+    "EXPLICIT_VR_LITTLE_ENDIAN": "WITHHELD_PENDING_SYNTHETIC_CONTRACT_VALIDATION",
+    "IMPLICIT_VR_LITTLE_ENDIAN": "WITHHELD_PENDING_SYNTHETIC_CONTRACT_VALIDATION",
+    "COMPRESSED_TRANSFER_SYNTAXES": "WITHHELD_NO_GOVERNED_CODEC_MATRIX",
+    "METADATA_PARSING": "AVAILABLE_DATASET_SPECIFIC_WITH_PYDICOM"
+  },
+  "photometric_scope": {
+    "MONOCHROME1": "WITHHELD_PENDING_EXPLICIT_DISPLAY_TRANSFORM_CONTRACT",
+    "MONOCHROME2": "WITHHELD_PENDING_EXPLICIT_DISPLAY_TRANSFORM_CONTRACT",
+    "OTHER": "WITHHELD_UNSUPPORTED"
+  },
+  "required_pixel_fields": [
+    "Rows",
+    "Columns",
+    "BitsAllocated",
+    "BitsStored",
+    "HighBit",
+    "PixelRepresentation",
+    "SamplesPerPixel",
+    "PlanarConfiguration_WHEN_APPLICABLE",
+    "PhotometricInterpretation",
+    "RescaleSlope",
+    "RescaleIntercept",
+    "WindowCenter",
+    "WindowWidth",
+    "VOILUTSequence",
+    "PixelPaddingValue",
+    "TransferSyntaxUID",
+    "NumberOfFrames",
+    "PixelData"
+  ],
+  "display_representations": [
+    "RAW_STORED_PIXEL_VALUES",
+    "MODALITY_TRANSFORMED_VALUES",
+    "DISPLAY_WINDOWED_VALUES",
+    "NORMALIZED_ML_INPUT_TENSOR"
+  ],
+  "display_transform_status": "WITHHELD_NO_GOVERNED_GENERIC_DISPLAY_TRANSFORM",
+  "phi_metadata_readiness": [
+    "NO_RAW_METADATA_DUMP",
+    "NO_UNRESTRICTED_TAG_DISPLAY",
+    "NO_PHI_IN_API_RESPONSES",
+    "NO_PHI_IN_LOGS",
+    "NO_PHI_IN_TRACKED_ARTIFACTS",
+    "NO_PHI_IN_SCREENSHOTS",
+    "NO_BROWSER_PERSISTENCE",
+    "NO_EXTERNAL_UPLOAD",
+    "NO_TELEMETRY"
+  ],
+  "uid_governance_readiness": "EXPLICIT_GOVERNED_IDENTITY_CONTRACT_ONLY_NO_PUBLIC_RAW_UID",
+  "synthetic_fixture_readiness": "READY_FOR_PROSPECTIVE_CONTRACT_NOT_CREATED",
+  "synthetic_fixture_protocol": [
+    "VALID_MONOCHROME2",
+    "VALID_MONOCHROME1",
+    "AP_METADATA",
+    "PA_METADATA",
+    "LATERAL_METADATA",
+    "MISSING_VIEW_POSITION",
+    "MISSING_WINDOWING_METADATA",
+    "EXPLICIT_VR_LITTLE_ENDIAN",
+    "IMPLICIT_VR_LITTLE_ENDIAN",
+    "INVALID_MALFORMED_DICOM",
+    "MISSING_PIXEL_DATA",
+    "UNSUPPORTED_TRANSFER_SYNTAX",
+    "UNSUPPORTED_MULTI_FRAME_OBJECT",
+    "UNSAFE_METADATA_FIELD",
+    "DETERMINISTIC_SYNTHETIC_UID_LIKE_VALUES",
+    "DETERMINISTIC_PIXEL_RENDERING",
+    "PHI_REJECTION_REDACTION"
+  ],
+  "dicom_viewer_authorization": "WITHHELD_NO_GOVERNED_GENERIC_VIEWER_CONTRACT",
+  "package_installation_authorized": false,
+  "real_dicom_display_authorized": false,
+  "real_patient_processing_authorized": false,
+  "model_inference_authorized": false,
+  "language_model_work_authorized": false,
+  "real_patient_dicom_files_read": 0,
+  "locked_test_records_accessed": 0,
+  "next_canonical_stage": "23B_DICOM_INTEROPERABILITY_CONTRACT_AND_SYNTHETIC_FIXTURE_PROTOCOL",
+  "next_stage_authorizes_dependency_installation": false,
+  "next_stage_authorizes_synthetic_dicom_creation_decoding": false,
+  "next_stage_authorizes_real_dicom_display": false,
+  "next_stage_authorizes_patient_processing": false,
+  "next_stage_authorizes_real_model_inference": false,
+  "next_stage_authorizes_language_model_work": false,
+  "currently_planned_llm_authorized_gate": null
+}
