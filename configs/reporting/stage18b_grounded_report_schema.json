@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trustcxr.local/schemas/stage18b-grounded-report-v1.json",
+  "title": "TrustCXR deterministic grounded research-report draft",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["report_identity", "research_use_disclaimer", "statements", "omitted_capabilities"],
+  "properties": {
+    "report_identity": {
+      "const": "AI_GENERATED_RESEARCH_REPORT_DRAFT_FOR_EXPERT_REVIEW"
+    },
+    "research_use_disclaimer": {
+      "const": "Research use only. Not a medical diagnosis. Expert review is required."
+    },
+    "statements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "evidence_type",
+          "grounding_status",
+          "template_id",
+          "template_parameters",
+          "source_stage",
+          "source_version",
+          "evidence_code",
+          "structured_source_field"
+        ],
+        "properties": {
+          "evidence_type": {
+            "enum": [
+              "model_identified_view_ap_pa_or_lateral",
+              "technical_quality_proxy_warning_with_nonclinical_qualifier",
+              "research_system_defer_status_with_reason_code",
+              "stage9_classifier_finding_signal",
+              "predictive_probability",
+              "stage11_uncertain_or_unlocalized_fusion_status"
+            ]
+          },
+          "grounding_status": {
+            "enum": ["DIRECT_STRUCTURED", "EXPLICIT_UNCERTAINTY"]
+          },
+          "template_id": {"type": "string", "minLength": 1},
+          "template_parameters": {"type": "object"},
+          "source_stage": {"type": "string", "minLength": 1},
+          "source_version": {"type": "string", "minLength": 1},
+          "evidence_code": {"type": "string", "minLength": 1},
+          "structured_source_field": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "omitted_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["capability", "reason_code"],
+        "properties": {
+          "capability": {
+            "enum": [
+              "reliable_positive_localization_claim",
+              "classifier_negation_from_localization_absence",
+              "severity",
+              "temporal_change",
+              "ood_status_claim",
+              "device_localization",
+              "clinical_image_quality_diagnosis",
+              "clinical_certainty_from_probability",
+              "patient_history",
+              "treatment_recommendation"
+            ]
+          },
+          "reason_code": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

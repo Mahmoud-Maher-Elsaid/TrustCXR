@@ -1,0 +1,66 @@
+{
+  "stage": "18B",
+  "stage18a_evidence": "reports/stage18/stage18a_grounded_report_data_readiness_summary.json",
+  "stage18a_evidence_sha256": "cc1cb64c5523afc86fa9f8a82d761b1ad262e54d70972d9c33c12c875a82ba4b",
+  "report_schema": "configs/reporting/stage18b_grounded_report_schema.json",
+  "report_schema_sha256": "ea2e4d254a7efc99fa861197001d59d29f92e9b3e8bdd2c508a828594065701c",
+  "report_identity": "AI_GENERATED_RESEARCH_REPORT_DRAFT_FOR_EXPERT_REVIEW",
+  "research_use_disclaimer": "Research use only. Not a medical diagnosis. Expert review is required.",
+  "statement_policy": {
+    "direct_structured": [
+      "model_identified_view_ap_pa_or_lateral",
+      "technical_quality_proxy_warning_with_nonclinical_qualifier",
+      "research_system_defer_status_with_reason_code"
+    ],
+    "requires_explicit_uncertainty": [
+      "stage9_classifier_finding_signal",
+      "predictive_probability",
+      "stage11_uncertain_or_unlocalized_fusion_status"
+    ],
+    "must_omit": [
+      "reliable_positive_localization_claim",
+      "classifier_negation_from_localization_absence",
+      "severity",
+      "temporal_change",
+      "ood_status_claim",
+      "device_localization",
+      "clinical_image_quality_diagnosis",
+      "clinical_certainty_from_probability",
+      "patient_history",
+      "treatment_recommendation"
+    ]
+  },
+  "grounding": {
+    "required_fields": ["source_stage", "source_version", "evidence_code", "structured_source_field"],
+    "unsupported_behavior": ["OMIT", "EXPLICIT_UNCERTAINTY"],
+    "fabrication_permitted": false
+  },
+  "template_rules": {
+    "free_text_factual_additions_permitted": false,
+    "meaning_changing_synonym_expansion_permitted": false,
+    "severity_adjectives_permitted": false,
+    "temporal_statements_permitted": false,
+    "treatment_recommendations_permitted": false,
+    "clinical_diagnosis_wording_permitted": false,
+    "positive_localization_claim_permitted": false,
+    "localization_absence_negation_permitted": false,
+    "ood_claim_permitted": false,
+    "patient_history_permitted": false
+  },
+  "templates": {
+    "VIEW_IDENTIFIED": "Model-identified view: {view}.",
+    "TECHNICAL_PROXY_WARNING": "Technical-quality proxy warning: {warning}. This is not a clinical image-quality assessment.",
+    "RESEARCH_DEFER": "Research system status: DEFER. Reason codes: {reason_codes}.",
+    "CLASSIFIER_SIGNAL_UNCERTAIN": "The model produced an uncertain {finding} signal with model score {model_score}. This is not a clinical diagnosis.",
+    "FUSION_STATUS_UNCERTAIN": "Fusion evidence is {fusion_status}; reliable localization support is not established."
+  },
+  "indiana_reports_status": "WITHHELD_PATIENT_IDENTITY_UNRESOLVED",
+  "indiana_reports_permitted_uses": [],
+  "patient_identifying_fields_permitted": false,
+  "locked_test_access_permitted": false,
+  "report_generation_permitted": false,
+  "inference_permitted": false,
+  "language_model_use_permitted": false,
+  "training_permitted": false,
+  "fine_tuning_permitted": false
+}

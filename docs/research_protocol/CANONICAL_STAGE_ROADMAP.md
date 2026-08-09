@@ -73,7 +73,8 @@ This roadmap preserves the stage identifiers established by repository history. 
 | 17B | Completed contract freeze | Hold for expert-approved finding-priority policy | Deterministic precedence, reason codes, deferral rules, and unsupported-priority withholding | Research triage contract | Original Stage 14 | Complete | Only DEFER activated; priority mapping requires expert approval | 17C |
 | 17C | Completed evidence audit | Go for Stage 18A grounded-report data readiness | Governed priority-policy evidence audit with exact Stage 17B preservation | Research triage governance | Original Stage 14 | Scientifically withheld | DEFER only; governance limitation, not model failure | 18A |
 | 17D | Current closure | Go for Stage 18A grounded-report data readiness | Frozen DEFER-only research triage | Research triage freeze | Original Stage 14 | Complete | Priority and input rejection withheld | 18A |
-| 18A | Prepared after Stage 17 closure | Provenance and data-readiness audit only | Structured statement grounding and report-dataset identity audit | Grounded report readiness | Original Stage 15 | Ready to run | No report generation, LLM work, inference, or test access | 18B |
+| 18A | Completed provenance audit | Go for Stage 18B deterministic report contract | Structured statement grounding and report-dataset identity audit | Grounded report readiness | Original Stage 15 | Complete | Indiana reports withheld; no generation, inference, or test access | 18B |
+| 18B | Prepared after Stage 18A completion | Contract freeze only | Deterministic schema, templates, provenance, uncertainty, omission, and privacy rules | Grounded report contract | Original Stage 15 | Ready to run | No patient reports or language-model use | 18C |
 
 ## Numbering rule
 

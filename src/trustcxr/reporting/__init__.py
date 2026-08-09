@@ -1,0 +1,1 @@
+"""Grounded research-report contracts."""

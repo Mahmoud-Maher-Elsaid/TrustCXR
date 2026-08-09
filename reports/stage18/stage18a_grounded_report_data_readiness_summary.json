@@ -1,0 +1,58 @@
+{
+  "clinical_quality_claim_permitted": false,
+  "device_localization_permitted": false,
+  "gate": "GO_FOR_STAGE_18B_DETERMINISTIC_REPORT_CONTRACT",
+  "grounding": {
+    "fabrication_permitted": false,
+    "statement_requires_evidence_code": true,
+    "statement_requires_source_stage_and_version": true,
+    "statement_requires_structured_source": true,
+    "unsupported_behavior": [
+      "OMIT",
+      "EXPLICIT_UNCERTAINTY"
+    ]
+  },
+  "inference_performed": false,
+  "localization_absence_may_contradict_classifier": false,
+  "locked_test_records_accessed": 0,
+  "ood_claim_permitted": false,
+  "patient_identifiers_disclosed": false,
+  "report_dataset_audit": {
+    "dataset": "indiana_reports",
+    "identity_aligned_with_model_cohorts": false,
+    "permitted_use": "SEPARATE_FUTURE_GOVERNANCE_AUDIT_ONLY",
+    "status": "WITHHELD_PATIENT_IDENTITY_UNRESOLVED"
+  },
+  "report_generation_performed": false,
+  "report_identity": "AI_GENERATED_RESEARCH_REPORT_DRAFT_FOR_EXPERT_REVIEW",
+  "severity_permitted": false,
+  "stage": "18A",
+  "stage11_maximum_support": "PARTIALLY_SUPPORTED",
+  "statement_policy": {
+    "direct_structured": [
+      "model_identified_view_ap_pa_or_lateral",
+      "technical_quality_proxy_warning_with_nonclinical_qualifier",
+      "research_system_defer_status_with_reason_code"
+    ],
+    "must_omit": [
+      "reliable_positive_localization_claim",
+      "classifier_negation_from_localization_absence",
+      "severity",
+      "temporal_change",
+      "ood_status_claim",
+      "device_localization",
+      "clinical_image_quality_diagnosis",
+      "clinical_certainty_from_probability",
+      "patient_history",
+      "treatment_recommendation"
+    ],
+    "requires_explicit_uncertainty": [
+      "stage9_classifier_finding_signal",
+      "predictive_probability",
+      "stage11_uncertain_or_unlocalized_fusion_status"
+    ]
+  },
+  "status": "PASSED_GROUNDED_REPORT_DATA_READINESS_WITH_DATASET_HOLD",
+  "temporal_change_permitted": false,
+  "training_performed": false
+}
