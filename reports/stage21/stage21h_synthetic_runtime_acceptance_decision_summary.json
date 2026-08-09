@@ -1,0 +1,73 @@
+{
+  "stage": "21H",
+  "status": "ACCEPTED_MINIMAL_LOCAL_RESEARCH_SERVING_ARCHITECTURE_SYNTHETICALLY_VALIDATED",
+  "gate": "GO_FOR_STAGE_22A_RESEARCH_UI_MEDICAL_VIEWER_DATA_READINESS",
+  "research_designation": "RESEARCH_USE_ONLY_EXPERT_REVIEW_REQUIRED",
+  "stage21b_contract_fingerprint": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f",
+  "stage21f_summary_sha256": "02a07278b6ccbdf773749733b448cf80129de93a40bedbf6d867c400f29219c3",
+  "stage21g_summary_sha256": "7b6b358e2510dd133f95e802c70165769eddcdf38e8cee52d1b419ea99fab1d6",
+  "accepted_scope": "MINIMAL_LOCAL_RESEARCH_SERVING_SYNTHETIC_RUNTIME_ONLY",
+  "architecture": [
+    "ONE_LOCAL_API_PROCESS",
+    "ONE_LOCAL_GPU_EXECUTION_PATH",
+    "SEQUENTIAL_MODEL_LOADING",
+    "MAXIMUM_ONE_RESIDENT_GPU_MODEL",
+    "DETERMINISTIC_CPU_POSTPROCESSING",
+    "LOCAL_IN_PROCESS_OR_BOUNDED_CHILD_PROCESS_COORDINATION_ONLY",
+    "REQUEST_SCOPED_IGNORED_TEMPORARY_STORAGE"
+  ],
+  "public_endpoints": [
+    "POST /v1/jobs",
+    "GET /v1/jobs/{job_id}",
+    "GET /health"
+  ],
+  "safety_limitations": [
+    "STAGE11_MAXIMUM_SUPPORT_PARTIALLY_SUPPORTED",
+    "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",
+    "NO_LOCALIZATION_ABSENCE_CONTRADICTION",
+    "STAGE13_SELECTIVE_PREDICTION_NOT_ACCEPTED",
+    "OOD_WITHHELD",
+    "STAGE17_DEFER_ONLY",
+    "STAGE18_DETERMINISTIC_GROUNDED_REPORTING",
+    "STAGE19_VERIFIER_RESTRICTIONS",
+    "STAGE20_DEFER_HIGHEST_PRECEDENCE",
+    "NO_SEVERITY",
+    "NO_TEMPORAL_CHANGE",
+    "NO_DEVICE_LOCALIZATION",
+    "NO_CLINICAL_DIAGNOSIS",
+    "NO_TREATMENT_RECOMMENDATION",
+    "NO_CLINICAL_APPROVAL",
+    "NO_AUTONOMOUS_RELEASE"
+  ],
+  "privacy_rules": [
+    "PSEUDONYMOUS_SERVER_GENERATED_JOB_IDS",
+    "NO_PATIENT_IDENTIFIERS_IN_LOGS",
+    "NO_RAW_PHI_IN_TRACKED_ARTIFACTS",
+    "NO_INTERNAL_PATHS_IN_API_RESPONSES",
+    "NO_STACK_TRACES_IN_RESPONSES",
+    "DETERMINISTIC_REQUEST_SCOPED_CLEANUP",
+    "REQUEST_ISOLATION",
+    "SANITIZED_DETERMINISTIC_FAILURES"
+  ],
+  "failure_semantics": {
+    "safety_or_evidence_limitation": "DEFER",
+    "technical_infrastructure_failure": "FAILED_SANITIZED"
+  },
+  "no_partial_success_after_safety_critical_failure": true,
+  "real_model_loaded": false,
+  "real_inference_performed": false,
+  "gpu_residency_profiling_performed": false,
+  "real_patient_records_used": 0,
+  "locked_test_records_accessed": 0,
+  "persistent_server_started": false,
+  "persistent_worker_started": false,
+  "language_model_used": false,
+  "language_model_endpoint_prepared": false,
+  "currently_planned_llm_authorized_gate": null,
+  "next_canonical_stage": "22A_RESEARCH_UI_MEDICAL_VIEWER_DATA_READINESS",
+  "next_stage_authorizes_real_model_loading": false,
+  "next_stage_authorizes_bounded_real_inference": false,
+  "next_stage_authorizes_gpu_residency_profiling": false,
+  "next_stage_authorizes_real_patient_processing": false,
+  "next_stage_authorizes_language_model_work": false
+}
