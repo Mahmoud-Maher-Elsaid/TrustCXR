@@ -1,7 +1,7 @@
 {
   "stage": "21B",
   "stage21a_evidence": "reports/stage21/stage21a_backend_gpu_worker_data_readiness_summary.json",
-  "stage21a_evidence_sha256": "ff166895310a0829b7265f96e28bb8696c47285c2e9ec25ef0cd25e72095164c",
+  "stage21a_evidence_sha256": "de2c83e60a2d7ce46d729e418e0e79ac998cae42df20fca61e187f5cd8784b11",
   "schema_version": "trustcxr-serving-contract-v1",
   "research_designation": "RESEARCH_USE_ONLY_EXPERT_REVIEW_REQUIRED",
   "schemas": {

@@ -2,7 +2,7 @@
   "stage": "25A",
   "target": "REPRODUCIBLE_RESEARCH_PIPELINE",
   "stage24b_summary": "reports/stage24/stage24b_human_feedback_active_learning_closure.json",
-  "stage24b_summary_sha256": "f9d17d58ebc1da7eeaf44e09837976270d024cbaea10b7dfcb87ff08cf5f6224",
+  "stage24b_summary_sha256": "a8a523d675947140dddb96f91e5643199c251bf1b363e67a4ac67540859c47c5",
   "stage24b_status": "SCIENTIFICALLY_WITHHELD_NO_GOVERNED_EXPERT_FEEDBACK_DATA",
   "stage24b_closure_classification": "WITHHELD_NOT_FAILED",
   "environment_contract": {
@@ -79,7 +79,7 @@
       "path": "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt",
       "sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
       "config": "configs/training/stage9_final_freeze.json",
-      "config_sha256": "d6c3a19658b8f98c328cbfc4f2693d872d5542bb710e1f5d7564a2b0377eedf5",
+      "config_sha256": "7ac88ed6a72372ce04c7ea23a23914f8b1ba474b4d93849ded8ea071dd8b6617",
       "architecture": "DenseNet-121 original-image variant",
       "preprocessing": "224px RGB ImageNet normalization",
       "label_contract": "FROZEN_14_LABEL_ORDER"

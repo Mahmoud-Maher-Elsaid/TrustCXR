@@ -1,7 +1,7 @@
 {
   "stage": "16C",
   "stage16b_evidence": "reports/stage16/stage16b_reliability_contract_summary.json",
-  "stage16b_evidence_sha256": "cf3d7275d4bee2db92f1125639b54e553e87370288c47078d05a01361b50d3ec",
+  "stage16b_evidence_sha256": "f6223ae428f147065833783579497f8c9711330c84b121fe20cf74b6bea1dedd",
   "required_contract_fingerprint": "3bb34f4edd5d4ed1f27120e028efacf92eb7e0e5217dbc6a1d29c59521b9af9e",
   "partition_salt": "trustcxr-stage16-reliability-v1",
   "partition_intervals": {"calibration_fit": [0.0, 0.5], "abstention_selection": [0.5, 0.75], "reliability_evaluation": [0.75, 1.0]},
@@ -13,7 +13,7 @@
     "checkpoint": "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt",
     "checkpoint_sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
     "freeze": "configs/training/stage9_final_freeze.json",
-    "freeze_sha256": "d6c3a19658b8f98c328cbfc4f2693d872d5542bb710e1f5d7564a2b0377eedf5",
+    "freeze_sha256": "7ac88ed6a72372ce04c7ea23a23914f8b1ba474b4d93849ded8ea071dd8b6617",
     "inference_permitted": false
   },
   "stage13": {
@@ -21,7 +21,7 @@
     "training_config": "configs/multiview/stage13d_multiview_baseline.json",
     "training_config_sha256": "91ed562471c53705cb2905b0d4f035180790d8ac3407432bea0c25384fce14a1",
     "pair_evidence": "reports/stage13/stage13c_patient_safe_pair_design_summary.json",
-    "pair_evidence_sha256": "0dc79ce40cd6d3821374e1bd908269bd1ce85ea88c554142eca4f6d46cd8e6b7",
+    "pair_evidence_sha256": "5ffcd7023507cc9b7710a8ff442c5fde1ae8b5791aabfa76436abf9c1d95beb4",
     "pair_index": "artifacts/stage13/stage13c_multiview_pairs.sqlite",
     "pair_index_sha256": "3879ddf5e65e02ad5bbd6265c4d783fd1621bc3e8fa81da2a079fb38bca3f844",
     "checkpoint": "artifacts/stage13/stage13d_multiview_baseline/frontal_only/best_checkpoint.pt",

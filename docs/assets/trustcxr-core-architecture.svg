@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1450" viewBox="0 0 720 1450" role="img" aria-labelledby="title desc">
+  <title id="title">TrustCXR frozen core architecture</title>
+  <desc id="desc">Vertical research-only pipeline from a local chest X-ray to expert review.</desc>
+  <defs><linearGradient id="accent" x1="0" x2="1"><stop offset="0" stop-color="#9b5cff"/><stop offset="1" stop-color="#e85d8f"/></linearGradient></defs>
+  <rect width="720" height="1450" rx="24" fill="#0b1020"/>
+  <text x="360" y="48" fill="#f7f8fc" font-family="Arial,sans-serif" font-size="25" font-weight="700" text-anchor="middle">TrustCXR frozen core</text>
+  <text x="360" y="76" fill="#aeb8d0" font-family="Arial,sans-serif" font-size="14" text-anchor="middle">Evidence-governed local research review</text>
+  <g font-family="Arial,sans-serif" text-anchor="middle">
+    <g transform="translate(90 105)"><rect width="540" height="78" rx="16" fill="#17223b" stroke="#6576a8"/><text x="270" y="34" fill="#fff" font-size="18" font-weight="700">Local PNG / JPG / JPEG chest X-ray</text><text x="270" y="58" fill="#b9c5df" font-size="13">research input</text></g>
+    <g transform="translate(90 215)"><rect width="540" height="78" rx="16" fill="#1c2845" stroke="#9b5cff"/><text x="270" y="34" fill="#fff" font-size="18" font-weight="700">Stage 5</text><text x="270" y="58" fill="#d7c8ff" font-size="14">View + technical quality</text></g>
+    <g transform="translate(90 325)"><rect width="540" height="78" rx="16" fill="#1c2845" stroke="#9b5cff"/><text x="270" y="34" fill="#fff" font-size="18" font-weight="700">Stage 9</text><text x="270" y="58" fill="#d7c8ff" font-size="14">Frozen 14-label classifier</text></g>
+    <g transform="translate(90 435)"><rect width="540" height="78" rx="16" fill="#1c2845" stroke="#9b5cff"/><text x="270" y="34" fill="#fff" font-size="18" font-weight="700">Stage 16</text><text x="270" y="58" fill="#d7c8ff" font-size="14">Predictive uncertainty</text></g>
+    <g transform="translate(90 545)"><rect width="540" height="78" rx="16" fill="#202a46" stroke="#4f8edb"/><text x="270" y="34" fill="#fff" font-size="18" font-weight="700">Governed evidence layer</text><text x="270" y="58" fill="#c2d9ff" font-size="13">structured research evidence</text></g>
+    <g transform="translate(90 655)"><rect width="540" height="78" rx="16" fill="#202a46" stroke="#4f8edb"/><text x="270" y="34" fill="#fff" font-size="18" font-weight="700">Stage 17</text><text x="270" y="58" fill="#c2d9ff" font-size="14">Deterministic DEFER logic</text></g>
+    <g transform="translate(90 765)"><rect width="540" height="78" rx="16" fill="#202a46" stroke="#4f8edb"/><text x="270" y="34" fill="#fff" font-size="18" font-weight="700">Stage 18</text><text x="270" y="58" fill="#c2d9ff" font-size="14">Deterministic research report</text></g>
+    <g transform="translate(90 875)"><rect width="540" height="78" rx="16" fill="#202a46" stroke="#4f8edb"/><text x="270" y="34" fill="#fff" font-size="18" font-weight="700">Stage 19</text><text x="270" y="58" fill="#c2d9ff" font-size="14">Evidence verifier</text></g>
+    <g transform="translate(90 985)"><rect width="540" height="78" rx="16" fill="#39213e" stroke="#e85d8f"/><text x="270" y="34" fill="#fff" font-size="18" font-weight="700">Stage 20</text><text x="270" y="58" fill="#ffd0e0" font-size="14">ACCEPT / REVISE / DEFER</text></g>
+    <g transform="translate(90 1095)"><rect width="540" height="78" rx="16" fill="#17223b" stroke="#6576a8"/><text x="270" y="46" fill="#fff" font-size="19" font-weight="700">FastAPI</text></g>
+    <g transform="translate(90 1205)"><rect width="540" height="78" rx="16" fill="#17223b" stroke="#6576a8"/><text x="270" y="46" fill="#fff" font-size="19" font-weight="700">Frozen research UI</text></g>
+    <g transform="translate(90 1315)"><rect width="540" height="78" rx="16" fill="url(#accent)" stroke="#ffd4e5"/><text x="270" y="46" fill="#fff" font-size="19" font-weight="700">Expert review</text></g>
+  </g>
+  <g stroke="#94a5d2" stroke-width="3" fill="none"><path d="M360 183v32m0 78v32m0 78v32m0 78v32m0 78v32m0 78v32m0 78v32m0 78v32m0 78v32m0 78v32m0 78v32"/></g>
+  <g fill="#b9c7ea"><path d="m351 207 9 12 9-12z"/><path d="m351 317 9 12 9-12z"/><path d="m351 427 9 12 9-12z"/><path d="m351 537 9 12 9-12z"/><path d="m351 647 9 12 9-12z"/><path d="m351 757 9 12 9-12z"/><path d="m351 867 9 12 9-12z"/><path d="m351 977 9 12 9-12z"/><path d="m351 1087 9 12 9-12z"/><path d="m351 1197 9 12 9-12z"/><path d="m351 1307 9 12 9-12z"/></g>
+</svg>

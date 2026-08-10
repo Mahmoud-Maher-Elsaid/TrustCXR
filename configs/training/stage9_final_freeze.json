@@ -37,7 +37,7 @@
   ],
   "source_commit": "0c29f74c5287c6a07e118cd4d0084badf1a7ca79",
   "configuration_sha256": "75933fad8f47e7d637596edd935b02f8b8f5ed9d104acacc3e67500a9abdbd69",
-  "stage9c_summary_sha256": "5ba06d2f4052651c7e68fe9219f19cc7e2729d6b25ef846e6c0dbc5afe77ccc9",
+  "stage9c_summary_sha256": "667d63ca84bf3aaa9bca7bdf0c21da87447426ad9f939b5e5e84e972cac67f8b",
   "selection_rationale": "Original was retained because no candidate satisfied both the paired positive-interval rule and the frozen meaningful-delta threshold.",
   "test_policy": {
     "split": "test",

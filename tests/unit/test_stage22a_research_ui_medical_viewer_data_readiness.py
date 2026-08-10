@@ -26,7 +26,7 @@ def test_stage22a_frozen_stage21_evidence_is_preserved() -> None:
         "MINIMAL_LOCAL_RESEARCH_SERVING_SYNTHETIC_RUNTIME_ONLY"
     )
     assert result["stage21h_summary_sha256"] == (
-        "ff59a3710e618092ee1e5da6ca4ea136fac02c50ac0ee77b3974f1d1be1f0fb0"
+        "2afbdda97d2de112aeba6f09a557cc04a00ad8a28e8a106b8ebe5a7391e0e01f"
     )
 
 

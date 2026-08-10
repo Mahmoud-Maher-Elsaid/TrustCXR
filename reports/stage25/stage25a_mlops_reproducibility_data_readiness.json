@@ -103,7 +103,7 @@
       "path": "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt",
       "sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
       "config": "configs/training/stage9_final_freeze.json",
-      "config_sha256": "d6c3a19658b8f98c328cbfc4f2693d872d5542bb710e1f5d7564a2b0377eedf5",
+      "config_sha256": "7ac88ed6a72372ce04c7ea23a23914f8b1ba474b4d93849ded8ea071dd8b6617",
       "architecture": "DenseNet-121 original-image variant",
       "preprocessing": "224px RGB ImageNet normalization",
       "label_contract": "FROZEN_14_LABEL_ORDER",

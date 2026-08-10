@@ -1,7 +1,7 @@
 {
   "stage": "18E",
   "stage18d_evidence": "reports/stage18/stage18d_template_safety_validation_summary.json",
-  "stage18d_evidence_sha256": "072e79044825442b9a951f5d42f27d3c5217774f7bcfe49f4e35bf56b68d6db4",
+  "stage18d_evidence_sha256": "d4bfe6d8616520f15671e7dc5ba089a03950032d9dc4f75c716236c588fc48ed",
   "contract_fingerprint": "bf83dacb98bbc0f9e87d4e4a61f014c470a9cf650976044412bdb13418e4d09b",
   "report_schema": "configs/reporting/stage18b_grounded_report_schema.json",
   "report_schema_sha256": "ea2e4d254a7efc99fa861197001d59d29f92e9b3e8bdd2c508a828594065701c",

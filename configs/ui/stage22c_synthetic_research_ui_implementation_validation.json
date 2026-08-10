@@ -1,17 +1,25 @@
 {
   "stage": "22C",
   "stage22b_summary": "reports/stage22/stage22b_research_ui_display_contract_summary.json",
-  "stage22b_summary_sha256": "b4a33ce2130d90c4d88d8c8bbcd4f85c438fc0157d2d5d614ff3f46bcb1cc5a7",
+  "stage22b_summary_sha256": "2d8e1b53d4f2df9f771e2f0330091780a114af4ba0f61b17307fce9cd04d1c34",
   "stage22b_contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
   "assets": {
-    "index.html": "d5ba8ec2f496f0127c1af597389c9666357920ccb8ae0586465cbe2e7060d180",
-    "app.css": "6a9fa2051465640973dd941cde05bf6226b90c4e4ee685000ec4d6dad4a2345e",
-    "app.js": "329fb542aba7637aa6b129f0c5ab2b2fac783fb9ca5f8e17d702a25ee55d174b",
+    "index.html": "c1fec3ce42427be674b17810ebf63657ac2d772ca5bc251beed2da09217e404d",
+    "app.css": "79ab1029638614671d38beb4a5282c4b5789a4a01759e10ca90fa388eca6f32f",
+    "app.js": "1b7f58d370baf9994daf09f21ee099be065753b3ba14edcc106dc525f7507863",
     "fixtures.json": "0a20f709d2d7f0b2bd22615dfdf1f53b2dba242b0b5cbbd45f921b1f4a0ff554"
   },
   "static_root": "src/trustcxr/serving/static",
-  "ui_routes": ["GET /ui", "GET /ui/app.css", "GET /ui/app.js", "GET /ui/fixtures.json"],
-  "synthetic_viewer_fixture_types": ["PNG", "JPEG"],
+  "ui_routes": [
+    "GET /ui",
+    "GET /ui/app.css",
+    "GET /ui/app.js",
+    "GET /ui/fixtures.json"
+  ],
+  "synthetic_viewer_fixture_types": [
+    "PNG",
+    "JPEG"
+  ],
   "synthetic_viewer_fixture_count": 2,
   "expected_status": "PASSED_SYNTHETIC_RESEARCH_UI_IMPLEMENTATION_VALIDATION",
   "expected_gate": "GO_FOR_STAGE_22D_BOUNDED_SYNTHETIC_UI_RUNTIME_BROWSER_VALIDATION",

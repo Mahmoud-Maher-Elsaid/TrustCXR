@@ -19,7 +19,7 @@ def test_stage21d_preserves_evidence_and_dependency_governance_hold() -> None:
         "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f"
     )
     assert decision["stage21b_summary_sha256"] == (
-        "649a046c31499bb1a280bff09793045683cb4f0fb760cfb72b56672c1c7d3d82"
+        "af0be7410bbf743f1261e73f1fdec1c897a16eb88d791679ea7e8e24f8b38c8f"
     )
     assert decision["stage21c_fixtures_passed"] == 83
     assert decision["dependency_decision"]["fastapi"] == "UNPINNED_NOT_YET_APPROVED"

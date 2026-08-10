@@ -1,7 +1,7 @@
 {
   "stage": "19D",
   "stage19c_evidence": "reports/stage19/stage19c_synthetic_verifier_validation_summary.json",
-  "stage19c_evidence_sha256": "eb51be1586ab3aa12e20e035410e9208e929810f8ab590eae19da397977ea754",
+  "stage19c_evidence_sha256": "b439f86221978167522443effe33121fc5c46ae4d0c8ca5f3af0955a028a553c",
   "stage19b_contract_fingerprint": "b34d11431e84566e890464696fe171ecf705f8f7ef8568b994ba5ef7de7639b3",
   "decision": "ACCEPTED_DETERMINISTIC_RESEARCH_ONLY_VERIFIER_CAPABILITY",
   "accepted_capabilities": [

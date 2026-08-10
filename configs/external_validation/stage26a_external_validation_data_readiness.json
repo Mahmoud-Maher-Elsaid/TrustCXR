@@ -1,7 +1,7 @@
 {
   "stage": "26A",
   "stage25b_summary": "reports/stage25/stage25b_mlops_reproducibility_closure.json",
-  "stage25b_summary_sha256": "81c1e927c32b5535a62572d792440c1cd46f8d7f69e11450431f6a37312563d4",
+  "stage25b_summary_sha256": "d05c9b3b2c97c3396d641aaa1a00cb868e0afb4d81da5717ea7dc8c6f9af8242",
   "stage25b_status": "ACCEPTED_REPRODUCIBLE_RESEARCH_PIPELINE_WINDOWS_SCOPE",
   "canonical_environment_lock": "requirements/lock-final-research-windows-cu130.txt",
   "canonical_environment_lock_sha256": "cc63ac8bfb8dd6cc0f15469c4e7dfd6f620ec3747931ebd63c85fb11a8dc0786",

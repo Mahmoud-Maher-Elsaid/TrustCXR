@@ -69,20 +69,7 @@ The frozen Stage 9 evidence is macro AUROC `0.7287231943`, macro AUPRC `0.154046
 
 ## Architecture
 
-```mermaid
-flowchart TD
-  A[Local PNG/JPG/JPEG] --> B[Stage 5<br/>View + technical quality]
-  B --> C[Stage 9<br/>Frozen 14-label classifier]
-  C --> D[Stage 16<br/>Predictive uncertainty]
-  D --> E[Governed evidence layer]
-  E --> F[Stage 17<br/>Deterministic DEFER logic]
-  F --> G[Stage 18<br/>Deterministic research report]
-  G --> H[Stage 19<br/>Evidence verifier]
-  H --> I[Stage 20<br/>ACCEPT / REVISE / DEFER]
-  I --> J[Local FastAPI]
-  J --> K[Frozen research UI]
-  K --> L[Expert review]
-```
+<img src="docs/assets/trustcxr-core-architecture.svg" alt="TrustCXR frozen core architecture" />
 
 ## Installation and reproducibility
 

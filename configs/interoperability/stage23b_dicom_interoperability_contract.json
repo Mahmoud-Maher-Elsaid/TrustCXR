@@ -1,7 +1,7 @@
 {
   "stage": "23B",
   "stage23a_summary": "reports/stage23/stage23a_dicom_interoperability_data_readiness_summary.json",
-  "stage23a_summary_sha256": "ff62f29bd97f14d593372f9466241194ea14be1ac55e1dd2e27df28cd154fc20",
+  "stage23a_summary_sha256": "9963843742535014734f68bbfc5bbb7073a016a9cc1a7b68c8d814e22f47e787",
   "stage23a_status": "PASSED_DICOM_INTEROPERABILITY_DATA_READINESS_WITH_GENERIC_VIEWER_HOLD",
   "stage22_designation": "SYNTHETICALLY_VALIDATED_LOCAL_RESEARCH_UI_EXPERT_REVIEW_REQUIRED",
   "stage22b_contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",

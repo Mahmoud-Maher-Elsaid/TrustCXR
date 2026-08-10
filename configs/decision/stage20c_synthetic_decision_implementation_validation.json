@@ -1,7 +1,7 @@
 {
   "stage": "20C",
   "stage20b_contract": "reports/stage20/stage20b_deterministic_decision_contract_summary.json",
-  "stage20b_contract_sha256": "9c62a726f2dd492b475c2d6af5fe2c256dd258d50bcf081cb086c356351576d0",
+  "stage20b_contract_sha256": "2f92aa692cec76e325b1e06240ec3a737cebcd8ce6fa938aaa62e83d544c7891",
   "stage20b_contract_fingerprint": "ae38c43d1d959b5b97c369dbc1e6b074db59231c074b030206e2328f0b5193bf",
   "expected_fixture_count": 17,
   "synthetic_fixtures_only": true,

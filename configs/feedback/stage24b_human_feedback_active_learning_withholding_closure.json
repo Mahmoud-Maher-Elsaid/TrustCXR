@@ -1,7 +1,7 @@
 {
   "stage": "24B",
   "stage24a_summary": "reports/stage24/stage24a_human_feedback_active_learning_readiness.json",
-  "stage24a_summary_sha256": "fc33216899e9b947740a38ddb7cf9871ac7aa5a1eb3b9afa0d35a41291b6139d",
+  "stage24a_summary_sha256": "411750566d2dbb7edf093f40154c0cf5d9bd95b7d1acb381b096a70adfdfc650",
   "stage24a_status": "PASSED_HUMAN_FEEDBACK_ACTIVE_LEARNING_DATA_READINESS_WITH_EXPERT_FEEDBACK_HOLD",
   "disposition": "SCIENTIFICALLY_WITHHELD_NO_GOVERNED_EXPERT_FEEDBACK_DATA",
   "closure_classification": "WITHHELD_NOT_FAILED",

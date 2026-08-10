@@ -1,7 +1,7 @@
 {
   "stage": "22A",
   "stage21h_summary": "reports/stage21/stage21h_synthetic_runtime_acceptance_decision_summary.json",
-  "stage21h_summary_sha256": "ff59a3710e618092ee1e5da6ca4ea136fac02c50ac0ee77b3974f1d1be1f0fb0",
+  "stage21h_summary_sha256": "2afbdda97d2de112aeba6f09a557cc04a00ad8a28e8a106b8ebe5a7391e0e01f",
   "stage21_research_designation": "RESEARCH_USE_ONLY_EXPERT_REVIEW_REQUIRED",
   "accepted_serving_scope": "MINIMAL_LOCAL_RESEARCH_SERVING_SYNTHETIC_RUNTIME_ONLY",
   "stage21b_contract_fingerprint": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f",

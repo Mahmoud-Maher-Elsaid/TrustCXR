@@ -1,7 +1,7 @@
 {
   "stage": "17B",
   "stage17a_evidence": "reports/stage17/stage17a_research_triage_data_readiness_summary.json",
-  "stage17a_evidence_sha256": "ae1d3a384f14c39fb6120e797391f1de609c9a7fd3c431345e08a2c1bd42476c",
+  "stage17a_evidence_sha256": "9d6cf3a43dc371c85f28d82b7e6e627bd60b4ff3f1635d195416b39d7a02732c",
   "eligible_inputs": [
     "stage9_original_validation_accepted_reliability",
     "stage5_ap_pa_lateral_and_technical_quality_proxy",

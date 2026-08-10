@@ -8,7 +8,7 @@
       "checkpoint": "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt",
       "checkpoint_sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
       "freeze": "configs/training/stage9_final_freeze.json",
-      "freeze_sha256": "d6c3a19658b8f98c328cbfc4f2693d872d5542bb710e1f5d7564a2b0377eedf5",
+      "freeze_sha256": "7ac88ed6a72372ce04c7ea23a23914f8b1ba474b4d93849ded8ea071dd8b6617",
       "validation_predictions": "artifacts/stage9/stage9c_comparison/original_validation_predictions.npz",
       "validation_predictions_sha256": "90d958f6434d108f81624360f87447af13c3a7e587d7500f63d7b6c76643e5fd",
       "validation_prediction_required_members": ["targets.npy", "probabilities.npy", "identifiers.npy", "patient_ids.npy"],
@@ -19,7 +19,7 @@
       "checkpoint": "artifacts/stage13/stage13d_multiview_baseline/frontal_only/best_checkpoint.pt",
       "checkpoint_sha256": "09a8db4e83861fcc41172d64f29215d6e9d24cd41a8d6b51f825ca6d00fb1c77",
       "freeze": "reports/stage13/stage13f_multiview_selection_freeze_summary.json",
-      "freeze_sha256": "924a2f80cae87bb9b8857728dae6bb1e58b2c67b570b2e495422d55571873b90",
+      "freeze_sha256": "7ac88ed6a72372ce04c7ea23a23914f8b1ba474b4d93849ded8ea071dd8b6617",
       "validation_predictions": null,
       "validation_inference_required": true
     }

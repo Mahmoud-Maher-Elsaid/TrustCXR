@@ -4,15 +4,15 @@
   "evidence": {
     "stage9": {
       "path": "reports/stage9/stage9_final_summary.json",
-      "sha256": "a7a84587aabde23f49d400e7ec64229dca74f8a0b2c0f55e7db77946fcd27479"
+      "sha256": "9516d17e5a91360cc14faf562173d36c374bb06b2471fbe3e3fa9c282be12d7e"
     },
     "stage11": {
       "path": "reports/stage11/stage11l_fusion_acceptance_decision_summary.json",
-      "sha256": "78eedeca24ca941a9c61ce77af28175f8af792f909af622458981312861839e0"
+      "sha256": "f9acb6a0faaace7f0134c38f2a8549396385875ec34b64085c80e0b6b1f50de3"
     },
     "stage12": {
       "path": "reports/stage12/stage12h_partial_scope_capability_freeze_summary.json",
-      "sha256": "386efb62ec122720f03b7c8911c410fcf175c6201a38a3f70f21b765d86de27d"
+      "sha256": "269c0e35a421d452208d688350c71f406ab8bd117e79220b93c505db708a909f"
     },
     "stage16": {
       "path": "reports/stage16/stage16_final_capability_freeze.json",
@@ -24,7 +24,7 @@
     },
     "report_dataset_governance": {
       "path": "reports/stage4_4/data_readiness_summary.json",
-      "sha256": "4313c85ef85425536b75db2b7d2c68e3707fe0593bb8e63f6eb9cde1880a7ad0"
+      "sha256": "f293196d66094ea35923ea00f033725f0150538ed2fe4e9788438861b9a012c7"
     }
   },
   "statement_policy": {

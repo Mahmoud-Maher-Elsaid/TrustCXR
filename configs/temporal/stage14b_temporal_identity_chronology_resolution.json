@@ -2,7 +2,7 @@
   "stage": "14B",
   "stage14a_evidence": "reports/stage14/stage14a_temporal_data_readiness_summary.json",
   "stage13b_evidence": "reports/stage13/stage13b_study_identity_resolution_summary.json",
-  "stage13b_evidence_sha256": "500510d2e1662ca8c3583ae299b748f94714632262c5e8612635531e9335e94d",
+  "stage13b_evidence_sha256": "4454f52803048e922ce704605972bcd235761d79182b01fae0adeb0b261220a1",
   "stage13b_config": "configs/multiview/stage13b_study_identity_resolution.json",
   "stage13b_config_sha256": "2f75f378f80da01c42b448baec73c1e2e77081cb8ee250047c5d6dd19f1ec7b5",
   "stage13b_index": "artifacts/stage13/stage13b_study_identity.sqlite",

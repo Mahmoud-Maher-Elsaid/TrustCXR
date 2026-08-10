@@ -1,7 +1,7 @@
 {
   "stage": "18D",
   "stage18c_evidence": "reports/stage18/stage18c_deterministic_template_implementation_summary.json",
-  "stage18c_evidence_sha256": "f9816e0f1e653f4f615a92604acf53cb35f5c743b3ae125ea10746a8837b47e6",
+  "stage18c_evidence_sha256": "2668004affcd78eea8d7317ec8053986cdf34297ce058c4fee666a69afbabeea",
   "stage18b_contract": "reports/stage18/stage18b_deterministic_grounded_report_contract_summary.json",
   "contract_fingerprint": "bf83dacb98bbc0f9e87d4e4a61f014c470a9cf650976044412bdb13418e4d09b",
   "report_schema": "configs/reporting/stage18b_grounded_report_schema.json",

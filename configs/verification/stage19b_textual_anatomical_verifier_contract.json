@@ -1,9 +1,9 @@
 {
   "stage": "19B",
   "stage19a_evidence": "reports/stage19/stage19a_textual_anatomical_verifier_data_readiness_summary.json",
-  "stage19a_evidence_sha256": "6dbc11f05ea4e97eef23e3e790acfed314d0b28396652f682e5734fe4507a360",
+  "stage19a_evidence_sha256": "7ff837b0588340baa2c9295307e21622bc9b952b364bac0234a6e424b99b18e2",
   "stage18b_contract": "reports/stage18/stage18b_deterministic_grounded_report_contract_summary.json",
-  "stage18b_contract_sha256": "c185ef749bc1afc87f9eadb16e3bef39e50dcd40737d39dc366b744f8553e44d",
+  "stage18b_contract_sha256": "8ceca2b6ed1266d6a5514cb8b9bee1e790f59da78a95030ed8f8f326ed40dbd1",
   "verifier_statuses": [
     "VERIFIED",
     "PARTIALLY_VERIFIED",

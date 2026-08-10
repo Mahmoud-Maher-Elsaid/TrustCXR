@@ -1,7 +1,7 @@
 {
   "stage": "16B",
   "stage16a_evidence": "reports/stage16/stage16a_reliability_data_readiness_summary.json",
-  "stage16a_evidence_sha256": "3926e80faa69c29f99ff087be8cf75d84fd34db632df8fdd7e7ca12df01cfba0",
+  "stage16a_evidence_sha256": "b8e5566e4273c024a4ad9c7fc47d403d3b7de574b87f3f8c685be0b7e0ee6a86",
   "eligible_models": ["stage9_original", "stage13_frontal_only"],
   "validation_partition": {
     "unit": "patient_cluster",

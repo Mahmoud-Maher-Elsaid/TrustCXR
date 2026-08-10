@@ -1,7 +1,7 @@
 {
   "stage": "22E",
   "stage22d_summary": "reports/stage22/stage22d_bounded_synthetic_ui_runtime_browser_summary.json",
-  "stage22d_summary_sha256": "fbec3c05e2b8846d807aa78ef733ccaf2ac4cbeaa433163bf5a3afa16b99bda4",
+  "stage22d_summary_sha256": "baec92ebaaf56f76bde0748bea14a0daae3811708952d5232bccf3aa06afc577",
   "stage22b_contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
   "stage22c_summary_sha256": "043c021240d097e6c3547191c24800c35646762871409cb86009ad3e953182f9",
   "acceptance_designation": "SYNTHETICALLY_VALIDATED_LOCAL_RESEARCH_UI_EXPERT_REVIEW_REQUIRED",

@@ -1,7 +1,7 @@
 {
   "stage": "21F",
   "stage21e_summary": "reports/stage21/stage21e_serving_dependency_implementation_protocol_summary.json",
-  "stage21e_summary_sha256": "664a76ac942a0b1a8e73589a31809879d541443786f976c88ad801dc69c42a72",
+  "stage21e_summary_sha256": "9689c20d25053a6c38a528f369101258ba736e561c773bbe4dd95e945cd6f501",
   "stage21b_contract_fingerprint": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f",
   "dependency_manifest_sha256": "6b82df6db246280518aec3078f55675e02c41b9afd4e74c104836960b820d782",
   "dependency_fingerprint": "b6fa4c0ec10301f9d6018610b4bd18b6a45270955ad7087b5ec62f55c594463f",

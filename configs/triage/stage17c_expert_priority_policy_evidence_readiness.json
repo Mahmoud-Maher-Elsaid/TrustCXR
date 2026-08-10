@@ -1,7 +1,7 @@
 {
   "stage": "17C",
   "stage17b_evidence": "reports/stage17/stage17b_rule_based_research_triage_contract_summary.json",
-  "stage17b_evidence_sha256": "79dd5d1461fb8de3af72cc8893adf123b568559dffa9c381facb6ca2f4d5d460",
+  "stage17b_evidence_sha256": "2281bbc876050b1c523eb45828859006397f6771e1110ec088369dd573091d07",
   "stage17b_contract_fingerprint": "16b28935ff1e3a3dbbd64848af757057e10f95a87702c8c65a959af8f596352b",
   "acceptable_evidence_types": [
     "expert_approved_project_triage_policy",

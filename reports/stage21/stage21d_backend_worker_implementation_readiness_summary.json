@@ -3,8 +3,8 @@
   "status": "READY_FOR_DEPENDENCY_AND_IMPLEMENTATION_PROTOCOL_GOVERNANCE",
   "gate": "GO_FOR_STAGE_21E_SERVING_DEPENDENCY_AND_IMPLEMENTATION_PROTOCOL_FREEZE",
   "stage21b_contract_fingerprint": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f",
-  "stage21b_summary_sha256": "649a046c31499bb1a280bff09793045683cb4f0fb760cfb72b56672c1c7d3d82",
-  "stage21c_summary_sha256": "8fee0fb800ee796c0f468d86972f8508a992d56db66401b2f969eb9527ac0751",
+  "stage21b_summary_sha256": "af0be7410bbf743f1261e73f1fdec1c897a16eb88d791679ea7e8e24f8b38c8f",
+  "stage21c_summary_sha256": "abe7145c89cfbba4f4c02be869e5af025284b8489c79f518824fdced968d8602",
   "stage21c_fixtures_passed": 83,
   "implementation_prerequisites": {
     "serving_dependency_approval_and_exact_pins": "REQUIRES_STAGE_21E_GOVERNANCE",

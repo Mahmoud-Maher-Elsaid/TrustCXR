@@ -2,7 +2,7 @@
   "stage": "16E",
   "contract_fingerprint": "3bb34f4edd5d4ed1f27120e028efacf92eb7e0e5217dbc6a1d29c59521b9af9e",
   "stage16d_summary": "reports/stage16/stage16d_validation_reliability_summary.json",
-  "stage16d_summary_sha256": "f78f4940532a028c365e09e0fcfdb8d5b95770f902c6ffc752e6609e794a7b06",
+  "stage16d_summary_sha256": "f2dc6b9bccf592ca494ec04a667bd4f93c68ad0fc6b0d03fe8e7a1f038a2a0f5",
   "stage16d_evidence_hashes": {
     "reports/stage16/stage16d_calibration_metrics.csv": "43b63c6658af83dd2a51d1046a28fe78e47f2ad8ca2ccd50b66841df9c30546e",
     "reports/stage16/stage16d_risk_coverage.csv": "fd2266f4f20275dafd18248966704fb82029fd66ce40800c1e161979b6c2d360",

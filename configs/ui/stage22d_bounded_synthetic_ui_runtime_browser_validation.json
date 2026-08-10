@@ -1,7 +1,7 @@
 {
   "stage": "22D",
   "stage22c_summary": "reports/stage22/stage22c_synthetic_research_ui_implementation_summary.json",
-  "stage22c_summary_sha256": "043c021240d097e6c3547191c24800c35646762871409cb86009ad3e953182f9",
+  "stage22c_summary_sha256": "4640e58a11cde6a7385a6032f79b5d410892912e0e362bde3facab17c9d602d1",
   "stage22b_contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
   "stage22b_summary_sha256": "b4a33ce2130d90c4d88d8c8bbcd4f85c438fc0157d2d5d614ff3f46bcb1cc5a7",
   "ui_routes": ["GET /ui", "GET /ui/app.css", "GET /ui/app.js", "GET /ui/fixtures.json"],

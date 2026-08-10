@@ -14,7 +14,7 @@
     {"component": "stage6_nih_classifier", "sha256": "3d94879aff1d7a88378ed049f9c375aa1390bd47d0bd2611064116282dc12a89", "config_sha256": "6351e285dea74fe4a78fea6289cab05cdf27e3665e2317c661061fb1a1ff7025"},
     {"component": "stage7_rad_dino_probe", "sha256": "87f7781d6a1fc0afce1fb21d33c483275c13148eb8a47750dcfc1612b926bbb3", "config_sha256": "f0a987a44d72ff57dea39bfd3948eafb6f05408bcf62b25282b1fb0792c97c00"},
     {"component": "stage8_anatomy_segmentation", "sha256": "f97e6f94ea0ad5f33c98bdeffe3bf19f3d168c0bd41317e083fa08361cba00ba", "config_sha256": "2b979ca22abf636a9f8aaa6018603b078412bc39d42979baf348cfa1ee34035a"},
-    {"component": "stage9_original_classifier", "sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de", "config_sha256": "d6c3a19658b8f98c328cbfc4f2693d872d5542bb710e1f5d7564a2b0377eedf5"},
+    {"component": "stage9_original_classifier", "sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de", "config_sha256": "7ac88ed6a72372ce04c7ea23a23914f8b1ba474b4d93849ded8ea071dd8b6617"},
     {"component": "stage10_rsna_localizer", "sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429", "config_sha256": "a905044f6e601f0d0624cc2b215a93283e700e3443a6080733125fc0fc64d47b"},
     {"component": "stage13_frontal_only", "sha256": "09a8db4e83861fcc41172d64f29215d6e9d24cd41a8d6b51f825ca6d00fb1c77", "config_sha256": "8ef34e9acff9611d9ae16b252417e57ff720479aec30c0499944053ff80ff8ff"}
   ],

@@ -1,7 +1,7 @@
 {
   "stage": "23A",
   "stage22e_summary": "reports/stage22/stage22e_synthetic_ui_acceptance_decision_summary.json",
-  "stage22e_summary_sha256": "a73bdae43e1e3c86ddc7ff4a22a4681cb2bbc22b0c9222dd86707bfa5e4c671c",
+  "stage22e_summary_sha256": "dbbb08f29a395b46e63e6ed5aefe9edb4af6ebbc5dd2387c979a6ab2e2b24dd6",
   "stage22_designation": "SYNTHETICALLY_VALIDATED_LOCAL_RESEARCH_UI_EXPERT_REVIEW_REQUIRED",
   "stage22b_contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
   "stage22c_summary_sha256": "043c021240d097e6c3547191c24800c35646762871409cb86009ad3e953182f9",

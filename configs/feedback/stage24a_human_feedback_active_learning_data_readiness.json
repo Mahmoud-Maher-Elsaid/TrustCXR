@@ -1,7 +1,7 @@
 {
   "stage": "24A",
   "stage23d_summary": "reports/stage23/stage23d_dicom_interoperability_acceptance_closure.json",
-  "stage23d_summary_sha256": "8280b2d566f3b9eaa1fb9d6d6cb8c34e2c1ba75b2fd4802b0be833b5dd373fa8",
+  "stage23d_summary_sha256": "111eec1a21a5ff4cc642547499655c79803f88ca510f425a145d6fdbe7b64839",
   "stage23d_status": "ACCEPTED_SYNTHETIC_DICOM_INTEROPERABILITY_RESEARCH_ONLY",
   "numbering_reconciliation": {
     "actual_repository_stages_completed": [21, 22, 23],

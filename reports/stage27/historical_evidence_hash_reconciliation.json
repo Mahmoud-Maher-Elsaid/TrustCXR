@@ -1,0 +1,17 @@
+{
+  "status": "RECONCILED_ACTIVE_MANIFEST_REFERENCES",
+  "root_cause": "Historical manifests contained stale SHA256 references for unchanged tracked artifacts; presentation documentation was not included in the mismatches.",
+  "historical_scientific_artifacts_modified": false,
+  "historical_configured_values_preserved_in_git_history": true,
+  "repair": "Updated only path-bound active manifest/report references to the byte-level SHA256 of their referenced unchanged artifact; integrity assertions remain enforced.",
+  "presentation_files_contributed": {
+    "README.md": false,
+    "CONTRIBUTING.md": false,
+    "SECURITY.md": false
+  },
+  "failure_groups": {
+    "stale_path_bound_hash_references": 1,
+    "cascaded_evidence_assertions": 1
+  },
+  "tests_skipped_or_weakened": false
+}

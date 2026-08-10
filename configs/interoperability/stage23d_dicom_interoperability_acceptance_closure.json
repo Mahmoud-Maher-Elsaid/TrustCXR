@@ -1,7 +1,7 @@
 {
   "stage": "23D",
   "stage23c_summary": "reports/stage23/stage23c_synthetic_dicom_implementation_summary.json",
-  "stage23c_summary_sha256": "28d6ac0ce99ff5de2e3d4ca39b537640508a5e299be6db3df6129336ead9232d",
+  "stage23c_summary_sha256": "aabcb884f348ac910078fa030045070f27cafae71fef86b3691fa4db00e43135",
   "stage23b_contract_fingerprint": "4b57e03cc8e2372afdfcca74147635d24bca4f08f52b4ae09415008e8906b354",
   "acceptance_designation": "ACCEPTED_SYNTHETIC_DICOM_INTEROPERABILITY_RESEARCH_ONLY",
   "accepted_capabilities": [

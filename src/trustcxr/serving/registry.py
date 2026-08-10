@@ -11,7 +11,7 @@ from typing import Any
 from trustcxr.serving.schemas import ComponentId
 
 STAGE21B_FINGERPRINT = "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f"
-STAGE21B_SUMMARY_SHA256 = "649a046c31499bb1a280bff09793045683cb4f0fb760cfb72b56672c1c7d3d82"
+STAGE21B_SUMMARY_SHA256 = "af0be7410bbf743f1261e73f1fdec1c897a16eb88d791679ea7e8e24f8b38c8f"
 
 
 def sha256(path: Path) -> str:

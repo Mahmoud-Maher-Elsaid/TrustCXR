@@ -1,7 +1,7 @@
 {
   "stage": "26B",
   "stage26a_summary": "reports/stage26/stage26a_external_validation_data_readiness.json",
-  "stage26a_summary_sha256": "a5df7ba8c641ea3bc1ae137f7f1dad00c1ff373fec1425804ebc5f593061feba",
+  "stage26a_summary_sha256": "2797f6ba20db85db9f9ec7a869214e5e260d4fddd6ac898421b4bbc3c4b39207",
   "stage26a_status": "PASSED_EXTERNAL_VALIDATION_DATA_READINESS_WITH_NO_ELIGIBLE_COHORT",
   "disposition": "SCIENTIFICALLY_WITHHELD_NO_GOVERNED_INDEPENDENT_EXTERNAL_VALIDATION_COHORT",
   "closure_classification": "WITHHELD_NOT_FAILED",

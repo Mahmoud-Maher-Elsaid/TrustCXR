@@ -1,7 +1,7 @@
 {
   "stage": "18B",
   "stage18a_evidence": "reports/stage18/stage18a_grounded_report_data_readiness_summary.json",
-  "stage18a_evidence_sha256": "cc1cb64c5523afc86fa9f8a82d761b1ad262e54d70972d9c33c12c875a82ba4b",
+  "stage18a_evidence_sha256": "291db871fa0a11bec69c0448c67d9bec1807c8577cdfa9210071e8dcd7df4624",
   "report_schema": "configs/reporting/stage18b_grounded_report_schema.json",
   "report_schema_sha256": "ea2e4d254a7efc99fa861197001d59d29f92e9b3e8bdd2c508a828594065701c",
   "report_identity": "AI_GENERATED_RESEARCH_REPORT_DRAFT_FOR_EXPERT_REVIEW",

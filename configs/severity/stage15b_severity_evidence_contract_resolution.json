@@ -1,17 +1,17 @@
 {
   "stage": "15B",
   "stage15a_evidence": "reports/stage15/stage15a_severity_data_readiness_summary.json",
-  "stage15a_evidence_sha256": "c40caf25ec0ab5416c021b0209ad35697db69ec993fd3e1b32d0cbd3f7a7f475",
+  "stage15a_evidence_sha256": "8ea3c927f067c87fd5fad20416805e1510373433cbea0f1e2ec0d9986e7af6df",
   "metadata_profile": "reports/stage4/metadata_profiles.json",
-  "metadata_profile_sha256": "d9f0f9ebf2f6334333c5f3faaa4970362d01fb3b7ea255cf97ee3dcbcb0d6265",
+  "metadata_profile_sha256": "cd9b413cda55c1bffe2644535246973c1dc2c874ac62793b29e669bdd6d5d5fd",
   "governed_limitations": [
     {
       "path": "reports/stage10/stage10n_localization_acceptance_decision_summary.json",
-      "sha256": "2beec215d36acfba3800a0c55913044723b6c68db255c859eca7fdbf7883a219"
+      "sha256": "4ea042f20bc88c8c95287e6a5728c2efd79d0e1c3bd6ad277189885cf302ddc8"
     },
     {
       "path": "reports/stage12/stage12h_partial_scope_capability_freeze_summary.json",
-      "sha256": "386efb62ec122720f03b7c8911c410fcf175c6201a38a3f70f21b765d86de27d"
+      "sha256": "269c0e35a421d452208d688350c71f406ab8bd117e79220b93c505db708a909f"
     }
   ],
   "explicit_severity_field_terms": ["severity", "severity_grade", "severity_score", "ordinal_severity", "radiologist_severity"],

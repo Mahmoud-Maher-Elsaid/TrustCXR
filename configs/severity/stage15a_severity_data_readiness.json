@@ -5,11 +5,11 @@
   "governed_evidence": [
     {
       "path": "reports/stage10/stage10n_localization_acceptance_decision_summary.json",
-      "sha256": "2beec215d36acfba3800a0c55913044723b6c68db255c859eca7fdbf7883a219"
+      "sha256": "4ea042f20bc88c8c95287e6a5728c2efd79d0e1c3bd6ad277189885cf302ddc8"
     },
     {
       "path": "reports/stage12/stage12h_partial_scope_capability_freeze_summary.json",
-      "sha256": "386efb62ec122720f03b7c8911c410fcf175c6201a38a3f70f21b765d86de27d"
+      "sha256": "269c0e35a421d452208d688350c71f406ab8bd117e79220b93c505db708a909f"
     }
   ],
   "candidate_severity_sources": ["explicit_ordinal_severity_annotation", "validated_lesion_area_ratio", "validated_affected_lung_percentage"],

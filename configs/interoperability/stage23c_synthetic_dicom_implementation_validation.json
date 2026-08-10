@@ -1,7 +1,7 @@
 {
   "stage": "23C",
   "stage23b_summary": "reports/stage23/stage23b_dicom_interoperability_contract_summary.json",
-  "stage23b_summary_sha256": "3f2779288a15576f33699e0165783f8f54f9979801c8f5b9e619fcf02873a548",
+  "stage23b_summary_sha256": "31e4b524944aea8d73be2da47a86d11ed02c69aa4f0aa24297f5f2e9ac142794",
   "stage23b_contract_fingerprint": "4b57e03cc8e2372afdfcca74147635d24bca4f08f52b4ae09415008e8906b354",
   "governed_dependency": "pydicom==3.0.2",
   "fixture_count": 22,

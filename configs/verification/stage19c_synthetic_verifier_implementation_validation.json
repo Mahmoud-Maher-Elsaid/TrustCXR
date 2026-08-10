@@ -1,10 +1,10 @@
 {
   "stage": "19C",
   "stage19b_contract": "reports/stage19/stage19b_textual_anatomical_verifier_contract_summary.json",
-  "stage19b_contract_sha256": "460e68505260479959acd7ce94c1912d57785f1226bb5ba04a0822dce68fb450",
+  "stage19b_contract_sha256": "71dccfe5669ba689afca7a6e0adef8ce2e5a8baae10aca56ea1003406f320c42",
   "stage19b_contract_fingerprint": "b34d11431e84566e890464696fe171ecf705f8f7ef8568b994ba5ef7de7639b3",
   "stage18_report_contract": "reports/stage18/stage18b_deterministic_grounded_report_contract_summary.json",
-  "stage18_report_contract_sha256": "c185ef749bc1afc87f9eadb16e3bef39e50dcd40737d39dc366b744f8553e44d",
+  "stage18_report_contract_sha256": "8ceca2b6ed1266d6a5514cb8b9bee1e790f59da78a95030ed8f8f326ed40dbd1",
   "synthetic_fixtures_only": true,
   "real_patient_reports_permitted": false,
   "patient_identifiers_permitted": false,

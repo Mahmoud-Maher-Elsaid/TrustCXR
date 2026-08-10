@@ -1,7 +1,7 @@
 {
   "stage": "22B",
   "stage22a_summary": "reports/stage22/stage22a_research_ui_medical_viewer_data_readiness_summary.json",
-  "stage22a_summary_sha256": "c0b23bc3d25ccef72fd530cf648c40df1c366e6faf33cd666071a09057112fde",
+  "stage22a_summary_sha256": "2ef318bc3945db6b237c028d72cde4bc95d9c7cede83fe424be275a99ae4300d",
   "stage21h_summary_sha256": "ff59a3710e618092ee1e5da6ca4ea136fac02c50ac0ee77b3974f1d1be1f0fb0",
   "contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
   "contract": {

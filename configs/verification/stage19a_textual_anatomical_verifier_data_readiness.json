@@ -11,15 +11,15 @@
     },
     "stage10_anatomy_proxy": {
       "path": "reports/stage10/stage10m_validation_anatomical_audit_summary.json",
-      "sha256": "b304d650c6dc11aa6786d1586d5aca5da0039b378788256a4b7917b793857a43"
+      "sha256": "58127b67b48af6f3cb87066255610e38548b759f8bb47fd135576cd9061f8b6e"
     },
     "stage10_acceptance": {
       "path": "reports/stage10/stage10n_localization_acceptance_decision_summary.json",
-      "sha256": "2beec215d36acfba3800a0c55913044723b6c68db255c859eca7fdbf7883a219"
+      "sha256": "4ea042f20bc88c8c95287e6a5728c2efd79d0e1c3bd6ad277189885cf302ddc8"
     },
     "stage11": {
       "path": "reports/stage11/stage11l_fusion_acceptance_decision_summary.json",
-      "sha256": "78eedeca24ca941a9c61ce77af28175f8af792f909af622458981312861839e0"
+      "sha256": "f9acb6a0faaace7f0134c38f2a8549396385875ec34b64085c80e0b6b1f50de3"
     }
   },
   "verifier_statuses": [

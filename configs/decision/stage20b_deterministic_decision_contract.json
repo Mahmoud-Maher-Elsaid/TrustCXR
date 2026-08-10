@@ -1,7 +1,7 @@
 {
   "stage": "20B",
   "stage20a_evidence": "reports/stage20/stage20a_accept_revise_defer_data_readiness_summary.json",
-  "stage20a_evidence_sha256": "1ab49888dca8a4cfaf5f781babf9f720d3eecf6035c602e75c169f0e6eccf73b",
+  "stage20a_evidence_sha256": "cf92e90e4e9a2aa1a8142af05411440088bc3d921324d9f86ddde82598b4d834",
   "stage19b_contract_fingerprint": "b34d11431e84566e890464696fe171ecf705f8f7ef8568b994ba5ef7de7639b3",
   "candidate_decisions": [
     "ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW",
