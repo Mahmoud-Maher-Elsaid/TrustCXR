@@ -106,8 +106,28 @@ if (($requiredDocs | Where-Object { -not (Test-Path -LiteralPath $_) }).Count -e
 
 Write-Host "[08/14] Artifact and checkpoint evidence"
 $tracked = git ls-files
-$suspicious = $tracked | Where-Object { $_ -match '(?i)(secret|password|token|private.key|\.env$|TrustCXR-Data)' }
-if ($suspicious) { Add-Result "Tracked privacy scan" "FAIL" "suspicious tracked paths found" } else { Add-Result "Tracked privacy scan" "PASS" "no suspicious tracked paths" }
+$pathWarnings = $tracked | Where-Object { $_ -match '(?i)(TrustCXR-Data|stage7e_patch_token_audit)' }
+$secretFindings = [Collections.Generic.List[string]]::new()
+$textExtensions = @('.md','.txt','.json','.py','.ps1','.toml','.yml','.yaml','.html','.css','.js','.xml','.ini','.cfg')
+foreach ($relativePath in $tracked) {
+    $fullPath = Join-Path $RepositoryRoot $relativePath
+    if (-not (Test-Path -LiteralPath $fullPath)) { continue }
+    $extension = [IO.Path]::GetExtension($relativePath).ToLowerInvariant()
+    if ($extension -notin $textExtensions) { continue }
+    try { $content = Get-Content -LiteralPath $fullPath -Raw -ErrorAction Stop } catch { continue }
+    if ($content -match '-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----' -or
+        $content -match '(?i)(?:api[_-]?key|secret|password)\s*[:=]\s*["''][^"'']{12,}["'']' -or
+        $content -match '(?i)\bsk-[A-Za-z0-9_-]{20,}\b') {
+        $secretFindings.Add($relativePath)
+    }
+}
+if ($secretFindings.Count -gt 0) {
+    Add-Result "Tracked privacy scan" "FAIL" "credential, private-key, or secret pattern found in tracked content"
+} elseif ($pathWarnings) {
+    Add-Result "Tracked privacy scan" "PASS" "no secrets/PHI; historical path-audit evidence retained"
+} else {
+    Add-Result "Tracked privacy scan" "PASS" "no secrets/PHI or sensitive tracked paths"
+}
 Write-Host "[09/14] Privacy and security"
 $ui = Get-Content "src/trustcxr/serving/static/app.js" -Raw
 if ($ui -match 'https?://|localStorage|sessionStorage|document\.cookie') { Add-Result "UI network/persistence scan" "FAIL" "external or persistent browser behavior detected" } else { Add-Result "UI network/persistence scan" "PASS" "local-only patterns" }

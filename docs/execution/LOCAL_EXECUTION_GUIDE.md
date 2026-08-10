@@ -45,7 +45,7 @@ The 2026-08-06 failed run is classified as `FAILED_GPU_TDR` from matching Window
 10. Never use `-FreshStart` over recoverable checkpoints without preserving evidence.
 
 ```powershell
-Set-Location -LiteralPath "F:\AI\TrustCXR"
+Set-Location -LiteralPath (Resolve-Path ".")
 
 powershell.exe -NoProfile -ExecutionPolicy Bypass \`
     -File ".\scripts\training\run_stage9b_external.ps1" \`
@@ -65,7 +65,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass \`
 In a second PowerShell, run one-shot monitoring whenever needed:
 
 ```powershell
-Set-Location -LiteralPath "F:\AI\TrustCXR"
+Set-Location -LiteralPath (Resolve-Path ".")
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\training\monitor_stage9b.ps1"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\training\check_stage9b_status.ps1"
 ```
@@ -79,7 +79,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\training\run_
 After all variants finish:
 
 ```powershell
-.\.venv\Scripts\python.exe .\scripts\evaluation\finalize_stage9b_reports.py --project-root "F:\AI\TrustCXR" --config ".\configs\training\stage9b_segmentation_guided_ablation.json"
+.\.venv\Scripts\python.exe .\scripts\evaluation\finalize_stage9b_reports.py --project-root (Resolve-Path ".").Path --config ".\configs\training\stage9b_segmentation_guided_ablation.json"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\evaluation\validate_stage9b_completion.ps1"
 ```
 

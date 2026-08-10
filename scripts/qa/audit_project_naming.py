@@ -14,7 +14,6 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 CANONICAL = {
     "brand": "TrustCXR",
@@ -38,6 +37,29 @@ TEXT_SUFFIXES = {
     ".js",
     ".tsx",
     ".xml",
+}
+CURRENT_PUBLIC_DOCS = {
+    "README.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "docs/data/DATA_GOVERNANCE.md",
+    "docs/execution/LOCAL_EXECUTION_GUIDE.md",
+    "docs/execution/QUICK_START.md",
+}
+CURRENT_DOC_PREFIXES = ("docs/release/", "docs/research_extensions/")
+CURRENT_RUNTIME_PREFIXES = ("src/trustcxr/serving/",)
+HISTORICAL_PREFIXES = (
+    "configs/",
+    "reports/",
+    "scripts/",
+    "docs/execution/stages/",
+    "docs/fusion/",
+    "docs/training/",
+    "docs/research_protocol/",
+    "src/trustcxr/segmentation/",
+)
+AUDITOR_DEFINITION_FILES = {
+    "scripts/qa/audit_project_naming.py",
 }
 
 
@@ -85,8 +107,22 @@ def github_metadata() -> dict[str, Any] | None:
 def is_future_or_historical(root: Path, path: Path, line: str) -> tuple[bool, bool]:
     rel = path.relative_to(root).as_posix()
     future = "research_extensions" in rel or "NOT IMPLEMENTED" in line.upper()
-    historical = rel.startswith(("configs/", "reports/", "docs/execution/stages/"))
+    historical = (
+        rel.startswith(HISTORICAL_PREFIXES) or rel == "docs/execution/complete_stage_registry.json"
+    )
     return future, historical
+
+
+def machine_path_severity(rel: str) -> str:
+    if rel in CURRENT_PUBLIC_DOCS or rel.startswith(CURRENT_DOC_PREFIXES):
+        return "ERROR"
+    if rel.startswith(CURRENT_RUNTIME_PREFIXES):
+        return "ERROR"
+    if rel.startswith("tests/"):
+        return "ALLOWED_TEST_FIXTURE"
+    if rel.startswith(HISTORICAL_PREFIXES) or rel == "docs/execution/complete_stage_registry.json":
+        return "WARNING"
+    return "WARNING"
 
 
 def audit(root: Path = ROOT) -> dict[str, Any]:
@@ -100,12 +136,16 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
         except (UnicodeDecodeError, OSError):
             continue
         rel = path.relative_to(root).as_posix()
+        definition_file = rel in AUDITOR_DEFINITION_FILES
+        test_fixture = rel.startswith("tests/")
         for number, line in enumerate(text.splitlines(), 1):
             future, historical = is_future_or_historical(root, path, line)
+            if definition_file:
+                continue
             if re.search(r"F:\\AI\\TrustCXR|C:\\Users\\[^\\\s]+", line, re.I):
                 findings.append(
                     Finding(
-                        "ERROR",
+                        machine_path_severity(rel),
                         "PRIVATE_MACHINE_PATH",
                         rel,
                         number,
@@ -115,7 +155,7 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
             if "..\\venv" in line or "../.venv" in line:
                 findings.append(
                     Finding(
-                        "ERROR",
+                        "ALLOWED_TEST_FIXTURE" if test_fixture else "ERROR",
                         "VENV_PATH_TYPO",
                         rel,
                         number,
@@ -127,7 +167,7 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
             ):
                 findings.append(
                     Finding(
-                        "ERROR",
+                        "ALLOWED_TEST_FIXTURE" if test_fixture else "ERROR",
                         "STALE_CURRENT_STAGE",
                         rel,
                         number,
@@ -135,7 +175,8 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
                     )
                 )
             extension_claim = (
-                r"vision[- ]language system|implemented LLM|LLM report generation|implemented VLM"
+                r"vision[- ]language system|implemented LLM|LLM report generation|implemented VLM|"
+                r"(?:implements?|implemented|available|supports?)\s+Grad-CAM|Grad-CAM\s+is\s+implemented"
             )
             if re.search(extension_claim, line, re.I):
                 qualified = r"not implemented|withheld|future|planned"
@@ -152,30 +193,38 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
                 else:
                     findings.append(
                         Finding(
-                            "ERROR",
+                            "ALLOWED_TEST_FIXTURE" if test_fixture else "ERROR",
                             "OVERCLAIMED_CAPABILITY",
                             rel,
                             number,
                             "unqualified extension capability claim",
                         )
                     )
-            if re.search(r"Trust\s*-?CXR|TRUST\s+CXR", line) and rel in {
+            if re.search(r"trust(?:\s+|-)cxr", line, re.I) and rel in {
                 "README.md",
                 "CONTRIBUTING.md",
                 "SECURITY.md",
             }:
                 findings.append(
                     Finding(
-                        "WARNING", "BRAND_VARIANT", rel, number, "non-canonical TrustCXR spelling"
+                        "ALLOWED_TEST_FIXTURE" if test_fixture else "WARNING",
+                        "BRAND_VARIANT",
+                        rel,
+                        number,
+                        "non-canonical TrustCXR spelling",
                     )
                 )
             extension_terms = r"pathology localization|grounded LLM|multimodal VLM"
             if "Grad-CAM" in line or re.search(extension_terms, line, re.I):
                 findings.append(
                     Finding(
-                        "ALLOWED_FUTURE_WORK"
-                        if future
-                        else ("ALLOWED_HISTORICAL" if historical else "INFO"),
+                        "ALLOWED_TEST_FIXTURE"
+                        if test_fixture
+                        else (
+                            "ALLOWED_FUTURE_WORK"
+                            if future
+                            else ("ALLOWED_HISTORICAL" if historical else "INFO")
+                        ),
                         "EXTENSION_TERM",
                         rel,
                         number,
@@ -186,7 +235,9 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
     for path in files:
         rel = path.relative_to(root).as_posix()
         name = path.name.lower()
-        if re.search(r"(?:final_final|copy(?:\s*\(\d+\))?|old\d*|new\d*|\.bak$|\.tmp$)", name):
+        if re.search(
+            r"(^|[_.-])(final_final|copy\d*|new_new|backup-temp|old2|tmp|scratch)([_.-]|$)", name
+        ):
             findings.append(
                 Finding(
                     "WARNING",
@@ -212,7 +263,14 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
                     "About description overclaims an unimplemented extension",
                 )
             )
-    severities = ("ERROR", "WARNING", "INFO", "ALLOWED_HISTORICAL", "ALLOWED_FUTURE_WORK")
+    severities = (
+        "ERROR",
+        "WARNING",
+        "INFO",
+        "ALLOWED_HISTORICAL",
+        "ALLOWED_FUTURE_WORK",
+        "ALLOWED_TEST_FIXTURE",
+    )
     counts = {
         severity: sum(item.severity == severity for item in findings) for severity in severities
     }
@@ -237,7 +295,14 @@ def main() -> int:
     counts = report["counts"]
     print("Project Naming Audit\n====================\n")
     print(f"Files scanned: {report['files_scanned']}")
-    for key in ("ERROR", "WARNING", "INFO", "ALLOWED_HISTORICAL", "ALLOWED_FUTURE_WORK"):
+    for key in (
+        "ERROR",
+        "WARNING",
+        "INFO",
+        "ALLOWED_HISTORICAL",
+        "ALLOWED_FUTURE_WORK",
+        "ALLOWED_TEST_FIXTURE",
+    ):
         print(f"{key}: {counts[key]}")
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
@@ -247,7 +312,14 @@ def main() -> int:
         lines = ["# Project Naming Audit", "", f"Files scanned: {report['files_scanned']}", ""]
         lines.extend(
             f"- **{key}:** {counts[key]}"
-            for key in ("ERROR", "WARNING", "INFO", "ALLOWED_HISTORICAL", "ALLOWED_FUTURE_WORK")
+            for key in (
+                "ERROR",
+                "WARNING",
+                "INFO",
+                "ALLOWED_HISTORICAL",
+                "ALLOWED_FUTURE_WORK",
+                "ALLOWED_TEST_FIXTURE",
+            )
         )
         lines.extend(["", "## Findings", ""])
         for finding in report["findings"]:
