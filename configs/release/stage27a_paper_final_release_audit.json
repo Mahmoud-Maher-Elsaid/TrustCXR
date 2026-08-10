@@ -1,0 +1,20 @@
+{
+  "stage": "27A",
+  "status": "PREPARED_NOT_EXECUTED",
+  "expected_status": "PASSED_PAPER_FINAL_RELEASE_AUDIT",
+  "expected_gate": "GO_FOR_STAGE_27B_FINAL_RELEASE_CLOSURE",
+  "next_canonical_stage": "STAGE_27B_FINAL_RELEASE_CLOSURE",
+  "completed_major_canonical_stage_count": 23,
+  "accepted_checkpoint_count": 7,
+  "environment_lock": "requirements/lock-final-research-windows-cu130.txt",
+  "environment_lock_sha256": "cc63ac8bfb8dd6cc0f15469c4e7dfd6f620ec3747931ebd63c85fb11a8dc0786",
+  "claims_matrix": "docs/release/FINAL_CLAIMS_MATRIX.md",
+  "dataset_summary": "docs/release/FINAL_DATASET_USE_SUMMARY.md",
+  "metrics_table": "docs/release/FINAL_METRICS_TABLE.md",
+  "technical_report": "docs/release/TRUSTCXR_CORE_TECHNICAL_REPORT.md",
+  "release_manifest": "reports/stage27/final_release_manifest.json",
+  "ui_designation": "FROZEN_CORE_RESEARCH_REVIEW_UI",
+  "external_validation_status": "EXTERNAL_VALIDATION_NOT_PERFORMED",
+  "repository_visibility": "PRIVATE",
+  "mandatory_remaining_after_stage27a": ["STAGE_27B_FINAL_RELEASE_CLOSURE"]
+}

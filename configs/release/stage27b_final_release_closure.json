@@ -1,0 +1,14 @@
+{
+  "stage": "27B",
+  "status": "PREPARED_NOT_EXECUTED",
+  "expected_status": "TRUSTCXR_FROZEN_RESEARCH_RELEASE",
+  "closure": "CORE_PROJECT_COMPLETELY_CLOSED",
+  "required_stage27a_status": "PASSED_PAPER_FINAL_RELEASE_AUDIT",
+  "required_stage27a_gate": "GO_FOR_STAGE_27B_FINAL_RELEASE_CLOSURE",
+  "stage27a_report": "reports/stage27/stage27a_paper_final_release_audit.json",
+  "manifest": "reports/stage27/final_release_manifest.json",
+  "ui_designation": "FROZEN_CORE_RESEARCH_REVIEW_UI",
+  "mandatory_core_stages_remaining": 0,
+  "repository_visibility": "PRIVATE",
+  "recommended_tag": "v1.0.0-research"
+}

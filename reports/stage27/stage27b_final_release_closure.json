@@ -1,0 +1,16 @@
+{
+  "stage": "27B",
+  "status": "TRUSTCXR_FROZEN_RESEARCH_RELEASE",
+  "closure": "CORE_PROJECT_COMPLETELY_CLOSED",
+  "mandatory_core_stages_remaining": 0,
+  "ui_designation": "FROZEN_CORE_RESEARCH_REVIEW_UI",
+  "external_validation_performed": false,
+  "active_learning_activated": false,
+  "training_performed": false,
+  "locked_test_records_accessed": 0,
+  "grad_cam_implemented": false,
+  "true_localization_implemented": false,
+  "language_model_implemented": false,
+  "multimodal_vlm_implemented": false,
+  "recommended_post_release_branch": "research-extension/explainability-grounded-llm"
+}

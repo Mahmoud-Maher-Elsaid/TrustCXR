@@ -1,0 +1,16 @@
+{
+  "stage": "27A",
+  "status": "PASSED_PAPER_FINAL_RELEASE_AUDIT",
+  "gate": "GO_FOR_STAGE_27B_FINAL_RELEASE_CLOSURE",
+  "completed_canonical_stages_audited": 23,
+  "accepted_checkpoint_count": 7,
+  "all_checkpoint_and_config_hashes_valid": true,
+  "environment_lock_sha256": "cc63ac8bfb8dd6cc0f15469c4e7dfd6f620ec3747931ebd63c85fb11a8dc0786",
+  "blocking_final_release_issues": [],
+  "mandatory_remaining": [
+    "STAGE_27B_FINAL_RELEASE_CLOSURE"
+  ],
+  "scientific_execution_performed": false,
+  "locked_test_records_accessed": 0,
+  "language_model_used": false
+}

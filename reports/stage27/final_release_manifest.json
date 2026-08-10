@@ -1,0 +1,33 @@
+{
+  "release_identity": "TRUSTCXR_FROZEN_RESEARCH_RELEASE",
+  "source_core_commit": "dee31b392f3f259f68d68716aeeede9445bd1844",
+  "release_commit_resolution": "ANNOTATED_TAG_TARGET_v1.0.0-research",
+  "canonical_branch": "develop",
+  "canonical_tag": "v1.0.0-research",
+  "research_designation": "RESEARCH_USE_ONLY_NOT_A_MEDICAL_DIAGNOSIS_EXPERT_REVIEW_REQUIRED",
+  "repository_visibility_expectation": "PRIVATE",
+  "environment": {"lock_path": "requirements/lock-final-research-windows-cu130.txt", "lock_sha256": "cc63ac8bfb8dd6cc0f15469c4e7dfd6f620ec3747931ebd63c85fb11a8dc0786", "validated_scope": "WINDOWS_11_PYTHON_3_12_10_CUDA_13_0"},
+  "accepted_checkpoint_count": 7,
+  "checkpoint_inventory": "reports/stage25/stage25a_mlops_reproducibility_data_readiness.json",
+  "accepted_checkpoints": [
+    {"component": "stage5_quality_view", "sha256": "1ca66fcffe590dac5c4c56d9d1233c29bb51a21000db7da4483673c1f7182a74", "config_sha256": "de641a682362b5671c8d761d77c9d507ae907041bb7b3f057489f20581e1021c"},
+    {"component": "stage6_nih_classifier", "sha256": "3d94879aff1d7a88378ed049f9c375aa1390bd47d0bd2611064116282dc12a89", "config_sha256": "6351e285dea74fe4a78fea6289cab05cdf27e3665e2317c661061fb1a1ff7025"},
+    {"component": "stage7_rad_dino_probe", "sha256": "87f7781d6a1fc0afce1fb21d33c483275c13148eb8a47750dcfc1612b926bbb3", "config_sha256": "f0a987a44d72ff57dea39bfd3948eafb6f05408bcf62b25282b1fb0792c97c00"},
+    {"component": "stage8_anatomy_segmentation", "sha256": "f97e6f94ea0ad5f33c98bdeffe3bf19f3d168c0bd41317e083fa08361cba00ba", "config_sha256": "2b979ca22abf636a9f8aaa6018603b078412bc39d42979baf348cfa1ee34035a"},
+    {"component": "stage9_original_classifier", "sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de", "config_sha256": "d6c3a19658b8f98c328cbfc4f2693d872d5542bb710e1f5d7564a2b0377eedf5"},
+    {"component": "stage10_rsna_localizer", "sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429", "config_sha256": "a905044f6e601f0d0624cc2b215a93283e700e3443a6080733125fc0fc64d47b"},
+    {"component": "stage13_frontal_only", "sha256": "09a8db4e83861fcc41172d64f29215d6e9d24cd41a8d6b51f825ca6d00fb1c77", "config_sha256": "8ef34e9acff9611d9ae16b252417e57ff720479aec30c0499944053ff80ff8ff"}
+  ],
+  "contracts": {"stage21b": "6d92a8ddab32c2669d9e41b0b3f98bcac7485188f3b0ead628a7c2f87ae15c5f", "stage22b": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f", "stage23b": "4b57e03cc8e2372afdfcca74147635d24bca4f08f52b4ae09415008e8906b354"},
+  "completed_major_canonical_stages": ["4.4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26"],
+  "claims_matrix": "docs/release/FINAL_CLAIMS_MATRIX.md",
+  "metrics_evidence": "docs/release/FINAL_METRICS_TABLE.md",
+  "dataset_governance": "docs/release/FINAL_DATASET_USE_SUMMARY.md",
+  "technical_report": "docs/release/TRUSTCXR_CORE_TECHNICAL_REPORT.md",
+  "reproducibility_protocol": "docs/reproducibility/STAGE25_FINAL_REPRODUCIBILITY_INDEX.md",
+  "ui_designation": "FROZEN_CORE_RESEARCH_REVIEW_UI",
+  "external_validation_status": "EXTERNAL_VALIDATION_NOT_PERFORMED",
+  "human_feedback_status": "SCIENTIFICALLY_WITHHELD_NO_GOVERNED_EXPERT_FEEDBACK_DATA",
+  "post_release_extension": {"status": "OPTIONAL_POST_RELEASE_RESEARCH_EXTENSION_NOT_IMPLEMENTED", "roadmap": "docs/research_extensions/POST_RELEASE_RESEARCH_EXTENSION_ROADMAP.md", "grad_cam": false, "true_localization": false, "llm": false, "vlm": false},
+  "final_limitations_source": "docs/release/FINAL_CLAIMS_MATRIX.md"
+}
