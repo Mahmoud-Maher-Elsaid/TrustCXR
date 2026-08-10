@@ -243,6 +243,9 @@ function renderResult(data, localReview = false) {
   // Research technical-quality proxy warning; not a clinical image-quality assessment.
   byId("overview-uncertainty").textContent = presentation.uncertainty.label;
   byId("overview-review").textContent = presentation.reviewStatus;
+  byId("overview-review-caption").textContent = presentation.reviewStatus === "Expert Review Required"
+    ? "Analysis completed. Expert review required."
+    : "Analysis completed. Expert review remains required.";
   byId("analysis-error").classList.add("is-hidden");
   byId("results-column").classList.remove("results-cleared");
   if (!localReview) renderViewer(data.synthetic_images.PNG, "PNG");

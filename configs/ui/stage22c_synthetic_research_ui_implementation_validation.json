@@ -4,9 +4,9 @@
   "stage22b_summary_sha256": "b4a33ce2130d90c4d88d8c8bbcd4f85c438fc0157d2d5d614ff3f46bcb1cc5a7",
   "stage22b_contract_fingerprint": "f413fbb969261cf9b9b51eb0870aba4de9555483acff42212c04639f293b3a2f",
   "assets": {
-    "index.html": "5070a4ec85d14542c9c964793f8b5fa40b4f71668655e7e5464e4d507b410a60",
+    "index.html": "d5ba8ec2f496f0127c1af597389c9666357920ccb8ae0586465cbe2e7060d180",
     "app.css": "6a9fa2051465640973dd941cde05bf6226b90c4e4ee685000ec4d6dad4a2345e",
-    "app.js": "33c3ccdb3f8f9f187046d29b04a2b5d42dada1662319d3ac68445b4c595ee277",
+    "app.js": "329fb542aba7637aa6b129f0c5ab2b2fac783fb9ca5f8e17d702a25ee55d174b",
     "fixtures.json": "0a20f709d2d7f0b2bd22615dfdf1f53b2dba242b0b5cbbd45f921b1f4a0ff554"
   },
   "static_root": "src/trustcxr/serving/static",

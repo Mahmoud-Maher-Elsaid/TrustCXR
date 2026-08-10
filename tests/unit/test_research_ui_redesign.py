@@ -185,3 +185,43 @@ def test_failure_card_clears_current_results_without_fixture_fallback() -> None:
     assert 'byId("analysis-error").classList.remove("is-hidden")' in javascript
     assert "renderResult(result, true)" in javascript
     assert "renderResult(fixtureData" not in javascript
+
+
+def test_frozen_core_ui_final_polish_contract() -> None:
+    html = (STATIC_ROOT / "index.html").read_text(encoding="utf-8")
+    javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
+
+    assert 'content="FROZEN_CORE_RESEARCH_REVIEW_UI"' in html
+    assert "Analysis completed. Expert review required." in javascript
+    assert "Highest model response — not a diagnosis." in html
+    assert "Evidence verification is limited for this local image review." in javascript
+    assert (
+        "Reliable lesion localization and finding laterality are unavailable for this review."
+        in html
+    )
+    marker = '<details class="technical-details" id="technical-details">'
+    advanced = html.split(marker, maxsplit=1)[1].split("</details>", maxsplit=1)[0]
+    assert "Raw verifier evidence" in advanced
+    assert "WITHHELD_INSUFFICIENT_EVIDENCE" not in html.split(marker, maxsplit=1)[0]
+
+
+def test_post_release_extension_roadmap_is_design_only() -> None:
+    roadmap = (
+        ROOT / "docs/research_extensions/POST_RELEASE_RESEARCH_EXTENSION_ROADMAP.md"
+    ).read_text(encoding="utf-8")
+
+    for required in (
+        "OPTIONAL_POST_RELEASE_RESEARCH_EXTENSION",
+        "Implementation status:** `NOT STARTED`",
+        "Authorization:** `POST-CORE-RELEASE ONLY`",
+        "attention or attribution is not validated lesion localization",
+        "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",
+        "LOCALIZATION_ABSENCE_MUST_NOT_CONTRADICT_CLASSIFIER_EVIDENCE",
+        "DETERMINISTIC_REPORTER",
+        "GROUNDED_LLM_REPORTER",
+        "Frozen vision models",
+        "Deterministic verifier",
+    ):
+        assert required in roadmap
+
+    assert "research-extension/explainability-grounded-llm" in roadmap

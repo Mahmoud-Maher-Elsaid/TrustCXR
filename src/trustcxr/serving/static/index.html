@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="color-scheme" content="dark">
+  <meta name="trustcxr-ui-designation" content="FROZEN_CORE_RESEARCH_REVIEW_UI">
   <title>TrustCXR Research Review</title>
   <link rel="stylesheet" href="/ui/app.css">
 </head>
@@ -53,7 +54,7 @@
       <section class="panel interpretation-panel" data-region="VIEW_TECHNICAL_QUALITY_PANEL">
         <div class="section-heading"><span class="section-number">2</span><div><h2>Research Interpretation</h2><p>Deterministic overview of the current image</p></div></div>
         <div class="interpretation-grid">
-          <article class="primary-signal-card"><span>Primary model signal</span><strong id="interpretation-primary-label">—</strong><b id="interpretation-primary-score">—</b><small>Highest model response</small></article>
+          <article class="primary-signal-card"><span>Primary model signal</span><strong id="interpretation-primary-label">—</strong><b id="interpretation-primary-score">—</b><small>Highest model response — not a diagnosis.</small></article>
           <article class="secondary-signals-card"><span>Other notable signals</span><div id="interpretation-secondary"></div></article>
           <article class="interpretation-metric quality-metric"><span>Image quality</span><strong id="overview-quality">—</strong><small>Research technical-quality proxy</small></article>
           <article class="interpretation-metric uncertainty-metric"><span>Model uncertainty</span><strong id="overview-uncertainty">—</strong><small>Predictive uncertainty</small></article>
@@ -75,9 +76,9 @@
           <div id="summary-content"></div>
         </section>
         <section class="panel verification-panel" data-region="VERIFIER_PANEL">
-          <div class="section-heading compact"><div><h2>Evidence Verification</h2><p>Governed evidence availability</p></div></div>
+          <div class="section-heading compact"><div><h2>Evidence Verification</h2></div></div>
           <div id="verification-summary"></div>
-          <div class="evidence-note"><strong>Evidence limitation</strong><span>Reliable lesion localization and finding laterality are not available for this review.</span></div>
+          <div class="evidence-note"><strong>Evidence limitation</strong><span>Reliable lesion localization and finding laterality are unavailable for this review.</span></div>
         </section>
       </div>
 
