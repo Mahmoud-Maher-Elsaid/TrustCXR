@@ -16,7 +16,8 @@
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{url}
-\usepackage{natbib}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{multicol}
 \special{pdf:docinfo << /Title (TrustCXR: An Evidence-Governed and Uncertainty-Aware Chest X-ray Research System) /Subject (Frozen Core Research Release) /Keywords (Chest X-ray, Medical Imaging, Deep Learning, Computer Vision, Multi-Label Classification, Predictive Uncertainty, Evidence Verification, Reproducible AI) >>}
 
 \definecolor{ink}{HTML}{172033}
@@ -185,10 +186,11 @@ For release traceability, the frozen evidence disposition is recorded as \texttt
 Privacy requires that patient identifiers, PHI, raw private DICOM metadata, credentials, and raw datasets remain outside the repository. The project is a reproducible research pipeline, not production clinical MLOps.
 
 \begin{table}[t]
-\centering\scriptsize
+\centering\footnotesize
+\renewcommand{\arraystretch}{1.12}
 \caption{Capability and limitation matrix for the frozen core.}
 \label{tab:scope}
-\begin{tabularx}{\columnwidth}{@{}l l Y@{}}
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}p{0.28\columnwidth} >{\raggedright\arraybackslash}p{0.18\columnwidth} Y@{}}
 \toprule
 \textbf{Capability} & \textbf{Status} & \textbf{Interpretation}\\
 \midrule
@@ -209,18 +211,19 @@ Post-release work is documented separately and is not implemented in this core p
 \section{Conclusion}
 TrustCXR demonstrates a conservative way to package chest X-ray research models for expert-oriented review. Its contribution is the combination of frozen perception and classification, predictive-uncertainty evidence, provenance-aware evidence handling, deterministic reporting and verification, and a defer-first decision policy within a reproducible local application. The evidence supports a research system with explicit boundaries, not a clinical diagnostic product. External validation, reliable positive localization, active learning, language-model reporting, and other extensions remain future work and are not required for the validity of the frozen core release.
 
+\clearpage
+\onecolumn
+\begin{multicols}{2}
 \begingroup\small
 \bibliographystyle{unsrtnat}
 \bibliography{references}
 \endgroup
 
-\section*{Project artifacts}
+\section*{Appendix A. Reproducibility Artifacts}
 \small
-The frozen manuscript is accompanied by an evidence trail rather than a claim that the paper replaces the underlying records. The final claims matrix, metrics table, dataset-use summary, technical report, reproducibility lock and post-release roadmap remain the authoritative project artifacts. They preserve exact hashes, cohort qualifications, withheld dispositions, and reconstruction instructions without redistributing raw data or patient identifiers.
+The frozen manuscript is accompanied by an evidence trail rather than a claim that the paper replaces the underlying records. The final claims matrix, metrics table, dataset-use summary, technical report, reproducibility lock, and post-release roadmap remain the authoritative project artifacts. They preserve exact hashes, cohort qualifications, withheld dispositions, and reconstruction instructions without redistributing raw data or patient identifiers.
 
-\begin{table}[b]
-\centering\scriptsize
-\caption{Selected release artifacts and their role in reproducibility.}
+\begin{center}\scriptsize
 \begin{tabularx}{\columnwidth}{@{}l Y@{}}
 \toprule
 Artifact & Role\\
@@ -233,6 +236,11 @@ Architecture asset & Compact vector description of the frozen core\\
 Extension roadmap & Optional, post-release research only; not implemented\\
 \bottomrule
 \end{tabularx}
-\end{table}
+\end{center}
+\vspace{3pt}
+Reconstruction is anchored by the final Windows/CUDA environment lock and its installation protocol. The local service accepts bounded raster input, validates decoding, runs the view/quality and classifier models sequentially on the governed GPU, and releases model residency before deterministic downstream processing. This ordering is an operational reproducibility constraint, not a claim of production deployment.
+
+The evidence boundary is equally important: raw datasets remain outside Git, patient-safe split records and locked-test protections are preserved, and the release does not include external validation, human-feedback acquisition, attribution maps, pathology localization, or language-model reporting. These boundaries are part of the reproducibility result because they define what another authorized researcher is, and is not, being asked to reconstruct.
+\end{multicols}
 
 \end{document}
