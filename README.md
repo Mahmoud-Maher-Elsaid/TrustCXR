@@ -120,6 +120,8 @@ Raw datasets, patient-level records, DICOM files, checkpoints, logs, and local i
 
 ## Release documentation
 
+- [Professional Core Research Paper (PDF)](docs/paper/TRUSTCXR_CORE_RESEARCH_PAPER.pdf)
+- [Core Research Paper Source](docs/paper/TRUSTCXR_CORE_RESEARCH_PAPER.md)
 - [Core Technical Report](docs/release/TRUSTCXR_CORE_TECHNICAL_REPORT.md)
 - [Final Claims Matrix](docs/release/FINAL_CLAIMS_MATRIX.md)
 - [Final Dataset Use Summary](docs/release/FINAL_DATASET_USE_SUMMARY.md)
