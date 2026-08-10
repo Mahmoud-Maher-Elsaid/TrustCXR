@@ -76,4 +76,47 @@ def test_local_review_mode_clears_fixture_results_on_ready_analyzing_and_failure
     assert javascript.count("clearAnalysisForLocalReview(") >= 4
     assert "No current-image result is available because the review failed." in javascript
     assert "LOCAL_REVIEW_ENDPOINT_UNAVAILABLE_RESTART_SERVER" in javascript
-    assert 'preservePreview ? "Local frozen-model research inference"' in javascript
+    assert 'localReview ? "LOCAL_IMAGE_REVIEW" : "SYNTHETIC_DEMO"' in javascript
+
+
+def test_presentation_layer_keeps_raw_governance_and_human_readable_mapping() -> None:
+    html = (STATIC_ROOT / "index.html").read_text(encoding="utf-8")
+    javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
+
+    assert 'DEFER: "Expert Review Required"' in javascript
+    assert 'REVISE_DETERMINISTICALLY: "Draft Requires Revision"' in javascript
+    assert 'ACCEPT_RESEARCH_DRAFT_FOR_EXPERT_REVIEW: "Ready for Expert Review"' in javascript
+    assert 'addDataRow(decision, "Raw Stage 20 decision"' in javascript
+    assert '<details class="technical-details" id="technical-details">' in html
+    assert '<details class="technical-details" id="technical-details" open' not in html
+
+
+def test_findings_are_sorted_without_mutating_values_and_top_three_are_derived() -> None:
+    javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
+
+    assert ".toSorted(" in javascript
+    assert "right.score - left.score" in javascript
+    assert "topSignals: sortedScores.slice(0, 3)" in javascript
+    assert "item.score.toFixed(4)" in javascript
+    assert "Pleural Thickening" not in javascript  # Display text is derived from the frozen key.
+
+
+def test_main_presentation_is_concise_and_verifier_is_aggregated() -> None:
+    html = (STATIC_ROOT / "index.html").read_text(encoding="utf-8")
+    javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
+
+    assert "Highest model signals" in javascript
+    assert "Lesion localization is not available for this review." in javascript
+    assert "verificationCounts" in javascript
+    assert "Evidence verification is limited for this local image review." in javascript
+    assert "verifier-card" not in html
+    assert "data.report.statements.forEach" not in javascript
+
+
+def test_failure_card_clears_current_results_without_fixture_fallback() -> None:
+    javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
+
+    assert "showAnalysisFailure(error.message)" in javascript
+    assert 'byId("analysis-error").classList.remove("is-hidden")' in javascript
+    assert "renderResult(result, true)" in javascript
+    assert "renderResult(fixtureData" not in javascript
