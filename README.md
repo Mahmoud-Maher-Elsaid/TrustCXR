@@ -1,5 +1,9 @@
 # TrustCXR
 
+**Evidence-Governed Chest X-ray Research System**
+
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](requirements/lock-final-research-windows-cu130.txt) [![PyTorch](https://img.shields.io/badge/PyTorch-2.12.1%2Bcu130-ee4c2c.svg)](requirements/lock-final-research-windows-cu130.txt) [![FastAPI](https://img.shields.io/badge/FastAPI-0.116.1-009688.svg)](requirements/lock-serving-stage21.txt) [![Release](https://img.shields.io/badge/release-v1.0.0--research-6f42c1.svg)](docs/release/RELEASE_NOTES_v1.0.0-research.md)
+
 TrustCXR is a local, deterministic chest X-ray research pipeline with frozen vision models, predictive-uncertainty evidence, conservative downstream safety logic, and an expert-review interface.
 
 > **RESEARCH USE ONLY · NOT A MEDICAL DIAGNOSIS · EXPERT REVIEW REQUIRED**
@@ -26,9 +30,19 @@ The real local-image workflow uses frozen Stage 5 and Stage 9 checkpoints. Model
 
 ## Accepted research scope
 
+### Image quality and view assessment
+
 - AP, PA, and LATERAL model-identified view output.
-- A non-clinical technical-quality proxy.
+- A research technical-quality proxy.
+
+### Chest X-ray classification
 - Frozen 14-label Stage 9 research model scores.
+
+Classifier values are model signals only. They are not calibrated clinical probabilities and are not diagnoses.
+
+Frozen labels: Atelectasis, Cardiomegaly, Effusion, Infiltration, Mass, Nodule, Pneumonia, Pneumothorax, Consolidation, Edema, Emphysema, Fibrosis, Pleural Thickening, and Hernia.
+
+### Predictive reliability and evidence-grounded review
 - Quality-filtered pseudo lung/heart anatomy research evidence.
 - A localization research baseline with no accepted operating threshold or reliable positive-localization claim.
 - Limited fusion with maximum status `PARTIALLY_SUPPORTED`.
@@ -50,6 +64,25 @@ See [Final Claims Matrix](docs/release/FINAL_CLAIMS_MATRIX.md) for the authorita
 | Stage 13 frontal-only model | locked-test macro AUROC 0.846686; macro AUPRC 0.859265 | different cohort/label contract; not a superiority comparison |
 
 These values are copied from frozen reports; they are not recomputed here. Full traceability and qualifications are in [Final Metrics Table](docs/release/FINAL_METRICS_TABLE.md).
+
+The frozen Stage 9 evidence is macro AUROC `0.7287231943`, macro AUPRC `0.1540464037`, F1 at 0.5 `0.2072496443`, across 17,061 test records and 4,715 patients. This is an internal frozen evaluation, not external validation.
+
+## Architecture
+
+```mermaid
+flowchart TD
+  A[Local PNG/JPG/JPEG] --> B[Stage 5<br/>View + technical quality]
+  B --> C[Stage 9<br/>Frozen 14-label classifier]
+  C --> D[Stage 16<br/>Predictive uncertainty]
+  D --> E[Governed evidence layer]
+  E --> F[Stage 17<br/>Deterministic DEFER logic]
+  F --> G[Stage 18<br/>Deterministic research report]
+  G --> H[Stage 19<br/>Evidence verifier]
+  H --> I[Stage 20<br/>ACCEPT / REVISE / DEFER]
+  I --> J[Local FastAPI]
+  J --> K[Frozen research UI]
+  K --> L[Expert review]
+```
 
 ## Installation and reproducibility
 
@@ -105,5 +138,13 @@ Raw datasets, patient-level records, DICOM files, checkpoints, logs, and local i
 - [Final Dataset Use Summary](docs/release/FINAL_DATASET_USE_SUMMARY.md)
 - [Final Metrics Table](docs/release/FINAL_METRICS_TABLE.md)
 - `reports/stage27/final_release_manifest.json`
+- [Final closure audit](docs/release/FINAL_CLOSURE_AUDIT.md)
+
+## Project status
+
+- Core release: `TRUSTCXR_FROZEN_RESEARCH_RELEASE`
+- Version: `v1.0.0-research`
+- Mandatory core stages remaining: `0`
+- Post-release research extensions: **Not started**
 
 Optional visual-explainability, true-localization, grounded-LLM, and multimodal studies are **not implemented** and are not part of the core release. They are design-only future work in [Post-Release Research Extension Roadmap](docs/research_extensions/POST_RELEASE_RESEARCH_EXTENSION_ROADMAP.md).
