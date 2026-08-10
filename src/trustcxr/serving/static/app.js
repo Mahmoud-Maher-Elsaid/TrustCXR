@@ -43,6 +43,16 @@ function uncertaintyPresentation(value) {
   return { label: "High", value };
 }
 
+function uncertaintyExplanation(category) {
+  const explanations = {
+    High: "Predictive uncertainty is high. Model outputs should be interpreted cautiously and require expert review.",
+    Moderate: "Predictive uncertainty is moderate. Model outputs contain meaningful uncertainty and require expert interpretation.",
+    Low: "Predictive uncertainty is relatively low for this model, but expert review is still required.",
+    Unavailable: "Predictive uncertainty is unavailable for this review. Expert review is required.",
+  };
+  return explanations[category];
+}
+
 function qualityPresentation(quality) {
   if (!quality) return "Quality warning";
   return quality.status === "PASS" ? "Acceptable" : "Quality warning";
@@ -111,33 +121,38 @@ function renderScores(presentation) {
   });
 }
 
+function renderInterpretation(presentation) {
+  const primary = presentation.topSignals[0];
+  byId("interpretation-primary-label").textContent = displayLabel(primary.label);
+  byId("interpretation-primary-score").textContent = primary.score.toFixed(3);
+  const secondary = byId("interpretation-secondary");
+  secondary.replaceChildren();
+  presentation.topSignals.slice(1).forEach((item) => {
+    const row = element("div", "secondary-signal");
+    row.append(element("strong", "", displayLabel(item.label)), element("span", "", item.score.toFixed(3)));
+    secondary.append(row);
+  });
+}
+
 function renderSummary(presentation) {
   const summary = byId("summary-content");
   summary.replaceChildren();
-  const facts = element("dl", "summary-facts");
-  [["View", presentation.view], ["Technical quality", `${presentation.quality} for research analysis.`]].forEach(([label, value]) => {
-    const row = element("div", "summary-row");
-    row.append(element("dt", "", label), element("dd", "", value));
-    facts.append(row);
-  });
-  const signals = element("div", "summary-signals");
-  signals.append(element("strong", "", "Highest model signals"));
-  const list = element("ul");
-  presentation.topSignals.forEach((item) => {
-    list.append(element("li", "", `${displayLabel(item.label)}: ${item.score.toFixed(3)}`));
-  });
-  signals.append(list);
-  const remainder = element("dl", "summary-facts");
+  const primary = presentation.topSignals[0];
+  const second = presentation.topSignals[1];
+  const third = presentation.topSignals[2];
+  const qualitySentence = presentation.quality === "Acceptable"
+    ? `The uploaded chest X-ray was identified as a ${presentation.view} view and passed the technical-quality check for research analysis.`
+    : `The uploaded chest X-ray was identified as a ${presentation.view} view and received a technical-quality warning for research analysis.`;
+  const signalSentence = `Among the model outputs, ${displayLabel(primary.label)} produced the highest signal (${primary.score.toFixed(3)}). ${displayLabel(second.label)} (${second.score.toFixed(3)}) and ${displayLabel(third.label)} (${third.score.toFixed(3)}) were the next highest model signals.`;
   [
-    ["Predictive uncertainty", `${presentation.uncertainty.label}.`],
-    ["Evidence limitation", "Lesion localization is not available for this review."],
-    ["Review", `${presentation.reviewStatus}.`],
-  ].forEach(([label, value]) => {
-    const row = element("div", "summary-row");
-    row.append(element("dt", "", label), element("dd", "", value));
-    remainder.append(row);
-  });
-  summary.append(facts, signals, remainder, element("p", "summary-disclaimer", "This is a research-only model summary and is not a medical diagnosis."));
+    qualitySentence,
+    signalSentence,
+    uncertaintyExplanation(presentation.uncertainty.label),
+    "Reliable lesion-localization evidence is not available for this image, so the system cannot identify where a suspected finding is located.",
+  ].forEach((text) => summary.append(element("p", "explanation-paragraph", text)));
+  const disposition = element("p", "explanation-disposition");
+  disposition.append(element("strong", "", "Overall disposition: "), document.createTextNode(`${presentation.reviewStatus}.`));
+  summary.append(disposition, element("p", "summary-disclaimer", "These outputs are research model signals and do not constitute a medical diagnosis."));
 }
 
 function renderVerification(data, presentation) {
@@ -231,6 +246,7 @@ function renderResult(data, localReview = false) {
   byId("analysis-error").classList.add("is-hidden");
   byId("results-column").classList.remove("results-cleared");
   if (!localReview) renderViewer(data.synthetic_images.PNG, "PNG");
+  renderInterpretation(presentation);
   renderScores(presentation);
   // Research model signal only; not diagnoses, thresholds, severity, temporal change, or clinical certainty.
   renderSummary(presentation);
@@ -255,7 +271,9 @@ function releaseLocalPreview() {
 
 function clearAnalysisForLocalReview(message) {
   ["overview-view", "overview-quality", "overview-uncertainty", "overview-review"].forEach((id) => { byId(id).textContent = "—"; });
-  ["top-signals-content", "classifier-content", "summary-content", "verification-summary", "reliability-content", "fusion-content", "decision-content", "verifier-content", "report-content", "provenance-content", "job-status-content", "failure-content"].forEach((id) => byId(id).replaceChildren());
+  ["interpretation-secondary", "top-signals-content", "classifier-content", "summary-content", "verification-summary", "reliability-content", "fusion-content", "decision-content", "verifier-content", "report-content", "provenance-content", "job-status-content", "failure-content"].forEach((id) => byId(id).replaceChildren());
+  byId("interpretation-primary-label").textContent = "—";
+  byId("interpretation-primary-score").textContent = "—";
   byId("results-column").classList.add("results-cleared");
   byId("analysis-error").classList.add("is-hidden");
   byId("overview-review-caption").textContent = message;

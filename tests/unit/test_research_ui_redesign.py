@@ -105,12 +105,77 @@ def test_main_presentation_is_concise_and_verifier_is_aggregated() -> None:
     html = (STATIC_ROOT / "index.html").read_text(encoding="utf-8")
     javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
 
-    assert "Highest model signals" in javascript
-    assert "Lesion localization is not available for this review." in javascript
+    assert "Top model signals" in html
+    assert "produced the highest signal" in javascript
+    assert "Reliable lesion-localization evidence is not available for this image" in javascript
     assert "verificationCounts" in javascript
     assert "Evidence verification is limited for this local image review." in javascript
     assert "verifier-card" not in html
     assert "data.report.statements.forEach" not in javascript
+
+
+def test_case_interpretation_derives_primary_and_secondary_signals() -> None:
+    html = (STATIC_ROOT / "index.html").read_text(encoding="utf-8")
+    javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
+
+    assert "Research Interpretation" in html
+    assert "const primary = presentation.topSignals[0]" in javascript
+    assert "presentation.topSignals.slice(1)" in javascript
+    assert "presentation.topSignals[1]" in javascript
+    assert "presentation.topSignals[2]" in javascript
+    assert (
+        'byId("interpretation-primary-score").textContent = primary.score.toFixed(3)' in javascript
+    )
+
+
+def test_case_explanation_is_deterministic_and_uses_current_values() -> None:
+    javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
+
+    assert "The uploaded chest X-ray was identified as a ${presentation.view} view" in javascript
+    assert "${primary.score.toFixed(3)}" in javascript
+    assert "${second.score.toFixed(3)}" in javascript
+    assert "${third.score.toFixed(3)}" in javascript
+    assert "uncertaintyExplanation(presentation.uncertainty.label)" in javascript
+    assert (
+        "These outputs are research model signals and do not constitute a medical diagnosis."
+        in javascript
+    )
+    for prohibited in (
+        "probability of disease",
+        "diagnosis confidence",
+        "confirmed finding",
+        "positive disease",
+    ):
+        assert prohibited not in javascript.lower()
+
+
+def test_uncertainty_explanations_follow_the_presentation_category() -> None:
+    javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
+
+    assert (
+        "Predictive uncertainty is high. Model outputs should be interpreted cautiously"
+        in javascript
+    )
+    assert (
+        "Predictive uncertainty is moderate. Model outputs contain meaningful uncertainty"
+        in javascript
+    )
+    assert "Predictive uncertainty is relatively low for this model" in javascript
+    assert 'if (fraction < 1 / 3) return { label: "Low", value }' in javascript
+    assert 'if (fraction < 2 / 3) return { label: "Moderate", value }' in javascript
+
+
+def test_advanced_research_details_are_collapsed_and_contain_raw_governance() -> None:
+    html = (STATIC_ROOT / "index.html").read_text(encoding="utf-8")
+
+    marker = '<details class="technical-details" id="technical-details">'
+    assert marker in html
+    advanced = html.split(marker, maxsplit=1)[1].split("</details>", maxsplit=1)[0]
+    assert "Advanced Research Details" in advanced
+    assert "Raw decision state" in advanced
+    assert "Raw verifier evidence" in advanced
+    assert "Safe provenance" in advanced
+    assert "Stage 11" in advanced
 
 
 def test_failure_card_clears_current_results_without_fixture_fallback() -> None:

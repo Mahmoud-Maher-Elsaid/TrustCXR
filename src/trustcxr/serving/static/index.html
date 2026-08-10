@@ -50,26 +50,28 @@
     <div class="results-column" id="results-column">
       <section class="analysis-hero"><div><p id="analysis-mode-label">SYNTHETIC DEMO OUTPUT</p><h2 id="analysis-title">Analysis overview</h2></div><span class="completed-badge"><i aria-hidden="true"></i><b id="analysis-state">Demo ready</b></span></section>
 
-      <section class="panel overview-panel" data-region="VIEW_TECHNICAL_QUALITY_PANEL">
-        <div class="section-heading"><span class="section-number">2</span><div><h2>Analysis Overview</h2><p>Current-image research result</p></div></div>
-        <div class="overview-grid">
-          <article><span>View</span><strong id="overview-view">—</strong><small>Model-identified view</small></article>
-          <article><span>Technical quality</span><strong id="overview-quality">—</strong><small>Research technical-quality proxy</small></article>
-          <article><span>Model uncertainty</span><strong id="overview-uncertainty">—</strong><small>Predictive uncertainty</small></article>
-          <article><span>Review status</span><strong id="overview-review">—</strong><small id="overview-review-caption">Expert review is required</small></article>
+      <section class="panel interpretation-panel" data-region="VIEW_TECHNICAL_QUALITY_PANEL">
+        <div class="section-heading"><span class="section-number">2</span><div><h2>Research Interpretation</h2><p>Deterministic overview of the current image</p></div></div>
+        <div class="interpretation-grid">
+          <article class="primary-signal-card"><span>Primary model signal</span><strong id="interpretation-primary-label">—</strong><b id="interpretation-primary-score">—</b><small>Highest model response</small></article>
+          <article class="secondary-signals-card"><span>Other notable signals</span><div id="interpretation-secondary"></div></article>
+          <article class="interpretation-metric quality-metric"><span>Image quality</span><strong id="overview-quality">—</strong><small>Research technical-quality proxy</small></article>
+          <article class="interpretation-metric uncertainty-metric"><span>Model uncertainty</span><strong id="overview-uncertainty">—</strong><small>Predictive uncertainty</small></article>
+          <article class="interpretation-metric review-metric"><span>Review status</span><strong id="overview-review">—</strong><small id="overview-review-caption">Expert review is required</small></article>
         </div>
+        <span id="overview-view" class="visually-hidden">—</span>
       </section>
 
       <section class="panel findings-panel" data-region="CLASSIFIER_SCORE_PANEL">
         <div class="section-heading"><span class="section-number">3</span><div><h2>Model Findings</h2><p>Chest X-ray research model signals</p></div></div>
         <div class="top-signals"><span>Top model signals</span><div id="top-signals-content"></div></div>
         <div class="score-list" id="classifier-content"></div>
-        <p class="panel-note">Model scores are research outputs and are not clinical diagnoses.</p>
+        <p class="panel-note">Scores indicate model response strength only. They are not calibrated clinical probabilities or diagnoses.</p>
       </section>
 
       <div class="summary-grid">
         <section class="panel summary-panel" data-region="RESEARCH_REPORT_DRAFT_PANEL">
-          <div class="section-heading"><span class="section-number">4</span><div><h2>Research Summary</h2><p>Concise deterministic presentation</p></div></div>
+          <div class="section-heading"><span class="section-number">4</span><div><h2>Case Explanation</h2><p>Deterministic explanation from structured results</p></div></div>
           <div id="summary-content"></div>
         </section>
         <section class="panel verification-panel" data-region="VERIFIER_PANEL">
@@ -86,7 +88,7 @@
       </section>
 
       <details class="technical-details" id="technical-details">
-        <summary>Technical details <span>Governance, provenance, and raw evidence</span></summary>
+        <summary>Advanced Research Details <span>Governance, provenance, and raw evidence</span></summary>
         <div class="technical-content">
           <section data-region="RELIABILITY_UNCERTAINTY_PANEL"><h2>Reliability evidence</h2><div id="reliability-content"></div></section>
           <section data-region="LIMITED_FUSION_EVIDENCE_PANEL"><h2>Governed evidence boundary</h2><div id="fusion-content"></div></section>
