@@ -112,3 +112,12 @@ def test_future_and_current_capability_claims_are_distinguished(tmp_path: Path) 
     assert future["errors"] == 0
     assert future["counts"]["ALLOWED_FUTURE_WORK"] >= 1
     assert current["errors"] == 1
+
+
+def test_prohibited_claims_list_does_not_trigger_overclaim(tmp_path: Path) -> None:
+    content = """The release must never be described as:
+- using an LLM, VLM, or implemented Grad-CAM extension;
+"""
+    report = run_audit(tmp_path, "docs/release/FINAL_CLAIMS_MATRIX.md", content)
+    assert report["errors"] == 0
+    assert not any(finding["rule"] == "OVERCLAIMED_CAPABILITY" for finding in report["findings"])

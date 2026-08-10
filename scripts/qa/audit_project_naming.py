@@ -125,6 +125,20 @@ def machine_path_severity(rel: str) -> str:
     return "WARNING"
 
 
+def is_prohibited_context(lines: list[str], line_number: int) -> bool:
+    """Recognize nearby prose that explicitly negates or prohibits a claim."""
+    start = max(0, line_number - 12)
+    context = " ".join(lines[start:line_number])
+    return bool(
+        re.search(
+            r"must\s+never\s+be\s+described|prohibited\s+claims?|must\s+not|do\s+not|"
+            r"does\s+not|not\s+(?:implemented|supported|available)|without\s+",
+            context,
+            re.I,
+        )
+    )
+
+
 def audit(root: Path = ROOT) -> dict[str, Any]:
     findings: list[Finding] = []
     files = tracked_files(root)
@@ -138,8 +152,10 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
         rel = path.relative_to(root).as_posix()
         definition_file = rel in AUDITOR_DEFINITION_FILES
         test_fixture = rel.startswith("tests/")
-        for number, line in enumerate(text.splitlines(), 1):
+        lines = text.splitlines()
+        for number, line in enumerate(lines, 1):
             future, historical = is_future_or_historical(root, path, line)
+            prohibited = is_prohibited_context(lines, number)
             if definition_file:
                 continue
             if re.search(r"F:\\AI\\TrustCXR|C:\\Users\\[^\\\s]+", line, re.I):
@@ -180,10 +196,12 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
             )
             if re.search(extension_claim, line, re.I):
                 qualified = r"not implemented|withheld|future|planned"
-                if future or historical or re.search(qualified, line, re.I):
+                if future or historical or prohibited or re.search(qualified, line, re.I):
                     findings.append(
                         Finding(
-                            "ALLOWED_FUTURE_WORK" if future else "ALLOWED_HISTORICAL",
+                            "ALLOWED_FUTURE_WORK"
+                            if future
+                            else ("ALLOWED_HISTORICAL" if historical else "INFO"),
                             "CAPABILITY_CONTEXT",
                             rel,
                             number,
