@@ -63,3 +63,17 @@ def test_redesign_does_not_use_browser_persistence_or_unsafe_fixture_html() -> N
         "insertAdjacentHTML",
     ):
         assert prohibited not in javascript
+
+
+def test_local_review_mode_clears_fixture_results_on_ready_analyzing_and_failure() -> None:
+    html = (STATIC_ROOT / "index.html").read_text(encoding="utf-8")
+    javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
+
+    assert 'id="analysis-mode-label">SYNTHETIC DEMO OUTPUT' in html
+    assert '"LOCAL IMAGE REVIEW · READY"' in javascript
+    assert '"LOCAL IMAGE REVIEW · ANALYZING"' in javascript
+    assert '"LOCAL IMAGE REVIEW · FAILED_SANITIZED"' in javascript
+    assert javascript.count("clearAnalysisForLocalReview(") >= 4
+    assert "No current-image result is available because the review failed." in javascript
+    assert "LOCAL_REVIEW_ENDPOINT_UNAVAILABLE_RESTART_SERVER" in javascript
+    assert 'preservePreview ? "Local frozen-model research inference"' in javascript

@@ -44,10 +44,30 @@ OMITTED_CAPABILITIES = (
 
 
 class LocalReviewError(RuntimeError):
-    def __init__(self, reason_code: str, status_code: int) -> None:
+    def __init__(
+        self, reason_code: str, status_code: int, stage: str = "REQUEST_VALIDATION"
+    ) -> None:
         super().__init__(reason_code)
         self.reason_code = reason_code
         self.status_code = status_code
+        self.stage = stage
+
+
+class PipelineExecutionError(RuntimeError):
+    def __init__(self, stage: str, cause: Exception) -> None:
+        super().__init__("LOCAL_RESEARCH_PIPELINE_STAGE_FAILED")
+        self.stage = stage
+        self.cause_type = type(cause).__name__
+
+
+def execute_stage(stage: str, function: Any, *args: Any) -> Any:
+    try:
+        return function(*args)
+    except LocalReviewError as error:
+        error.stage = stage
+        raise
+    except Exception as error:
+        raise PipelineExecutionError(stage, error) from error
 
 
 def sha256(path: Path) -> str:
@@ -211,14 +231,14 @@ class LocalResearchPipeline:
             return self._review_locked(payload, media_type)
 
     def _review_locked(self, payload: bytes, media_type: str) -> dict[str, Any]:
-        image, image_format = decode_image(payload, media_type)
+        image, image_format = execute_stage("IMAGE_DECODE", decode_image, payload, media_type)
         content_fingerprint = hashlib.sha256(payload).hexdigest()
         job_id = (
             "job_"
             + hashlib.sha256(("local-review:" + content_fingerprint).encode()).hexdigest()[:24]
         )
-        stage5 = self.runner.stage5(image)
-        stage9 = self.runner.stage9(image)
+        stage5 = execute_stage("STAGE5_INFERENCE", self.runner.stage5, image)
+        stage9 = execute_stage("STAGE9_INFERENCE", self.runner.stage9, image)
         uncertainty = float(stage9["predictive_uncertainty"])
         defer_reasons = ["FUSION_EVIDENCE_NOT_RELIABLY_SUPPORTIVE"]
         if uncertainty > STAGE9_ABSTENTION_THRESHOLD:

@@ -3,11 +3,16 @@ from __future__ import annotations
 import asyncio
 import io
 import json
+import logging
 from pathlib import Path
 from typing import Any
 
+import torch
 from PIL import Image
 
+from trustcxr.integration.stage9b_ablation import build_model
+from trustcxr.quality.dataset import VIEW_LABELS, build_transforms
+from trustcxr.quality.model import EfficientNetQualityView
 from trustcxr.serving.api import create_app
 from trustcxr.serving.local_inference import (
     LABELS,
@@ -42,6 +47,14 @@ class DeterministicImageRunner:
         }
 
 
+class FailingStage5Runner:
+    def stage5(self, image: Image.Image) -> dict[str, Any]:
+        raise RuntimeError("bounded synthetic stage5 failure")
+
+    def stage9(self, image: Image.Image) -> dict[str, Any]:
+        raise AssertionError("Stage 9 must not be reached after Stage 5 fails")
+
+
 def pipeline() -> LocalResearchPipeline:
     return LocalResearchPipeline(ROOT, runner=DeterministicImageRunner())
 
@@ -51,8 +64,9 @@ async def asgi_post(
     content_type: str,
     *,
     content_length: int | None = None,
+    review_pipeline: LocalResearchPipeline | None = None,
 ) -> tuple[int, dict[str, Any]]:
-    app = create_app(local_pipeline=pipeline())
+    app = create_app(local_pipeline=review_pipeline or pipeline())
     messages: list[dict[str, Any]] = []
     sent = False
 
@@ -139,6 +153,58 @@ def test_real_checkpoint_integrity_evidence_is_current() -> None:
     stage9 = ROOT / "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt"
     assert sha256(stage5) == STAGE5_CHECKPOINT_SHA256
     assert sha256(stage9) == STAGE9_CHECKPOINT_SHA256
+
+
+def test_stage5_and_stage9_real_loaders_and_forward_boundaries() -> None:
+    image = Image.new("RGB", (96, 80), (48, 96, 144))
+    stage5_checkpoint = torch.load(
+        ROOT / "artifacts/stage5/best_quality_view.pt",
+        map_location="cpu",
+        weights_only=False,
+    )
+    assert tuple(stage5_checkpoint["labels"]) == VIEW_LABELS
+    stage5_model = EfficientNetQualityView(pretrained=False).eval()
+    stage5_model.load_state_dict(stage5_checkpoint["model"], strict=True)
+    stage5_tensor = build_transforms(224, training=False)(image).unsqueeze(0)
+    with torch.inference_mode():
+        stage5_output = stage5_model(stage5_tensor)
+    assert stage5_tensor.shape == (1, 3, 224, 224)
+    assert stage5_tensor.dtype == torch.float32
+    assert stage5_output["view_logits"].shape == (1, 3)
+    assert stage5_output["quality_logit"].shape == (1,)
+
+    stage9_checkpoint = torch.load(
+        ROOT / "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt",
+        map_location="cpu",
+        weights_only=False,
+    )
+    stage9_model = build_model(14, input_channels=3, pretrained=False).eval()
+    stage9_model.load_state_dict(stage9_checkpoint["model"], strict=True)
+    stage9_tensor = torch.nn.functional.interpolate(
+        stage5_tensor,
+        size=(224, 224),
+        mode="bilinear",
+        align_corners=False,
+    )
+    with torch.inference_mode():
+        stage9_logits = stage9_model(stage9_tensor)
+    assert stage9_logits.shape == (1, 14)
+    assert torch.isfinite(torch.sigmoid(stage9_logits)).all()
+
+
+def test_pipeline_stage_failure_is_sanitized_and_safely_logged(caplog: Any) -> None:
+    failing_pipeline = LocalResearchPipeline(ROOT, runner=FailingStage5Runner())
+    with caplog.at_level(logging.ERROR, logger="trustcxr.serving.local_review"):
+        status, body = asyncio.run(
+            asgi_post(png_fixture(90), "image/png", review_pipeline=failing_pipeline)
+        )
+
+    assert status == 500
+    assert body["reason_codes"] == ["INFERENCE_FAILURE"]
+    assert "STAGE5_INFERENCE" in caplog.text
+    assert "RuntimeError" in caplog.text
+    assert "job_" in caplog.text
+    assert "image bytes" not in caplog.text.lower()
 
 
 def test_pipeline_uses_no_temporary_artifacts_training_or_external_fetches() -> None:

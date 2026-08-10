@@ -40,15 +40,23 @@ function renderViewer(image, format) {
 
 function renderFixture(data, preservePreview = false) {
   const jobState = data.job.state.toLowerCase();
-  byId("header-job-state").textContent = jobState;
-  byId("analysis-state").textContent = jobState;
+  const displayState = jobState.charAt(0).toUpperCase() + jobState.slice(1);
+  byId("header-job-state").textContent = displayState;
+  byId("analysis-state").textContent = displayState;
   byId("kpi-view").textContent = data.view.selected;
   byId("kpi-decision").textContent = data.decisions.actual || data.decisions.precedence[0];
+  byId("analysis-mode-label").textContent = preservePreview
+    ? "LOCAL IMAGE REVIEW"
+    : "SYNTHETIC DEMO OUTPUT";
 
   const job = byId("job-status-content");
   job.replaceChildren();
   addDataRow(job, "Pseudonymous job", data.job.job_id);
-  addDataRow(job, "Workflow", "Synthetic fixture review only");
+  addDataRow(
+    job,
+    "Workflow",
+    preservePreview ? "Local frozen-model research inference" : "Synthetic fixture review only",
+  );
   if (!preservePreview) renderViewer(data.synthetic_images.PNG, "PNG");
 
   const view = byId("view-quality-content");
@@ -216,6 +224,8 @@ function previewLocalFile(file) {
   byId("image-dimensions").textContent = "Reading local preview";
   byId("preview-notice").textContent = "Local browser-memory preview only. This image is not uploaded, stored, or analyzed.";
   byId("review-mode-badge").textContent = "LOCAL IMAGE REVIEW";
+  byId("analysis-mode-label").textContent = "LOCAL IMAGE REVIEW · READY";
+  clearAnalysisForLocalReview("Local image selected. Run the review to generate current-image evidence.");
   byId("run-review").disabled = false;
   viewer.addEventListener("load", () => {
     byId("image-dimensions").textContent = `${viewer.naturalWidth} × ${viewer.naturalHeight} px`;
@@ -258,6 +268,8 @@ async function runLocalReview() {
   button.lastChild.textContent = "Analyzing...";
   byId("header-job-state").textContent = "analyzing";
   byId("analysis-state").textContent = "Analyzing...";
+  byId("analysis-mode-label").textContent = "LOCAL IMAGE REVIEW · ANALYZING";
+  clearAnalysisForLocalReview("Current-image inference is in progress.");
   byId("preview-notice").textContent = "Running the frozen TrustCXR research pipeline locally. No external service is used.";
   try {
     const response = await fetch("/ui/research-review", {
@@ -269,7 +281,11 @@ async function runLocalReview() {
     });
     const result = await response.json();
     if (!response.ok) {
-      const reason = Array.isArray(result.reason_codes) ? result.reason_codes.join(" · ") : "INFERENCE_FAILURE";
+      const reason = Array.isArray(result.reason_codes)
+        ? result.reason_codes.join(" · ")
+        : response.status === 404
+          ? "LOCAL_REVIEW_ENDPOINT_UNAVAILABLE_RESTART_SERVER"
+          : "INFERENCE_FAILURE";
       throw new Error(reason);
     }
     renderFixture(result, true);
@@ -278,12 +294,49 @@ async function runLocalReview() {
   } catch (error) {
     byId("header-job-state").textContent = "failed";
     byId("analysis-state").textContent = "FAILED_SANITIZED";
+    byId("analysis-mode-label").textContent = "LOCAL IMAGE REVIEW · FAILED_SANITIZED";
+    clearAnalysisForLocalReview("No current-image result is available because the review failed.");
+    renderLocalReviewFailure(error.message);
     byId("preview-notice").textContent = `Local review failed safely: ${error.message}`;
   } finally {
     reviewInProgress = false;
     button.disabled = selectedLocalFile === null;
     button.lastChild.textContent = originalLabel;
   }
+}
+
+function clearAnalysisForLocalReview(message) {
+  byId("kpi-view").textContent = "—";
+  byId("kpi-decision").textContent = "—";
+  [
+    "view-quality-content",
+    "classifier-content",
+    "reliability-content",
+    "fusion-content",
+    "verifier-content",
+    "report-content",
+    "decision-content",
+    "provenance-content",
+    "failure-content",
+  ].forEach((id) => {
+    const container = byId(id);
+    container.replaceChildren(element("p", "contract-note", message));
+  });
+  const job = byId("job-status-content");
+  job.replaceChildren();
+  addDataRow(job, "Mode", "LOCAL IMAGE REVIEW");
+  addDataRow(job, "Workflow", message);
+}
+
+function renderLocalReviewFailure(reasonCode) {
+  const failure = byId("failure-content");
+  failure.replaceChildren();
+  const box = element("article", "failure-box");
+  box.append(
+    element("strong", "status-failed", "FAILED_SANITIZED — local review did not complete"),
+    element("span", "", reasonCode),
+  );
+  failure.append(box);
 }
 
 configureLocalPreview();

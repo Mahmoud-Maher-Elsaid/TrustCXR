@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import logging
 from pathlib import Path
 
 from fastapi import FastAPI, Request
@@ -11,6 +13,7 @@ from trustcxr.serving.local_inference import (
     MAX_UPLOAD_BYTES,
     LocalResearchPipeline,
     LocalReviewError,
+    PipelineExecutionError,
 )
 from trustcxr.serving.runtime import JobStore, sanitized_disposition
 from trustcxr.serving.schemas import (
@@ -19,6 +22,8 @@ from trustcxr.serving.schemas import (
     JobSubmission,
     LocalResearchReviewResponse,
 )
+
+LOGGER = logging.getLogger("trustcxr.serving.local_review")
 
 
 def create_app(
@@ -76,8 +81,29 @@ def create_app(
         try:
             result = await run_in_threadpool(review_pipeline.review, bytes(payload), media_type)
         except LocalReviewError as error:
+            LOGGER.warning(
+                "local_review_failed job_id=%s stage=%s exception_type=%s message=%s",
+                _request_job_id(bytes(payload)),
+                error.stage,
+                type(error).__name__,
+                error.reason_code,
+            )
             return _local_review_error(error.reason_code, error.status_code)
+        except PipelineExecutionError as error:
+            LOGGER.error(
+                "local_review_failed job_id=%s stage=%s exception_type=%s "
+                "message=local_pipeline_stage_failed",
+                _request_job_id(bytes(payload)),
+                error.stage,
+                error.cause_type,
+            )
+            return _local_review_error("INFERENCE_FAILURE", 500)
         except Exception:
+            LOGGER.error(
+                "local_review_failed job_id=%s stage=DOWNSTREAM_OR_SERIALIZATION "
+                "exception_type=UnexpectedError message=local_pipeline_stage_failed",
+                _request_job_id(bytes(payload)),
+            )
             return _local_review_error("INFERENCE_FAILURE", 500)
         return LocalResearchReviewResponse.model_validate(result)
 
@@ -118,4 +144,11 @@ def _local_review_error(reason_code: str, status_code: int) -> JSONResponse:
             "reason_codes": [reason_code],
             "research_designation": "RESEARCH_USE_ONLY_EXPERT_REVIEW_REQUIRED",
         },
+    )
+
+
+def _request_job_id(payload: bytes) -> str:
+    content_fingerprint = hashlib.sha256(payload).hexdigest()
+    return (
+        "job_" + hashlib.sha256(("local-review:" + content_fingerprint).encode()).hexdigest()[:24]
     )
