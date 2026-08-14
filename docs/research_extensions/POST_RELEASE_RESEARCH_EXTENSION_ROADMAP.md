@@ -6,7 +6,7 @@
 
 **EXT-1A Explainability Foundation:** `COMPLETED` (governance and compatibility audit only)
 **EXT-1B Grad-CAM Implementation and Technical Validation:** `COMPLETED`
-**Grad-CAM UI Integration / EXT-1C:** `BLOCKED — targeted validation pending in the governed Python environment`
+**Grad-CAM UI Integration / EXT-1C:** `COMPLETED`
 **True pathology localization:** `NOT STARTED`
 **Grounded LLM reporting:** `NOT STARTED`
 **Multimodal VLM:** `NOT STARTED`

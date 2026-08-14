@@ -1,6 +1,6 @@
 # EXT-1C Governed Grad-CAM UI Integration
 
-**Status: BLOCKED — targeted validation pending in the governed Python environment**
+**Status: COMPLETED — bounded technical and manual UI validation accepted**
 **Clinical/pathology validation: NOT PERFORMED**
 
 The frozen core UI assets remain immutable. EXT-1C is intentionally isolated
@@ -91,3 +91,33 @@ does not establish a lesion location.
 
 The next research tracks—true pathology localization, grounded LLM reporting,
 and VLM comparison—remain not started.
+
+## Final EXT-1C Acceptance Evidence
+
+EXT-1C was accepted after bounded automated, GPU, serving, and manual UI validation.
+
+Validated evidence:
+
+- Stage 22C frozen UI regression: 33 passed.
+- Stage 22D frozen UI regression: 27 passed.
+- Complete unit regression suite: 777 passed in 15.55 seconds.
+- Frozen Stage 9 Grad-CAM GPU integration: 1 passed in 16.35 seconds.
+- Real FastAPI extension UI request: HTTP 200.
+- Real Grad-CAM attribution request: HTTP 200.
+- Governed target layer: `features.norm5`.
+- Raw attribution dimensions: `7 x 7`.
+- Heatmap payload present.
+- Overlay payload present.
+- Manual extension UI review: PASS.
+- Original image, heatmap, and attribution overlay were rendered successfully.
+- Research disclaimer was visible.
+- Display resizing warning was visible.
+- Frozen core UI remained isolated from the extension UI.
+- No locked-test records were accessed.
+- No training or fine-tuning was performed.
+- No external network dependency was introduced.
+- No patient-image persistence was introduced.
+
+Scientific boundary remains unchanged: Grad-CAM is class-specific model attribution. It is not lesion localization, segmentation, diagnostic evidence, causal explanation, laterality, severity estimation, or radiologist reasoning.
+
+The next research extensions remain not started.
