@@ -188,8 +188,9 @@ def test_optional_gradcam_ui_is_explicit_and_governed() -> None:
     assert '"X-TrustCXR-Attribution-Label"' in javascript
     assert "Research attribution only — not lesion localization or diagnostic evidence." in html
     assert "features.norm5" in javascript or "features.norm5" in html
-    assert "lesion localization" in javascript
-    assert "absence of pathology" in javascript
+    assert "No non-degenerate Grad-CAM attribution was available" in javascript
+    assert "This does not imply absence of pathology." in javascript
+    assert "diagnostic evidence" in html
     assert "localStorage" not in javascript
     assert "sessionStorage" not in javascript
 

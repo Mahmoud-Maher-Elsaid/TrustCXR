@@ -20,7 +20,8 @@ def test_roadmap_keeps_follow_on_stages_unimplemented() -> None:
     ).read_text(encoding="utf-8")
     assert "EXT-1A Explainability Foundation:** `COMPLETED`" in roadmap
     assert "EXT-1B Grad-CAM Implementation and Technical Validation:** `COMPLETED`" in roadmap
-    assert "Grad-CAM UI integration:** `NOT STARTED`" in roadmap
+    assert "Grad-CAM UI Integration / EXT-1C:** `BLOCKED" in roadmap
+    assert "True pathology localization:** `NOT STARTED`" in roadmap
     assert "Grounded LLM reporting:** `NOT STARTED`" in roadmap
     assert "Multimodal VLM:** `NOT STARTED`" in roadmap
 
