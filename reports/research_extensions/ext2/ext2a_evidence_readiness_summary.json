@@ -1,0 +1,43 @@
+{
+  "extension": "EXT-2",
+  "stage": "EXT-2A",
+  "status": "PASS_FOR_EXT2B_RSNA_LUNG_OPACITY",
+  "selected_dataset": "RSNA_Pneumonia",
+  "selected_semantic_scope": "Lung Opacity",
+  "annotation_type": "BOUNDING_BOX",
+  "annotation_semantics_preserved": true,
+  "local_counts": {
+    "annotation_rows": 30227,
+    "image_count": 26684,
+    "positive_image_count": 6012,
+    "positive_annotation_rows": 9555,
+    "positive_box_count": 9555
+  },
+  "identity": {
+    "patient_identity_rate": 1.0,
+    "study_identity_rate": 1.0,
+    "annotation_join_count": 26684,
+    "deterministic_join": true
+  },
+  "existing_patient_safe_split": {
+    "train_patients": 21356,
+    "validation_patients": 2660,
+    "locked_test_patients": 2668,
+    "patient_leakage_violations": 0,
+    "final_test_accessed": 0
+  },
+  "source_license": {
+    "source": "RSNA Pneumonia Detection Challenge 2018",
+    "source_url_recorded_in": "configs/localization/stage10c_governance_adjudication.json",
+    "license_decision": "APPROVED_FOR_RESEARCH",
+    "attribution_required": true
+  },
+  "withheld_candidates": [
+    {"dataset": "VinBigData", "reason": "patient_identity_unresolved"},
+    {"dataset": "SIIM_Pneumothorax", "reason": "identity_and_join_unresolved"},
+    {"dataset": "TBX11K", "reason": "filename_only_identity"},
+    {"dataset": "CRD_Masks", "reason": "anatomy_masks_not_lesion_ground_truth_and_identity_unresolved"}
+  ],
+  "training_performed": false,
+  "locked_test_accessed": false
+}

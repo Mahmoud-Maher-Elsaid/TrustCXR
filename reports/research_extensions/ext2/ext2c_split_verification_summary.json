@@ -1,0 +1,17 @@
+{
+  "extension": "EXT-2",
+  "stage": "EXT-2C",
+  "status": "VERIFIED_FROM_EXISTING_STAGE10D_EVIDENCE",
+  "dataset": "RSNA_Pneumonia",
+  "semantic_scope": "Lung Opacity",
+  "identity_field": "patientId",
+  "split_method": "DETERMINISTIC_PATIENT_SHA256",
+  "seed": 20260806,
+  "train_patients": 21356,
+  "validation_patients": 2660,
+  "locked_test_patients": 2668,
+  "patient_leakage_violations": 0,
+  "deterministic_join": true,
+  "locked_test_accessed": false,
+  "new_split_generated": false
+}

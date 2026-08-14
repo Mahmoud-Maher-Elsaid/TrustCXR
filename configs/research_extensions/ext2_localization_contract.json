@@ -1,0 +1,96 @@
+{
+  "schema_version": "trustcxr-ext2-localization-contract-v1",
+  "extension": "EXT-2",
+  "stage": "EXT-2B",
+  "status": "CONTRACT_FROZEN_PRE_TRAINING",
+  "dataset": {
+    "id": "RSNA_Pneumonia",
+    "source": "RSNA Pneumonia Detection Challenge 2018",
+    "annotation_semantics": "Lung Opacity",
+    "annotation_type": "BOUNDING_BOX",
+    "stage9_label_relationship": "SEMANTICALLY_NOT_EQUIVALENT_TO_STAGE9_PNEUMONIA",
+    "metadata_path": "TrustCXR-Data/06_RSNA_Pneumonia/rsna-pneumonia-detection-challenge/stage_2_train_labels.csv",
+    "identity_field": "patientId",
+    "license_decision": "APPROVED_FOR_RESEARCH_WITH_ATTRIBUTION"
+  },
+  "cohort": {
+    "inclusion": [
+      "RSNA train-source records with deterministic patient identity",
+      "valid image-to-row join",
+      "valid Lung Opacity bounding box when Target=1"
+    ],
+    "exclusion": [
+      "records without verified patient identity",
+      "malformed or non-positive bounding boxes",
+      "duplicate patient/image keys without deterministic resolution"
+    ],
+    "duplicate_policy": "fail_closed_and_report; never heuristic-merge"
+  },
+  "split": {
+    "source_artifact": "artifacts/stage10/stage10d_rsna_patient_splits.sqlite",
+    "method": "DETERMINISTIC_PATIENT_SHA256",
+    "seed": 20260806,
+    "train_fraction": 0.8,
+    "validation_fraction": 0.1,
+    "locked_test_fraction": 0.1,
+    "patient_overlap_required": 0,
+    "locked_test_access_before_freeze": false
+  },
+  "preprocessing": {
+    "input_representation": "governed RSNA DICOM decoding",
+    "resize_policy": "extension-specific and frozen before training",
+    "augmentation_policy": "none until explicitly frozen by this contract",
+    "stage9_preprocessing_unchanged": true
+  },
+  "development_budget": {
+    "baseline": "historical Stage 10E fasterrcnn_resnet50_fpn_v2 comparison only",
+    "maximum_new_variants": 2,
+    "maximum_epochs": 100,
+    "selection_split": "validation_only",
+    "early_stopping": "predeclared validation rule",
+    "locked_test_used_for_selection": false
+  },
+  "metrics": {
+    "primary": "validation_AP50",
+    "secondary": [
+      "COCO_AP_0.50_0.95",
+      "AP75",
+      "lesion_level_sensitivity",
+      "false_positives_per_image",
+      "FROC_or_sensitivity_fp_tradeoff",
+      "best_match_IoU",
+      "patient_bootstrap_95_percent_CI"
+    ],
+    "size_strata": "defined from training annotations only before validation evaluation",
+    "small_lesion_analysis_required": true
+  },
+  "operating_point": {
+    "selection_data": "validation_only",
+    "threshold_frozen_before_locked_test": true,
+    "nms_policy_frozen_before_locked_test": true,
+    "arbitrary_clinical_thresholds": false
+  },
+  "acceptance": {
+    "type": "technical_research_localization_acceptance",
+    "requirements": [
+      "zero patient leakage",
+      "finite reproducible metrics and confidence intervals",
+      "usable validation operating point",
+      "meaningful improvement over historical Stage 10 baseline where directly comparable",
+      "no catastrophic degradation in larger-lesion strata",
+      "explicit small-lesion analysis",
+      "no contract or semantic violation"
+    ],
+    "clinical_localization_claim_authorized": false,
+    "diagnosis_authorized": false,
+    "laterality_authorized": false,
+    "severity_authorized": false,
+    "localization_absence_may_contradict_classifier": false
+  },
+  "lock_policy": {
+    "final_test_evaluation_authorized": false,
+    "authorization_condition": "all validation gates pass and model/checkpoint/operating point hashes are frozen",
+    "final_test_evaluations_allowed": 1,
+    "test_consumed_after_evaluation": true
+  }
+}
