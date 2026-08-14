@@ -30,12 +30,6 @@ const VERIFIER_PRESENTATION = Object.freeze({
   WITHHELD_INSUFFICIENT_EVIDENCE: "Evidence unavailable",
 });
 
-const ATTRIBUTION_LABELS = Object.freeze([
-  "Atelectasis", "Cardiomegaly", "Effusion", "Infiltration", "Mass", "Nodule",
-  "Pneumonia", "Pneumothorax", "Consolidation", "Edema", "Emphysema",
-  "Fibrosis", "Pleural_Thickening", "Hernia",
-]);
-
 function displayLabel(label) {
   return label.replaceAll("_", " ");
 }
@@ -237,70 +231,6 @@ function renderTechnicalDetails(data) {
   addDataRow(failure, "FAILED_SANITIZED — technical processing failure", data.dispositions.technical_failure_recorded ? data.dispositions.failure_code : "No sanitized technical failure recorded.");
 }
 
-function setAttributionControls(enabled) {
-  const select = byId("attribution-label");
-  const button = byId("generate-attribution");
-  select.disabled = !enabled;
-  button.disabled = !enabled || !selectedLocalFile;
-}
-
-function renderAttributionMeta(data) {
-  const meta = byId("attribution-meta");
-  meta.replaceChildren();
-  [["Selected class", displayLabel(data.label)], ["Model score", Number(data.model_score).toFixed(4)],
-    ["Method", "Grad-CAM"], ["Target layer", data.target_layer],
-    ["Raw attribution", `${data.raw_attribution_dimensions[0]} × ${data.raw_attribution_dimensions[1]}`],
-    ["Display map", `${data.display_dimensions[0]} × ${data.display_dimensions[1]}`]].forEach(([key, value]) => {
-    meta.append(element("div", "attribution-meta-item"));
-    const item = meta.lastElementChild;
-    item.append(element("dt", "", key), element("dd", "", String(value)));
-  });
-}
-
-function clearAttribution(message = "Run a local image review before requesting an attribution.") {
-  byId("attribution-visuals").classList.add("is-hidden");
-  byId("attribution-status").textContent = message;
-  byId("attribution-meta").replaceChildren();
-  ["attribution-original", "attribution-heatmap", "attribution-overlay"].forEach((id) => {
-    byId(id).removeAttribute("src");
-  });
-}
-
-async function runAttribution() {
-  if (!selectedLocalFile || !currentReviewReady || attributionInProgress) return;
-  attributionInProgress = true;
-  const button = byId("generate-attribution");
-  button.disabled = true;
-  byId("attribution-status").textContent = "Generating one bounded research attribution…";
-  clearAttribution("Generating one bounded research attribution…");
-  try {
-    const response = await fetch("/research/explainability/gradcam", {
-      method: "POST",
-      headers: { "Content-Type": selectedLocalFile.type, "X-TrustCXR-Attribution-Label": byId("attribution-label").value },
-      body: selectedLocalFile,
-      credentials: "omit",
-      cache: "no-store",
-    });
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.reason_code === "ATTRIBUTION_UNAVAILABLE"
-        ? "No non-degenerate Grad-CAM attribution was available for this class/input pair. This does not imply absence of pathology."
-        : "The research attribution could not be generated.");
-    }
-    byId("attribution-original").src = localPreviewUrl;
-    byId("attribution-heatmap").src = `data:image/png;base64,${result.heatmap_png_base64}`;
-    byId("attribution-overlay").src = `data:image/png;base64,${result.overlay_png_base64}`;
-    byId("attribution-visuals").classList.remove("is-hidden");
-    byId("attribution-status").textContent = "Attribution generated for the selected model class.";
-    renderAttributionMeta(result);
-  } catch (error) {
-    clearAttribution(error.message || "The research attribution could not be generated.");
-  } finally {
-    attributionInProgress = false;
-    setAttributionControls(currentReviewReady);
-  }
-}
-
 function renderResult(data, localReview = false) {
   const presentation = buildPresentation(data);
   const displayState = data.job.state === "COMPLETED" ? "Analysis Complete" : data.job.state;
@@ -325,9 +255,6 @@ function renderResult(data, localReview = false) {
   renderSummary(presentation);
   renderVerification(data, presentation);
   renderTechnicalDetails(data);
-  currentReviewReady = localReview;
-  setAttributionControls(localReview);
-  clearAttribution(localReview ? "Select one model finding and request one attribution." : "Run a local image review before requesting an attribution.");
   const job = byId("job-status-content");
   job.replaceChildren();
   addDataRow(job, "Mode", localReview ? "LOCAL_IMAGE_REVIEW" : "SYNTHETIC_DEMO");
@@ -337,8 +264,6 @@ function renderResult(data, localReview = false) {
 let localPreviewUrl = null;
 let selectedLocalFile = null;
 let reviewInProgress = false;
-let attributionInProgress = false;
-let currentReviewReady = false;
 
 function releaseLocalPreview() {
   if (localPreviewUrl) {
@@ -355,9 +280,6 @@ function clearAnalysisForLocalReview(message) {
   byId("results-column").classList.add("results-cleared");
   byId("analysis-error").classList.add("is-hidden");
   byId("overview-review-caption").textContent = message;
-  currentReviewReady = false;
-  setAttributionControls(false);
-  clearAttribution(message);
 }
 
 function previewLocalFile(file) {
@@ -382,8 +304,6 @@ function previewLocalFile(file) {
   byId("analysis-state").textContent = "Ready";
   clearAnalysisForLocalReview("Run the review to generate current-image results.");
   byId("run-review").disabled = false;
-  setAttributionControls(false);
-  clearAttribution("Run a local image review before requesting an attribution.");
   viewer.addEventListener("load", () => { byId("image-dimensions").textContent = `${viewer.naturalWidth} × ${viewer.naturalHeight} px`; }, { once: true });
 }
 
@@ -439,13 +359,6 @@ function configureLocalPreview() {
   ["dragleave", "drop"].forEach((name) => dropZone.addEventListener(name, (event) => { event.preventDefault(); dropZone.classList.remove("is-dragging"); }));
   dropZone.addEventListener("drop", (event) => previewLocalFile(event.dataTransfer.files[0]));
   byId("run-review").addEventListener("click", runLocalReview);
-  const select = byId("attribution-label");
-  ATTRIBUTION_LABELS.forEach((label) => {
-    const option = element("option", "", displayLabel(label));
-    option.value = label;
-    select.append(option);
-  });
-  byId("generate-attribution").addEventListener("click", runAttribution);
   window.addEventListener("beforeunload", releaseLocalPreview);
 }
 

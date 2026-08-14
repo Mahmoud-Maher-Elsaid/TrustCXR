@@ -1,7 +1,11 @@
 # EXT-1C Governed Grad-CAM UI Integration
 
-**Status: IMPLEMENTED — targeted validation pending in the governed Python environment**  
+**Status: BLOCKED — targeted validation pending in the governed Python environment**
 **Clinical/pathology validation: NOT PERFORMED**
+
+The frozen core UI assets remain immutable. EXT-1C is intentionally isolated
+behind a separate extension UI surface so the Stage 22C/22D frozen-core asset
+and structure contracts remain byte-for-byte intact.
 
 ## Purpose and boundary
 
@@ -17,7 +21,15 @@ confirmation.
 
 ## Serving boundary
 
-The bounded local endpoint is:
+The bounded local extension surface is:
+
+`GET /research/explainability/ui`
+
+The frozen core remains:
+
+`GET /ui`
+
+The attribution endpoint is:
 
 `POST /research/explainability/gradcam`
 

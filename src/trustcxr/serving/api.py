@@ -155,6 +155,26 @@ def create_app(
     def research_ui_fixtures() -> FileResponse:
         return static_response("fixtures.json", "application/json")
 
+    extension_root = static_root / "extensions" / "explainability"
+
+    def extension_response(filename: str, media_type: str) -> FileResponse:
+        response = FileResponse(extension_root / filename, media_type=media_type)
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        return response
+
+    @app.get("/research/explainability/ui", include_in_schema=False)
+    def explainability_ui() -> FileResponse:
+        return extension_response("index.html", "text/html")
+
+    @app.get("/research/explainability/ui/app.css", include_in_schema=False)
+    def explainability_ui_css() -> FileResponse:
+        return extension_response("app.css", "text/css")
+
+    @app.get("/research/explainability/ui/app.js", include_in_schema=False)
+    def explainability_ui_javascript() -> FileResponse:
+        return extension_response("app.js", "text/javascript")
+
     return app
 
 
