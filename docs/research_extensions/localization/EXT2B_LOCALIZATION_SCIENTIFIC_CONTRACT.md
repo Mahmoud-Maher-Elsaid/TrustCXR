@@ -1,7 +1,7 @@
 # EXT-2B Localization Scientific Contract
 
-**Status:** `CONTRACT_FROZEN_PRE_TRAINING`  
-**Selected scope:** RSNA `Lung Opacity` bounding-box localization  
+**Status:** `CONTRACT_FROZEN_PRE_TRAINING`
+**Selected scope:** RSNA `Lung Opacity` bounding-box localization
 **Clinical acceptance:** not authorized
 
 ## Semantic scope

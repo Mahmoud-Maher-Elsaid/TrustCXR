@@ -1,8 +1,8 @@
 # EXT-2A Localization Evidence Readiness
 
-**Track:** True pathology localization research extension  
-**Branch:** `research-extension/pathology-localization`  
-**Status:** `PASSED_FOR_EXT2B_RSNA_LUNG_OPACITY_CONTRACT`  
+**Track:** True pathology localization research extension
+**Branch:** `research-extension/pathology-localization`
+**Status:** `PASSED_FOR_EXT2B_RSNA_LUNG_OPACITY_CONTRACT`
 **Core status:** unchanged; Stage 10N remains historical evidence only
 
 ## Decision

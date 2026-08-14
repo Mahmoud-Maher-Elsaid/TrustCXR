@@ -1,7 +1,7 @@
 # EXT-2C Patient-Safe Cohort and Split Verification
 
-**Status:** `VERIFIED_FROM_EXISTING_STAGE10_EVIDENCE`  
-**Dataset:** RSNA `Lung Opacity` bounding boxes  
+**Status:** `VERIFIED_FROM_EXISTING_STAGE10_EVIDENCE`
+**Dataset:** RSNA `Lung Opacity` bounding boxes
 **Locked test:** not accessed
 
 ## Verified cohort
