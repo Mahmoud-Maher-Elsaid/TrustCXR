@@ -129,6 +129,8 @@ class AttributionResult:
     original_model_score: float
     input_dimensions: tuple[int, int]
     attribution_dimensions: tuple[int, int]
+    normalized_attribution_dimensions: tuple[int, int] | None = None
+    finite_values: bool = True
     preprocessing_contract: str = "stage9_original_224_imagenet_rgb"
     normalized: bool = True
     raw_attribution_dtype: str = "float32"
@@ -148,3 +150,10 @@ class AttributionResult:
             raise ValueError("Model score must be a finite bounded research score")
         if min(*self.input_dimensions, *self.attribution_dimensions) <= 0:
             raise ValueError("Attribution dimensions must be positive")
+        if (
+            self.normalized_attribution_dimensions is not None
+            and min(*self.normalized_attribution_dimensions) <= 0
+        ):
+            raise ValueError("Normalized attribution dimensions must be positive")
+        if not self.finite_values:
+            raise ValueError("Non-finite attribution cannot be represented as a result")
