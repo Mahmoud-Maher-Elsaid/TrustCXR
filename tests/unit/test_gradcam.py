@@ -17,6 +17,24 @@ class TinyDenseNetShape(nn.Module):
         self.features.denseblock4 = nn.Sequential(nn.Conv2d(3, 4, 3, padding=1), nn.ReLU())
         self.features.norm5 = nn.Sequential(nn.Conv2d(4, 4, 1), nn.ReLU())
         self.classifier = nn.Linear(4, len(FROZEN_STAGE9_LABELS))
+        with torch.no_grad():
+            dense = self.features.denseblock4[0]
+            dense.weight.zero_()
+            dense.bias.zero_()
+            dense.weight[0, 0, 0, 0] = 1.0
+            dense.weight[1, 1, 0, 0] = 1.0
+            dense.weight[2, 2, 0, 0] = 1.0
+            dense.weight[3, 0, 0, 0] = 0.5
+            norm = self.features.norm5[0]
+            norm.weight.zero_()
+            norm.bias.zero_()
+            for channel in range(4):
+                norm.weight[channel, channel, 0, 0] = 1.0
+            self.classifier.weight.zero_()
+            self.classifier.bias.zero_()
+            self.classifier.weight[0, 0] = 1.0
+            self.classifier.weight[5, 2] = 1.0
+            self.classifier.weight[6, 1] = 1.0
 
     def forward(self, tensor: torch.Tensor) -> torch.Tensor:
         tensor = self.features.denseblock4(tensor)
@@ -34,7 +52,11 @@ def parameter_digest(model: nn.Module) -> str:
 
 def test_gradcam_captures_finite_bounded_map_and_metadata() -> None:
     model = TinyDenseNetShape().eval()
-    tensor = torch.ones(1, 3, 16, 16)
+    tensor = torch.zeros(1, 3, 16, 16)
+    axis = torch.linspace(0.1, 1.0, 16)
+    tensor[:, 0] = axis[None, None, :]
+    tensor[:, 1] = axis[None, :, None]
+    tensor[:, 2] = tensor[:, 0] * tensor[:, 1]
     output = generate_gradcam(model, tensor, "Nodule", resize_to_input=True)
     assert output.result.label_index == 5
     assert output.result.target_layer == "features.norm5"
@@ -48,7 +70,11 @@ def test_gradcam_captures_finite_bounded_map_and_metadata() -> None:
 def test_gradcam_is_deterministic_and_does_not_mutate_parameters() -> None:
     torch.manual_seed(7)
     model = TinyDenseNetShape().eval()
-    tensor = torch.randn(1, 3, 16, 16)
+    tensor = torch.zeros(1, 3, 16, 16)
+    axis = torch.linspace(0.1, 1.0, 16)
+    tensor[:, 0] = axis[None, None, :]
+    tensor[:, 1] = axis[None, :, None]
+    tensor[:, 2] = tensor[:, 0] * tensor[:, 1]
     before = parameter_digest(model)
     first = generate_gradcam(model, tensor, "Atelectasis")
     second = generate_gradcam(model, tensor, "Atelectasis")
@@ -59,10 +85,15 @@ def test_gradcam_is_deterministic_and_does_not_mutate_parameters() -> None:
 
 def test_gradcam_uses_requested_class_and_cleans_hooks() -> None:
     model = TinyDenseNetShape().eval()
-    tensor = torch.randn(1, 3, 16, 16)
+    tensor = torch.zeros(1, 3, 16, 16)
+    axis = torch.linspace(0.1, 1.0, 16)
+    tensor[:, 0] = axis[None, None, :]
+    tensor[:, 1] = axis[None, :, None]
+    tensor[:, 2] = tensor[:, 0] * tensor[:, 1]
     first = generate_gradcam(model, tensor, "Atelectasis")
-    second = generate_gradcam(model, tensor, "Pneumonia")
+    second = generate_gradcam(model, tensor, "Nodule")
     assert first.result.label_index != second.result.label_index
+    assert not torch.equal(first.heatmap, second.heatmap)
     assert len(model.features.norm5._forward_hooks) == 0
     assert len(model.features.norm5._backward_hooks) == 0
 

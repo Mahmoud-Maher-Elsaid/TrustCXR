@@ -110,7 +110,7 @@ def _normalize_cam(cam: torch.Tensor) -> torch.Tensor:
         raise ValueError("Grad-CAM contains non-finite values")
     cam = torch.relu(cam)
     maximum = cam.amax()
-    if not torch.isfinite(maximum) or float(maximum) <= 1e-12:
+    if not torch.isfinite(maximum) or float(maximum.detach()) <= 1e-12:
         raise ValueError("Grad-CAM is degenerate or has zero activation")
     normalized = cam / maximum
     if not torch.isfinite(normalized).all():
@@ -183,7 +183,10 @@ def generate_gradcam(
             gradient_shape=tuple(int(value) for value in gradient.shape),
             finite_activation=True,
             finite_gradient=True,
-            normalized_range=(float(normalized.min()), float(normalized.max())),
+            normalized_range=(
+                float(normalized.min().detach()),
+                float(normalized.max().detach()),
+            ),
         )
         identity = FrozenClassifierIdentity()
         result = AttributionResult(
