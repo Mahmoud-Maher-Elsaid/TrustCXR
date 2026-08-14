@@ -70,6 +70,24 @@
         <p class="panel-note">Scores indicate model response strength only. They are not calibrated clinical probabilities or diagnoses.</p>
       </section>
 
+      <section class="panel attribution-panel" id="attribution-panel" data-region="OPTIONAL_GRADCAM_ATTRIBUTION_PANEL">
+        <div class="section-heading"><span class="section-number">3A</span><div><h2>Model Attribution</h2><p>Class-specific Grad-CAM research view</p></div></div>
+        <div class="attribution-controls">
+          <label for="attribution-label">Select model finding</label>
+          <select id="attribution-label" disabled aria-label="Select a frozen Stage 9 model finding"></select>
+          <button class="secondary-action" id="generate-attribution" type="button" disabled>Generate Attribution</button>
+        </div>
+        <p class="attribution-disclaimer">Research attribution only — not lesion localization or diagnostic evidence.</p>
+        <p class="attribution-status" id="attribution-status" role="status">Run a local image review before requesting an attribution.</p>
+        <div class="attribution-visuals is-hidden" id="attribution-visuals">
+          <figure><img id="attribution-original" alt="Original local research image"><figcaption>Original image</figcaption></figure>
+          <figure><img id="attribution-heatmap" alt="Model attribution intensity map"><figcaption>Model attribution intensity</figcaption></figure>
+          <figure><img id="attribution-overlay" alt="Model attribution overlay on the original image"><figcaption>Attribution overlay</figcaption></figure>
+        </div>
+        <p class="attribution-note">Color intensity reflects relative attribution strength within this map. Target layer: <code>features.norm5</code>. Raw attribution resolution: 7 × 7; display resizing does not increase localization precision.</p>
+        <dl class="attribution-meta" id="attribution-meta"></dl>
+      </section>
+
       <div class="summary-grid">
         <section class="panel summary-panel" data-region="RESEARCH_REPORT_DRAFT_PANEL">
           <div class="section-heading"><span class="section-number">4</span><div><h2>Case Explanation</h2><p>Deterministic explanation from structured results</p></div></div>

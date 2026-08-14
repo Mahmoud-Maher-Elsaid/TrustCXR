@@ -178,6 +178,22 @@ def test_advanced_research_details_are_collapsed_and_contain_raw_governance() ->
     assert "Stage 11" in advanced
 
 
+def test_optional_gradcam_ui_is_explicit_and_governed() -> None:
+    html = (STATIC_ROOT / "index.html").read_text(encoding="utf-8")
+    javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
+    assert "Model Attribution" in html
+    assert 'id="generate-attribution"' in html
+    assert 'id="attribution-label" disabled' in html
+    assert 'fetch("/research/explainability/gradcam"' in javascript
+    assert '"X-TrustCXR-Attribution-Label"' in javascript
+    assert "Research attribution only — not lesion localization or diagnostic evidence." in html
+    assert "features.norm5" in javascript or "features.norm5" in html
+    assert "lesion localization" in javascript
+    assert "absence of pathology" in javascript
+    assert "localStorage" not in javascript
+    assert "sessionStorage" not in javascript
+
+
 def test_failure_card_clears_current_results_without_fixture_fallback() -> None:
     javascript = (STATIC_ROOT / "app.js").read_text(encoding="utf-8")
 

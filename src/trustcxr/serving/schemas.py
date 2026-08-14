@@ -204,3 +204,33 @@ class LocalResearchReviewResponse(StrictContractModel):
     dispositions: dict[str, str | list[str] | bool]
     provenance: dict[str, str]
     limitations: list[str]
+
+
+class GradCAMReviewResponse(StrictContractModel):
+    """Request-scoped display metadata for optional model attribution."""
+
+    schema_version: Literal["trustcxr-gradcam-v1"] = "trustcxr-gradcam-v1"
+    mode: Literal["RESEARCH_ATTRIBUTION"] = "RESEARCH_ATTRIBUTION"
+    method: Literal["gradcam"] = "gradcam"
+    label: BoundedToken
+    label_index: int = Field(ge=0, le=13)
+    model: Literal["Stage 9 DenseNet121"] = "Stage 9 DenseNet121"
+    model_score: float = Field(ge=0.0, le=1.0)
+    checkpoint_sha256: Sha256
+    target_layer: Literal["features.norm5"] = "features.norm5"
+    raw_attribution_dimensions: tuple[int, int]
+    display_dimensions: tuple[int, int]
+    finite: Literal[True] = True
+    normalized: Literal[True] = True
+    scientific_scope: Literal["CLASS_SPECIFIC_MODEL_ATTRIBUTION_ONLY"] = (
+        "CLASS_SPECIFIC_MODEL_ATTRIBUTION_ONLY"
+    )
+    disclaimer: Literal[
+        "Research attribution only — not lesion localization or diagnostic evidence."
+    ] = "Research attribution only — not lesion localization or diagnostic evidence."
+    color_note: Literal[
+        "Color intensity reflects relative attribution strength within this map."
+    ] = "Color intensity reflects relative attribution strength within this map."
+    heatmap_png_base64: str
+    overlay_png_base64: str
+    warnings: tuple[str, ...] = ()
