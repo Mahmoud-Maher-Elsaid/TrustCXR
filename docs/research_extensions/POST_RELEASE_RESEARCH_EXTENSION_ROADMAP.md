@@ -1,8 +1,14 @@
 # TrustCXR Post-Release Research Extension Roadmap
 
-**Classification:** `OPTIONAL_POST_RELEASE_RESEARCH_EXTENSION`  
-**Implementation status:** `NOT STARTED`  
+**Classification:** `OPTIONAL_POST_RELEASE_RESEARCH_EXTENSION`
+**Implementation status:** `NOT STARTED`
 **Authorization:** `POST-CORE-RELEASE ONLY`
+
+**EXT-1A Explainability Foundation:** `COMPLETED` (governance and compatibility audit only)
+**EXT-1B Grad-CAM Implementation:** `NOT STARTED`
+**True pathology localization:** `NOT STARTED`
+**Grounded LLM reporting:** `NOT STARTED`
+**Multimodal VLM:** `NOT STARTED`
 
 ```text
 IMPLEMENTATION STATUS: NOT STARTED
