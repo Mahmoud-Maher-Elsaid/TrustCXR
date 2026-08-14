@@ -1,6 +1,6 @@
 {
-  "stage": "EXT-1A",
-  "status": "IMPLEMENTATION_CREATED_NOT_VALIDATED",
+  "stage": "EXT-1B",
+  "status": "TECHNICAL_GRADCAM_BASELINE_ACCEPTED",
   "method": "gradcam",
   "purpose": "Class-specific model attribution for a selected frozen Stage 9 output",
   "classifier": {
@@ -30,7 +30,7 @@
   "target_layers": {
     "candidates": ["features.denseblock4", "features.norm5"],
     "preferred": "features.norm5",
-    "rationale": "Final spatial convolutional activation before adaptive pooling and the classifier; exact module path must be confirmed by implementation tests."
+    "rationale": "The final named spatial module output before the functional ReLU and global average pooling in torchvision DenseNet121. This is an architectural and governance selection, not an empirical localization-quality claim."
   },
   "artifacts": {
     "allowed_types": ["normalized_attribution_matrix", "overlay_image", "metadata_json"],
@@ -56,6 +56,18 @@
   },
   "validation": {
     "implementation_required": true,
+    "technical_validation": "BOUNDED_SYNTHETIC_FIXTURE_VALIDATED",
+    "successful_labels_per_candidate": 7,
+    "candidate_activation_shape": [1, 1024, 7, 7],
+    "candidate_gradient_shape": [1, 1024, 7, 7],
+    "candidate_raw_heatmap_shape": [7, 7],
+    "normalized_range": [0, 1],
+    "deterministic_repeated_map_max_abs_difference": 0.0,
+    "class_specific_maps_identical": false,
+    "class_specific_map_max_abs_difference": {
+      "features.denseblock4": 0.8909317255020142,
+      "features.norm5": 0.903232216835022
+    },
     "deterministic_output": true,
     "safe_fixture_required": true,
     "ui_gate_required": true,
@@ -64,5 +76,5 @@
     "training": false,
     "seed": 20260815
   },
-  "next_stage": "EXT-1B: Grad-CAM Implementation and Technical Validation"
+  "next_stage": "UI explainability integration: NOT STARTED"
 }

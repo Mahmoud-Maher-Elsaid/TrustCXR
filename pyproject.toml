@@ -32,7 +32,8 @@ where = ["src"]
 testpaths = ["tests"]
 addopts = "-ra --strict-markers"
 markers = [
-    "gpu: tests that require an NVIDIA CUDA GPU"
+    "gpu: tests that require an NVIDIA CUDA GPU",
+    "integration: bounded integration tests that exercise multiple project components"
 ]
 
 [tool.ruff]

@@ -5,7 +5,8 @@
 **Authorization:** `POST-CORE-RELEASE ONLY`
 
 **EXT-1A Explainability Foundation:** `COMPLETED` (governance and compatibility audit only)
-**EXT-1B Grad-CAM Implementation:** `BLOCKED` (runtime technical validation unavailable)
+**EXT-1B Grad-CAM Implementation and Technical Validation:** `COMPLETED`
+**Grad-CAM UI integration:** `NOT STARTED`
 **True pathology localization:** `NOT STARTED`
 **Grounded LLM reporting:** `NOT STARTED`
 **Multimodal VLM:** `NOT STARTED`

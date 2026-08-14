@@ -1,54 +1,84 @@
 # EXT-1B Grad-CAM Technical Validation
 
-**Status: BLOCKED — runtime validation unavailable in the current environment**  
-**Implementation status: baseline adapter created; acceptance not granted**
+**Status: COMPLETED — bounded technical baseline accepted**
+**Clinical/pathology validation: NOT PERFORMED**
 
-## Scope
+## Scope and environment
 
-The native PyTorch implementation is isolated at
-`src/trustcxr/explainability/gradcam.py`. It uses the canonical
-`trustcxr.integration.stage9b_ablation.build_model` builder, selects a class
-logit as the backward objective, captures a temporary target-layer activation,
-computes gradient-weighted activations, applies ReLU, and safely normalizes to
-`[0, 1]`. It does not integrate with FastAPI, the UI, reporting, verification,
-or decision logic.
+EXT-1B implements an isolated native PyTorch Grad-CAM adapter for the frozen
+Stage 9 classifier. The bounded validation was performed on the governed
+environment:
 
-## Frozen identity
+- Python 3.12.10
+- PyTorch 2.12.1+cu130
+- CUDA 13.0
+- NVIDIA GeForce RTX 3070 Ti Laptop GPU
+
+Only one synthetic, in-memory RGB fixture was used. No patient data,
+dataset-wide inference, training, fine-tuning, or locked-test records were
+accessed. No UI, FastAPI, report, verifier, or decision integration was run.
+
+## Frozen model identity and preprocessing
 
 - Architecture: DenseNet121, original Stage 9 variant, 14 outputs
 - Checkpoint: `artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt`
-- Checkpoint SHA-256: `bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de`
-- Preprocessing: 224×224 RGB, bilinear antialiased resize, ImageNet normalization,
-  no augmentation
-- Label order: the immutable Stage 9 fourteen-label order in the EXT-1A contract
+- Checkpoint SHA-256 before and after: `bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de`
+- Preprocessing: RGB conversion, 224×224 bilinear antialiased resize,
+  ImageNet mean/std normalization, no inference augmentation
+- Label order: the immutable fourteen-label Stage 9 contract
+- Backward objective: selected class logit, not sigmoid probability
 
-## Target-layer plan
+## Candidate-layer audit
 
-The implementation allow-lists `features.denseblock4` and `features.norm5` and
-keeps `features.norm5` as the preferred candidate from EXT-1A. Activation and
-gradient shapes, finite values, and non-degeneracy must be measured on the
-governed runtime before a target layer can be frozen. No runtime shape claim is
-made in this blocked report.
+Both candidates were exercised on the governed gray synthetic fixture:
 
-## Validation status
+| Candidate | Module output | Gradient | Raw heatmap | Finite | Normalized maps | Successful labels |
+|---|---:|---:|---:|---|---|---:|
+| `features.denseblock4` | `(1, 1024, 7, 7)` | `(1, 1024, 7, 7)` | `(7, 7)` | Yes | `[0, 1]` | 7/14 |
+| `features.norm5` | `(1, 1024, 7, 7)` | `(1, 1024, 7, 7)` | `(7, 7)` | Yes | `[0, 1]` | 7/14 |
 
-The repository virtual environment currently points to a missing Python 3.12
-interpreter. Consequently the targeted unit tests and bounded CUDA integration
-test could not execute in this environment. No checkpoint was loaded, no GPU
-forward/backward pass was run, and no heatmap was generated.
+The frozen EXT-1B target is **`features.norm5`**. It is the **final named
+spatial module output before the functional ReLU and global average pooling in
+torchvision DenseNet121**. This is an architectural and governance selection,
+not a claim of superiority over `features.denseblock4` or a localization-
+quality result.
 
-The following acceptance observations therefore remain **NOT VALIDATED**:
+## Technical observations
 
-- runtime activation and gradient shapes for both candidates;
-- finite, non-degenerate attribution on a safe fixture;
-- repeated-run determinism;
-- class-specific sanity behavior;
-- parameter immutability after a real attribution pass;
-- hook cleanup under successful and failing execution.
+For the same model, checkpoint, input, label, and target layer, repeated maps
+had maximum absolute difference `0.0` for both candidates in this bounded
+runtime. This records observed deterministic equality in the governed
+environment only; it is not a universal bitwise CUDA claim.
 
-## Acceptance gate
+On the real frozen Stage 9 model and the same synthetic fixture, Atelectasis
+and Effusion produced different class-specific maps. The maximum absolute
+differences were `0.8909317255020142` for `features.denseblock4` and
+`0.903232216835022` for `features.norm5`; maps were not exactly identical.
+This demonstrates that the requested class controls the backward objective. It
+has no clinical interpretation.
 
-EXT-1B must remain blocked until the governed Python/CUDA environment is
-available and the targeted unit and integration tests pass on a synthetic,
-non-patient fixture. Until then, Grad-CAM remains unavailable to the UI and is
-not a localization or clinical explanation capability.
+The model remained in evaluation mode before and after attribution, parameters
+were unchanged, and forward-hook count was zero before and after each request.
+Hook cleanup passed. The checkpoint hash remained unchanged.
+
+## Degenerate attribution policy
+
+Several class/input combinations produced `Grad-CAM is degenerate or has zero
+activation`. This is an expected fail-closed outcome, not an implementation
+failure. Zero maps are never converted into successful explanations, epsilon
+values are not injected, and positive values are not forced.
+
+Availability is conditional on a non-degenerate class/input attribution. A
+failed attribution does not imply pathology absence. A successful attribution
+does not establish lesion localization.
+
+## Scientific boundary and next gate
+
+Grad-CAM is **class-specific model attribution**. It is not lesion
+segmentation, true or ground-truth localization, laterality determination,
+severity estimation, causal explanation, diagnostic confirmation, or
+radiologist reasoning. This bounded study is not pathology-localization
+validation and does not alter the frozen Stage 10 limitation.
+
+EXT-1B is complete as a technical baseline. Grad-CAM UI integration remains
+**NOT STARTED** and requires a separate explicit gate.
