@@ -25,6 +25,13 @@ zero-leakage evidence remain applicable: 21,356 train patients, 2,660
 validation patients, and 2,668 locked-test patients. The locked test remains
 unread before model selection and threshold selection.
 
+EXT-2E development uses a separate deterministic bounded cohort sampled from
+the parent train and validation partitions only: at most 3,000 training
+patients and 1,000 validation patients. Its immutable manifest records the
+parent split hash, selection seed, patient/image counts, positive/negative
+representation, and frozen lesion-size strata. This development cohort never
+replaces the parent split or the locked final test.
+
 ## Annotation and size contract
 
 RSNA rows use zero-based top-left `XYWH` coordinates in the original DICOM
@@ -63,11 +70,12 @@ prohibited.
   repair.
 - One new variant is permitted initially; no second variant may be trained
   before review of the first validation evidence.
-- Maximum 30 epochs, batch size 1, gradient accumulation 1, AdamW learning
+- Maximum 12 epochs, batch size 1, gradient accumulation 1, AdamW learning
   rate `5e-5`, weight decay `1e-4`, gradient clipping `1.0`, AMP enabled, and
-  seed `20260806`.
+  seed `20260806`. The bounded development run is limited to 12 epochs and
+  requires at least 3 completed epochs.
 - Early stopping monitors validation AP50, requires improvement `0.001`, and
-  stops after patience `4` epochs.
+  stops after patience `3` epochs; progress is reported every 50 batches.
 - The Stage 9 classifier contract and outputs are outside this experiment and
   remain unchanged.
 

@@ -76,3 +76,32 @@ def test_ext2_contract_has_no_scientific_placeholders() -> None:
     for path in paths:
         text = path.read_text(encoding="utf-8").lower()
         assert not any(token in text for token in forbidden), path
+
+
+def test_ext2e_bounded_cohort_and_budget_are_frozen() -> None:
+    contract = load_contract()
+    cohort = contract["development_cohort"]
+    budget = contract["development_budget"]
+    assert cohort["maximum_train_patients"] == 3000
+    assert cohort["maximum_validation_patients"] == 1000
+    assert cohort["locked_test_included"] is False
+    assert (
+        cohort["selection_algorithm"]
+        == "patient_level_stable_hash_stratified_round_robin_then_stable_fill"
+    )
+    assert budget["maximum_epochs"] == 12
+    assert budget["minimum_epochs"] == 3
+    assert budget["early_stopping"]["patience"] == 3
+    assert budget["progress_interval_batches"] == 50
+
+
+def test_ext2e_training_entry_points_are_interruption_safe() -> None:
+    runner = (ROOT / "scripts/training/run_ext2e_local.py").read_text(encoding="utf-8")
+    wrapper = (ROOT / "scripts/training/run_ext2e_local.ps1").read_text(encoding="utf-8")
+    assert "KeyboardInterrupt" in runner
+    assert '"status": "ABORTED"' in runner
+    assert "best_validation_checkpoint.pt" in runner
+    assert "COMPLETED_VALIDATION_ONLY_DEVELOPMENT" in runner
+    assert "$LASTEXITCODE" in wrapper
+    assert "trainingExit -ne 0" in wrapper
+    assert "powershell.exe" not in wrapper

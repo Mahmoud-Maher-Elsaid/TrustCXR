@@ -54,6 +54,17 @@
     "locked_test_access_before_freeze": false,
     "split_artifact_sha256": "CC9F1A8C639843CAFA8E83135868D8C283E5FE6B35F6498EC5B70DF67580F3D2"
   },
+  "development_cohort": {
+    "manifest_path": "artifacts/research_extensions/ext2e_dev_cohort/manifest.json",
+    "manifest_sha256_recorded_in_manifest": true,
+    "parent_split": "artifacts/stage10/stage10d_rsna_patient_splits.sqlite",
+    "selection_seed": 20260806,
+    "maximum_train_patients": 3000,
+    "maximum_validation_patients": 1000,
+    "selection_algorithm": "patient_level_stable_hash_stratified_round_robin_then_stable_fill",
+    "stratification": ["positive_negative", "small_medium_large_positive_lesion_presence"],
+    "locked_test_included": false
+  },
   "preprocessing": {
     "input_representation": "pydicom.pixel_array.astype(float32)",
     "per_image_scaling": "(pixels-pixels.min())/max(pixels.max()-pixels.min(),1.0)",
@@ -95,7 +106,8 @@
   "development_budget": {
     "baseline": "historical Stage 10E fasterrcnn_resnet50_fpn_v2 comparison only",
     "maximum_new_variants": 1,
-    "maximum_epochs": 30,
+    "maximum_epochs": 12,
+    "minimum_epochs": 3,
     "batch_size": 1,
     "gradient_accumulation_steps": 1,
     "optimizer": "AdamW",
@@ -103,12 +115,13 @@
     "weight_decay": 0.0001,
     "gradient_clip_norm": 1.0,
     "automatic_mixed_precision": true,
+    "progress_interval_batches": 50,
     "seed": 20260806,
     "selection_split": "validation_only",
     "early_stopping": {
       "metric": "validation_AP50",
       "minimum_improvement": 0.001,
-      "patience": 4,
+      "patience": 3,
       "mode": "max"
     },
     "locked_test_used_for_selection": false
