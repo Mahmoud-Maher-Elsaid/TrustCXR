@@ -145,7 +145,7 @@ def test_malformed_output_and_defer_override_fail_closed():
     assert result["valid"] is False
     defer_output = _safe_output().model_dump()
     defer_output["defer_state"] = build_synthetic_case("defer").decision_state.model_dump()
-    defer_result = score_case(CASES["final_defer"], defer_output)
+    defer_result = score_case(_final_case("ACTIVE_DEFER"), defer_output)
     assert defer_result["valid"] is False
     assert defer_result["violations"]["PROVENANCE_ERROR"] == 1
 
