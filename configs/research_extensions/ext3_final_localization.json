@@ -2,7 +2,7 @@
   "schema_version": "trustcxr-ext3-final-localization-v1",
   "extension": "EXT-3 FINAL",
   "experiment_id": "EXT3_FINAL_FASTER_RCNN_SCALE_AWARE_DATA_EXPANSION",
-  "status": "PREPARED_NOT_TRAINED",
+  "status": "CLOSED_CONTROLLED_NEGATIVE_RESULT",
   "semantic_scope": "RSNA Lung Opacity bounding-box localization",
   "dataset": {
     "id": "RSNA_Pneumonia",

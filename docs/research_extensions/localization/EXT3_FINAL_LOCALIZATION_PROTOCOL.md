@@ -62,3 +62,25 @@ Even a passing development gate would support only technical research
 localization for RSNA Lung Opacity. It would not establish diagnosis,
 laterality, severity, causality, radiologist reasoning, or clinical use.
 The locked test remains unauthorized and untouched.
+
+## Final EXT-3 closure
+
+The governed EXT-3 run `20260816T104314Z_1786876994516321500` completed its
+fresh-development validation protocol. Epoch 1 was selected by validation AP50;
+the selected checkpoint is recorded in the tracked aggregate closure report.
+No threshold in the frozen grid satisfied both overall sensitivity at least 0.70
+and false positives per image at most 1.0. Accordingly:
+
+- `operating_point_status = UNFROZEN`;
+- `decision = FAIL_OPERATING_POINT`;
+- `disposition = CONTROLLED_NEGATIVE_LOCALIZATION_RESULT`;
+- localization integration is withheld;
+- no EXT-3B/EXT-3C rescue experiment or additional localization training is authorized;
+- the locked test remains closed (`locked_test_accessed = false`,
+  `final_test_images_accessed = 0`, `final_test_evaluation_authorized = false`).
+
+This is a technically valid controlled negative scientific result, not a crash or
+implementation failure. The exact metrics, threshold table, cohort identity, and
+bootstrap intervals are preserved in
+`reports/research_extensions/ext3/EXT3_FINAL_LOCALIZATION_CLOSURE.json` and its
+human-readable companion.
