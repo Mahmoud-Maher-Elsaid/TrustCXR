@@ -14,16 +14,28 @@ def test_gradcam_config_tracks_accepted_technical_baseline() -> None:
     assert '"ui_gate_required": true' in config
 
 
-def test_roadmap_keeps_follow_on_stages_unimplemented() -> None:
+def test_roadmap_records_current_extension_lifecycle_and_boundaries() -> None:
     roadmap = (
         ROOT / "docs/research_extensions/POST_RELEASE_RESEARCH_EXTENSION_ROADMAP.md"
     ).read_text(encoding="utf-8")
     assert "EXT-1A Explainability Foundation:** `COMPLETED`" in roadmap
     assert "EXT-1B Grad-CAM Implementation and Technical Validation:** `COMPLETED`" in roadmap
-    assert "Grad-CAM UI Integration / EXT-1C:** `BLOCKED" in roadmap
-    assert "True pathology localization:** `NOT STARTED`" in roadmap
+    assert "Grad-CAM UI Integration / EXT-1C:** `COMPLETED`" in roadmap
+    assert (
+        "EXT-3 Final RSNA Lung Opacity localization:** `CLOSED_CONTROLLED_NEGATIVE_RESULT`"
+        in roadmap
+    )
+    assert "Next authorized stage:** `EXT-4A GROUNDED LLM GOVERNANCE`" in roadmap
+    assert "True pathology localization follow-on experiments:** `CLOSED" in roadmap
     assert "Grounded LLM reporting:** `NOT STARTED`" in roadmap
     assert "Multimodal VLM:** `NOT STARTED`" in roadmap
+    assert "Class-specific model attribution" in (
+        ROOT / "docs/research_extensions/explainability/EXPLAINABILITY_CLAIMS_POLICY.md"
+    ).read_text(encoding="utf-8")
+    assert "not ground-truth localization" in (
+        ROOT / "docs/research_extensions/explainability/EXPLAINABILITY_CLAIMS_POLICY.md"
+    ).read_text(encoding="utf-8")
+    assert "FROZEN_CORE_RESEARCH_REVIEW_UI" in roadmap
 
 
 def test_explainability_policy_distinguishes_attribution_from_localization() -> None:

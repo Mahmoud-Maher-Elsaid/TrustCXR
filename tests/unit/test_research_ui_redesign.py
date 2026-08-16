@@ -205,22 +205,29 @@ def test_frozen_core_ui_final_polish_contract() -> None:
     assert "WITHHELD_INSUFFICIENT_EVIDENCE" not in html.split(marker, maxsplit=1)[0]
 
 
-def test_post_release_extension_roadmap_is_design_only() -> None:
+def test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_boundaries() -> None:
     roadmap = (
         ROOT / "docs/research_extensions/POST_RELEASE_RESEARCH_EXTENSION_ROADMAP.md"
     ).read_text(encoding="utf-8")
 
     for required in (
         "OPTIONAL_POST_RELEASE_RESEARCH_EXTENSION",
-        "Implementation status:** `NOT STARTED`",
+        "Implementation status:** `EXT-3 CLOSED — CONTROLLED NEGATIVE LOCALIZATION RESULT`",
         "Authorization:** `POST-CORE-RELEASE ONLY`",
+        "EXT-1A Explainability Foundation:** `COMPLETED`",
+        "EXT-1B Grad-CAM Implementation and Technical Validation:** `COMPLETED`",
+        "Grad-CAM UI Integration / EXT-1C:** `COMPLETED`",
+        "EXT-3 Final RSNA Lung Opacity localization:** `CLOSED_CONTROLLED_NEGATIVE_RESULT`",
+        "Next authorized stage:** `EXT-4A GROUNDED LLM GOVERNANCE`",
+        "Grounded LLM reporting:** `NOT STARTED`",
         "attention or attribution is not validated lesion localization",
         "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",
         "LOCALIZATION_ABSENCE_MUST_NOT_CONTRADICT_CLASSIFIER_EVIDENCE",
         "DETERMINISTIC_REPORTER",
         "GROUNDED_LLM_REPORTER",
         "Frozen vision models",
-        "Deterministic verifier",
+        "deterministic verifier",
+        "Stage 18 deterministic renderer remains the safe fallback",
     ):
         assert required in roadmap
 
