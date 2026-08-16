@@ -320,7 +320,7 @@ def main() -> int:
                     elapsed = time.perf_counter() - epoch_start
                     print(
                         f"EXT-3 epoch {epoch}/{maximum_epochs} batch {batch_number}/{limit} "
-                        f"loss={float(loss):.5f} elapsed={elapsed:.1f}s",
+                        f"loss={loss.detach().item():.5f} elapsed={elapsed:.1f}s",
                         flush=True,
                     )
             if args.smoke_only:

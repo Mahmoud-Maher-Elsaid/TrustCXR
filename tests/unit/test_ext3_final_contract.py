@@ -78,3 +78,8 @@ def test_ext3_preflight_is_training_only_and_strict() -> None:
     assert '"locked_test_accessed": False' in source
     assert "EXT3_FINAL_PREFLIGHT_PASS" in source
     assert "EXT3_FINAL_PREFLIGHT_FAIL" in source
+
+
+def test_ext3_progress_logging_detaches_loss_scalar() -> None:
+    source = (ROOT / "scripts/training/run_ext3_final_local.py").read_text(encoding="utf-8")
+    assert "loss.detach().item()" in source
