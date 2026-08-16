@@ -12,7 +12,9 @@
 **EXT-4B Evidence Grounding Schema:** `COMPLETED — SCHEMA ONLY`
 **EXT-4C Output Contract:** `COMPLETED — OUTPUT CONTRACT ONLY`
 **EXT-4D Hallucination / Faithfulness Benchmark:** `COMPLETED — FROZEN BENCHMARK DEFINITION ONLY`
-**Next authorized stage:** `EXT-4E MODEL / PROVIDER SELECTION AND BASELINE EXECUTION` (not started)
+**EXT-4E Model Selection Protocol:** `MODEL_SELECTION_PROTOCOL_PREPARED`
+**Next authorized stage:** `EXT-4E MODEL / PROVIDER SELECTION AND BASELINE EXECUTION` (protocol prepared; execution not started)
+**Next local execution step:** `LOCAL DEVELOPMENT CANDIDATE EXECUTION`
 **True pathology localization follow-on experiments:** `CLOSED — NO EXT-3B/EXT-3C OR ADDITIONAL LOCALIZATION TRAINING`
 **Grounded LLM reporting:** `NOT STARTED`
 **Multimodal VLM:** `NOT STARTED`
@@ -167,6 +169,7 @@ Before any extension implementation begins, require a post-core-release authoriz
 EXT-3 is closed as a controlled negative result: its frozen development operating-point gate
 was not satisfied, so localization integration remains withheld and the locked test remains
 closed. EXT-4A governance, EXT-4B evidence grounding schema, EXT-4C output contract,
-and EXT-4D benchmark definition are complete; no
+and EXT-4D benchmark definition are complete; EXT-4E1 model-selection protocol is prepared;
+no
 LLM/provider/client has been selected or implemented. The next separately authorized work
-is EXT-4E model / provider selection and baseline execution.
+is local development candidate execution under the EXT-4E protocol.
