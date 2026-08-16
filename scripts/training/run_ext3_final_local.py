@@ -3,29 +3,27 @@
 from __future__ import annotations
 
 import argparse
-import copy
 import datetime as dt
 import hashlib
 import json
 import random
 import subprocess
-import sys
 import time
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Any, Iterator
-
-# Direct script invocation must resolve repository-local imports.
-ROOT = Path(__file__).resolve().parents[2]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+from typing import Any
 
 import torch
+from scripts.training.run_ext2e_local import average_precision_50, collate
 from torch.utils.data import DataLoader, Sampler
 from torchvision.models.detection import fasterrcnn_resnet50_fpn_v2
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
-from scripts.training.run_ext2e_local import average_precision_50, collate
-from trustcxr.detection.stage10e_rsna import RsnaDetectionDataset, atomic_torch_save, seed_everything
+from trustcxr.detection.stage10e_rsna import (
+    RsnaDetectionDataset,
+    atomic_torch_save,
+    seed_everything,
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -39,7 +37,9 @@ def sha256_file(path: Path) -> str:
 def manifest_hash(manifest: dict[str, Any]) -> str:
     payload = dict(manifest)
     payload.pop("manifest_sha256", None)
-    return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
 
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -49,12 +49,19 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
 class SmallOpacityAwareSampler(Sampler[int]):
     """Deterministic weighted patient-image sampler; validation is never sampled here."""
 
-    def __init__(self, records: list[tuple[str, list[list[float]]]], manifest_rows: list[dict[str, Any]], config: dict[str, Any]) -> None:
+    def __init__(
+        self,
+        records: list[tuple[str, list[list[float]]]],
+        manifest_rows: list[dict[str, Any]],
+        config: dict[str, Any],
+    ) -> None:
         self.records = records
         self.seed = int(config["cohort"]["selection_seed"])
         self.weights = config["sampling"]["weights"]
         metadata = {row["patient_id"]: row for row in manifest_rows}
-        self.buckets: dict[str, list[int]] = {name: [] for name in ("small", "medium", "large", "negative")}
+        self.buckets: dict[str, list[int]] = {
+            name: [] for name in ("small", "medium", "large", "negative")
+        }
         for index, (patient_id, _boxes) in enumerate(records):
             row = metadata.get(patient_id)
             if row is None:
@@ -92,37 +99,58 @@ def validate_manifest(root: Path, config: dict[str, Any]) -> dict[str, Any]:
     manifest = json.loads(path.read_text(encoding="utf-8"))
     if manifest.get("manifest_sha256") != manifest_hash(manifest):
         raise RuntimeError("EXT-3 cohort manifest hash mismatch.")
-    if manifest.get("locked_test_included") is not False or manifest.get("parent_validation_included") is not False:
+    if (
+        manifest.get("locked_test_included") is not False
+        or manifest.get("parent_validation_included") is not False
+    ):
         raise RuntimeError("EXT-3 cohort includes forbidden validation or test records.")
     train = manifest["splits"]["train"]
     validation = manifest["splits"]["validation"]
-    if len(train) != config["cohort"]["target_train_patients"] or len(validation) != config["cohort"]["target_validation_patients"]:
+    if (
+        len(train) != config["cohort"]["target_train_patients"]
+        or len(validation) != config["cohort"]["target_validation_patients"]
+    ):
         raise RuntimeError("EXT-3 cohort patient counts do not match the frozen targets.")
     train_ids = {row["patient_id"] for row in train}
     validation_ids = {row["patient_id"] for row in validation}
     if train_ids & validation_ids:
         raise RuntimeError("EXT-3 cohort patient leakage detected.")
-    if sha256_file(root / config["dataset"]["parent_split"]).lower() != config["dataset"]["parent_split_sha256"].lower():
+    if (
+        sha256_file(root / config["dataset"]["parent_split"]).lower()
+        != config["dataset"]["parent_split_sha256"].lower()
+    ):
         raise RuntimeError("EXT-3 parent split hash mismatch.")
     return manifest
 
 
 def validate_config(root: Path, config: dict[str, Any]) -> None:
-    branch = subprocess.check_output(["git", "branch", "--show-current"], cwd=root, text=True).strip()
+    branch = subprocess.check_output(
+        ["git", "branch", "--show-current"], cwd=root, text=True
+    ).strip()
     if branch != "research-extension/pathology-localization":
         raise RuntimeError("EXT-3 requires research-extension/pathology-localization.")
     if config["model"]["architecture"] != "fasterrcnn_resnet50_fpn_v2":
         raise RuntimeError("EXT-3 architecture changed.")
     if config["training"]["amp"] is not False:
         raise RuntimeError("EXT-3 requires FP32 training.")
-    if config["lock_policy"]["locked_test_accessed"] or config["lock_policy"]["final_test_evaluation_authorized"]:
+    if (
+        config["lock_policy"]["locked_test_accessed"]
+        or config["lock_policy"]["final_test_evaluation_authorized"]
+    ):
         raise RuntimeError("EXT-3 locked-test protection is disabled.")
     if config["training"]["maximum_epochs"] != 12 or config["training"]["minimum_epochs"] != 3:
         raise RuntimeError("EXT-3 epoch budget changed.")
-    if config["sampling"]["replacement"] is not True or config["sampling"]["negative_images_retained"] is not True:
+    if (
+        config["sampling"]["replacement"] is not True
+        or config["sampling"]["negative_images_retained"] is not True
+    ):
         raise RuntimeError("EXT-3 sampling policy changed.")
     checkpoint = root / config["model"]["initialization_checkpoint"]
-    if not checkpoint.is_file() or sha256_file(checkpoint).lower() != config["model"]["initialization_checkpoint_sha256"].lower():
+    if (
+        not checkpoint.is_file()
+        or sha256_file(checkpoint).lower()
+        != config["model"]["initialization_checkpoint_sha256"].lower()
+    ):
         raise RuntimeError("EXT-2E initialization checkpoint SHA-256 mismatch.")
 
 
@@ -152,26 +180,49 @@ def finite_targets(images: list[torch.Tensor], targets: list[dict[str, torch.Ten
         boxes = target["boxes"]
         if boxes.ndim != 2 or boxes.shape[-1] != 4 or not torch.isfinite(boxes).all():
             raise RuntimeError("EXT-3 target boxes are invalid or non-finite.")
-        if len(boxes) and ((boxes[:, 2] <= boxes[:, 0]).any() or (boxes[:, 3] <= boxes[:, 1]).any()):
+        if len(boxes) and (
+            (boxes[:, 2] <= boxes[:, 0]).any() or (boxes[:, 3] <= boxes[:, 1]).any()
+        ):
             raise RuntimeError("EXT-3 target boxes have non-positive area.")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run EXT-3 final localization development.")
     parser.add_argument("--project-root", type=Path, required=True)
-    parser.add_argument("--config", type=Path, default=Path("configs/research_extensions/ext3_final_localization.json"))
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/research_extensions/ext3_final_localization.json"),
+    )
     parser.add_argument("--smoke-only", action="store_true")
     args = parser.parse_args()
     root = args.project_root.resolve()
-    config = json.loads(((root / args.config) if not args.config.is_absolute() else args.config).read_text(encoding="utf-8"))
+    config = json.loads(
+        ((root / args.config) if not args.config.is_absolute() else args.config).read_text(
+            encoding="utf-8"
+        )
+    )
     validate_config(root, config)
     manifest = validate_manifest(root, config)
     if not torch.cuda.is_available():
         raise RuntimeError("EXT-3 requires the governed CUDA environment.")
     seed_everything(config["training"]["seed"])
-    output = root / "artifacts/research_extensions/ext3_final_runs" / f"{dt.datetime.now(dt.UTC).strftime('%Y%m%dT%H%M%SZ')}_{time.time_ns()}"
+    output = (
+        root
+        / "artifacts/research_extensions/ext3_final_runs"
+        / f"{dt.datetime.now(dt.UTC).strftime('%Y%m%dT%H%M%SZ')}_{time.time_ns()}"
+    )
     output.mkdir(parents=True, exist_ok=False)
-    summary: dict[str, Any] = {"stage": "EXT-3 FINAL", "experiment_id": config["experiment_id"], "status": "RUNNING", "run_id": output.name, "locked_test_accessed": False, "final_test_images_accessed": 0, "selected_checkpoint": None, "smoke_only": args.smoke_only}
+    summary: dict[str, Any] = {
+        "stage": "EXT-3 FINAL",
+        "experiment_id": config["experiment_id"],
+        "status": "RUNNING",
+        "run_id": output.name,
+        "locked_test_accessed": False,
+        "final_test_images_accessed": 0,
+        "selected_checkpoint": None,
+        "smoke_only": args.smoke_only,
+    }
     write_json(output / "run_summary.json", summary)
     started = time.perf_counter()
     try:
@@ -184,16 +235,44 @@ def main() -> int:
         train_dataset.records = [row for row in train_dataset.records if row[0] in train_ids]
         validation_dataset = None
         if not args.smoke_only:
-            validation_dataset = RsnaDetectionDataset(annotation, image_root, split_path, "train", 0.0)
-            validation_dataset.records = [row for row in validation_dataset.records if row[0] in validation_ids]
+            validation_dataset = RsnaDetectionDataset(
+                annotation, image_root, split_path, "train", 0.0
+            )
+            validation_dataset.records = [
+                row for row in validation_dataset.records if row[0] in validation_ids
+            ]
         if not train_dataset.records or (not args.smoke_only and not validation_dataset.records):
             raise RuntimeError("EXT-3 cohort resolved no records.")
-        sampler = SmallOpacityAwareSampler(train_dataset.records, manifest["splits"]["train"], config)
-        train_loader = DataLoader(train_dataset, batch_size=1, sampler=sampler, num_workers=0, collate_fn=collate, pin_memory=True)
-        validation_loader = None if validation_dataset is None else DataLoader(validation_dataset, batch_size=1, shuffle=False, num_workers=0, collate_fn=collate, pin_memory=True)
+        sampler = SmallOpacityAwareSampler(
+            train_dataset.records, manifest["splits"]["train"], config
+        )
+        train_loader = DataLoader(
+            train_dataset,
+            batch_size=1,
+            sampler=sampler,
+            num_workers=0,
+            collate_fn=collate,
+            pin_memory=True,
+        )
+        validation_loader = (
+            None
+            if validation_dataset is None
+            else DataLoader(
+                validation_dataset,
+                batch_size=1,
+                shuffle=False,
+                num_workers=0,
+                collate_fn=collate,
+                pin_memory=True,
+            )
+        )
         device = torch.device("cuda")
         model = build_model(config, root / config["model"]["initialization_checkpoint"]).to(device)
-        optimizer = torch.optim.AdamW(model.parameters(), lr=config["training"]["learning_rate"], weight_decay=config["training"]["weight_decay"])
+        optimizer = torch.optim.AdamW(
+            model.parameters(),
+            lr=config["training"]["learning_rate"],
+            weight_decay=config["training"]["weight_decay"],
+        )
         best_ap50, best_epoch, patience = -1.0, 0, 0
         history: list[dict[str, Any]] = []
         maximum_epochs = 1 if args.smoke_only else config["training"]["maximum_epochs"]
@@ -202,13 +281,20 @@ def main() -> int:
             model.train()
             loss_sum = 0.0
             epoch_start = time.perf_counter()
-            limit = min(config["training"]["smoke_batches"], len(train_loader)) if args.smoke_only else len(train_loader)
+            limit = (
+                min(config["training"]["smoke_batches"], len(train_loader))
+                if args.smoke_only
+                else len(train_loader)
+            )
             for batch_number, (images, targets) in enumerate(train_loader, start=1):
                 if batch_number > limit:
                     break
                 finite_targets(images, targets)
                 images = [image.to(device, non_blocking=True) for image in images]
-                targets = [{key: value.to(device, non_blocking=True) for key, value in target.items()} for target in targets]
+                targets = [
+                    {key: value.to(device, non_blocking=True) for key, value in target.items()}
+                    for target in targets
+                ]
                 optimizer.zero_grad(set_to_none=True)
                 losses = model(images, targets)
                 if any(not torch.isfinite(value).all() for value in losses.values()):
@@ -217,16 +303,34 @@ def main() -> int:
                 if not torch.isfinite(loss).all():
                     raise RuntimeError("EXT-3 encountered a non-finite total loss.")
                 loss.backward()
-                if any(parameter.grad is not None and not torch.isfinite(parameter.grad).all() for parameter in model.parameters()):
+                if any(
+                    parameter.grad is not None and not torch.isfinite(parameter.grad).all()
+                    for parameter in model.parameters()
+                ):
                     raise RuntimeError("EXT-3 encountered non-finite gradients.")
-                torch.nn.utils.clip_grad_norm_(model.parameters(), config["training"]["gradient_clip_norm"])
+                torch.nn.utils.clip_grad_norm_(
+                    model.parameters(), config["training"]["gradient_clip_norm"]
+                )
                 optimizer.step()
                 loss_sum += float(loss.detach().cpu())
-                if batch_number % config["training"]["progress_interval_batches"] == 0 or batch_number == limit:
+                if (
+                    batch_number % config["training"]["progress_interval_batches"] == 0
+                    or batch_number == limit
+                ):
                     elapsed = time.perf_counter() - epoch_start
-                    print(f"EXT-3 epoch {epoch}/{maximum_epochs} batch {batch_number}/{limit} loss={float(loss):.5f} elapsed={elapsed:.1f}s", flush=True)
+                    print(
+                        f"EXT-3 epoch {epoch}/{maximum_epochs} batch {batch_number}/{limit} "
+                        f"loss={float(loss):.5f} elapsed={elapsed:.1f}s",
+                        flush=True,
+                    )
             if args.smoke_only:
-                summary.update({"status": "SMOKE_PASSED", "smoke_batches_completed": limit, "wall_clock_seconds": time.perf_counter() - started})
+                summary.update(
+                    {
+                        "status": "SMOKE_PASSED",
+                        "smoke_batches_completed": limit,
+                        "wall_clock_seconds": time.perf_counter() - started,
+                    }
+                )
                 write_json(output / "run_summary.json", summary)
                 print("EXT-3 FP32 NUMERICAL SMOKE PASSED", flush=True)
                 return 0
@@ -235,30 +339,72 @@ def main() -> int:
             with torch.inference_mode():
                 for images, batch_targets in validation_loader:
                     outputs = model([image.to(device, non_blocking=True) for image in images])
-                    predictions.extend([{key: value.detach().cpu() for key, value in item.items()} for item in outputs])
-                    targets_cpu.extend([{key: value.detach().cpu() for key, value in item.items()} for item in batch_targets])
+                    predictions.extend(
+                        [
+                            {key: value.detach().cpu() for key, value in item.items()}
+                            for item in outputs
+                        ]
+                    )
+                    targets_cpu.extend(
+                        [
+                            {key: value.detach().cpu() for key, value in item.items()}
+                            for item in batch_targets
+                        ]
+                    )
             ap50 = average_precision_50(predictions, targets_cpu)
             improved = ap50 > best_ap50 + config["training"]["early_stopping_minimum_improvement"]
             if improved:
                 best_ap50, best_epoch, patience = ap50, epoch, 0
             else:
                 patience += 1
-            payload = {"model_state": model.state_dict(), "optimizer_state": optimizer.state_dict(), "epoch": epoch, "validation_ap50": ap50, "selection_split": "fresh_ext3_validation_only"}
+            payload = {
+                "model_state": model.state_dict(),
+                "optimizer_state": optimizer.state_dict(),
+                "epoch": epoch,
+                "validation_ap50": ap50,
+                "selection_split": "fresh_ext3_validation_only",
+            }
             atomic_torch_save(payload, output / "last_checkpoint.pt")
             if improved:
                 atomic_torch_save(payload, output / "best_validation_checkpoint.pt")
-            history.append({"epoch": epoch, "train_loss": loss_sum / max(limit, 1), "validation_AP50": ap50})
-            print(f"EXT-3 epoch {epoch} summary: loss={history[-1]['train_loss']:.5f} AP50={ap50:.5f} best_epoch={best_epoch} patience={patience}", flush=True)
-            if epoch >= config["training"]["minimum_epochs"] and patience >= config["training"]["early_stopping_patience"]:
+            history.append(
+                {"epoch": epoch, "train_loss": loss_sum / max(limit, 1), "validation_AP50": ap50}
+            )
+            print(
+                f"EXT-3 epoch {epoch} summary: "
+                f"loss={history[-1]['train_loss']:.5f} AP50={ap50:.5f} "
+                f"best_epoch={best_epoch} patience={patience}",
+                flush=True,
+            )
+            if (
+                epoch >= config["training"]["minimum_epochs"]
+                and patience >= config["training"]["early_stopping_patience"]
+            ):
                 break
         if best_epoch == 0:
             raise RuntimeError("EXT-3 produced no validation-selected checkpoint.")
         write_json(output / "history.json", {"history": history})
-        summary.update({"status": "COMPLETED_VALIDATION_ONLY_DEVELOPMENT", "best_epoch": best_epoch, "best_validation_AP50": best_ap50, "selected_checkpoint": "best_validation_checkpoint.pt", "checkpoint_sha256": sha256_file(output / "best_validation_checkpoint.pt"), "epochs_completed": len(history), "wall_clock_seconds": time.perf_counter() - started})
+        summary.update(
+            {
+                "status": "COMPLETED_VALIDATION_ONLY_DEVELOPMENT",
+                "best_epoch": best_epoch,
+                "best_validation_AP50": best_ap50,
+                "selected_checkpoint": "best_validation_checkpoint.pt",
+                "checkpoint_sha256": sha256_file(output / "best_validation_checkpoint.pt"),
+                "epochs_completed": len(history),
+                "wall_clock_seconds": time.perf_counter() - started,
+            }
+        )
         write_json(output / "run_summary.json", summary)
         return 0
     except KeyboardInterrupt:
-        summary.update({"status": "ABORTED", "selected_checkpoint": None, "stopping_reason": "KEYBOARD_INTERRUPT"})
+        summary.update(
+            {
+                "status": "ABORTED",
+                "selected_checkpoint": None,
+                "stopping_reason": "KEYBOARD_INTERRUPT",
+            }
+        )
         write_json(output / "run_summary.json", summary)
         return 130
     except Exception as error:

@@ -46,7 +46,9 @@ def parent_train_ids(split_path: Path) -> set[str]:
         connection.close()
 
 
-def size_strata(boxes: list[tuple[float, float, float, float]], width: int, height: int) -> list[str]:
+def size_strata(
+    boxes: list[tuple[float, float, float, float]], width: int, height: int
+) -> list[str]:
     result: set[str] = set()
     denominator = float(width * height)
     for x, y, box_width, box_height in boxes:
@@ -62,7 +64,9 @@ def size_strata(boxes: list[tuple[float, float, float, float]], width: int, heig
     return sorted(result)
 
 
-def load_train_records(annotation_csv: Path, image_root: Path, split_path: Path) -> list[dict[str, Any]]:
+def load_train_records(
+    annotation_csv: Path, image_root: Path, split_path: Path
+) -> list[dict[str, Any]]:
     allowed = parent_train_ids(split_path)
     grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
     with annotation_csv.open(encoding="utf-8-sig", newline="") as handle:
@@ -97,9 +101,7 @@ def load_train_records(annotation_csv: Path, image_root: Path, split_path: Path)
                 "height": height,
                 "boxes_xywh": boxes,
                 "positive": bool(boxes),
-                "size_strata": size_strata(
-                    [tuple(box) for box in boxes], width, height
-                ),
+                "size_strata": size_strata([tuple(box) for box in boxes], width, height),
             }
         )
     return records
@@ -161,10 +163,14 @@ def build_payload(root: Path, config: dict[str, Any]) -> dict[str, Any]:
         root / config["dataset"]["image_root"],
         split_path,
     )
-    validation = select_stratified(records, cohort["target_validation_patients"], cohort["selection_seed"])
+    validation = select_stratified(
+        records, cohort["target_validation_patients"], cohort["selection_seed"]
+    )
     validation_ids = {row["patient_id"] for row in validation}
     remaining = [row for row in records if row["patient_id"] not in validation_ids]
-    train = select_stratified(remaining, cohort["target_train_patients"], cohort["selection_seed"] + 1)
+    train = select_stratified(
+        remaining, cohort["target_train_patients"], cohort["selection_seed"] + 1
+    )
     train_ids = {row["patient_id"] for row in train}
     if train_ids & validation_ids:
         raise RuntimeError("EXT-3 train/validation patient overlap detected.")
@@ -189,7 +195,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Build the final EXT-3 patient-safe cohort.")
     parser.add_argument("--project-root", type=Path, required=True)
     parser.add_argument(
-        "--config", type=Path, default=Path("configs/research_extensions/ext3_final_localization.json")
+        "--config",
+        type=Path,
+        default=Path("configs/research_extensions/ext3_final_localization.json"),
     )
     args = parser.parse_args()
     root = args.project_root.resolve()
@@ -201,7 +209,16 @@ def main() -> int:
     payload = build_payload(root, config)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps({"manifest": str(output), "manifest_sha256": payload["manifest_sha256"], "patient_counts": payload["patient_counts"]}, indent=2))
+    print(
+        json.dumps(
+            {
+                "manifest": str(output),
+                "manifest_sha256": payload["manifest_sha256"],
+                "patient_counts": payload["patient_counts"],
+            },
+            indent=2,
+        )
+    )
     return 0
 
 

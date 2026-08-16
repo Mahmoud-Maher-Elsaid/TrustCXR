@@ -7,7 +7,11 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def load_config() -> dict:
-    return json.loads((ROOT / "configs/research_extensions/ext3_final_localization.json").read_text(encoding="utf-8"))
+    return json.loads(
+        (ROOT / "configs/research_extensions/ext3_final_localization.json").read_text(
+            encoding="utf-8"
+        )
+    )
 
 
 def test_ext3_final_model_and_initialization_are_frozen() -> None:
@@ -15,7 +19,10 @@ def test_ext3_final_model_and_initialization_are_frozen() -> None:
     assert config["experiment_id"] == "EXT3_FINAL_FASTER_RCNN_SCALE_AWARE_DATA_EXPANSION"
     assert config["model"]["architecture"] == "fasterrcnn_resnet50_fpn_v2"
     assert config["model"]["min_size"] == config["model"]["max_size"] == 1024
-    assert config["model"]["initialization_checkpoint_sha256"] == "a668edf0166643ab533a32a3d823b43f6e606dbce479654bfe76ed74bf00484d"
+    assert (
+        config["model"]["initialization_checkpoint_sha256"]
+        == "a668edf0166643ab533a32a3d823b43f6e606dbce479654bfe76ed74bf00484d"
+    )
 
 
 def test_ext3_final_cohorts_are_fresh_and_locked() -> None:
@@ -34,7 +41,12 @@ def test_ext3_final_sampling_and_training_policy_are_single_fixed_policy() -> No
     assert config["sampling"]["policy_id"] == "EXT3_FIXED_SMALL_OPACITY_AWARE_WEIGHTED_SAMPLER_V1"
     assert config["sampling"]["replacement"] is True
     assert config["sampling"]["negative_images_retained"] is True
-    assert config["sampling"]["weights"] == {"negative": 1.0, "small": 3.0, "medium": 1.5, "large": 1.0}
+    assert config["sampling"]["weights"] == {
+        "negative": 1.0,
+        "small": 3.0,
+        "medium": 1.5,
+        "large": 1.0,
+    }
     assert config["training"]["amp"] is False
     assert config["training"]["maximum_epochs"] == 12
     assert config["training"]["early_stopping_metric"] == "validation_AP50"
