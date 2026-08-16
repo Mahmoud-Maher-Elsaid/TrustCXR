@@ -1,0 +1,210 @@
+{
+  "schema_version": "trustcxr-ext4a-grounded-llm-governance-v1",
+  "extension": "EXT-4A",
+  "status": "GOVERNANCE_COMPLETED_IMPLEMENTATION_NOT_STARTED",
+  "scientific_question": "Can a grounded language model transform governed TrustCXR structured evidence into useful research-review language while preserving evidence fidelity, provenance, uncertainty, DEFER states, and unsupported-claim refusal?",
+  "null_outcome": "RETAIN_DETERMINISTIC_REPORTING",
+  "scope": {
+    "text_grounded_structured_evidence_only": true,
+    "raw_image_input": "FORBIDDEN",
+    "clinical_decision_support": "FORBIDDEN",
+    "replacement_of_stage18": "FORBIDDEN",
+    "implementation_started": false,
+    "provider_selected": false,
+    "external_api_called": false,
+    "locked_test_accessed": false
+  },
+  "frozen_core_authority": [
+    "stage5_view_and_quality_evidence",
+    "stage9_classifier_evidence",
+    "stage16_predictive_uncertainty",
+    "stage17_deterministic_evidence_integration_and_defer",
+    "stage18_deterministic_report",
+    "stage19_deterministic_verifier",
+    "stage20_final_research_review_decision"
+  ],
+  "localization_boundary": {
+    "ext3_status": "CONTROLLED_NEGATIVE_LOCALIZATION_RESULT",
+    "operating_point": "UNFROZEN",
+    "integration_status": "WITHHELD_NOT_ACCEPTED_FOR_TRUSTED_INTEGRATION",
+    "gradcam_status": "ATTRIBUTION_ONLY_NOT_LESION_LOCALIZATION"
+  },
+  "evidence_states": [
+    "SUPPORTED",
+    "PARTIALLY_SUPPORTED",
+    "WITHHELD",
+    "CONTRADICTED",
+    "NOT_AVAILABLE",
+    "NOT_APPLICABLE"
+  ],
+  "evidence_state_rules": [
+    "missing evidence is not negative evidence",
+    "missing evidence is not positive evidence",
+    "withheld evidence is not permission to infer",
+    "DEFER remains DEFER",
+    "uncertainty must not be silently omitted when materially relevant",
+    "failed localization does not imply pathology absence",
+    "classifier score is not definitive diagnosis"
+  ],
+  "input_field_governance": {
+    "currently_available_allowed": [
+      "stage5.view.selected",
+      "stage5.technical_quality_proxy",
+      "stage9.classifier_scores",
+      "stage16.predictive_uncertainty",
+      "stage11.fusion_status",
+      "stage17.defer_reason_codes",
+      "stage18.report.statements",
+      "stage19.verifier_statuses",
+      "stage20.decisions",
+      "provenance",
+      "limitations"
+    ],
+    "conditionally_allowed": [
+      "evidence availability status",
+      "explicit uncertainty explanation",
+      "safe source-stage and source-field references",
+      "withheld-field markers"
+    ],
+    "not_currently_available": [
+      "model-generated claim-level grounding annotations",
+      "LLM output attribution records",
+      "provider/model revision identity"
+    ],
+    "forbidden": [
+      "raw CXR image",
+      "DICOM file or metadata",
+      "patient name",
+      "MRN",
+      "patient ID",
+      "date of birth",
+      "address or contact information",
+      "ungoverned clinical history",
+      "raw hidden patient metadata",
+      "locked-test membership",
+      "direct local dataset-directory access",
+      "raw training labels outside governed case evidence"
+    ]
+  },
+  "allowed_output_categories": [
+    "research_review_summary",
+    "structured_evidence_explanation",
+    "uncertainty_statement",
+    "limitations",
+    "defer_reason",
+    "evidence_provenance",
+    "contradiction_for_expert_review",
+    "expert_review_question_or_flag"
+  ],
+  "forbidden_claim_categories": [
+    "definitive_diagnosis",
+    "treatment_or_management_recommendation",
+    "causal_conclusion",
+    "prognosis",
+    "severity",
+    "laterality",
+    "anatomical_or_lesion_localization",
+    "disease_progression",
+    "patient_history_or_demographics",
+    "ungoverned_clinical_urgency",
+    "fabricated_measurement",
+    "fabricated_uncertainty",
+    "fabricated_provenance",
+    "DEFER_override",
+    "WITHHELD_as_negative",
+    "external_validation_claim",
+    "clinical_deployment_readiness",
+    "patient_has_upgrade_from_model_evidence_suggests"
+  ],
+  "faithfulness_taxonomy": [
+    "UNSUPPORTED_CLAIM",
+    "CONTRADICTED_CLAIM",
+    "PROVENANCE_ERROR",
+    "OMISSION_OF_MATERIAL_LIMITATION",
+    "DEFER_VIOLATION",
+    "WITHHELD_EVIDENCE_VIOLATION",
+    "FABRICATED_DETAIL",
+    "UNSUPPORTED_LOCALIZATION",
+    "UNSUPPORTED_SEVERITY",
+    "UNSUPPORTED_LATERALITY",
+    "EVIDENCE_POLARITY_ERROR"
+  ],
+  "abstention_contract": [
+    "malformed structured input fails closed",
+    "unavailable evidence is stated as unavailable",
+    "conflicting evidence is surfaced rather than reconciled by invention",
+    "missing provenance prevents attributed claims",
+    "active DEFER cannot be overridden",
+    "unsupported medical reasoning is declined explicitly"
+  ],
+  "provenance_requirements": [
+    "source field identity",
+    "source stage",
+    "source status",
+    "safe source value where permitted",
+    "withheld-state handling",
+    "uncertainty source",
+    "verifier state",
+    "no fabricated citations"
+  ],
+  "deterministic_baseline": {
+    "component": "Stage 18 deterministic renderer",
+    "role": "frozen baseline and safe fallback",
+    "replacement_allowed": false,
+    "future_comparison_dimensions": [
+      "faithfulness",
+      "unsupported_claims",
+      "contradiction_handling",
+      "DEFER_compliance",
+      "provenance",
+      "material_limitation_omission",
+      "readability_and_usefulness",
+      "stability"
+    ]
+  },
+  "provider_governance": {
+    "provider_selection": "NOT_AUTHORIZED",
+    "external_provider": "REQUIRES_SEPARATE_EXPLICIT_PRIVACY_DECISION",
+    "selection_requirements": [
+      "local_or_offline capability",
+      "data retention and provider logging",
+      "regional privacy implications",
+      "structured output support",
+      "reproducibility and version pinning",
+      "model revision identity",
+      "deterministic controls",
+      "cost and availability",
+      "latency and resource requirements"
+    ]
+  },
+  "benchmark_categories": [
+    "normal_complete_evidence",
+    "high_confidence_evidence",
+    "high_uncertainty",
+    "DEFER",
+    "missing_evidence",
+    "withheld_localization",
+    "conflicting_evidence",
+    "classifier_positive_localization_unavailable",
+    "low_quality_or_view_issue",
+    "malformed_structured_context",
+    "unsupported_user_request",
+    "provenance_sensitive_case"
+  ],
+  "stopping_rules": [
+    "definitions cannot change after benchmark results are observed",
+    "difficult cases cannot be removed because the model fails",
+    "provider or model switching requires a predefined selection protocol",
+    "final benchmark cannot be used for prompt tuning",
+    "locked test remains prohibited",
+    "subjective examples alone cannot establish success",
+    "faithfulness or safety gate failure blocks integration"
+  ],
+  "possible_final_outcomes": [
+    "ACCEPT_GROUNDED_LLM_RESEARCH_EXTENSION",
+    "RETAIN_DETERMINISTIC_REPORTING",
+    "WITHHOLD_LLM_DUE_TO_FAITHFULNESS_RISK",
+    "TECHNICALLY_INVALID_LLM_EXPERIMENT"
+  ],
+  "next_stage": "EXT-4B EVIDENCE GROUNDING SCHEMA"
+}

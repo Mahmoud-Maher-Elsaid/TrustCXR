@@ -1,20 +1,21 @@
 # TrustCXR Post-Release Research Extension Roadmap
 
 **Classification:** `OPTIONAL_POST_RELEASE_RESEARCH_EXTENSION`
-**Implementation status:** `EXT-3 CLOSED — CONTROLLED NEGATIVE LOCALIZATION RESULT`
+**Implementation status:** `EXT-4A GOVERNANCE COMPLETED — IMPLEMENTATION NOT STARTED`
 **Authorization:** `POST-CORE-RELEASE ONLY`
 
 **EXT-1A Explainability Foundation:** `COMPLETED` (governance and compatibility audit only)
 **EXT-1B Grad-CAM Implementation and Technical Validation:** `COMPLETED`
 **Grad-CAM UI Integration / EXT-1C:** `COMPLETED`
 **EXT-3 Final RSNA Lung Opacity localization:** `CLOSED_CONTROLLED_NEGATIVE_RESULT` (operating point unfrozen; localization integration withheld)
-**Next authorized stage:** `EXT-4A GROUNDED LLM GOVERNANCE` (not started)
+**EXT-4A Grounded LLM Governance:** `COMPLETED — GOVERNANCE ONLY`
+**Next authorized stage:** `EXT-4B EVIDENCE GROUNDING SCHEMA` (not started)
 **True pathology localization follow-on experiments:** `CLOSED — NO EXT-3B/EXT-3C OR ADDITIONAL LOCALIZATION TRAINING`
 **Grounded LLM reporting:** `NOT STARTED`
 **Multimodal VLM:** `NOT STARTED`
 
 ```text
-IMPLEMENTATION STATUS: EXT-3 CLOSED — CONTROLLED NEGATIVE LOCALIZATION RESULT
+IMPLEMENTATION STATUS: EXT-4A GOVERNANCE COMPLETED — IMPLEMENTATION NOT STARTED
 AUTHORIZATION: POST-CORE-RELEASE ONLY
 ```
 
@@ -162,5 +163,5 @@ Before any extension implementation begins, require a post-core-release authoriz
 
 EXT-3 is closed as a controlled negative result: its frozen development operating-point gate
 was not satisfied, so localization integration remains withheld and the locked test remains
-closed. The next separately authorized work is EXT-4A governance; this roadmap does not
-authorize implementation of that stage.
+closed. EXT-4A has now completed governance only; no LLM/provider/client has been selected
+or implemented. The next separately authorized work is EXT-4B evidence grounding schema.
