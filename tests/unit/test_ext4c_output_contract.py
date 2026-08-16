@@ -177,6 +177,7 @@ def test_partial_support_cannot_be_upgraded_and_defer_is_non_overridable():
     defer = build_synthetic_case("defer")
     with pytest.raises(ValidationError):
         _output(
+            "defer",
             claims=(
                 OutputClaim(
                     claim_id="claim_override",
@@ -186,9 +187,26 @@ def test_partial_support_cannot_be_upgraded_and_defer_is_non_overridable():
                     supporting_evidence_ids=("stage9_signal_01",),
                     provenance_refs=("stage9_signal_01",),
                 ),
-            )
+            ),
         )
     assert defer.decision_state.non_overridable
+
+
+def test_active_defer_with_deferred_status_is_accepted():
+    output = _output(
+        "defer",
+        status=GenerationStatus.DEFERRED,
+        claims=(
+            OutputClaim(
+                claim_id="claim_defer",
+                claim_type=OutputClaimType.DEFER_REASON,
+                text="The governed decision remains deferred for expert review.",
+                support_status=EvidenceStatus.NOT_AVAILABLE,
+            ),
+        ),
+    )
+    assert output.defer_state.defer_active
+    assert output.generation_status == GenerationStatus.DEFERRED
 
 
 def test_uncertainty_limitation_and_contradiction_are_structured():

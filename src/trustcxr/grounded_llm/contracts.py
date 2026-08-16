@@ -436,6 +436,11 @@ class GroundedOutputEnvelope(ContractModel):
             if not set(contradiction.evidence_ids).issubset(evidence):
                 raise ValueError("Contradiction references nonexistent evidence ID")
         if self.defer_state.defer_active:
+            if self.generation_status not in {
+                GenerationStatus.DEFERRED,
+                GenerationStatus.ABSTAINED,
+            }:
+                raise ValueError("Active DEFER requires deferred or abstained generation status")
             allowed = {
                 OutputClaimType.DEFER_REASON,
                 OutputClaimType.LIMITATION_STATEMENT,
@@ -444,11 +449,6 @@ class GroundedOutputEnvelope(ContractModel):
             }
             if any(claim.claim_type not in allowed for claim in self.claims):
                 raise ValueError("Active DEFER cannot be overridden by a confident claim")
-            if self.generation_status not in {
-                GenerationStatus.DEFERRED,
-                GenerationStatus.ABSTAINED,
-            }:
-                raise ValueError("Active DEFER requires deferred or abstained generation status")
         if self.generation_status == GenerationStatus.COMPLETED and not self.claims:
             raise ValueError("Completed output requires structured claims")
         return self
