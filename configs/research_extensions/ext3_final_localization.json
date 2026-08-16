@@ -1,0 +1,124 @@
+{
+  "schema_version": "trustcxr-ext3-final-localization-v1",
+  "extension": "EXT-3 FINAL",
+  "experiment_id": "EXT3_FINAL_FASTER_RCNN_SCALE_AWARE_DATA_EXPANSION",
+  "status": "PREPARED_NOT_TRAINED",
+  "semantic_scope": "RSNA Lung Opacity bounding-box localization",
+  "dataset": {
+    "id": "RSNA_Pneumonia",
+    "annotation_semantics": "Lung Opacity",
+    "annotation_csv": "TrustCXR-Data/06_RSNA_Pneumonia/rsna-pneumonia-detection-challenge/stage_2_train_labels.csv",
+    "image_root": "TrustCXR-Data/06_RSNA_Pneumonia/rsna-pneumonia-detection-challenge/stage_2_train_images",
+    "parent_split": "artifacts/stage10/stage10d_rsna_patient_splits.sqlite",
+    "parent_split_sha256": "CC9F1A8C639843CAFA8E83135868D8C283E5FE6B35F6498EC5B70DF67580F3D2",
+    "identity_field": "patientId",
+    "locked_test_allowed": false
+  },
+  "cohort": {
+    "manifest_path": "artifacts/research_extensions/ext3_final_cohort/manifest.json",
+    "selection_seed": 20260816,
+    "selection_algorithm": "train_parent_only_stratified_stable_hash_validation_first_then_train_fill",
+    "source_allocation": "parent_training_only",
+    "target_train_patients": 12000,
+    "target_validation_patients": 1500,
+    "train_patients": null,
+    "validation_patients": null,
+    "manifest_sha256": null,
+    "locked_test_included": false,
+    "parent_validation_included": false,
+    "patient_overlap_required": 0
+  },
+  "annotation_contract": {
+    "source_box_convention": "XYWH",
+    "converted_box_convention": "XYXY",
+    "coordinate_space": "original_RSNA_DICOM_pixel_coordinates",
+    "lesion_area_formula": "(x2-x1)*(y2-y1)",
+    "image_area_denominator": "original_DICOM_height*original_DICOM_width",
+    "size_bins": {
+      "small": [0.0, 0.02],
+      "medium": [0.02, 0.1],
+      "large": [0.1, 1.0]
+    },
+    "boundary_inclusivity": "small_left_closed_right_open; medium_left_closed_right_open; large_left_closed_right_closed",
+    "invalid_box_policy": "fail_closed"
+  },
+  "model": {
+    "architecture": "fasterrcnn_resnet50_fpn_v2",
+    "torchvision_constructor": "torchvision.models.detection.fasterrcnn_resnet50_fpn_v2",
+    "num_classes": 2,
+    "classes": ["background", "Lung Opacity"],
+    "min_size": 1024,
+    "max_size": 1024,
+    "initialization": "EXT2E_BEST_VALIDATION_CHECKPOINT_STRICT_STATE_DICT",
+    "initialization_checkpoint": "artifacts/research_extensions/ext2e_runs/20260815T112946Z_1786793386180543800/best_validation_checkpoint.pt",
+    "initialization_checkpoint_sha256": "a668edf0166643ab533a32a3d823b43f6e606dbce479654bfe76ed74bf00484d",
+    "incompatible_initialization_policy": "fail_closed_no_partial_load"
+  },
+  "preprocessing": {
+    "pixel_dtype": "float32",
+    "pixel_scaling": "(pixels-min)/(max-min clamped at 1.0)",
+    "channels": "grayscale repeated to RGB",
+    "detector_resize": "torchvision GeneralizedRCNNTransform min_size=1024 max_size=1024",
+    "normalization": "torchvision detector ImageNet mean/std",
+    "training_augmentation": "horizontal_flip_probability=0.5 with exact XYXY box transform",
+    "validation_augmentation": "none"
+  },
+  "sampling": {
+    "policy_id": "EXT3_FIXED_SMALL_OPACITY_AWARE_WEIGHTED_SAMPLER_V1",
+    "unit": "patient_image_record",
+    "replacement": true,
+    "draws_per_epoch": "training_cohort_image_count",
+    "bucket_priority": ["small", "medium", "large", "negative"],
+    "weights": {"negative": 1.0, "small": 3.0, "medium": 1.5, "large": 1.0},
+    "multi_stratum_assignment": "small_then_medium_then_large",
+    "negative_images_retained": true,
+    "seed_rule": "selection_seed + epoch",
+    "pixel_or_annotation_modification": false,
+    "validation_sampling": "sequential_without_replacement"
+  },
+  "training": {
+    "amp": false,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 1,
+    "optimizer": "AdamW",
+    "learning_rate": 0.00005,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "maximum_epochs": 12,
+    "minimum_epochs": 3,
+    "early_stopping_metric": "validation_AP50",
+    "early_stopping_patience": 3,
+    "early_stopping_minimum_improvement": 0.001,
+    "checkpoint_selection": "highest_validation_AP50_only",
+    "smoke_batches": 200,
+    "seed": 20260816,
+    "progress_interval_batches": 50
+  },
+  "metrics": {
+    "threshold_grid": [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5],
+    "iou_match_threshold": 0.5,
+    "ap_iou_thresholds": [0.5, 0.75],
+    "ap50_95_step": 0.05,
+    "bootstrap": {"method": "patient_level_percentile", "replicates": 2000, "seed": 20260806, "confidence": 0.95},
+    "operating_point_rule": "maximize small-lesion sensitivity subject to overall sensitivity >= 0.70 and false positives per image <= 1.0; otherwise UNFROZEN",
+    "success_requires": [
+      "frozen operating point",
+      "overall sensitivity >= 0.70",
+      "false positives per image <= 1.0",
+      "material small-lesion sensitivity improvement over EXT2E",
+      "zero locked-test access"
+    ]
+  },
+  "lock_policy": {
+    "locked_test_accessed": false,
+    "final_test_images_accessed": 0,
+    "final_test_evaluation_authorized": false,
+    "final_test_runner_created": false
+  },
+  "comparison": {
+    "ext2e_ap50": 0.4095703880498198,
+    "ext2e_ap75": 0.037253093312356544,
+    "ext2e_ap50_95": 0.12871736120999172,
+    "ext2e_small_sensitivity_reference": "reported by EXT-2F validation evidence; no test access"
+  }
+}
