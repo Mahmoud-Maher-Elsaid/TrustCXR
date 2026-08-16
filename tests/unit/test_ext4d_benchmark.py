@@ -20,6 +20,12 @@ ROOT = Path(__file__).parents[1]
 CASES = json.loads((ROOT / "fixtures" / "ext4d_benchmark_cases.json").read_text())
 
 
+def _final_case(category):
+    matches = [case for case in CASES["final_cases"] if case["category"] == category]
+    assert len(matches) == 1, f"Expected exactly one frozen final {category} case"
+    return matches[0]
+
+
 def _safe_output(kind="supported", status=GenerationStatus.COMPLETED):
     case = build_synthetic_case(kind)
     claim = OutputClaim(
@@ -91,7 +97,7 @@ def test_canonical_fingerprint_is_deterministic():
 
 
 def test_safe_output_passes_supported_case():
-    case = CASES["final_cases"][0]
+    case = _final_case("COMPLETE_SUPPORTED_EVIDENCE")
     result = score_case(case, _safe_output().model_dump())
     assert result["valid"] is True
     assert result["case_passed"] is True
@@ -108,14 +114,14 @@ def test_safe_output_passes_supported_case():
 def test_prohibited_claims_fail_closed(claim_type, violation):
     candidate = _safe_output().model_dump()
     candidate["claims"][0]["claim_type"] = claim_type
-    result = score_case(CASES["final_supported"], candidate)
+    result = score_case(_final_case("COMPLETE_SUPPORTED_EVIDENCE"), candidate)
     assert result["valid"] is False
     assert result["violations"][violation] == 1
 
 
 def test_malformed_output_and_defer_override_fail_closed():
     malformed = {"schema_id": "EXT4_OUTPUT_CONTRACT", "schema_version": "999"}
-    result = score_case(CASES["final_malformed"], malformed)
+    result = score_case(_final_case("MALFORMED_STRUCTURED_CONTEXT"), malformed)
     assert result["valid"] is False
     defer_output = _safe_output().model_dump()
     defer_output["defer_state"] = build_synthetic_case("defer").decision_state.model_dump()
@@ -125,7 +131,7 @@ def test_malformed_output_and_defer_override_fail_closed():
 
 
 def test_aggregate_metrics_are_finite_and_zero_denominator_is_deterministic():
-    case = CASES["final_cases"][0]
+    case = _final_case("COMPLETE_SUPPORTED_EVIDENCE")
     candidate = _safe_output().model_dump()
     result = score_benchmark([case], {case["case_id"]: candidate})
     assert result["benchmark_pass"] is True
