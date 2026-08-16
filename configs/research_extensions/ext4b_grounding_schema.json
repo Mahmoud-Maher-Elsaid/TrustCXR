@@ -1,0 +1,45 @@
+{
+  "schema_id": "EXT4_GROUNDING_SCHEMA",
+  "schema_version": "1",
+  "status": "COMPLETED_SCHEMA_ONLY",
+  "implementation": "VALIDATION_CONTRACT_ONLY",
+  "source_stages": ["STAGE_5", "STAGE_9", "STAGE_16", "STAGE_17", "STAGE_18", "STAGE_19", "STAGE_20"],
+  "evidence_states": ["SUPPORTED", "PARTIALLY_SUPPORTED", "WITHHELD", "CONTRADICTED", "NOT_AVAILABLE", "NOT_APPLICABLE"],
+  "grounding_policy": "EXT4A_GOVERNED_STRUCTURED_EVIDENCE_ONLY",
+  "case_reference_pattern": "^research_case_[A-Za-z0-9._:-]{1,96}$",
+  "localization": {
+    "status": "WITHHELD",
+    "reason_code": "LOCALIZATION_INTEGRATION_WITHHELD",
+    "trusted_integration": false,
+    "gradcam_interpretation": "ATTRIBUTION_ONLY_NOT_LESION_LOCALIZATION"
+  },
+  "forbidden_input_categories": [
+    "raw_image",
+    "dicom",
+    "patient_identity",
+    "raw_patient_identifier",
+    "raw_image_path",
+    "dataset_directory",
+    "locked_test_membership",
+    "ungoverned_hidden_metadata"
+  ],
+  "claim_permissions": [
+    "research_summary",
+    "classifier_evidence",
+    "uncertainty_statement",
+    "defer_reason",
+    "limitation_statement",
+    "provenance_statement",
+    "quality_statement",
+    "view_statement",
+    "verifier_statement",
+    "contradiction_statement"
+  ],
+  "deterministic_baseline": "STAGE_18_DETERMINISTIC_REPORT",
+  "provider_selection": "NOT_AUTHORIZED",
+  "llm_implementation": "NOT_STARTED",
+  "external_api": "NOT_USED",
+  "locked_test_accessed": false,
+  "next_stage": "EXT-4C OUTPUT CONTRACT",
+  "compatibility_policy": "Unknown schema versions fail closed; additions must be optional, breaking changes require a new version and migration."
+}
