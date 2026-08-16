@@ -1,5 +1,6 @@
 param(
-    [string]$ProjectRoot = "F:\AI\TrustCXR"
+    [string]$ProjectRoot = "F:\AI\TrustCXR",
+    [switch]$SmokeOnly
 )
 
 $ErrorActionPreference = "Stop"
@@ -15,7 +16,9 @@ if (-not (Test-Path -LiteralPath $python)) {
     exit 2
 }
 $config = Join-Path $ProjectRoot "configs\research_extensions\ext2g_fcos_repair.json"
-& $python -m scripts.training.run_ext2g_local --project-root $ProjectRoot --config $config
+$arguments = @("-m", "scripts.training.run_ext2g_local", "--project-root", $ProjectRoot, "--config", $config)
+if ($SmokeOnly) { $arguments += "--smoke-only" }
+& $python @arguments
 $exitCode = $LASTEXITCODE
 if ($exitCode -ne 0) {
     Write-Error "EXT-2G training did not complete (exit code $exitCode)."

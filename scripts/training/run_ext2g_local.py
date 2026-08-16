@@ -40,10 +40,17 @@ from scripts.training.run_ext2e_local import (
 from trustcxr.detection.stage10e_rsna import (
     RsnaDetectionDataset,
     atomic_torch_save,
-    finite_loss,
     seed_everything,
     write_history,
 )
+
+
+class NumericalStabilityError(RuntimeError):
+    """A governed numerical failure with serializable sample diagnostics."""
+
+    def __init__(self, message: str, details: dict[str, Any]) -> None:
+        super().__init__(message)
+        self.details = details
 
 
 def load_manifest(root: Path, config: dict[str, Any]) -> dict[str, Any]:
@@ -131,12 +138,114 @@ def build_model(config: dict[str, Any]) -> torch.nn.Module:
         ) from error
 
 
+def patient_id_for_target(dataset: RsnaDetectionDataset, target: dict[str, torch.Tensor]) -> str:
+    index = int(target["image_id"].reshape(-1)[0].item())
+    if index < 0 or index >= len(dataset.records):
+        return "UNRESOLVED_GOVERNED_IMAGE_ID"
+    return str(dataset.records[index][0])
+
+
+def target_diagnostics(
+    image: torch.Tensor,
+    target: dict[str, torch.Tensor],
+    dataset: RsnaDetectionDataset,
+    epoch: int,
+    batch_number: int,
+) -> dict[str, Any]:
+    patient_id = patient_id_for_target(dataset, target)
+    boxes = target["boxes"]
+    labels = target["labels"]
+    height, width = int(image.shape[-2]), int(image.shape[-1])
+    details = {
+        "epoch": epoch,
+        "batch": batch_number,
+        "patient_id": patient_id,
+        "image_min": float(image.min().detach().cpu()),
+        "image_max": float(image.max().detach().cpu()),
+        "image_dimensions": [height, width],
+        "target_box_count": int(len(boxes)),
+        "target_boxes": boxes.detach().cpu().tolist(),
+        "target_labels": labels.detach().cpu().tolist(),
+    }
+    if not torch.isfinite(image).all():
+        raise NumericalStabilityError("EXT-2G image contains NaN or Inf.", details)
+    if boxes.ndim != 2 or boxes.shape[-1] != 4:
+        raise NumericalStabilityError("EXT-2G target boxes must have shape Nx4.", details)
+    if not torch.isfinite(boxes).all():
+        raise NumericalStabilityError("EXT-2G target boxes contain NaN or Inf.", details)
+    if len(boxes) and (
+        (boxes[:, 2] <= boxes[:, 0]).any()
+        or (boxes[:, 3] <= boxes[:, 1]).any()
+        or (boxes[:, 0] < 0).any()
+        or (boxes[:, 1] < 0).any()
+        or (boxes[:, 2] > width).any()
+        or (boxes[:, 3] > height).any()
+    ):
+        raise NumericalStabilityError("EXT-2G target boxes violate image bounds.", details)
+    if not torch.isfinite(labels.float()).all() or (labels < 1).any() or (labels > 1).any():
+        raise NumericalStabilityError(
+            "EXT-2G FCOS labels are outside the governed class set.", details
+        )
+    return details
+
+
+def finite_loss_components(
+    losses: dict[str, torch.Tensor],
+    image: torch.Tensor,
+    target: dict[str, torch.Tensor],
+    dataset: RsnaDetectionDataset,
+    epoch: int,
+    batch_number: int,
+    amp_enabled: bool,
+    scaler: torch.amp.GradScaler,
+    learning_rate: float,
+) -> tuple[torch.Tensor, dict[str, Any]]:
+    details = target_diagnostics(image, target, dataset, epoch, batch_number)
+    values = {name: float(value.detach().cpu()) for name, value in losses.items()}
+    details.update(
+        {
+            "loss_components": values,
+            "total_loss": None,
+            "amp_enabled": amp_enabled,
+            "grad_scaler_scale": float(scaler.get_scale()) if amp_enabled else None,
+            "learning_rate": learning_rate,
+            "cuda_memory": gpu_memory(),
+        }
+    )
+    invalid = [name for name, value in losses.items() if not torch.isfinite(value).all()]
+    if invalid:
+        raise NumericalStabilityError(
+            f"EXT-2G FCOS non-finite loss component(s): {', '.join(invalid)}.", details
+        )
+    total = sum(losses.values())
+    details["total_loss"] = float(total.detach().cpu())
+    if not torch.isfinite(total).all():
+        raise NumericalStabilityError("EXT-2G FCOS total loss is non-finite.", details)
+    return total, details
+
+
+def finite_gradients(
+    model: torch.nn.Module,
+    details: dict[str, Any],
+) -> None:
+    invalid = [
+        name
+        for name, parameter in model.named_parameters()
+        if parameter.grad is not None and not torch.isfinite(parameter.grad).all()
+    ]
+    if invalid:
+        details = dict(details)
+        details["non_finite_gradient_parameters"] = invalid[:20]
+        raise NumericalStabilityError("EXT-2G FCOS gradients are non-finite.", details)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run bounded EXT-2G FCOS development.")
     parser.add_argument("--project-root", type=Path, required=True)
     parser.add_argument(
         "--config", type=Path, default=Path("configs/research_extensions/ext2g_fcos_repair.json")
     )
+    parser.add_argument("--smoke-only", action="store_true")
     args = parser.parse_args()
     root = args.project_root.resolve()
     config_path = (root / args.config).resolve() if not args.config.is_absolute() else args.config
@@ -160,6 +269,7 @@ def main() -> int:
         "final_test_images_accessed": 0,
         "selected_checkpoint": None,
         "epochs_completed": 0,
+        "smoke_only": args.smoke_only,
     }
     write_summary(output / "run_summary.json", summary)
     started_total = time.perf_counter()
@@ -184,10 +294,11 @@ def main() -> int:
         ]
         if not train_dataset.records or not validation_dataset.records:
             raise RuntimeError("EXT-2G cohort resolved no train or validation records.")
+        smoke_batches = config["numerical_stability"]["smoke_batches"]
         train_loader = DataLoader(
             train_dataset,
             batch_size=1,
-            shuffle=True,
+            shuffle=not args.smoke_only,
             num_workers=0,
             collate_fn=collate,
             pin_memory=True,
@@ -206,26 +317,44 @@ def main() -> int:
             lr=config["training"]["learning_rate"],
             weight_decay=config["training"]["weight_decay"],
         )
-        scaler = torch.amp.GradScaler("cuda", enabled=True)
+        amp_enabled = config["numerical_stability"]["amp_enabled"]
+        scaler = torch.amp.GradScaler("cuda", enabled=amp_enabled)
         history: list[dict[str, Any]] = []
         best_ap50, best_epoch, patience = -1.0, 0, 0
-        for epoch in range(1, config["training"]["maximum_epochs"] + 1):
+        maximum_epochs = 1 if args.smoke_only else config["training"]["maximum_epochs"]
+        for epoch in range(1, maximum_epochs + 1):
             epoch_start = time.perf_counter()
             model.train()
             loss_sum = 0.0
             total_batches = len(train_loader)
             for batch_number, (images, targets) in enumerate(train_loader, start=1):
+                if args.smoke_only and batch_number > smoke_batches:
+                    break
+                raw_image, raw_target = images[0], targets[0]
+                target_diagnostics(raw_image, raw_target, train_dataset, epoch, batch_number)
                 images = [image.cuda(non_blocking=True) for image in images]
                 targets = [
                     {key: value.cuda(non_blocking=True) for key, value in target.items()}
                     for target in targets
                 ]
                 optimizer.zero_grad(set_to_none=True)
-                with torch.amp.autocast("cuda", enabled=True):
-                    loss = sum(model(images, targets).values())
-                loss_sum += finite_loss(loss)
+                with torch.amp.autocast("cuda", enabled=amp_enabled):
+                    losses = model(images, targets)
+                loss, loss_details = finite_loss_components(
+                    losses,
+                    images[0],
+                    targets[0],
+                    train_dataset,
+                    epoch,
+                    batch_number,
+                    amp_enabled,
+                    scaler,
+                    config["training"]["learning_rate"],
+                )
+                loss_sum += float(loss_details["total_loss"])
                 scaler.scale(loss).backward()
                 scaler.unscale_(optimizer)
+                finite_gradients(model, loss_details)
                 torch.nn.utils.clip_grad_norm_(
                     model.parameters(), config["training"]["gradient_clip_norm"]
                 )
@@ -238,7 +367,8 @@ def main() -> int:
                     elapsed = time.perf_counter() - epoch_start
                     eta = elapsed / batch_number * (total_batches - batch_number)
                     progress = (
-                        f"EXT-2G epoch {epoch}/12 batch {batch_number}/{total_batches} "
+                        f"EXT-2G epoch {epoch}/{maximum_epochs} "
+                        f"batch {batch_number}/{total_batches} "
                         f"({batch_number / total_batches * 100:.1f}%) "
                         f"loss={float(loss.detach()):.5f} "
                         f"epoch_eta={eta:.1f}s "
@@ -246,6 +376,17 @@ def main() -> int:
                         f"gpu={gpu_memory()}"
                     )
                     print(progress, flush=True)
+            if args.smoke_only:
+                summary.update(
+                    {
+                        "status": "SMOKE_PASSED",
+                        "smoke_batches_completed": min(smoke_batches, total_batches),
+                        "wall_clock_seconds": time.perf_counter() - started_total,
+                    }
+                )
+                write_summary(output / "run_summary.json", summary)
+                print("EXT-2G NUMERICAL STABILITY SMOKE PASSED", flush=True)
+                return 0
             # The same frozen metric implementation used by EXT-2F records
             # validation AP50/AP75/AP50-95 for every epoch.
             model.eval()
@@ -336,6 +477,20 @@ def main() -> int:
         )
         write_summary(output / "run_summary.json", summary)
         return 0
+    except NumericalStabilityError as error:
+        summary.update(
+            {
+                "status": "FAILED_NUMERICAL_STABILITY",
+                "stopping_reason": "NON_FINITE_LOSS_OR_GRADIENT_OR_INVALID_TARGET",
+                "wall_clock_seconds": time.perf_counter() - started_total,
+            }
+        )
+        write_summary(output / "run_summary.json", summary)
+        (output / "numerical_failure.json").write_text(
+            json.dumps(error.details, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        print(f"EXT-2G STATUS: FAILED_NUMERICAL_STABILITY ({error})", flush=True)
+        return 1
     except KeyboardInterrupt:
         summary.update(
             {
