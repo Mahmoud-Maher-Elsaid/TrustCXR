@@ -150,19 +150,9 @@ def manifest_hash(payload: dict[str, Any]) -> str:
     ).hexdigest()
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the final EXT-3 patient-safe cohort.")
-    parser.add_argument("--project-root", type=Path, required=True)
-    parser.add_argument(
-        "--config", type=Path, default=Path("configs/research_extensions/ext3_final_localization.json")
-    )
-    args = parser.parse_args()
-    root = args.project_root.resolve()
-    config = json.loads((root / args.config).read_text(encoding="utf-8"))
+def build_payload(root: Path, config: dict[str, Any]) -> dict[str, Any]:
+    """Build the deterministic manifest payload without writing or reading test data."""
     cohort = config["cohort"]
-    output = root / cohort["manifest_path"]
-    if output.exists():
-        raise RuntimeError("EXT-3 cohort manifest already exists; refusing to overwrite it.")
     split_path = root / config["dataset"]["parent_split"]
     if sha256_file(split_path).lower() != config["dataset"]["parent_split_sha256"].lower():
         raise RuntimeError("EXT-3 parent split SHA-256 mismatch.")
@@ -178,7 +168,7 @@ def main() -> int:
     train_ids = {row["patient_id"] for row in train}
     if train_ids & validation_ids:
         raise RuntimeError("EXT-3 train/validation patient overlap detected.")
-    payload = {
+    payload: dict[str, Any] = {
         "schema_version": "trustcxr-ext3-final-cohort-v1",
         "experiment_id": config["experiment_id"],
         "parent_split_path": config["dataset"]["parent_split"],
@@ -192,6 +182,23 @@ def main() -> int:
         "image_counts": {"train": len(train), "validation": len(validation)},
     }
     payload["manifest_sha256"] = manifest_hash(payload)
+    return payload
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Build the final EXT-3 patient-safe cohort.")
+    parser.add_argument("--project-root", type=Path, required=True)
+    parser.add_argument(
+        "--config", type=Path, default=Path("configs/research_extensions/ext3_final_localization.json")
+    )
+    args = parser.parse_args()
+    root = args.project_root.resolve()
+    config = json.loads((root / args.config).read_text(encoding="utf-8"))
+    cohort = config["cohort"]
+    output = root / cohort["manifest_path"]
+    if output.exists():
+        raise RuntimeError("EXT-3 cohort manifest already exists; refusing to overwrite it.")
+    payload = build_payload(root, config)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({"manifest": str(output), "manifest_sha256": payload["manifest_sha256"], "patient_counts": payload["patient_counts"]}, indent=2))

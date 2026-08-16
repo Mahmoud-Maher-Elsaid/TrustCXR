@@ -53,4 +53,16 @@ def test_ext3_final_gate_is_not_relaxed() -> None:
 def test_ext3_files_are_extension_owned_and_no_locked_runner_exists() -> None:
     assert (ROOT / "scripts/training/run_ext3_final_local.ps1").is_file()
     assert (ROOT / "scripts/evaluation/run_ext3_final_validation.ps1").is_file()
+    assert (ROOT / "scripts/evaluation/run_ext3_final_preflight.ps1").is_file()
+    assert (ROOT / "scripts/evaluation/run_ext3_final_preflight.py").is_file()
     assert not (ROOT / "scripts/evaluation/run_ext3_final_locked_test.py").exists()
+
+
+def test_ext3_preflight_is_training_only_and_strict() -> None:
+    source = (ROOT / "scripts/evaluation/run_ext3_final_preflight.py").read_text(encoding="utf-8")
+    assert "build_payload" in source
+    assert "strict=True" in source
+    assert '"validation_images_accessed": 0' in source
+    assert '"locked_test_accessed": False' in source
+    assert "EXT3_FINAL_PREFLIGHT_PASS" in source
+    assert "EXT3_FINAL_PREFLIGHT_FAIL" in source
