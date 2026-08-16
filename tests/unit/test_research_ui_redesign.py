@@ -225,7 +225,9 @@ def test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_bou
         "EXT-4A Grounded LLM Governance:** `COMPLETED — GOVERNANCE ONLY`",
         "EXT-4B Evidence Grounding Schema:** `COMPLETED — SCHEMA ONLY`",
         "EXT-4C Output Contract:** `COMPLETED — OUTPUT CONTRACT ONLY`",
-        "Next authorized stage:** `EXT-4D HALLUCINATION / FAITHFULNESS BENCHMARK`",
+        "EXT-4D Hallucination / Faithfulness Benchmark:** `COMPLETED — "
+        "FROZEN BENCHMARK DEFINITION ONLY`",
+        "Next authorized stage:** `EXT-4E MODEL / PROVIDER SELECTION AND BASELINE EXECUTION`",
         "Grounded LLM reporting:** `NOT STARTED`",
         "attention or attribution is not validated lesion localization",
         "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",

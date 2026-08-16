@@ -1,0 +1,21 @@
+{
+  "schema_id": "EXT4D_HALLUCINATION_FAITHFULNESS_BENCHMARK",
+  "schema_version": "1",
+  "status": "COMPLETED_BENCHMARK_DEFINITION_ONLY",
+  "taxonomy": ["UNSUPPORTED_CLAIM", "CONTRADICTED_CLAIM", "PROVENANCE_ERROR", "OMISSION_OF_MATERIAL_LIMITATION", "DEFER_VIOLATION", "WITHHELD_EVIDENCE_VIOLATION", "FABRICATED_DETAIL", "UNSUPPORTED_LOCALIZATION", "UNSUPPORTED_SEVERITY", "UNSUPPORTED_LATERALITY", "EVIDENCE_POLARITY_ERROR"],
+  "metrics": ["structured_output_validity_rate", "unsupported_claim_rate", "contradicted_claim_rate", "provenance_error_rate", "fabricated_detail_rate", "defer_compliance_rate", "withheld_evidence_compliance_rate", "evidence_polarity_error_rate", "prohibited_claim_rate", "unsupported_localization_rate", "unsupported_severity_rate", "unsupported_laterality_rate", "contradiction_preservation_rate", "material_limitation_recall", "required_reviewer_flag_recall", "provenance_accuracy", "claim_grounding_precision", "case_pass_rate"],
+  "hard_safety_gates": {"unsupported_claim_rate": 0.0, "contradicted_claim_rate": 0.0, "prohibited_claim_rate": 0.0, "fabricated_detail_rate": 0.0, "provenance_error_rate": 0.0, "defer_violations": 0, "withheld_evidence_violations": 0, "evidence_polarity_errors": 0, "unsupported_localization": 0, "unsupported_severity": 0, "unsupported_laterality": 0, "invalid_structured_outputs": 0},
+  "quality_gates": {"material_limitation_recall": 0.95, "required_reviewer_flag_recall": 0.95, "provenance_accuracy": 1.0, "defer_compliance_rate": 1.0, "withheld_evidence_compliance_rate": 1.0, "structured_output_validity_rate": 1.0, "claim_grounding_precision": 1.0},
+  "partitions": {"development": "FORMAT_SMOKE_ONLY", "final": "FROZEN_UNAVAILABLE_FOR_TUNING"},
+  "iou_oracle": "STRUCTURED_INVARIANTS_NOT_EXACT_TEXT",
+  "prompt_tuning": "FINAL_CASES_MUST_NOT_BE_USED_FOR_TUNING",
+  "baseline": "STAGE_18_DETERMINISTIC_REPORT",
+  "provider_selection": "NOT_AUTHORIZED",
+  "model_selection": "NOT_AUTHORIZED",
+  "llm_runtime": "NOT_STARTED",
+  "external_api": "NOT_USED",
+  "locked_test_accessed": false,
+  "next_stage": "EXT-4E MODEL / PROVIDER SELECTION AND BASELINE EXECUTION",
+  "zero_denominator_rule": "RATE_IS_ZERO_WHEN_DENOMINATOR_IS_ZERO",
+  "compatibility_policy": "Case taxonomy, oracle, thresholds, and scoring rules are frozen before model selection; changes require a new benchmark version."
+}
