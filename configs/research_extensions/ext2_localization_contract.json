@@ -65,6 +65,12 @@
     "stratification": ["positive_negative", "small_medium_large_positive_lesion_presence"],
     "locked_test_included": false
   },
+  "ext2e_selected_checkpoint": {
+    "path": "artifacts/research_extensions/ext2e_runs/20260815T112946Z_1786793386180543800/best_validation_checkpoint.pt",
+    "sha256": "a668edf0166643ab533a32a3d823b43f6e606dbce479654bfe76ed74bf00484d",
+    "best_epoch": 6,
+    "cohort_manifest_sha256": "a9c6c90d49df5b89a60fa14859edf43358819c083875dbff9599a42f8535a38f"
+  },
   "preprocessing": {
     "input_representation": "pydicom.pixel_array.astype(float32)",
     "per_image_scaling": "(pixels-pixels.min())/max(pixels.max()-pixels.min(),1.0)",
