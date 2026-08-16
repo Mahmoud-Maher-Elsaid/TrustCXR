@@ -88,7 +88,8 @@ def test_smoke_mode_is_training_only_and_failed_runs_are_not_selected() -> None:
     assert "scaler.unscale_(optimizer)" in source
     assert "scaler.step(optimizer)" in source
     assert "optimizer.step(" not in source
-    assert "SMOKE_PASSED" in source
+    assert "EXT-2G FP32 NUMERICAL SMOKE PASSED" in source
+    assert 'amp_enabled = config["training"]["automatic_mixed_precision"]' in source
     assert '"status": "FAILED_NUMERICAL_STABILITY"' in source
     assert '"selected_checkpoint": None' in source
     wrapper = (

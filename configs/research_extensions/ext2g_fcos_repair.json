@@ -1,7 +1,7 @@
 {
   "schema_version": "trustcxr-ext2g-fcos-repair-v1",
   "extension": "EXT-2G",
-  "status": "PREPARED_NOT_TRAINED",
+  "status": "FP32_STABILITY_REPAIR_FROZEN",
   "hypothesis": "A dense anchor-free detector may improve small-opacity representation and localization precision without repeating the failed Stage 10J custom-anchor intervention.",
   "architecture": "fcos_resnet50_fpn",
   "torchvision_constructor": "torchvision.models.detection.fcos_resnet50_fpn",
@@ -38,7 +38,7 @@
   "training": {
     "batch_size": 1,
     "gradient_accumulation_steps": 1,
-    "automatic_mixed_precision": true,
+    "automatic_mixed_precision": false,
     "optimizer": "AdamW",
     "learning_rate": 0.00005,
     "weight_decay": 0.0001,
@@ -54,9 +54,26 @@
     "checkpoint_metric": "validation_AP50"
   },
   "numerical_stability": {
-    "status": "DIAGNOSTIC_REPAIR_PENDING",
-    "amp_enabled": true,
+    "status": "FP32_STABILITY_REPAIR_FROZEN",
+    "policy": "EXT2G_FCOS_RESNET50_FPN_FP32_STABILITY_REPAIR",
+    "amp_enabled": false,
     "amp_disable_only_if_proven_overflow": true,
+    "diagnosis": {
+      "classification": "AMP_ONLY_GRADIENT_OVERFLOW",
+      "amp_loss_finite": true,
+      "amp_gradient_finite": false,
+      "amp_first_non_finite_parameter": "backbone.body.conv1.weight",
+      "amp_non_finite_parameter_count": 2,
+      "amp_grad_scaler_scale": 65536,
+      "amp_optimizer_step_performed": false,
+      "fp32_loss_finite": true,
+      "fp32_gradient_finite": true,
+      "fp32_first_non_finite_parameter": null,
+      "fp32_non_finite_parameter_count": 0,
+      "fp32_optimizer_step_performed": false,
+      "locked_test_accessed": false,
+      "final_test_images_accessed": 0
+    },
     "smoke_batches": 200,
     "failure_status": "FAILED_NUMERICAL_STABILITY",
     "diagnostic_loss_components_required": true,

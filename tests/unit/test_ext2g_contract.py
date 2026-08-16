@@ -61,10 +61,17 @@ def test_ext2g_runner_propagates_interrupts_and_never_promotes_partial_runs() ->
     assert "exit $exitCode" in wrapper
 
 
-def test_ext2g_numerical_policy_requires_diagnostic_before_fp32_change() -> None:
+def test_ext2g_numerical_policy_freezes_fp32_after_amp_only_diagnosis() -> None:
     config = load_config()
     stability = config["numerical_stability"]
     assert stability["smoke_batches"] == 200
-    assert stability["amp_enabled"] is True
+    assert config["training"]["automatic_mixed_precision"] is False
+    assert stability["amp_enabled"] is False
+    assert stability["status"] == "FP32_STABILITY_REPAIR_FROZEN"
+    assert stability["policy"] == "EXT2G_FCOS_RESNET50_FPN_FP32_STABILITY_REPAIR"
+    assert stability["diagnosis"]["classification"] == "AMP_ONLY_GRADIENT_OVERFLOW"
+    assert stability["diagnosis"]["amp_first_non_finite_parameter"] == "backbone.body.conv1.weight"
+    assert stability["diagnosis"]["amp_grad_scaler_scale"] == 65536
+    assert stability["diagnosis"]["fp32_gradient_finite"] is True
     assert stability["amp_disable_only_if_proven_overflow"] is True
     assert stability["failure_status"] == "FAILED_NUMERICAL_STABILITY"

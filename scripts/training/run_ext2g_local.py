@@ -91,6 +91,18 @@ def validate_config(root: Path, config: dict[str, Any], contract: dict[str, Any]
         raise RuntimeError("EXT-2G requires research-extension/pathology-localization.")
     if config["architecture"] != "fcos_resnet50_fpn":
         raise RuntimeError("Unexpected EXT-2G architecture.")
+    if config["training"]["automatic_mixed_precision"] is not False:
+        raise RuntimeError("EXT-2G FP32 stability repair requires AMP=false.")
+    if config["numerical_stability"]["amp_enabled"] is not False:
+        raise RuntimeError("EXT-2G numerical policy must keep AMP disabled.")
+    if config["numerical_stability"].get("policy") != (
+        "EXT2G_FCOS_RESNET50_FPN_FP32_STABILITY_REPAIR"
+    ):
+        raise RuntimeError("EXT-2G FP32 stability repair policy is not frozen.")
+    if config["numerical_stability"].get("diagnosis", {}).get("classification") != (
+        "AMP_ONLY_GRADIENT_OVERFLOW"
+    ):
+        raise RuntimeError("EXT-2G FP32 repair lacks the required AMP-only diagnosis.")
     if config["initialization"]["network_downloads_allowed"]:
         raise RuntimeError("EXT-2G network downloads must remain disabled.")
     if (
@@ -391,15 +403,19 @@ def main() -> int:
         train_ids = {row["patient_id"] for row in manifest["splits"]["train"]}
         validation_ids = {row["patient_id"] for row in manifest["splits"]["validation"]}
         train_dataset = RsnaDetectionDataset(annotation, image_root, split_index, "train", 0.5)
-        validation_dataset = RsnaDetectionDataset(
-            annotation, image_root, split_index, "validation", 0.0
-        )
         train_dataset.records = [row for row in train_dataset.records if row[0] in train_ids]
-        validation_dataset.records = [
-            row for row in validation_dataset.records if row[0] in validation_ids
-        ]
-        if not train_dataset.records or not validation_dataset.records:
-            raise RuntimeError("EXT-2G cohort resolved no train or validation records.")
+        if not train_dataset.records:
+            raise RuntimeError("EXT-2G cohort resolved no training records.")
+        validation_dataset = None
+        if not args.smoke_only:
+            validation_dataset = RsnaDetectionDataset(
+                annotation, image_root, split_index, "validation", 0.0
+            )
+            validation_dataset.records = [
+                row for row in validation_dataset.records if row[0] in validation_ids
+            ]
+            if not validation_dataset.records:
+                raise RuntimeError("EXT-2G cohort resolved no validation records.")
         smoke_batches = config["numerical_stability"]["smoke_batches"]
         train_loader = DataLoader(
             train_dataset,
@@ -409,21 +425,23 @@ def main() -> int:
             collate_fn=collate,
             pin_memory=True,
         )
-        validation_loader = DataLoader(
-            validation_dataset,
-            batch_size=1,
-            shuffle=False,
-            num_workers=0,
-            collate_fn=collate,
-            pin_memory=True,
-        )
+        validation_loader = None
+        if validation_dataset is not None:
+            validation_loader = DataLoader(
+                validation_dataset,
+                batch_size=1,
+                shuffle=False,
+                num_workers=0,
+                collate_fn=collate,
+                pin_memory=True,
+            )
         model = build_model(config).to(torch.device("cuda"))
         optimizer = torch.optim.AdamW(
             model.parameters(),
             lr=config["training"]["learning_rate"],
             weight_decay=config["training"]["weight_decay"],
         )
-        amp_enabled = config["numerical_stability"]["amp_enabled"]
+        amp_enabled = config["training"]["automatic_mixed_precision"]
         scaler = torch.amp.GradScaler("cuda", enabled=amp_enabled)
         history: list[dict[str, Any]] = []
         best_ap50, best_epoch, patience = -1.0, 0, 0
@@ -545,11 +563,12 @@ def main() -> int:
                         json.dumps(diagnosis, indent=2, sort_keys=True) + "\n", encoding="utf-8"
                     )
                 write_summary(output / "run_summary.json", summary)
-                print("EXT-2G NUMERICAL STABILITY SMOKE PASSED", flush=True)
+                print("EXT-2G FP32 NUMERICAL SMOKE PASSED", flush=True)
                 return 0
             # The same frozen metric implementation used by EXT-2F records
             # validation AP50/AP75/AP50-95 for every epoch.
             model.eval()
+            assert validation_loader is not None
             validation_predictions: list[dict[str, torch.Tensor]] = []
             validation_targets: list[dict[str, torch.Tensor]] = []
             with torch.inference_mode():
