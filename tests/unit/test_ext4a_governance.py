@@ -67,7 +67,7 @@ def test_ext4a_document_matches_non_implementation_boundary() -> None:
     document = DOC_PATH.read_text(encoding="utf-8")
     for phrase in (
         "COMPLETED — GOVERNANCE ONLY",
-        "Implementation: `NOT STARTED`",
+        "**Implementation:** `NOT STARTED`",
         "Raw CXR images",
         "EXT-3 is a controlled negative",
         "Stage 18 deterministic reporting remains the frozen baseline",
