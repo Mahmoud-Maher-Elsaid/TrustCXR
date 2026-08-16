@@ -1,5 +1,6 @@
 """Deterministic EXT-4D benchmark and scorer tests."""
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -18,6 +19,15 @@ from trustcxr.grounded_llm.contracts import (
 
 ROOT = Path(__file__).parents[1]
 CASES = json.loads((ROOT / "fixtures" / "ext4d_benchmark_cases.json").read_text())
+REPORT = json.loads(
+    (
+        ROOT.parent
+        / "reports"
+        / "research_extensions"
+        / "ext4d"
+        / "EXT4D_BENCHMARK_FINGERPRINTS.json"
+    ).read_text()
+)
 
 
 def _final_case(category):
@@ -94,6 +104,16 @@ def test_benchmark_partitions_and_case_families_are_frozen():
 def test_canonical_fingerprint_is_deterministic():
     value = {"b": 2, "a": [1, 2]}
     assert canonical_sha256(value) == canonical_sha256({"a": [1, 2], "b": 2})
+
+
+def test_recorded_fingerprints_match_raw_tracked_json_bytes():
+    config_path = ROOT.parent / "configs" / "research_extensions" / "ext4d_benchmark.json"
+    cases_path = ROOT / "fixtures" / "ext4d_benchmark_cases.json"
+    config_sha = hashlib.sha256(config_path.read_bytes()).hexdigest()
+    cases_sha = hashlib.sha256(cases_path.read_bytes()).hexdigest()
+    assert REPORT["fingerprint_basis"] == "SHA256_OF_TRACKED_JSON_ARTIFACTS"
+    assert REPORT["config_sha256"] == config_sha
+    assert REPORT["cases_sha256"] == cases_sha
 
 
 def test_safe_output_passes_supported_case():
