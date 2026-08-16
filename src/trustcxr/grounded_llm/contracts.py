@@ -54,6 +54,47 @@ class ClaimPermission(StrEnum):
     CONTRADICTION_STATEMENT = "contradiction_statement"
 
 
+class GenerationStatus(StrEnum):
+    COMPLETED = "COMPLETED"
+    ABSTAINED = "ABSTAINED"
+    DEFERRED = "DEFERRED"
+    REJECTED_INVALID_INPUT = "REJECTED_INVALID_INPUT"
+    REJECTED_UNGROUNDED_REQUEST = "REJECTED_UNGROUNDED_REQUEST"
+
+
+class OutputClaimType(StrEnum):
+    RESEARCH_SUMMARY = "RESEARCH_SUMMARY"
+    VIEW_STATEMENT = "VIEW_STATEMENT"
+    QUALITY_STATEMENT = "QUALITY_STATEMENT"
+    CLASSIFIER_EVIDENCE = "CLASSIFIER_EVIDENCE"
+    UNCERTAINTY_STATEMENT = "UNCERTAINTY_STATEMENT"
+    DEFER_REASON = "DEFER_REASON"
+    LIMITATION_STATEMENT = "LIMITATION_STATEMENT"
+    PROVENANCE_STATEMENT = "PROVENANCE_STATEMENT"
+    VERIFIER_STATEMENT = "VERIFIER_STATEMENT"
+    CONTRADICTION_STATEMENT = "CONTRADICTION_STATEMENT"
+    REVIEWER_FLAG = "REVIEWER_FLAG"
+
+
+class LimitationType(StrEnum):
+    UNCERTAINTY = "UNCERTAINTY"
+    DEFER = "DEFER"
+    LOCALIZATION_WITHHELD = "LOCALIZATION_WITHHELD"
+    EVIDENCE_NOT_AVAILABLE = "EVIDENCE_NOT_AVAILABLE"
+    CONTRADICTORY_EVIDENCE = "CONTRADICTORY_EVIDENCE"
+    TECHNICAL_QUALITY = "TECHNICAL_QUALITY"
+    VERIFIER_WARNING = "VERIFIER_WARNING"
+
+
+class ReviewerFlag(StrEnum):
+    HIGH_UNCERTAINTY = "HIGH_UNCERTAINTY"
+    DEFER_ACTIVE = "DEFER_ACTIVE"
+    CONTRADICTORY_EVIDENCE = "CONTRADICTORY_EVIDENCE"
+    EVIDENCE_WITHHELD = "EVIDENCE_WITHHELD"
+    EVIDENCE_NOT_AVAILABLE = "EVIDENCE_NOT_AVAILABLE"
+    VERIFIER_WARNING = "VERIFIER_WARNING"
+
+
 class ValueKind(StrEnum):
     TEXT = "TEXT"
     NUMBER = "NUMBER"
@@ -213,6 +254,203 @@ class EvidenceEnvelope(ContractModel):
                 raise ValueError(
                     "Localization withholding must use withheld_evidence, not a value item"
                 )
+        return self
+
+
+class OutputEvidenceReference(ContractModel):
+    evidence_id: SafeToken
+    status: EvidenceStatus
+    provenance_refs: tuple[SafeToken, ...]
+
+    @model_validator(mode="after")
+    def requires_provenance(self) -> OutputEvidenceReference:
+        if (
+            self.status
+            in {
+                EvidenceStatus.SUPPORTED,
+                EvidenceStatus.PARTIALLY_SUPPORTED,
+                EvidenceStatus.CONTRADICTED,
+            }
+            and not self.provenance_refs
+        ):
+            raise ValueError("Usable output evidence requires provenance references")
+        if (
+            self.status
+            in {
+                EvidenceStatus.WITHHELD,
+                EvidenceStatus.NOT_AVAILABLE,
+                EvidenceStatus.NOT_APPLICABLE,
+            }
+            and self.provenance_refs
+        ):
+            raise ValueError("Unavailable or withheld output evidence cannot carry provenance")
+        return self
+
+
+class OutputClaim(ContractModel):
+    claim_id: SafeToken
+    claim_type: OutputClaimType
+    text: SafeText
+    support_status: EvidenceStatus
+    supporting_evidence_ids: tuple[SafeToken, ...] = ()
+    contradicting_evidence_ids: tuple[SafeToken, ...] = ()
+    provenance_refs: tuple[SafeToken, ...] = ()
+    uncertainty_relevant: bool = False
+    limitation_refs: tuple[SafeToken, ...] = ()
+
+    @model_validator(mode="after")
+    def validate_claim_support(self) -> OutputClaim:
+        if (
+            self.support_status
+            in {
+                EvidenceStatus.SUPPORTED,
+                EvidenceStatus.PARTIALLY_SUPPORTED,
+            }
+            and not self.supporting_evidence_ids
+        ):
+            raise ValueError("Supported claims require supporting evidence IDs")
+        if (
+            self.support_status == EvidenceStatus.CONTRADICTED
+            and not self.contradicting_evidence_ids
+        ):
+            raise ValueError("Contradicted claims require contradicting evidence IDs")
+        if (
+            self.support_status
+            in {
+                EvidenceStatus.WITHHELD,
+                EvidenceStatus.NOT_AVAILABLE,
+                EvidenceStatus.NOT_APPLICABLE,
+            }
+            and self.supporting_evidence_ids
+        ):
+            raise ValueError("Unavailable or withheld claims cannot have positive support")
+        if (
+            self.support_status
+            in {
+                EvidenceStatus.SUPPORTED,
+                EvidenceStatus.PARTIALLY_SUPPORTED,
+                EvidenceStatus.CONTRADICTED,
+            }
+            and not self.provenance_refs
+        ):
+            raise ValueError("Factual claims require provenance references")
+        return self
+
+
+class OutputLimitation(ContractModel):
+    limitation_id: SafeToken
+    limitation_type: LimitationType
+    text: SafeText
+    source_evidence_ids: tuple[SafeToken, ...] = ()
+    mandatory_visibility: bool = True
+
+
+class ContradictionRecord(ContractModel):
+    contradiction_id: SafeToken
+    evidence_ids: tuple[SafeToken, ...]
+    reviewer_flag: Literal["CONTRADICTORY_EVIDENCE"] = "CONTRADICTORY_EVIDENCE"
+
+    @model_validator(mode="after")
+    def requires_multiple_sources(self) -> ContradictionRecord:
+        if len(self.evidence_ids) < 2:
+            raise ValueError("A contradiction must reference at least two evidence IDs")
+        return self
+
+
+class BaselineReference(ContractModel):
+    authority: Literal["FROZEN_DETERMINISTIC_BASELINE"] = "FROZEN_DETERMINISTIC_BASELINE"
+    component: Literal["STAGE_18_DETERMINISTIC_REPORT"] = "STAGE_18_DETERMINISTIC_REPORT"
+    relationship: Literal["RESEARCH_EXTENSION_ONLY_NOT_REPLACEMENT"] = (
+        "RESEARCH_EXTENSION_ONLY_NOT_REPLACEMENT"
+    )
+
+
+class GroundedOutputEnvelope(ContractModel):
+    schema_id: Literal["EXT4_OUTPUT_CONTRACT"] = "EXT4_OUTPUT_CONTRACT"
+    schema_version: Literal["1"] = "1"
+    case_reference: Annotated[
+        str, StringConstraints(pattern=r"^research_case_[A-Za-z0-9._:-]{1,96}$")
+    ]
+    generation_status: GenerationStatus
+    research_summary: SafeText | None = None
+    summary_claim_ids: tuple[SafeToken, ...] = ()
+    evidence_references: tuple[OutputEvidenceReference, ...]
+    claims: tuple[OutputClaim, ...] = ()
+    uncertainty_summary: UncertaintyState
+    limitations: tuple[OutputLimitation, ...] = ()
+    defer_state: DecisionState
+    contradictions: tuple[ContradictionRecord, ...] = ()
+    provenance_refs: tuple[SafeToken, ...]
+    reviewer_flags: tuple[ReviewerFlag, ...] = ()
+    baseline_reference: BaselineReference = Field(default_factory=BaselineReference)
+    output_scope: Literal["RESEARCH_EXTENSION_ONLY"] = "RESEARCH_EXTENSION_ONLY"
+
+    @model_validator(mode="after")
+    def validate_output_grounding(self) -> GroundedOutputEnvelope:
+        evidence = {item.evidence_id: item.status for item in self.evidence_references}
+        if len(evidence) != len(self.evidence_references):
+            raise ValueError("Evidence reference IDs must be unique")
+        claims = {claim.claim_id: claim for claim in self.claims}
+        if len(claims) != len(self.claims):
+            raise ValueError("Claim IDs must be unique")
+        if self.research_summary is not None and not self.summary_claim_ids:
+            raise ValueError("Research summary requires structured claim IDs")
+        if not set(self.summary_claim_ids).issubset(claims):
+            raise ValueError("Summary references a nonexistent claim ID")
+        limitations = {limitation.limitation_id for limitation in self.limitations}
+        for claim in self.claims:
+            refs = set(claim.supporting_evidence_ids) | set(claim.contradicting_evidence_ids)
+            if not refs.issubset(evidence):
+                raise ValueError("Claim references nonexistent evidence ID")
+            if claim.support_status == EvidenceStatus.SUPPORTED and any(
+                evidence[item] != EvidenceStatus.SUPPORTED for item in claim.supporting_evidence_ids
+            ):
+                raise ValueError(
+                    "Supported claim cannot upgrade partial, withheld, or unavailable evidence"
+                )
+            if claim.support_status == EvidenceStatus.SUPPORTED and any(
+                evidence[item] == EvidenceStatus.CONTRADICTED
+                for item in claim.supporting_evidence_ids
+            ):
+                raise ValueError("Supported claim cannot use contradicted evidence")
+            if claim.support_status == EvidenceStatus.PARTIALLY_SUPPORTED and any(
+                evidence[item]
+                in {
+                    EvidenceStatus.WITHHELD,
+                    EvidenceStatus.NOT_AVAILABLE,
+                    EvidenceStatus.NOT_APPLICABLE,
+                }
+                for item in claim.supporting_evidence_ids
+            ):
+                raise ValueError("Partial claim cannot use withheld or unavailable support")
+            if claim.support_status == EvidenceStatus.NOT_AVAILABLE and (
+                claim.supporting_evidence_ids or claim.contradicting_evidence_ids
+            ):
+                raise ValueError("Unavailable claims cannot assert positive or negative evidence")
+            if not set(claim.limitation_refs).issubset(limitations):
+                raise ValueError("Claim references nonexistent limitation ID")
+        for limitation in self.limitations:
+            if not set(limitation.source_evidence_ids).issubset(evidence):
+                raise ValueError("Limitation references nonexistent evidence ID")
+        for contradiction in self.contradictions:
+            if not set(contradiction.evidence_ids).issubset(evidence):
+                raise ValueError("Contradiction references nonexistent evidence ID")
+        if self.defer_state.defer_active:
+            allowed = {
+                OutputClaimType.DEFER_REASON,
+                OutputClaimType.LIMITATION_STATEMENT,
+                OutputClaimType.CONTRADICTION_STATEMENT,
+                OutputClaimType.REVIEWER_FLAG,
+            }
+            if any(claim.claim_type not in allowed for claim in self.claims):
+                raise ValueError("Active DEFER cannot be overridden by a confident claim")
+            if self.generation_status not in {
+                GenerationStatus.DEFERRED,
+                GenerationStatus.ABSTAINED,
+            }:
+                raise ValueError("Active DEFER requires deferred or abstained generation status")
+        if self.generation_status == GenerationStatus.COMPLETED and not self.claims:
+            raise ValueError("Completed output requires structured claims")
         return self
 
 

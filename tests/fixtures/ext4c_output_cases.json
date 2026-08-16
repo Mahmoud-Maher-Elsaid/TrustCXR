@@ -1,0 +1,17 @@
+{
+  "schema_id": "EXT4_OUTPUT_CONTRACT",
+  "schema_version": "1",
+  "supported": {"status": "COMPLETED", "claim_type": "CLASSIFIER_EVIDENCE"},
+  "uncertainty": {"status": "COMPLETED", "claim_type": "UNCERTAINTY_STATEMENT"},
+  "defer": {"status": "DEFERRED", "claim_type": "DEFER_REASON"},
+  "withheld_localization": {"status": "COMPLETED", "claim_type": "LIMITATION_STATEMENT"},
+  "conflict": {"status": "COMPLETED", "claim_type": "CONTRADICTION_STATEMENT"},
+  "missing": {"status": "COMPLETED", "claim_type": "LIMITATION_STATEMENT"},
+  "malformed_support": {"status": "COMPLETED", "claim_type": "CLASSIFIER_EVIDENCE"},
+  "prohibited_localization": {"status": "COMPLETED", "claim_type": "LESION_LOCALIZATION"},
+  "missing_reference": {"status": "COMPLETED", "claim_type": "CLASSIFIER_EVIDENCE"},
+  "defer_override": {"status": "COMPLETED", "claim_type": "CLASSIFIER_EVIDENCE"},
+  "patient_data": false,
+  "locked_test_data": false,
+  "provider_or_model": false
+}

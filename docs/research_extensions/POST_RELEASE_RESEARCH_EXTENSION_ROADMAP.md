@@ -10,7 +10,8 @@
 **EXT-3 Final RSNA Lung Opacity localization:** `CLOSED_CONTROLLED_NEGATIVE_RESULT` (operating point unfrozen; localization integration withheld)
 **EXT-4A Grounded LLM Governance:** `COMPLETED — GOVERNANCE ONLY`
 **EXT-4B Evidence Grounding Schema:** `COMPLETED — SCHEMA ONLY`
-**Next authorized stage:** `EXT-4C OUTPUT CONTRACT` (not started)
+**EXT-4C Output Contract:** `COMPLETED — OUTPUT CONTRACT ONLY`
+**Next authorized stage:** `EXT-4D HALLUCINATION / FAITHFULNESS BENCHMARK` (not started)
 **True pathology localization follow-on experiments:** `CLOSED — NO EXT-3B/EXT-3C OR ADDITIONAL LOCALIZATION TRAINING`
 **Grounded LLM reporting:** `NOT STARTED`
 **Multimodal VLM:** `NOT STARTED`
@@ -164,6 +165,7 @@ Before any extension implementation begins, require a post-core-release authoriz
 
 EXT-3 is closed as a controlled negative result: its frozen development operating-point gate
 was not satisfied, so localization integration remains withheld and the locked test remains
-closed. EXT-4A governance and EXT-4B evidence grounding schema are complete; no
+closed. EXT-4A governance, EXT-4B evidence grounding schema, and EXT-4C output
+contract are complete; no
 LLM/provider/client has been selected or implemented. The next separately authorized work
-is EXT-4C output contract.
+is EXT-4D hallucination / faithfulness benchmark.

@@ -1,0 +1,19 @@
+{
+  "schema_id": "EXT4_OUTPUT_CONTRACT",
+  "schema_version": "1",
+  "status": "COMPLETED_CONTRACT_ONLY",
+  "generation_statuses": ["COMPLETED", "ABSTAINED", "DEFERRED", "REJECTED_INVALID_INPUT", "REJECTED_UNGROUNDED_REQUEST"],
+  "allowed_claim_types": ["RESEARCH_SUMMARY", "VIEW_STATEMENT", "QUALITY_STATEMENT", "CLASSIFIER_EVIDENCE", "UNCERTAINTY_STATEMENT", "DEFER_REASON", "LIMITATION_STATEMENT", "PROVENANCE_STATEMENT", "VERIFIER_STATEMENT", "CONTRADICTION_STATEMENT", "REVIEWER_FLAG"],
+  "prohibited_claim_types": ["DEFINITIVE_DIAGNOSIS", "TREATMENT", "MANAGEMENT", "PROGNOSIS", "SEVERITY", "LATERALITY", "ANATOMICAL_LOCALIZATION", "LESION_LOCALIZATION", "CAUSALITY", "FABRICATED_HISTORY", "UNSUPPORTED_MEASUREMENT", "CLINICAL_URGENCY", "EXTERNAL_VALIDATION", "CLINICAL_DEPLOYMENT_READINESS"],
+  "support_states": ["SUPPORTED", "PARTIALLY_SUPPORTED", "WITHHELD", "CONTRADICTED", "NOT_AVAILABLE", "NOT_APPLICABLE"],
+  "baseline": "FROZEN_DETERMINISTIC_BASELINE",
+  "output_scope": "RESEARCH_EXTENSION_ONLY",
+  "localization": {"status": "WITHHELD", "trusted_integration": false, "reason_code": "LOCALIZATION_INTEGRATION_WITHHELD"},
+  "gradcam": "ATTRIBUTION_ONLY_NOT_LESION_LOCALIZATION",
+  "provider_selection": "NOT_AUTHORIZED",
+  "llm_implementation": "NOT_STARTED",
+  "external_api": "NOT_USED",
+  "locked_test_accessed": false,
+  "next_stage": "EXT-4D HALLUCINATION / FAITHFULNESS BENCHMARK",
+  "compatibility_policy": "Unknown versions fail closed; additive fields require a new compatible version and breaking changes require migration."
+}

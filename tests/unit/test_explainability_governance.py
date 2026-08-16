@@ -25,7 +25,7 @@ def test_roadmap_records_current_extension_lifecycle_and_boundaries() -> None:
         "EXT-3 Final RSNA Lung Opacity localization:** `CLOSED_CONTROLLED_NEGATIVE_RESULT`"
         in roadmap
     )
-    assert "Next authorized stage:** `EXT-4C OUTPUT CONTRACT`" in roadmap
+    assert "Next authorized stage:** `EXT-4D HALLUCINATION / FAITHFULNESS BENCHMARK`" in roadmap
     assert "True pathology localization follow-on experiments:** `CLOSED" in roadmap
     assert "Grounded LLM reporting:** `NOT STARTED`" in roadmap
     assert "Multimodal VLM:** `NOT STARTED`" in roadmap
