@@ -212,6 +212,7 @@ def test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_bou
     governance = (
         ROOT / "docs/research_extensions/grounded_llm/EXT4A_GROUNDED_LLM_GOVERNANCE.md"
     ).read_text(encoding="utf-8")
+    governance_normalized = " ".join(governance.split())
 
     for required in (
         "OPTIONAL_POST_RELEASE_RESEARCH_EXTENSION",
@@ -239,6 +240,6 @@ def test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_bou
         "No provider or model is selected by EXT-4A.",
         "No LLM client, provider, external API, UI, training, or fine-tuning is part of EXT-4A.",
     ):
-        assert required in governance
+        assert required in governance_normalized
 
     assert "research-extension/explainability-grounded-llm" in roadmap
