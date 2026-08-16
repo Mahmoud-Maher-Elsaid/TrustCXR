@@ -98,6 +98,18 @@
     "ext2e_ap75": 0.037253093312356544,
     "ext2e_ap50_95": 0.12871736120999172
   },
+  "scientific_disposition": {
+    "status": "REJECTED_AS_LOCALIZATION_REPAIR",
+    "selected_epoch": 5,
+    "selection_metric": "validation_AP50",
+    "selected_metrics": {
+      "AP50": 0.19961717086084899,
+      "AP75": 0.013797242087103846,
+      "AP50_95": 0.05964153608973849
+    },
+    "reason": "FCOS remained scientifically weaker than the controlled Faster R-CNN baseline and did not provide an accepted localization repair.",
+    "historical_amp_failure_is_not_scientific_evidence": true
+  },
   "lock_policy": {
     "locked_test_accessed": false,
     "final_test_images_accessed": 0,

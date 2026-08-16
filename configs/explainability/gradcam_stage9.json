@@ -76,5 +76,10 @@
     "training": false,
     "seed": 20260815
   },
-  "next_stage": "UI explainability integration: NOT STARTED"
+  "lifecycle": {
+    "ext1a": "COMPLETED",
+    "ext1b": "COMPLETED",
+    "ext1c": "COMPLETED",
+    "core_ui_integration": "NOT_PERFORMED"
+  }
 }

@@ -27,6 +27,8 @@ The frozen Stage 10 localization limitation remains active.
 
 ## UI gate
 
-No attribution map may appear in the core UI until implementation, technical
-sanity checks, safe-fixture validation, reproducibility checks, and wording
-governance all pass. Until then, Grad-CAM remains **NOT IMPLEMENTED**.
+The frozen core UI does not expose attribution. EXT-1B technical validation,
+reproducibility checks, wording governance, and the isolated EXT-1C research UI
+gate are complete. Grad-CAM remains available only as the governed
+class-specific model-attribution extension described above; it is not a core
+capability and does not establish lesion localization.

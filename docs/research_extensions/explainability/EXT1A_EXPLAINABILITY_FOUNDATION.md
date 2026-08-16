@@ -1,7 +1,7 @@
 # EXT-1A Explainability Foundation and Governance
 
 **Status: COMPLETED — foundation and compatibility audit only**  
-**Implementation status: Grad-CAM NOT IMPLEMENTED**
+**Lifecycle: EXT-1A COMPLETED; EXT-1B and EXT-1C COMPLETED**
 
 ## Purpose
 
@@ -9,8 +9,9 @@ EXT-1A freezes the identity, compatibility requirements, artifact policy, and
 claims boundary for a future class-specific visual-attribution study. It does
 not load a checkpoint, register hooks, run inference, or generate a heatmap.
 
-The next canonical stage is **EXT-1B: Grad-CAM Implementation and Technical
-Validation**. EXT-1B requires explicit approval and remains not started.
+EXT-1A established the foundation for the now-completed EXT-1B technical
+baseline and EXT-1C isolated research UI. This document remains the foundation
+record; it does not authorize any later extension stage.
 
 ## Explained classifier
 
@@ -134,4 +135,3 @@ Before any visual explanation can appear in the UI, EXT-1B must demonstrate:
 - an explicit governance approval of user-facing terminology.
 
 Failure of any gate keeps the capability withheld and out of the main UI.
-

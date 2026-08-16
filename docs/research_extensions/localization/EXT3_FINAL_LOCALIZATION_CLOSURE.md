@@ -22,6 +22,12 @@ or implementation failure.
 - Checkpoint SHA-256: `3e06c34890984fffa018d70c8938b7d2772f55f2328d5ac91230099d16ce3601`.
 - Parent validation and locked test: not used.
 
+The static pre-execution EXT-3 config intentionally retains null generated
+cohort fields. Post-build values are authoritative in this closure record and
+its machine-readable companion; they are not backfilled into the frozen
+protocol config. This preserves the distinction between the pre-execution
+contract and generated reproducibility evidence without tracking patient IDs.
+
 Training AP50 history was 0.3964011301 (epoch 1), 0.3655801295 (epoch 2),
 0.3660825235 (epoch 3), and 0.3599948767 (epoch 4). The decreasing training
 loss with lower validation AP50 after epoch 1 is consistent with validation
