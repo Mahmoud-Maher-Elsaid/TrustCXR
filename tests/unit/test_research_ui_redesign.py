@@ -209,16 +209,20 @@ def test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_bou
     roadmap = (
         ROOT / "docs/research_extensions/POST_RELEASE_RESEARCH_EXTENSION_ROADMAP.md"
     ).read_text(encoding="utf-8")
+    governance = (
+        ROOT / "docs/research_extensions/grounded_llm/EXT4A_GROUNDED_LLM_GOVERNANCE.md"
+    ).read_text(encoding="utf-8")
 
     for required in (
         "OPTIONAL_POST_RELEASE_RESEARCH_EXTENSION",
-        "Implementation status:** `EXT-3 CLOSED — CONTROLLED NEGATIVE LOCALIZATION RESULT`",
+        "Implementation status:** `EXT-4A GOVERNANCE COMPLETED — IMPLEMENTATION NOT STARTED`",
         "Authorization:** `POST-CORE-RELEASE ONLY`",
         "EXT-1A Explainability Foundation:** `COMPLETED`",
         "EXT-1B Grad-CAM Implementation and Technical Validation:** `COMPLETED`",
         "Grad-CAM UI Integration / EXT-1C:** `COMPLETED`",
         "EXT-3 Final RSNA Lung Opacity localization:** `CLOSED_CONTROLLED_NEGATIVE_RESULT`",
-        "Next authorized stage:** `EXT-4A GROUNDED LLM GOVERNANCE`",
+        "EXT-4A Grounded LLM Governance:** `COMPLETED — GOVERNANCE ONLY`",
+        "Next authorized stage:** `EXT-4B EVIDENCE GROUNDING SCHEMA`",
         "Grounded LLM reporting:** `NOT STARTED`",
         "attention or attribution is not validated lesion localization",
         "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",
@@ -230,5 +234,11 @@ def test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_bou
         "Stage 18 deterministic renderer remains the safe fallback",
     ):
         assert required in roadmap
+
+    for required in (
+        "No provider or model is selected by EXT-4A.",
+        "No LLM client, provider, external API, UI, training, or fine-tuning is part of EXT-4A.",
+    ):
+        assert required in governance
 
     assert "research-extension/explainability-grounded-llm" in roadmap
