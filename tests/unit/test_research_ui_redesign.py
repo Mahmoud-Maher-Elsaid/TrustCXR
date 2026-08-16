@@ -226,7 +226,7 @@ def test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_bou
         "DETERMINISTIC_REPORTER",
         "GROUNDED_LLM_REPORTER",
         "Frozen vision models",
-        "deterministic verifier",
+        "Deterministic verifier",
         "Stage 18 deterministic renderer remains the safe fallback",
     ):
         assert required in roadmap
