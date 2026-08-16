@@ -59,3 +59,12 @@ def test_ext2g_runner_propagates_interrupts_and_never_promotes_partial_runs() ->
     assert '"selected_checkpoint": None' in runner
     assert "$LASTEXITCODE" in wrapper
     assert "exit $exitCode" in wrapper
+
+
+def test_ext2g_numerical_policy_requires_diagnostic_before_fp32_change() -> None:
+    config = load_config()
+    stability = config["numerical_stability"]
+    assert stability["smoke_batches"] == 200
+    assert stability["amp_enabled"] is True
+    assert stability["amp_disable_only_if_proven_overflow"] is True
+    assert stability["failure_status"] == "FAILED_NUMERICAL_STABILITY"

@@ -80,6 +80,14 @@ def test_smoke_mode_is_training_only_and_failed_runs_are_not_selected() -> None:
         .read_text(encoding="utf-8")
     )
     assert "--smoke-only" in source
+    assert "--diagnose-numerics" in source
+    assert "replay_path" in source
+    assert '"optimizer_step_performed": False' in source
+    assert "model_state_before" in source
+    assert "optimizer_state_before" in source
+    assert "scaler.unscale_(optimizer)" in source
+    assert "scaler.step(optimizer)" in source
+    assert "optimizer.step(" not in source
     assert "SMOKE_PASSED" in source
     assert '"status": "FAILED_NUMERICAL_STABILITY"' in source
     assert '"selected_checkpoint": None' in source

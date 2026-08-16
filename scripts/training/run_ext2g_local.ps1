@@ -1,6 +1,7 @@
 param(
     [string]$ProjectRoot = "F:\AI\TrustCXR",
-    [switch]$SmokeOnly
+    [switch]$SmokeOnly,
+    [switch]$DiagnoseNumerics
 )
 
 $ErrorActionPreference = "Stop"
@@ -18,6 +19,7 @@ if (-not (Test-Path -LiteralPath $python)) {
 $config = Join-Path $ProjectRoot "configs\research_extensions\ext2g_fcos_repair.json"
 $arguments = @("-m", "scripts.training.run_ext2g_local", "--project-root", $ProjectRoot, "--config", $config)
 if ($SmokeOnly) { $arguments += "--smoke-only" }
+if ($DiagnoseNumerics) { $arguments += "--diagnose-numerics" }
 & $python @arguments
 $exitCode = $LASTEXITCODE
 if ($exitCode -ne 0) {

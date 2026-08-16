@@ -8,8 +8,13 @@
 from __future__ import annotations
 
 import argparse
+import base64
+import copy
 import datetime as dt
+import hashlib
 import json
+import pickle
+import random
 import sys
 import time
 from pathlib import Path
@@ -228,15 +233,112 @@ def finite_gradients(
     model: torch.nn.Module,
     details: dict[str, Any],
 ) -> None:
-    invalid = [
-        name
-        for name, parameter in model.named_parameters()
-        if parameter.grad is not None and not torch.isfinite(parameter.grad).all()
-    ]
+    finite_ranges: dict[str, dict[str, float]] = {}
+    invalid: list[str] = []
+    for name, parameter in model.named_parameters():
+        if parameter.grad is None:
+            continue
+        finite = torch.isfinite(parameter.grad).all().item()
+        if finite:
+            finite_ranges[name] = {
+                "min": float(parameter.grad.detach().min().cpu()),
+                "max": float(parameter.grad.detach().max().cpu()),
+            }
+        else:
+            invalid.append(name)
     if invalid:
         details = dict(details)
         details["non_finite_gradient_parameters"] = invalid[:20]
+        details["non_finite_gradient_parameter_count"] = len(invalid)
+        details["finite_gradient_ranges"] = finite_ranges
         raise NumericalStabilityError("EXT-2G FCOS gradients are non-finite.", details)
+
+
+def rng_snapshot() -> dict[str, Any]:
+    state = {
+        "python": base64.b64encode(pickle.dumps(random.getstate())).decode("ascii"),
+        "torch": torch.get_rng_state().tolist(),
+        "cuda": [item.tolist() for item in torch.cuda.get_rng_state_all()]
+        if torch.cuda.is_available()
+        else [],
+    }
+    state["fingerprint"] = hashlib.sha256(json.dumps(state, sort_keys=True).encode()).hexdigest()
+    return state
+
+
+def replay_path(
+    config: dict[str, Any],
+    model_state: dict[str, torch.Tensor],
+    optimizer_state: dict[str, Any],
+    image: torch.Tensor,
+    target: dict[str, torch.Tensor],
+    amp_enabled: bool,
+) -> dict[str, Any]:
+    """Replay one captured batch from identical pre-update state without stepping."""
+    results: dict[str, Any] = {}
+    for name, use_amp in (("amp", amp_enabled), ("fp32", False)):
+        replay_model = build_model(config).cuda().train()
+        replay_model.load_state_dict(copy.deepcopy(model_state), strict=True)
+        replay_optimizer = torch.optim.AdamW(
+            replay_model.parameters(),
+            lr=config["training"]["learning_rate"],
+            weight_decay=config["training"]["weight_decay"],
+        )
+        replay_optimizer.load_state_dict(copy.deepcopy(optimizer_state))
+        replay_scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
+        replay_image = image.detach().clone().cuda()
+        replay_target = {key: value.detach().clone().cuda() for key, value in target.items()}
+        with torch.amp.autocast("cuda", enabled=use_amp):
+            losses = replay_model([replay_image], [replay_target])
+            total = sum(losses.values())
+        loss_values = {key: float(value.detach().cpu()) for key, value in losses.items()}
+        loss_finite = all(torch.isfinite(value).all().item() for value in losses.values())
+        total_finite = bool(torch.isfinite(total).all().item())
+        gradient_finite = False
+        first_bad: str | None = None
+        bad_count = 0
+        finite_ranges: dict[str, dict[str, float]] = {}
+        if loss_finite and total_finite:
+            if use_amp:
+                replay_scaler.scale(total).backward()
+                replay_scaler.unscale_(replay_optimizer)
+            else:
+                total.backward()
+            bad: list[str] = []
+            for parameter_name, parameter in replay_model.named_parameters():
+                if parameter.grad is None:
+                    continue
+                if torch.isfinite(parameter.grad).all():
+                    finite_ranges[parameter_name] = {
+                        "min": float(parameter.grad.detach().min().cpu()),
+                        "max": float(parameter.grad.detach().max().cpu()),
+                    }
+                else:
+                    bad.append(parameter_name)
+            gradient_finite = not bad
+            first_bad = bad[0] if bad else None
+            bad_count = len(bad)
+        results[name] = {
+            "amp_enabled": use_amp,
+            "loss_components": loss_values,
+            "total_loss": float(total.detach().cpu()),
+            "loss_finite": loss_finite and total_finite,
+            "gradient_finite": gradient_finite,
+            "first_non_finite_parameter": first_bad,
+            "non_finite_parameter_count": bad_count,
+            "finite_gradient_ranges": finite_ranges,
+            "grad_scaler_scale": float(replay_scaler.get_scale()) if use_amp else None,
+            "optimizer_step_performed": False,
+        }
+    amp_failed = not results["amp"]["loss_finite"] or not results["amp"]["gradient_finite"]
+    fp32_failed = not results["fp32"]["loss_finite"] or not results["fp32"]["gradient_finite"]
+    if amp_failed and not fp32_failed:
+        classification = "AMP_ONLY_GRADIENT_OVERFLOW"
+    elif fp32_failed:
+        classification = "MODEL_OR_DATA_NUMERICAL_INSTABILITY"
+    else:
+        classification = "NONDETERMINISTIC_OR_UNREPRODUCED"
+    return {"classification": classification, **results}
 
 
 def main() -> int:
@@ -246,7 +348,10 @@ def main() -> int:
         "--config", type=Path, default=Path("configs/research_extensions/ext2g_fcos_repair.json")
     )
     parser.add_argument("--smoke-only", action="store_true")
+    parser.add_argument("--diagnose-numerics", action="store_true")
     args = parser.parse_args()
+    if args.diagnose_numerics:
+        args.smoke_only = True
     root = args.project_root.resolve()
     config_path = (root / args.config).resolve() if not args.config.is_absolute() else args.config
     config = json.loads(config_path.read_text(encoding="utf-8"))
@@ -270,6 +375,7 @@ def main() -> int:
         "selected_checkpoint": None,
         "epochs_completed": 0,
         "smoke_only": args.smoke_only,
+        "diagnose_numerics": args.diagnose_numerics,
     }
     write_summary(output / "run_summary.json", summary)
     started_total = time.perf_counter()
@@ -327,34 +433,70 @@ def main() -> int:
             model.train()
             loss_sum = 0.0
             total_batches = len(train_loader)
-            for batch_number, (images, targets) in enumerate(train_loader, start=1):
-                if args.smoke_only and batch_number > smoke_batches:
+            loader_iterator = iter(train_loader)
+            batch_limit = smoke_batches if args.smoke_only else total_batches
+            for batch_number in range(1, batch_limit + 1):
+                rng_before = rng_snapshot()
+                random_before = random.getstate()
+                try:
+                    images, targets = next(loader_iterator)
+                except StopIteration:
                     break
                 raw_image, raw_target = images[0], targets[0]
-                target_diagnostics(raw_image, raw_target, train_dataset, epoch, batch_number)
+                augmentation_probe = random.Random()
+                augmentation_probe.setstate(random_before)
+                augmentation_draw = augmentation_probe.random()
+                augmentation_details = {
+                    "augmentation_probability": 0.5,
+                    "augmentation_random_draw": augmentation_draw,
+                    "augmentation_applied": augmentation_draw < 0.5,
+                    "rng_state": rng_before,
+                }
+                target_details = target_diagnostics(
+                    raw_image, raw_target, train_dataset, epoch, batch_number
+                )
+                target_details.update(augmentation_details)
+                model_state_before = {
+                    name: value.detach().clone() for name, value in model.state_dict().items()
+                }
+                optimizer_state_before = copy.deepcopy(optimizer.state_dict())
                 images = [image.cuda(non_blocking=True) for image in images]
                 targets = [
                     {key: value.cuda(non_blocking=True) for key, value in target.items()}
                     for target in targets
                 ]
-                optimizer.zero_grad(set_to_none=True)
-                with torch.amp.autocast("cuda", enabled=amp_enabled):
-                    losses = model(images, targets)
-                loss, loss_details = finite_loss_components(
-                    losses,
-                    images[0],
-                    targets[0],
-                    train_dataset,
-                    epoch,
-                    batch_number,
-                    amp_enabled,
-                    scaler,
-                    config["training"]["learning_rate"],
-                )
-                loss_sum += float(loss_details["total_loss"])
-                scaler.scale(loss).backward()
-                scaler.unscale_(optimizer)
-                finite_gradients(model, loss_details)
+                try:
+                    optimizer.zero_grad(set_to_none=True)
+                    with torch.amp.autocast("cuda", enabled=amp_enabled):
+                        losses = model(images, targets)
+                    loss, loss_details = finite_loss_components(
+                        losses,
+                        images[0],
+                        targets[0],
+                        train_dataset,
+                        epoch,
+                        batch_number,
+                        amp_enabled,
+                        scaler,
+                        config["training"]["learning_rate"],
+                    )
+                    loss_details.update(target_details)
+                    loss_sum += float(loss_details["total_loss"])
+                    scaler.scale(loss).backward()
+                    scaler.unscale_(optimizer)
+                    finite_gradients(model, loss_details)
+                except NumericalStabilityError as error:
+                    error.details.update(target_details)
+                    if args.diagnose_numerics:
+                        error.details["replay"] = replay_path(
+                            config,
+                            model_state_before,
+                            optimizer_state_before,
+                            raw_image,
+                            raw_target,
+                            amp_enabled,
+                        )
+                    raise
                 torch.nn.utils.clip_grad_norm_(
                     model.parameters(), config["training"]["gradient_clip_norm"]
                 )
@@ -384,6 +526,24 @@ def main() -> int:
                         "wall_clock_seconds": time.perf_counter() - started_total,
                     }
                 )
+                if args.diagnose_numerics:
+                    diagnosis = {
+                        "classification": "NONDETERMINISTIC_OR_UNREPRODUCED",
+                        "locked_test_accessed": False,
+                        "final_test_images_accessed": 0,
+                        "note": (
+                            "No non-finite gradient was observed in the bounded diagnostic replay."
+                        ),
+                    }
+                    (root / "artifacts/research_extensions/ext2g_numerical_diagnosis").mkdir(
+                        parents=True, exist_ok=True
+                    )
+                    (
+                        root
+                        / "artifacts/research_extensions/ext2g_numerical_diagnosis/diagnosis.json"
+                    ).write_text(
+                        json.dumps(diagnosis, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+                    )
                 write_summary(output / "run_summary.json", summary)
                 print("EXT-2G NUMERICAL STABILITY SMOKE PASSED", flush=True)
                 return 0
@@ -489,6 +649,24 @@ def main() -> int:
         (output / "numerical_failure.json").write_text(
             json.dumps(error.details, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
+        if args.diagnose_numerics and "replay" in error.details:
+            diagnosis_root = root / "artifacts/research_extensions/ext2g_numerical_diagnosis"
+            diagnosis_root.mkdir(parents=True, exist_ok=True)
+            diagnosis = {
+                "classification": error.details["replay"]["classification"],
+                "failing_batch": error.details.get("batch"),
+                "governed_patient_id": error.details.get("patient_id"),
+                "amp": error.details["replay"]["amp"],
+                "fp32": error.details["replay"]["fp32"],
+                "first_non_finite_parameter": error.details["replay"]["amp"].get(
+                    "first_non_finite_parameter"
+                ),
+                "locked_test_accessed": False,
+                "final_test_images_accessed": 0,
+            }
+            (diagnosis_root / "diagnosis.json").write_text(
+                json.dumps(diagnosis, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
         print(f"EXT-2G STATUS: FAILED_NUMERICAL_STABILITY ({error})", flush=True)
         return 1
     except KeyboardInterrupt:
