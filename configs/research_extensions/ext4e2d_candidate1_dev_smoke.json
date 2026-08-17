@@ -22,7 +22,7 @@
     "gpu_layers": 999,
     "reasoning": "off",
     "readiness_endpoint": "/health",
-    "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_SCHEMA",
+    "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA",
     "request_reasoning_effort": "none"
   },
   "generation": {

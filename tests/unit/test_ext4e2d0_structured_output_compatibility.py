@@ -49,10 +49,14 @@ def test_compatibility_smoke_is_synthetic_and_partition_free():
 def test_request_level_schema_is_the_only_constraint_path():
     config = _config()
     script = _script()
-    assert config["structured_output_mechanism"] == "REQUEST_RESPONSE_FORMAT_JSON_SCHEMA"
-    assert config["response_format_type"] == "json_schema"
+    assert (
+        config["structured_output_mechanism"] == "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA"
+    )
+    assert config["response_format_type"] == "json_object"
     assert '"response_format"' in script
-    assert '"type": "json_schema"' in script
+    assert '"type": "json_object"' in script
+    assert '"schema": schema' in script
+    assert '"type": "json_schema"' not in script
     assert '"--json-schema-file"' not in script
     assert '"--json-schema"' not in script
     assert '"--grammar"' not in script

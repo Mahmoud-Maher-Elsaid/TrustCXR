@@ -212,7 +212,7 @@ def main() -> int:
             "stream": False,
             "reasoning_effort": config["request_reasoning_effort"],
             "response_format": {
-                "type": "json_schema",
+                "type": "json_object",
                 "schema": GroundedOutputEnvelope.model_json_schema(),
             },
         }

@@ -6,6 +6,12 @@ server applied a startup JSON grammar while accepting the Qwen Chat Completions 
 prefill. The prefill began with `<|im_start|>assistant` and thinking-template content, so
 the JSON grammar failed before token generation.
 
+The observed `response_format.type = json_schema` request was accepted by the pinned
+runtime but returned a schema-violating object. This is a technical structured-output
+compatibility defect, not prompt tuning or scientific model selection. The repaired
+architecture uses the pinned documented Chat Completions form `json_object` with the
+same schema object.
+
 The repaired architecture separates the concerns:
 
 - llama-server starts without `--json-schema-file`, `--json-schema`, `--grammar`, or
@@ -14,7 +20,7 @@ The repaired architecture separates the concerns:
 
   ```json
   "response_format": {
-    "type": "json_schema",
+    "type": "json_object",
     "schema": "<generated EXT-4C JSON Schema>"
   }
   ```

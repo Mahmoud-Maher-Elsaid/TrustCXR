@@ -48,7 +48,7 @@ def test_server_and_generation_policy_are_frozen():
         "gpu_layers": 999,
         "reasoning": "off",
         "readiness_endpoint": "/health",
-        "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_SCHEMA",
+        "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA",
         "request_reasoning_effort": "none",
     }
     assert config["server"]["gpu_layers"] == 999
@@ -91,7 +91,9 @@ def test_prompt_hash_and_non_thinking_safety_are_frozen():
     assert "prompt_sha256" in script
     assert '"--reasoning",\n        "off"' in script
     assert '"response_format"' in script
-    assert '"type": "json_schema"' in script
+    assert '"type": "json_object"' in script
+    assert '"schema": GroundedOutputEnvelope.model_json_schema()' in script
+    assert '"type": "json_schema"' not in script
     assert '"reasoning_effort"' in script
     assert "reasoning_content" in script
     assert "raw_response.json" in script

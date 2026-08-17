@@ -178,7 +178,7 @@ def main() -> int:
             "max_tokens": config["generation"]["max_tokens"],
             "stream": False,
             "reasoning_effort": config["request_reasoning_effort"],
-            "response_format": {"type": "json_schema", "schema": schema},
+            "response_format": {"type": "json_object", "schema": schema},
         }
         (run_root / "request.json").write_text(
             json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8"

@@ -19,8 +19,8 @@
     "reasoning": "off"
   },
   "endpoint": "http://127.0.0.1:18080/v1/chat/completions",
-  "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_SCHEMA",
-  "response_format_type": "json_schema",
+  "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA",
+  "response_format_type": "json_object",
   "request_reasoning_effort": "none",
   "synthetic_schema": {
     "type": "object",
