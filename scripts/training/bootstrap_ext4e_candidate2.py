@@ -15,8 +15,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 REPOSITORY = "mistralai/Ministral-3-8B-Instruct-2512-GGUF"
 FILENAME = "Ministral-3-8B-Instruct-2512-Q4_K_M.gguf"
-RUNTIME_RELEASE = "b10453"
-RUNTIME_COMMIT_PREFIX = "3cb7ffb"
+RUNTIME_RELEASE = "b8233"
+RUNTIME_COMMIT_PREFIX = "c5a7788"
 
 
 def sha256_file(path: Path) -> str:
@@ -96,7 +96,11 @@ def main() -> int:
     (evidence / "candidate2_identity.json").write_text(
         json.dumps(identity, indent=2), encoding="utf-8"
     )
-    runtime = ROOT / "cache/research_extensions/ext4e2/llama.cpp/llama-server.exe"
+    runtime = (
+        ROOT
+        / "cache/research_extensions/ext4e_candidate2/llama_cpp_b8233"
+        / "build_cuda/bin/Release/llama-server.exe"
+    )
     if not runtime.is_file():
         raise RuntimeError("PINNED_RUNTIME_INCOMPATIBLE_WITH_CANDIDATE2")
     version = subprocess.run(
@@ -105,7 +109,7 @@ def main() -> int:
     identity_text = version.stdout + version.stderr
     if (
         version.returncode != 0
-        or "10453" not in identity_text
+        or "8233" not in identity_text
         or RUNTIME_COMMIT_PREFIX not in identity_text
     ):
         raise RuntimeError("PINNED_RUNTIME_INCOMPATIBLE_WITH_CANDIDATE2")

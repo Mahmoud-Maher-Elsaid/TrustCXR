@@ -20,8 +20,8 @@ def test_candidate2_fast_path_is_local_and_single_request():
     config = json.loads(
         (ROOT / "configs/research_extensions/ext4e_candidate2_ministral.json").read_text()
     )
-    assert config["runtime"]["release"] == "b10453"
-    assert config["runtime"]["commit_prefix"] == "3cb7ffb"
+    assert config["runtime"]["release"] == "b8233"
+    assert config["runtime"]["commit"] == "c5a778891ba0ddbd4cbb507c823f970595b1adc2"
     assert config["runtime"]["host"] == "127.0.0.1"
     assert config["generation"]["request_count"] == 1
     assert config["generation"]["retry_count"] == 0

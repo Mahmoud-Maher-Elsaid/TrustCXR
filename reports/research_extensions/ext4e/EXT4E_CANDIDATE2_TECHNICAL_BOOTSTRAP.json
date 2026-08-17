@@ -1,0 +1,20 @@
+{
+  "candidate_id": 2,
+  "model_repository": "mistralai/Ministral-3-8B-Instruct-2512-GGUF",
+  "resolved_revision": "0102285ad796bd99af90f58de616092e5630e970",
+  "filename": "Ministral-3-8B-Instruct-2512-Q4_K_M.gguf",
+  "quantization": "Q4_K_M",
+  "model_sha256": "33e7a72cf5e6e2cfc2f2847075acc013d68bba023e35310cef86b5cf8fdca761",
+  "model_size_bytes": 5198911904,
+  "license": "Apache-2.0",
+  "runtime": {"tag": "b8233", "commit": "c5a778891ba0ddbd4cbb507c823f970595b1adc2", "cuda": "13.1", "server_sha256": "45e7c6cf982508f7f3aecd9d02d3d1dd91e3952e00798acd9edb8838ffb2a721"},
+  "prior_incompatible_runtime": "Newer runtime path rejected valid Ministral GGUF tokenizer.ggml.scores INT32 metadata.",
+  "cpu_load_evidence": "LOAD_READY=True; main: model loaded",
+  "gpu_load_status": "NOT_EXECUTED_IN_CODEX_ENVIRONMENT",
+  "gpu_load_blocker": "CUDA executable exits 0xC0000135 before --version; nvcc is not on PATH despite CUDA v13.1 installation.",
+  "synthetic_structured_output_status": "NOT_EXECUTED",
+  "development_evaluation_status": "NOT_EXECUTED",
+  "final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "next_stage": "LOCAL_CANDIDATE2_GPU_RUNTIME_REPAIR_OR_GOVERNED_EXECUTION"
+}
