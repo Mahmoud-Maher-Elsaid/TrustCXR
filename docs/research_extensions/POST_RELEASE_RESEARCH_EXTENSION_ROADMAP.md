@@ -13,6 +13,7 @@
 **EXT-4C Output Contract:** `COMPLETED — OUTPUT CONTRACT ONLY`
 **EXT-4D Hallucination / Faithfulness Benchmark:** `COMPLETED — FROZEN BENCHMARK DEFINITION ONLY`
 **EXT-4E Model Selection Protocol:** `MODEL_SELECTION_PROTOCOL_PREPARED`
+**EXT-4E2B Qwen Runtime/Model Identity:** `RUNTIME_AND_MODEL_IDENTITY_FROZEN — DOWNLOAD BLOCKED UNTIL OFFICIAL LLAMA.CPP ASSET DIGEST IS RESOLVED`
 **Next authorized stage:** `EXT-4E MODEL / PROVIDER SELECTION AND BASELINE EXECUTION` (protocol prepared; execution not started)
 **Next local execution step:** `LOCAL DEVELOPMENT CANDIDATE EXECUTION`
 **True pathology localization follow-on experiments:** `CLOSED — NO EXT-3B/EXT-3C OR ADDITIONAL LOCALIZATION TRAINING`

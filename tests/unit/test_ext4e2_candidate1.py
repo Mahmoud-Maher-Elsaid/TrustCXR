@@ -23,8 +23,10 @@ def test_candidate_identity_and_unresolved_execution_gates():
     assert config["mode"] == "TEXT_ONLY"
     assert config["reasoning_mode"] == "NON_THINKING"
     assert config["final_selection"] == "NOT_MADE"
-    assert config["revision"] == "TO_BE_RESOLVED_BEFORE_DOWNLOAD"
-    assert config["model_sha256"] == "TO_BE_RECORDED_AFTER_DOWNLOAD"
+    assert config["revision"] == "6a569868d07d3bd59e8b97fb001bf8c0b254bb20"
+    assert (
+        config["model_sha256"] == "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785"
+    )
 
 
 def test_local_privacy_and_structured_output_are_required():
@@ -49,8 +51,14 @@ def test_development_partition_is_allowed_and_final_partition_rejected():
 
 def test_runtime_and_execution_order_fail_closed_before_download():
     config = _config()
-    assert config["runtime"]["runtime_release"] == "TO_BE_PINNED_BEFORE_EXECUTION"
-    assert config["runtime"]["runtime_asset_sha256"] == "TO_BE_RECORDED_BEFORE_EXECUTION"
+    assert config["runtime"]["release"] == "b10453"
+    assert config["runtime"]["commit"] == "3cb7ffb"
+    assert config["runtime"]["cuda_backend"] == "CUDA_12.4"
+    assert config["runtime"]["runtime_asset_sha256"] == "TO_BE_RESOLVED_OFFICIAL_RELEASE_METADATA"
+    assert (
+        config["runtime"]["cuda_runtime_asset_sha256"]
+        == "8c79a9b226de4b3cacfd1f83d24f962d0773be79f1e7b75c6af4ded7e32ae1d6"
+    )
     assert config["inference_performed"] is False
     assert config["locked_test_accessed"] is False
     assert config["execution_order"][0] == "RUNTIME_INSTALLATION_VERIFICATION"
