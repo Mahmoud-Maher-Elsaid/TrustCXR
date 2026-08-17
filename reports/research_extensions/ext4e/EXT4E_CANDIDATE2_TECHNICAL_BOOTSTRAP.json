@@ -16,6 +16,7 @@
   "latest_gpu_load_failure": {"classification": "INVALID_SERVER_ARGUMENT", "evidence": "b8233 llama_server.log reported invalid argument: --cors-origins", "repair": "Removed unsupported --cors-origins flag and added process-exit classification before readiness timeout."},
   "b8233_cli_sweep": {"supported_active_arguments": ["--model", "--host", "--port", "--ctx-size", "--n-gpu-layers", "--parallel", "--no-webui"], "removed_unsupported_arguments": ["--cors-origins", "--reasoning"]},
   "b8233_http_api": {"endpoint": "/v1/chat/completions", "response_format": "json_object + schema supported by server-common.cpp", "reasoning_effort": "unsupported_in_b8233_source_and_removed", "synthetic_request_sent": false},
+  "argv_parser_smoke": {"status": "PASS", "argv": ["llama-server.exe", "--model", "<nonexistent.gguf>", "--host", "127.0.0.1", "--port", "18080", "--ctx-size", "2048", "--n-gpu-layers", "999", "--parallel", "1"], "result": "parsed arguments and reached model-file handling; no invalid-argument error; inference_requests": 0},
   "synthetic_structured_output_status": "NOT_EXECUTED",
   "development_evaluation_status": "NOT_EXECUTED",
   "final_cases_accessed": 0,

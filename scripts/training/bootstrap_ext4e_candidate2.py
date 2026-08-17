@@ -69,6 +69,26 @@ def classify_server_failure(log_path: Path, process: subprocess.Popen) -> str:
     return "MODEL_LOAD_TIMEOUT"
 
 
+def build_server_argv(model: Path, port: int = 18080) -> list[str]:
+    """The sole authoritative b8233 server argv construction path."""
+
+    return [
+        str(RUNTIME_EXE),
+        "--model",
+        str(model),
+        "--host",
+        "127.0.0.1",
+        "--port",
+        str(port),
+        "--ctx-size",
+        "2048",
+        "--n-gpu-layers",
+        "999",
+        "--parallel",
+        "1",
+    ]
+
+
 def runtime_source_identity() -> dict:
     def git(*args: str) -> str:
         result = subprocess.run(
@@ -134,6 +154,7 @@ def write_preflight_diagnostic(config: dict, model: Path, evidence: Path) -> int
         ],
         "missing_runtime_dlls": missing_dlls,
         "startup_probe": probe,
+        "server_argv": build_server_argv(model),
         "gpu_detected": gpu.returncode == 0,
         "gpu_identity": gpu.stdout.strip(),
         "final_cases_accessed": 0,
@@ -270,25 +291,10 @@ def main() -> int:
     probe = startup_probe()
     if not probe["passed"]:
         raise RuntimeError(probe["classification"])
+    server_argv = build_server_argv(model)
+    (evidence / "server_argv.json").write_text(json.dumps(server_argv, indent=2), encoding="utf-8")
     server = subprocess.Popen(
-        [
-            str(runtime),
-            "--model",
-            str(model),
-            "--host",
-            "127.0.0.1",
-            "--port",
-            "18080",
-            "--parallel",
-            "1",
-            "--ctx-size",
-            "2048",
-            "--n-gpu-layers",
-            "999",
-            "--no-webui",
-            "--reasoning",
-            "off",
-        ],
+        server_argv,
         stdout=(evidence / "llama_server.log").open("w"),
         stderr=subprocess.STDOUT,
         text=True,

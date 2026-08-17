@@ -86,3 +86,13 @@ def test_b8233_http_contract_is_schema_capable_without_newer_reasoning_field():
     assert 'response_type == "json_object"' in source
     assert 'json_value(response_format, "schema"' in source
     assert "reasoning_effort" not in source
+
+
+def test_exact_server_argv_is_minimal_and_unambiguous():
+    path = ROOT / "scripts/training/bootstrap_ext4e_candidate2.py"
+    text = path.read_text(encoding="utf-8")
+    assert "def build_server_argv" in text
+    assert "--cors-origins" not in text
+    assert "--reasoning" not in text
+    assert "--no-webui" not in text
+    assert "server_argv.json" in text
