@@ -367,6 +367,8 @@ def main() -> int:
             "seed": 20260806,
             "max_tokens": 768,
             "stream": False,
+            "chat_template_kwargs": {"enable_thinking": False},
+            "reasoning_format": "none",
             "response_format": {"type": "json_object", "schema": schema},
         }
         (evidence / "synthetic_request.json").write_text(
@@ -378,8 +380,32 @@ def main() -> int:
             headers={"Content-Type": "application/json"},
             method="POST",
         )
-        with urllib.request.urlopen(request, timeout=180) as response:
-            raw = response.read()
+        try:
+            with urllib.request.urlopen(request, timeout=180) as response:
+                raw = response.read()
+        except urllib.error.HTTPError as error:
+            body = error.read().decode("utf-8", errors="replace")
+            failure = {
+                "classification": "SYNTHETIC_HTTP_ERROR",
+                "status_code": error.code,
+                "reason": error.reason,
+                "headers": dict(error.headers.items()),
+                "url": request.full_url,
+                "method": request.method,
+                "request_body": payload,
+                "response_body": body,
+                "request_attempted": True,
+                "generation_started": True,
+                "generation_completed": False,
+                "inference_requests": 1,
+                "development_cases_accessed": 0,
+                "final_cases_accessed": 0,
+                "locked_test_accessed": False,
+            }
+            (evidence / "synthetic_http_error.json").write_text(
+                json.dumps(failure, indent=2), encoding="utf-8"
+            )
+            raise RuntimeError("SYNTHETIC_HTTP_ERROR") from error
         (evidence / "raw_http_response.json").write_bytes(raw)
         envelope = json.loads(raw)
         content = envelope["choices"][0]["message"]["content"]

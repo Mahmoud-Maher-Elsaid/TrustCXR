@@ -86,6 +86,16 @@ def test_b8233_http_contract_is_schema_capable_without_newer_reasoning_field():
     assert 'response_type == "json_object"' in source
     assert 'json_value(response_format, "schema"' in source
     assert "reasoning_effort" not in source
+    assert '"chat_template_kwargs"' in source
+    assert '"reasoning_format": "none"' in source
+
+
+def test_http_error_evidence_is_persisted_without_retry():
+    helper = (ROOT / "scripts/training/bootstrap_ext4e_candidate2.py").read_text(encoding="utf-8")
+    assert "synthetic_http_error.json" in helper
+    assert '"response_body": body' in helper
+    assert '"inference_requests": 1' in helper
+    assert 'raise RuntimeError("SYNTHETIC_HTTP_ERROR")' in helper
 
 
 def test_exact_server_argv_is_minimal_and_unambiguous():
