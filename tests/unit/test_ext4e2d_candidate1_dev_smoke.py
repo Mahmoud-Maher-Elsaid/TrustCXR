@@ -25,7 +25,9 @@ def test_exact_predefined_development_case_is_frozen():
     assert config["partition"] == "development"
     assert config["case_id"] == "dev_supported"
     assert config["case_category"] == "COMPLETE_SUPPORTED_EVIDENCE"
-    assert "performance" not in config["selection_rationale"].lower()
+    rationale = config["selection_rationale"].lower()
+    assert "selected before inference" in rationale
+    assert "without performance information" in rationale
     assert (
         config["model_sha256"] == "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785"
     )
@@ -60,6 +62,7 @@ def test_server_and_generation_policy_are_frozen():
 
 
 def test_structured_grounding_and_partition_safety_are_required():
+    config = _config()
     script = _script()
     powershell = _powershell()
     assert 'build_synthetic_case("supported")' in script
@@ -67,7 +70,9 @@ def test_structured_grounding_and_partition_safety_are_required():
     assert "score_case" in script
     assert "v1/chat/completions" in script
     assert "request_count = 1" in script
-    assert "retry_count" in script
+    assert config["generation"]["retry_count"] == 0
+    assert config["generation"]["request_count"] == 1
+    assert config["failure_policy"] == "FAIL_CLOSED_NO_RETRY_OR_OUTPUT_REPAIR"
     assert "ext4d_benchmark_cases" not in script
     assert "tests/fixtures" not in script
     assert "patient_data" not in script
