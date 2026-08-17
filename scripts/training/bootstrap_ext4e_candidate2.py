@@ -361,7 +361,6 @@ def main() -> int:
             "seed": 20260806,
             "max_tokens": 768,
             "stream": False,
-            "reasoning_effort": "none",
             "response_format": {"type": "json_object", "schema": schema},
         }
         (evidence / "synthetic_request.json").write_text(

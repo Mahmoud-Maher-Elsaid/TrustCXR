@@ -14,6 +14,8 @@
   "gpu_load_status": "NOT_EXECUTED_IN_CODEX_ENVIRONMENT",
   "gpu_load_blocker": "No GPU execution performed in Codex; runtime startup remains a local gated step.",
   "latest_gpu_load_failure": {"classification": "INVALID_SERVER_ARGUMENT", "evidence": "b8233 llama_server.log reported invalid argument: --cors-origins", "repair": "Removed unsupported --cors-origins flag and added process-exit classification before readiness timeout."},
+  "b8233_cli_sweep": {"supported_active_arguments": ["--model", "--host", "--port", "--ctx-size", "--n-gpu-layers", "--parallel", "--no-webui"], "removed_unsupported_arguments": ["--cors-origins", "--reasoning"]},
+  "b8233_http_api": {"endpoint": "/v1/chat/completions", "response_format": "json_object + schema supported by server-common.cpp", "reasoning_effort": "unsupported_in_b8233_source_and_removed", "synthetic_request_sent": false},
   "synthetic_structured_output_status": "NOT_EXECUTED",
   "development_evaluation_status": "NOT_EXECUTED",
   "final_cases_accessed": 0,

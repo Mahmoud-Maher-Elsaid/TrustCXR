@@ -74,3 +74,15 @@ def test_load_failure_classifications_and_b8233_arguments_are_explicit():
     assert "MODEL_LOAD_TIMEOUT" in helper
     assert "--cors-origins" not in helper
     assert '"--health"' not in helper
+    assert '"--reasoning"' not in helper
+
+
+def test_b8233_http_contract_is_schema_capable_without_newer_reasoning_field():
+    source = (
+        ROOT
+        / "cache/research_extensions/ext4e_candidate2/llama_cpp_b8233/tools/server"
+        / "server-common.cpp"
+    ).read_text(encoding="utf-8")
+    assert 'response_type == "json_object"' in source
+    assert 'json_value(response_format, "schema"' in source
+    assert "reasoning_effort" not in source
