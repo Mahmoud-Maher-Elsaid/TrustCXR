@@ -93,7 +93,13 @@ def test_consumed_case_discovery_never_selects_failed_case_again():
         {"dev_uncertainty", "dev_defer", "dev_withheld", "dev_missing", "dev_conflict"},
     )
     assert root is not None
-    assert consumed == {"dev_uncertainty", "dev_defer"}
+    assert consumed == {
+        "dev_uncertainty",
+        "dev_defer",
+        "dev_withheld",
+        "dev_missing",
+        "dev_conflict",
+    }
 
 
 def test_aggregate_accepts_completed_semantic_failure(tmp_path):
@@ -116,6 +122,14 @@ def test_aggregate_accepts_completed_semantic_failure(tmp_path):
         paths[case_id] = target
     aggregate = aggregate_evidence(CASES, paths)
     assert aggregate["total_cases"] == 6
+    assert set(aggregate["canonical_case_records"]) == {
+        "dev_supported",
+        "dev_uncertainty",
+        "dev_defer",
+        "dev_withheld",
+        "dev_missing",
+        "dev_conflict",
+    }
     assert aggregate["case_fail_count"] >= 1
     failed_result = next(
         item for item in aggregate["case_results"] if item["case_id"] == "dev_uncertainty"

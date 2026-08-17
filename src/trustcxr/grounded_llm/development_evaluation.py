@@ -181,6 +181,23 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
             result = score_case(scoring_case(case), json.loads(parsed.read_text(encoding="utf-8")))
             result["technical_status"] = "COMPLETED"
             result["contract_status"] = "EXT4C_VALID"
+            result.update(
+                {
+                    "evidence_path": str(root),
+                    "attempt_state": (
+                        "HISTORICAL_REUSED"
+                        if case_id == "dev_supported"
+                        else metadata.get("attempt_state", "ATTEMPTED_COMPLETE")
+                    ),
+                    "request_attempted": metadata.get("inference_request_count", 0) == 1,
+                    "request_count": metadata.get("inference_request_count", 0),
+                    "generation_completed": metadata.get("generation_completed", False),
+                    "parse_valid": metadata.get("response_parse_valid", False),
+                    "ext4c_valid": True,
+                    "scorer_executed": True,
+                    "validation_error": None,
+                }
+            )
             results.append(result)
             continue
         failure = root / "validation_error.json"
@@ -192,18 +209,31 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
                 "category": case["category"],
                 "valid": False,
                 "case_passed": False,
-                "violations": {name: 0 for name in TAXONOMY},
+                "violations": {name: None for name in TAXONOMY},
                 "generation_status": "COMPLETED",
                 "technical_status": "COMPLETED",
                 "contract_status": "EXT4C_SEMANTIC_VALIDATION_FAIL",
                 "validation_error": json.loads(failure.read_text(encoding="utf-8")),
+                "evidence_path": str(root),
+                "attempt_state": (
+                    "HISTORICAL_REUSED"
+                    if case_id == "dev_supported"
+                    else metadata.get("attempt_state", "ATTEMPTED_INCOMPLETE")
+                ),
+                "request_attempted": metadata.get("inference_request_count", 0) == 1,
+                "request_count": metadata.get("inference_request_count", 0),
+                "generation_completed": metadata.get("generation_completed", False),
+                "parse_valid": metadata.get("response_parse_valid", True),
+                "ext4c_valid": False,
+                "scorer_executed": False,
             }
         )
     total = len(results)
     counts = {name: 0 for name in TAXONOMY}
     for item in results:
         for name, count in item["violations"].items():
-            counts[name] += count
+            if isinstance(count, int):
+                counts[name] += count
     valid_count = sum(item["valid"] for item in results)
     passed = sum(item["case_passed"] for item in results)
 
@@ -251,6 +281,10 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
         "total_cases": total,
         "previously_executed": 1,
         "newly_executed": total - 1,
+        "historical_reused_count": sum(
+            item["attempt_state"] == "HISTORICAL_REUSED" for item in results
+        ),
+        "inference_consumed_count": sum(item["request_attempted"] for item in results),
         "completed_generations": sum(
             metadata_for(case["case_id"], evidence_paths[case["case_id"]]).get(
                 "generation_completed", False
@@ -263,10 +297,21 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
             )
             for case in development
         ),
+        "ext4c_valid_count": sum(item["ext4c_valid"] for item in results),
+        "ext4c_invalid_count": sum(not item["ext4c_valid"] for item in results),
+        "scorer_executed_count": sum(item["scorer_executed"] for item in results),
+        "incomplete_evidence_count": sum(
+            item["attempt_state"] == "ATTEMPTED_INCOMPLETE" for item in results
+        ),
+        "protocol_deviation_count": 0,
+        "resume_pending_count": 0,
+        "frozen_final_cases_accessed": 0,
+        "locked_test_accessed": False,
         "case_pass_count": passed,
         "case_fail_count": total - passed,
         "violation_counts": counts,
         "case_results": results,
+        "canonical_case_records": {item["case_id"]: item for item in results},
         "metrics": metrics,
         "hard_safety_gate_pass": hard_gate_pass,
         "quality_gate_pass": quality_gate_pass,

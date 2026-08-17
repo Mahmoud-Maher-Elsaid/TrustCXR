@@ -149,8 +149,15 @@ def main() -> int:
         evidence_paths = {"dev_supported": HISTORICAL_ROOT / "20260817T091916Z"}
         evidence_paths.update({case_id: evaluation_root / case_id for case_id in consumed})
         aggregate = aggregate_evidence(CASES_PATH, evidence_paths)
+        ledger["consumed_case_ids"] = sorted({"dev_supported", *consumed})
+        ledger["resume_pending_case_ids"] = []
+        _write_json_atomic(ledger_path, ledger)
+        _write_json(evaluation_root / "case_registry.json", aggregate["canonical_case_records"])
         _write_json(evaluation_root / "development_summary.json", aggregate)
-        _write_json(evaluation_root / "development_case_results.json", aggregate["case_results"])
+        _write_json(
+            evaluation_root / "development_case_results.json",
+            aggregate["canonical_case_records"],
+        )
         _write_json(
             evaluation_root / "development_violation_totals.json", aggregate["violation_counts"]
         )
@@ -358,8 +365,15 @@ def main() -> int:
             evidence_paths[case_id] = case_root
 
         aggregate = aggregate_evidence(CASES_PATH, evidence_paths)
+        ledger["consumed_case_ids"] = sorted({"dev_supported", *evidence_paths})
+        ledger["resume_pending_case_ids"] = []
+        _write_json_atomic(ledger_path, ledger)
+        _write_json(evaluation_root / "case_registry.json", aggregate["canonical_case_records"])
         _write_json(evaluation_root / "development_summary.json", aggregate)
-        _write_json(evaluation_root / "development_case_results.json", aggregate["case_results"])
+        _write_json(
+            evaluation_root / "development_case_results.json",
+            aggregate["canonical_case_records"],
+        )
         _write_json(
             evaluation_root / "development_violation_totals.json", aggregate["violation_counts"]
         )
