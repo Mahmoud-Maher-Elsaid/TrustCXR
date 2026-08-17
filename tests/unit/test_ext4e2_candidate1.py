@@ -67,3 +67,13 @@ def test_runtime_and_execution_order_fail_closed_before_download():
     assert config["locked_test_accessed"] is False
     assert config["execution_order"][0] == "RUNTIME_INSTALLATION_VERIFICATION"
     assert config["execution_order"][-1] == "SIX_DEVELOPMENT_CASE_CANDIDATE1_RUN"
+
+
+def test_native_runtime_identity_capture_checks_exit_code_not_stderr():
+    script = (ROOT / "scripts" / "training" / "run_ext4e2_candidate1_preflight.ps1").read_text()
+    assert "Start-Process" in script
+    assert "RedirectStandardError" in script
+    assert "$process.ExitCode -ne 0" in script
+    assert "build\\s+10453" in script
+    assert "commit\\s+3cb7ffb" in script
+    assert "& $cli.FullName --version" not in script

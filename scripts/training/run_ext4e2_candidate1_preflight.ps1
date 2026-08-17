@@ -48,6 +48,25 @@ function Get-Sha256([string]$Path) {
     return (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
 }
 
+function Invoke-NativeCapture([string]$FilePath, [string[]]$ArgumentList) {
+    $prefix = Join-Path ([System.IO.Path]::GetTempPath()) ("trustcxr-" + [guid]::NewGuid().ToString())
+    $stdoutPath = "$prefix.stdout"
+    $stderrPath = "$prefix.stderr"
+    try {
+        $process = Start-Process -FilePath $FilePath -ArgumentList $ArgumentList -RedirectStandardOutput $stdoutPath `
+            -RedirectStandardError $stderrPath -Wait -PassThru -NoNewWindow
+        $stdout = if (Test-Path -LiteralPath $stdoutPath) { Get-Content -LiteralPath $stdoutPath -Raw } else { "" }
+        $stderr = if (Test-Path -LiteralPath $stderrPath) { Get-Content -LiteralPath $stderrPath -Raw } else { "" }
+        if ($process.ExitCode -ne 0) {
+            throw "Native command failed ($($process.ExitCode)): $FilePath $($ArgumentList -join ' ')`n$stderr"
+        }
+        return [pscustomobject]@{ StdOut = $stdout; StdErr = $stderr; ExitCode = $process.ExitCode }
+    }
+    finally {
+        Remove-Item -LiteralPath $stdoutPath,$stderrPath -Force -ErrorAction SilentlyContinue
+    }
+}
+
 function Download-And-Verify([string]$Url, [string]$Path, [string]$ExpectedSha) {
     if ($ExpectedSha -match "TO_BE_") { throw "Pinned SHA-256 is unresolved for $Path." }
     if (-not (Test-Path -LiteralPath $Path)) {
@@ -67,9 +86,13 @@ Expand-Archive -LiteralPath $cudaArchive -DestinationPath $runtimeRoot -Force
 $cli = Get-ChildItem -LiteralPath $runtimeRoot -Recurse -Filter "llama-cli.exe" | Select-Object -First 1
 $server = Get-ChildItem -LiteralPath $runtimeRoot -Recurse -Filter "llama-server.exe" | Select-Object -First 1
 if (-not $cli -or -not $server) { throw "Pinned runtime executables were not found after extraction." }
-$versionText = (& $cli.FullName --version 2>&1 | Out-String)
-if ($versionText -notmatch "b10453") { throw "Runtime version does not identify b10453." }
-& nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader | Set-Content (Join-Path $evidenceRoot "gpu_identity.txt")
+$versionResult = Invoke-NativeCapture $cli.FullName @("--version")
+$versionText = ($versionResult.StdOut + "`n" + $versionResult.StdErr).Trim()
+if ($versionText -notmatch "build\s+10453") { throw "Runtime version does not identify build 10453." }
+if ($versionText -notmatch "commit\s+3cb7ffb(?:[0-9a-f]+)?") { throw "Runtime version does not identify commit 3cb7ffb." }
+$versionText | Set-Content (Join-Path $evidenceRoot "runtime_version.txt")
+$gpuResult = Invoke-NativeCapture "nvidia-smi.exe" @("--query-gpu=name,memory.total,driver_version", "--format=csv,noheader")
+($gpuResult.StdOut + $gpuResult.StdErr).Trim() | Set-Content (Join-Path $evidenceRoot "gpu_identity.txt")
 
 $modelUrl = "https://huggingface.co/$($config.model_repository)/resolve/$($config.revision)/$($config.model_filename)?download=true"
 Download-And-Verify $modelUrl $modelPath $config.model_sha256
