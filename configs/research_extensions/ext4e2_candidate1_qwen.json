@@ -1,0 +1,66 @@
+{
+  "schema_id": "EXT4E2_CANDIDATE1_LOCAL_PREFLIGHT",
+  "schema_version": "1",
+  "status": "CANDIDATE_1_PREFLIGHT_PREPARED",
+  "candidate_number": 1,
+  "model_repository": "Qwen/Qwen3-8B-GGUF",
+  "model_family": "Qwen3-8B",
+  "mode": "TEXT_ONLY",
+  "reasoning_mode": "NON_THINKING",
+  "quantization": "Q4_K_M",
+  "model_filename": "Qwen3-8B-Q4_K_M.gguf",
+  "revision": "TO_BE_RESOLVED_BEFORE_DOWNLOAD",
+  "model_file_bytes": "TO_BE_RECORDED_AFTER_DOWNLOAD",
+  "model_sha256": "TO_BE_RECORDED_AFTER_DOWNLOAD",
+  "license": "Apache-2.0 (verify exact model-card revision before download)",
+  "chat_template": "QWEN3_OFFICIAL_TEMPLATE_NON_THINKING_ENABLE_THINKING_FALSE",
+  "final_selection": "NOT_MADE",
+  "local_only": true,
+  "external_api": "NOT_AUTHORIZED",
+  "raw_images": false,
+  "patient_data": false,
+  "fine_tuning": "NOT_AUTHORIZED",
+  "runtime": {
+    "preferred": "LLAMA_CPP",
+    "fallback": "CPU_GPU_HYBRID_ONLY_IF_COMPATIBLE",
+    "runtime_release": "TO_BE_PINNED_BEFORE_EXECUTION",
+    "windows_asset": "TO_BE_PINNED_BEFORE_EXECUTION",
+    "runtime_asset_sha256": "TO_BE_RECORDED_BEFORE_EXECUTION",
+    "intended_root": "cache/research_extensions/ext4e2/llama.cpp",
+    "intended_model_root": "cache/research_extensions/ext4e2/models"
+  },
+  "hardware_policy": {
+    "gpu": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "vram_mib": 8192,
+    "gpu_offload": "BOUNDED_AND_MEASURED",
+    "oom": "FAIL_CLOSED_NO_SILENT_QUANTIZATION_OR_MODEL_CHANGE"
+  },
+  "generation": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "top_k": "RUNTIME_DEFAULT_UNLESS_FROZEN_BEFORE_EXECUTION",
+    "seed": "REQUIRED_IF_SUPPORTED",
+    "context_size": 4096,
+    "max_output_tokens": 768,
+    "repetition_penalty": "NOT_USED_UNLESS_FROZEN_BEFORE_EXECUTION",
+    "structured_output": "EXT4C_SCHEMA_OR_GRAMMAR_REQUIRED",
+    "free_form_fallback": false,
+    "timeout_seconds": 120
+  },
+  "partition_guard": {
+    "allowed": "EXT4D_DEVELOPMENT_ONLY",
+    "final_partition": "REJECTED",
+    "development_case_count": 6,
+    "final_case_count": 24
+  },
+  "execution_order": [
+    "RUNTIME_INSTALLATION_VERIFICATION",
+    "MODEL_DOWNLOAD_AND_SHA256_VERIFICATION",
+    "MODEL_LOAD_ONLY_SMOKE",
+    "ONE_DEVELOPMENT_CASE_FORMAT_AND_SAFETY_SMOKE",
+    "SIX_DEVELOPMENT_CASE_CANDIDATE1_RUN"
+  ],
+  "locked_test_accessed": false,
+  "inference_performed": false,
+  "next_step": "LOCAL_RUNTIME_AND_MODEL_DOWNLOAD_VERIFICATION"
+}
