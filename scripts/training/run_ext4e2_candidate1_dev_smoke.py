@@ -81,80 +81,107 @@ class RequestConstructionFailure(RuntimeError):
     """A failure while constructing the single governed HTTP request."""
 
 
+REQUIRED_TOP_LEVEL_FIELDS = (
+    "partition",
+    "case_id",
+    "case_category",
+    "model_repository",
+    "model_revision",
+    "model_filename",
+    "model_sha256",
+    "runtime_release",
+    "runtime_commit_prefix",
+    "request_reasoning_effort",
+    "structured_output_mechanism",
+    "prompt_template",
+    "prompt_sha256",
+    "evidence_root",
+    "failure_policy",
+)
+REQUIRED_SERVER_FIELDS = (
+    "host",
+    "port",
+    "cors_origins",
+    "webui",
+    "parallel_slots",
+    "context_size",
+    "gpu_layers",
+    "reasoning",
+    "readiness_endpoint",
+)
+REQUIRED_GENERATION_FIELDS = (
+    "request_count",
+    "retry_count",
+    "temperature",
+    "top_p",
+    "seed",
+    "max_tokens",
+    "stream",
+    "free_form_fallback",
+)
+FROZEN_TOP_LEVEL_VALUES = {
+    "partition": "development",
+    "case_id": "dev_supported",
+    "case_category": "COMPLETE_SUPPORTED_EVIDENCE",
+    "request_reasoning_effort": "none",
+    "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA",
+}
+FROZEN_SERVER_VALUES = {
+    "host": "127.0.0.1",
+    "port": 18080,
+    "parallel_slots": 1,
+    "context_size": 2048,
+    "gpu_layers": 999,
+    "reasoning": "off",
+    "cors_origins": "localhost",
+    "webui": False,
+    "readiness_endpoint": "/health",
+}
+FROZEN_GENERATION_VALUES = {
+    "request_count": 1,
+    "retry_count": 0,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "seed": 20260806,
+    "max_tokens": 768,
+    "stream": False,
+    "free_form_fallback": False,
+}
+
+
+def build_readiness_url(config: dict) -> str:
+    server = config["server"]
+    return f"http://{server['host']}:{server['port']}{server['readiness_endpoint']}"
+
+
+def build_completion_url(config: dict) -> str:
+    server = config["server"]
+    return f"http://{server['host']}:{server['port']}/v1/chat/completions"
+
+
 def validate_config(config: dict) -> None:
-    required_top_level = (
-        "partition",
-        "case_id",
-        "case_category",
-        "model_repository",
-        "model_revision",
-        "model_filename",
-        "model_sha256",
-        "runtime_release",
-        "runtime_commit_prefix",
-        "request_reasoning_effort",
-        "structured_output_mechanism",
-    )
-    required_server = (
-        "host",
-        "port",
-        "parallel_slots",
-        "context_size",
-        "gpu_layers",
-        "reasoning",
-        "cors_origins",
-        "webui",
-        "readiness_endpoint",
-    )
-    required_generation = (
-        "request_count",
-        "retry_count",
-        "temperature",
-        "top_p",
-        "seed",
-        "max_tokens",
-        "stream",
-    )
-    missing = [key for key in required_top_level if key not in config]
+    missing = [key for key in REQUIRED_TOP_LEVEL_FIELDS if key not in config]
     missing.extend(
-        f"server.{key}" for key in required_server if key not in config.get("server", {})
+        f"server.{key}" for key in REQUIRED_SERVER_FIELDS if key not in config.get("server", {})
     )
     missing.extend(
         f"generation.{key}"
-        for key in required_generation
+        for key in REQUIRED_GENERATION_FIELDS
         if key not in config.get("generation", {})
     )
     if missing:
         raise ConfigContractFailure(
             f"Missing required EXT-4E2D config fields: {', '.join(missing)}"
         )
-    if config["request_reasoning_effort"] != "none":
-        raise ConfigContractFailure("request_reasoning_effort must be exactly 'none'.")
-    if config["structured_output_mechanism"] != "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA":
-        raise ConfigContractFailure("Unexpected structured-output mechanism.")
-    if config["generation"]["request_count"] != 1 or config["generation"]["retry_count"] != 0:
-        raise ConfigContractFailure("EXT-4E2D requires exactly one request and zero retries.")
-    if config["partition"] != "development":
-        raise ConfigContractFailure("EXT-4E2D requires the development partition.")
-    if config["case_id"] != "dev_supported":
-        raise ConfigContractFailure("EXT-4E2D requires the predefined dev_supported case.")
-    if config["case_category"] != "COMPLETE_SUPPORTED_EVIDENCE":
-        raise ConfigContractFailure("EXT-4E2D requires the complete supported case category.")
-    server = config["server"]
-    invariants = {
-        "host": "127.0.0.1",
-        "port": 18080,
-        "parallel_slots": 1,
-        "context_size": 2048,
-        "gpu_layers": 999,
-        "reasoning": "off",
-    }
-    if any(server[key] != value for key, value in invariants.items()):
-        raise ConfigContractFailure("EXT-4E2D server invariants do not match the frozen contract.")
-    if server["cors_origins"] != "localhost" or server["webui"] is not False:
-        raise ConfigContractFailure("EXT-4E2D server exposure settings are not frozen safely.")
-    if server["readiness_endpoint"] != "/health":
-        raise ConfigContractFailure("EXT-4E2D readiness endpoint is not frozen.")
+    for key, value in FROZEN_TOP_LEVEL_VALUES.items():
+        if config[key] != value:
+            raise ConfigContractFailure(f"EXT-4E2D top-level invariant {key} is not frozen.")
+    for key, value in FROZEN_SERVER_VALUES.items():
+        if config["server"][key] != value:
+            raise ConfigContractFailure(f"EXT-4E2D server invariant {key} is not frozen.")
+    for key, value in FROZEN_GENERATION_VALUES.items():
+        if config["generation"][key] != value:
+            raise ConfigContractFailure(f"EXT-4E2D generation invariant {key} is not frozen.")
 
 
 def build_request_payload(config: dict, prompt: str, input_payload: dict, schema: dict) -> dict:
@@ -296,9 +323,7 @@ def main() -> int:
             if process.poll() is not None:
                 raise RuntimeError("llama-server exited before readiness.")
             try:
-                health_url = (
-                    f"http://{server['host']}:{server['port']}{server['readiness_endpoint']}"
-                )
+                health_url = build_readiness_url(config)
                 with urllib.request.urlopen(health_url, timeout=2) as health:
                     if health.status == 200:
                         break
@@ -316,7 +341,7 @@ def main() -> int:
         )
         request_count = 1
         raw_response = request_json(
-            f"http://{server['host']}:{server['port']}/v1/chat/completions",
+            build_completion_url(config),
             output_payload,
             180,
         )

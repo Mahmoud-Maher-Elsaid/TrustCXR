@@ -26,6 +26,27 @@ def main() -> int:
         )
     )
     runner.validate_config(config)
+    for fields, section in (
+        (runner.REQUIRED_TOP_LEVEL_FIELDS, config),
+        (runner.REQUIRED_SERVER_FIELDS, config["server"]),
+        (runner.REQUIRED_GENERATION_FIELDS, config["generation"]),
+    ):
+        missing = sorted(set(fields) - set(section))
+        if missing:
+            raise RuntimeError(f"Required config fields are missing: {missing}")
+    for key, value in runner.FROZEN_TOP_LEVEL_VALUES.items():
+        if config[key] != value:
+            raise RuntimeError(f"Frozen top-level value differs for {key}.")
+    for key, value in runner.FROZEN_SERVER_VALUES.items():
+        if config["server"][key] != value:
+            raise RuntimeError(f"Frozen server value differs for {key}.")
+    for key, value in runner.FROZEN_GENERATION_VALUES.items():
+        if config["generation"][key] != value:
+            raise RuntimeError(f"Frozen generation value differs for {key}.")
+    if runner.build_readiness_url(config) != "http://127.0.0.1:18080/health":
+        raise RuntimeError("Unexpected readiness endpoint.")
+    if runner.build_completion_url(config) != "http://127.0.0.1:18080/v1/chat/completions":
+        raise RuntimeError("Unexpected completion endpoint.")
     schema = runner.GroundedOutputEnvelope.model_json_schema()
     payload = runner.build_request_payload(config, "offline preflight", {"offline": True}, schema)
     if payload["reasoning_effort"] != "none":

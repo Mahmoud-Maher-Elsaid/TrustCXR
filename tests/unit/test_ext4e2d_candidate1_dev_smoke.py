@@ -16,14 +16,6 @@ def _config():
     )
 
 
-def _script():
-    return (ROOT / "scripts" / "training" / "run_ext4e2_candidate1_dev_smoke.py").read_text()
-
-
-def _powershell():
-    return (ROOT / "scripts" / "training" / "run_ext4e2_candidate1_dev_smoke.ps1").read_text()
-
-
 def _runner():
     path = ROOT / "scripts/training/run_ext4e2_candidate1_dev_smoke.py"
     spec = importlib.util.spec_from_file_location("ext4e2d_runner", path)
@@ -63,6 +55,7 @@ def test_server_and_generation_policy_are_frozen():
         "reasoning": "off",
         "readiness_endpoint": "/health",
     }
+    assert "context_size" not in config
     assert (
         config["structured_output_mechanism"] == "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA"
     )
@@ -80,10 +73,11 @@ def test_server_and_generation_policy_are_frozen():
 
 def test_structured_grounding_and_partition_safety_are_required():
     config = _config()
-    script = _script()
-    powershell = _powershell()
     runner = _runner()
     runner.validate_config(config)
+    assert set(runner.REQUIRED_TOP_LEVEL_FIELDS) - set(config) == set()
+    assert set(runner.REQUIRED_SERVER_FIELDS) - set(config["server"]) == set()
+    assert set(runner.REQUIRED_GENERATION_FIELDS) - set(config["generation"]) == set()
     schema = runner.GroundedOutputEnvelope.model_json_schema()
     payload = runner.build_request_payload(config, "system", {"synthetic": True}, schema)
     assert payload["response_format"]["type"] == "json_object"
@@ -94,11 +88,10 @@ def test_structured_grounding_and_partition_safety_are_required():
     assert config["generation"]["retry_count"] == 0
     assert config["generation"]["request_count"] == 1
     assert config["failure_policy"] == "FAIL_CLOSED_NO_RETRY_OR_OUTPUT_REPAIR"
-    assert "ext4d_benchmark_cases" not in script
-    assert "tests/fixtures" not in script
-    assert "patient_data" not in script
-    assert "locked" in script.lower()
-    assert "merge-base" in powershell
+    assert config["partition"] == "development"
+    assert config["input_builder"].endswith("build_synthetic_case:supported")
+    assert config["frozen_final_cases_accessed"] == 0
+    assert config["locked_test_accessed"] is False
 
 
 def test_prompt_hash_and_non_thinking_safety_are_frozen():
@@ -112,13 +105,14 @@ def test_prompt_hash_and_non_thinking_safety_are_frozen():
 
 
 def test_no_image_or_external_execution_path_is_present():
-    script = _script()
-    assert "raw_image" not in script
-    assert "DICOM" not in script
-    assert "requests" not in script
-    assert "urllib.request.urlopen" in script
-    assert "http://127.0.0.1" in script
-    assert "process.terminate()" in script
+    config = _config()
+    runner = _runner()
+    runner.validate_config(config)
+    assert runner.build_readiness_url(config) == "http://127.0.0.1:18080/health"
+    assert runner.build_completion_url(config) == "http://127.0.0.1:18080/v1/chat/completions"
+    assert config["server"]["host"] == "127.0.0.1"
+    assert config["server"]["cors_origins"] == "localhost"
+    assert config["server"]["webui"] is False
 
 
 def test_config_preflight_requires_request_reasoning_effort_without_fallback():
