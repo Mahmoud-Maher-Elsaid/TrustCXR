@@ -17,6 +17,7 @@
 **EXT-4E2C Qwen Load-Only GPU Smoke:** `LOAD_ONLY_PASS — TECHNICALLY LOADABLE; NOT SCIENTIFICALLY EVALUATED`
 **EXT-4E2D Candidate #1 Single Development-Case Smoke:** `CLOSED / PASS — SAFETY, FORMAT, AND GROUNDING VERIFIED; CANDIDATE NOT SCIENTIFICALLY SELECTED`
 **EXT-4E1 Candidate #1 Six-Development-Case Evaluation:** `EVALUATION_PREPARED — dev_supported REUSED; FIVE CASES REMAIN`
+**Candidate selection status:** `Candidate NOT SCIENTIFICALLY SELECTED — scientific selection requires the governed six-development-case evaluation under EXT-4E1; frozen final 24 cases and the locked test remain untouched`
 **EXT-4E2D0 Structured Output Compatibility Smoke:** `CLOSED / PASS — REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA_VERIFIED`
 **Structured-output compatibility:** `VERIFIED`
 **Next authorized stage:** `SIX_DEVELOPMENT_CASE_CANDIDATE1_RUN — FROZEN SIX-DEVELOPMENT-CASE CANDIDATE #1 EVALUATION UNDER EXT-4E1`
