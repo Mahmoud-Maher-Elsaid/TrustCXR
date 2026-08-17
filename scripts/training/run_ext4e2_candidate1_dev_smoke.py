@@ -138,8 +138,7 @@ def main() -> int:
         "1",
         "--reasoning",
         "off",
-        "--chat-template-kwargs",
-        '{"enable_thinking":false}',
+        "--no-prefill-assistant",
         "--json-schema-file",
         str(schema_path),
     ]

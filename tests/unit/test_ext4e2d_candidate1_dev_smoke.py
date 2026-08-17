@@ -47,7 +47,7 @@ def test_server_and_generation_policy_are_frozen():
         "parallel_slots": 1,
         "gpu_layers": 999,
         "reasoning": "off",
-        "chat_template_kwargs": {"enable_thinking": False},
+        "prefill_assistant": False,
         "readiness_endpoint": "/health",
         "json_schema_option": "--json-schema-file",
     }
@@ -90,7 +90,8 @@ def test_prompt_hash_and_non_thinking_safety_are_frozen():
     )
     assert "prompt_sha256" in script
     assert '"--reasoning",\n        "off"' in script
-    assert '"--chat-template-kwargs",\n        \'{"enable_thinking":false}\'' in script
+    assert '"--no-prefill-assistant"' in script
+    assert "chat-template-kwargs" not in script
     assert "reasoning_content" in script
     assert "raw_response.json" in script
 
