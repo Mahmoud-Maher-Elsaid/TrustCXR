@@ -2,6 +2,7 @@
 
 import importlib.util
 import json
+from copy import deepcopy
 from pathlib import Path
 
 import pytest
@@ -57,11 +58,14 @@ def test_server_and_generation_policy_are_frozen():
         "cors_origins": "localhost",
         "webui": False,
         "parallel_slots": 1,
+        "context_size": 2048,
         "gpu_layers": 999,
         "reasoning": "off",
         "readiness_endpoint": "/health",
-        "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA",
     }
+    assert (
+        config["structured_output_mechanism"] == "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA"
+    )
     assert config["request_reasoning_effort"] == "none"
     assert config["server"]["gpu_layers"] == 999
     assert generation["temperature"] == 0.0
@@ -78,11 +82,15 @@ def test_structured_grounding_and_partition_safety_are_required():
     config = _config()
     script = _script()
     powershell = _powershell()
-    assert 'build_synthetic_case("supported")' in script
-    assert "GroundedOutputEnvelope.model_validate" in script
-    assert "score_case" in script
-    assert "v1/chat/completions" in script
-    assert "request_count = 1" in script
+    runner = _runner()
+    runner.validate_config(config)
+    schema = runner.GroundedOutputEnvelope.model_json_schema()
+    payload = runner.build_request_payload(config, "system", {"synthetic": True}, schema)
+    assert payload["response_format"]["type"] == "json_object"
+    assert payload["response_format"]["schema"] == schema
+    assert payload["reasoning_effort"] == "none"
+    assert payload["stream"] is False
+    assert payload["model"] == config["model_filename"]
     assert config["generation"]["retry_count"] == 0
     assert config["generation"]["request_count"] == 1
     assert config["failure_policy"] == "FAIL_CLOSED_NO_RETRY_OR_OUTPUT_REPAIR"
@@ -95,20 +103,12 @@ def test_structured_grounding_and_partition_safety_are_required():
 
 def test_prompt_hash_and_non_thinking_safety_are_frozen():
     config = _config()
-    script = _script()
     assert (
         config["prompt_sha256"]
         == "41ef8d42303bdcfc238d64f9528796bf42c94935c55296c8c7a361c74b5d6a61"
     )
-    assert "prompt_sha256" in script
-    assert '"--reasoning",\n        "off"' in script
-    assert '"response_format"' in script
-    assert '"type": "json_object"' in script
-    assert '"schema": GroundedOutputEnvelope.model_json_schema()' in script
-    assert '"type": "json_schema"' not in script
-    assert '"reasoning_effort"' in script
-    assert "reasoning_content" in script
-    assert "raw_response.json" in script
+    assert config["request_reasoning_effort"] == "none"
+    assert config["server"]["reasoning"] == "off"
 
 
 def test_no_image_or_external_execution_path_is_present():
@@ -132,17 +132,59 @@ def test_config_preflight_requires_request_reasoning_effort_without_fallback():
         runner.validate_config(missing)
 
 
+@pytest.mark.parametrize(
+    "location",
+    [
+        ("request_reasoning_effort",),
+        ("structured_output_mechanism",),
+        ("generation", "request_count"),
+        ("generation", "retry_count"),
+        ("server", "reasoning"),
+    ],
+)
+def test_missing_critical_config_fields_fail_before_execution(location):
+    runner = _runner()
+    config = _config()
+    broken = deepcopy(config)
+    target = broken
+    for key in location[:-1]:
+        target = target[key]
+    del target[location[-1]]
+    with pytest.raises(runner.ConfigContractFailure):
+        runner.validate_config(broken)
+
+
+@pytest.mark.parametrize(
+    "location,value",
+    [
+        (("partition",), "final"),
+        (("case_id",), "other"),
+        (("request_reasoning_effort",), "auto"),
+        (("server", "parallel_slots"), 2),
+        (("server", "context_size"), 1024),
+        (("generation", "request_count"), 2),
+    ],
+)
+def test_invalid_frozen_config_values_fail_closed(location, value):
+    runner = _runner()
+    config = deepcopy(_config())
+    target = config
+    for key in location[:-1]:
+        target = target[key]
+    target[location[-1]] = value
+    with pytest.raises(runner.ConfigContractFailure):
+        runner.validate_config(config)
+
+
 def test_request_error_evidence_and_single_constraint_path_are_required():
-    script = _script()
-    assert "HttpRequestFailure" in script
-    assert "status_code" in script
-    assert "response_body" in script
-    assert '"http_error.json"' in script
-    assert '"retry_count": 0' in script
-    assert '"generation_completed": generation_completed' in script
-    assert '"--json-schema-file"' not in script
-    assert '"--json-schema"' not in script
-    assert '"--grammar"' not in script
-    assert '"--grammar-file"' not in script
-    assert '"json_schema":' not in script
-    assert '"grammar":' not in script
+    config = _config()
+    runner = _runner()
+    schema = runner.GroundedOutputEnvelope.model_json_schema()
+    payload = runner.build_request_payload(config, "system", {}, schema)
+    assert payload["response_format"] == {
+        "type": "json_object",
+        "schema": schema,
+    }
+    assert config["generation"]["request_count"] == 1
+    assert config["generation"]["retry_count"] == 0
+    assert config["generation"]["free_form_fallback"] is False

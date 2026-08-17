@@ -95,7 +95,17 @@ def validate_config(config: dict) -> None:
         "request_reasoning_effort",
         "structured_output_mechanism",
     )
-    required_server = ("host", "port", "parallel_slots", "gpu_layers", "reasoning")
+    required_server = (
+        "host",
+        "port",
+        "parallel_slots",
+        "context_size",
+        "gpu_layers",
+        "reasoning",
+        "cors_origins",
+        "webui",
+        "readiness_endpoint",
+    )
     required_generation = (
         "request_count",
         "retry_count",
@@ -124,6 +134,27 @@ def validate_config(config: dict) -> None:
         raise ConfigContractFailure("Unexpected structured-output mechanism.")
     if config["generation"]["request_count"] != 1 or config["generation"]["retry_count"] != 0:
         raise ConfigContractFailure("EXT-4E2D requires exactly one request and zero retries.")
+    if config["partition"] != "development":
+        raise ConfigContractFailure("EXT-4E2D requires the development partition.")
+    if config["case_id"] != "dev_supported":
+        raise ConfigContractFailure("EXT-4E2D requires the predefined dev_supported case.")
+    if config["case_category"] != "COMPLETE_SUPPORTED_EVIDENCE":
+        raise ConfigContractFailure("EXT-4E2D requires the complete supported case category.")
+    server = config["server"]
+    invariants = {
+        "host": "127.0.0.1",
+        "port": 18080,
+        "parallel_slots": 1,
+        "context_size": 2048,
+        "gpu_layers": 999,
+        "reasoning": "off",
+    }
+    if any(server[key] != value for key, value in invariants.items()):
+        raise ConfigContractFailure("EXT-4E2D server invariants do not match the frozen contract.")
+    if server["cors_origins"] != "localhost" or server["webui"] is not False:
+        raise ConfigContractFailure("EXT-4E2D server exposure settings are not frozen safely.")
+    if server["readiness_endpoint"] != "/health":
+        raise ConfigContractFailure("EXT-4E2D readiness endpoint is not frozen.")
 
 
 def build_request_payload(config: dict, prompt: str, input_payload: dict, schema: dict) -> dict:
@@ -228,25 +259,26 @@ def main() -> int:
         raise RuntimeError("Pinned model SHA-256 mismatch.")
 
     log_path = run_root / "llama_server.log"
+    server = config["server"]
     server_args = [
         str(server_path),
         "--model",
         str(model_path),
         "--ctx-size",
-        "2048",
+        str(server["context_size"]),
         "--n-gpu-layers",
-        "999",
+        str(server["gpu_layers"]),
         "--host",
-        "127.0.0.1",
+        server["host"],
         "--port",
-        "18080",
+        str(server["port"]),
         "--cors-origins",
-        "localhost",
+        server["cors_origins"],
         "--no-webui",
         "--parallel",
-        "1",
+        str(server["parallel_slots"]),
         "--reasoning",
-        "off",
+        server["reasoning"],
     ]
     started = time.monotonic()
     process = subprocess.Popen(server_args, stdout=log_path.open("w"), stderr=subprocess.STDOUT)
@@ -264,7 +296,10 @@ def main() -> int:
             if process.poll() is not None:
                 raise RuntimeError("llama-server exited before readiness.")
             try:
-                with urllib.request.urlopen("http://127.0.0.1:18080/health", timeout=2) as health:
+                health_url = (
+                    f"http://{server['host']}:{server['port']}{server['readiness_endpoint']}"
+                )
+                with urllib.request.urlopen(health_url, timeout=2) as health:
                     if health.status == 200:
                         break
             except (urllib.error.URLError, TimeoutError):
@@ -281,7 +316,9 @@ def main() -> int:
         )
         request_count = 1
         raw_response = request_json(
-            "http://127.0.0.1:18080/v1/chat/completions", output_payload, 180
+            f"http://{server['host']}:{server['port']}/v1/chat/completions",
+            output_payload,
+            180,
         )
         generation_started = True
         generation_completed = True
