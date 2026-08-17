@@ -47,6 +47,7 @@ def test_server_and_generation_policy_are_frozen():
         "parallel_slots": 1,
         "gpu_layers": 999,
         "reasoning": "off",
+        "chat_template_kwargs": {"enable_thinking": False},
         "readiness_endpoint": "/health",
         "json_schema_option": "--json-schema-file",
     }
@@ -89,6 +90,7 @@ def test_prompt_hash_and_non_thinking_safety_are_frozen():
     )
     assert "prompt_sha256" in script
     assert '"--reasoning",\n        "off"' in script
+    assert '"--chat-template-kwargs",\n        \'{"enable_thinking":false}\'' in script
     assert "reasoning_content" in script
     assert "raw_response.json" in script
 
@@ -101,3 +103,16 @@ def test_no_image_or_external_execution_path_is_present():
     assert "urllib.request.urlopen" in script
     assert "http://127.0.0.1" in script
     assert "process.terminate()" in script
+
+
+def test_request_error_evidence_and_single_constraint_path_are_required():
+    script = _script()
+    assert "HttpRequestFailure" in script
+    assert "status_code" in script
+    assert "response_body" in script
+    assert '"http_error.json"' in script
+    assert '"retry_count": 0' in script
+    assert '"generation_completed": generation_completed' in script
+    assert '"response_format"' not in script
+    assert '"json_schema"' not in script
+    assert '"grammar"' not in script

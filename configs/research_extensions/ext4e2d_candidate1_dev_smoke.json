@@ -21,6 +21,9 @@
     "parallel_slots": 1,
     "gpu_layers": 999,
     "reasoning": "off",
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    },
     "readiness_endpoint": "/health",
     "json_schema_option": "--json-schema-file"
   },

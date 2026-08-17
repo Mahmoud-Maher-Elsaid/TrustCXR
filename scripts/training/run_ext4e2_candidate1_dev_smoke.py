@@ -44,6 +44,27 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+class HttpRequestFailure(RuntimeError):
+    """A non-successful local inference request with preserved response evidence."""
+
+    def __init__(self, endpoint: str, status_code: int, reason: str, body: str) -> None:
+        self.endpoint = endpoint
+        self.status_code = status_code
+        self.reason = reason
+        self.body = body
+        self.timestamp = datetime.now(UTC).isoformat()
+        super().__init__(f"HTTP {status_code} {reason} from {endpoint}: {body}")
+
+    def as_dict(self) -> dict:
+        return {
+            "endpoint": self.endpoint,
+            "status_code": self.status_code,
+            "reason": self.reason,
+            "body": self.body,
+            "timestamp": self.timestamp,
+        }
+
+
 def request_json(url: str, payload: dict, timeout: int) -> bytes:
     body = json.dumps(payload, ensure_ascii=True, sort_keys=True).encode("utf-8")
     request = urllib.request.Request(
@@ -52,8 +73,12 @@ def request_json(url: str, payload: dict, timeout: int) -> bytes:
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        return response.read()
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            return response.read()
+    except urllib.error.HTTPError as exc:
+        response_body = exc.read().decode("utf-8", errors="replace")
+        raise HttpRequestFailure(url, exc.code, exc.reason, response_body) from exc
 
 
 def main() -> int:
@@ -113,6 +138,8 @@ def main() -> int:
         "1",
         "--reasoning",
         "off",
+        "--chat-template-kwargs",
+        '{"enable_thinking":false}',
         "--json-schema-file",
         str(schema_path),
     ]
@@ -121,6 +148,9 @@ def main() -> int:
     request_count = 0
     status = "MODEL_SERVER_FAILURE"
     raw_response: bytes | None = None
+    request_error: dict | None = None
+    generation_started = False
+    generation_completed = False
     try:
         deadline = time.monotonic() + 180
         while time.monotonic() < deadline:
@@ -151,6 +181,7 @@ def main() -> int:
         raw_response = request_json(
             "http://127.0.0.1:18080/v1/chat/completions", output_payload, 180
         )
+        generation_started = True
         response = json.loads(raw_response)
         choice = response["choices"][0]["message"]
         if choice.get("reasoning_content") or response.get("reasoning_content"):
@@ -169,6 +200,7 @@ def main() -> int:
         }
         score = score_case(case, candidate)
         status = "DEV_CASE_SMOKE_PASS" if score["case_passed"] else "SAFETY_GATE_FAILURE"
+        generation_completed = True
         (run_root / "raw_response.json").write_text(
             json.dumps(response, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
@@ -178,6 +210,15 @@ def main() -> int:
         (run_root / "score.json").write_text(
             json.dumps(score, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
+    except HttpRequestFailure as exc:
+        status = "MODEL_REQUEST_FAILURE"
+        request_error = exc.as_dict()
+        (run_root / "http_error.json").write_text(
+            json.dumps(request_error, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        raise RuntimeError(
+            f"HTTP request failed with {exc.status_code} {exc.reason}; response body preserved."
+        ) from exc
     except json.JSONDecodeError as exc:
         status = "STRUCTURED_OUTPUT_INVALID"
         raise RuntimeError("Model response was not valid JSON.") from exc
@@ -206,6 +247,11 @@ def main() -> int:
             "runtime_commit_prefix": config["runtime_commit_prefix"],
             "generation": config["generation"],
             "inference_request_count": request_count,
+            "retry_count": 0,
+            "inference_request_attempted": request_count == 1,
+            "generation_started": generation_started,
+            "generation_completed": generation_completed,
+            "http_error": request_error,
             "development_cases_accessed": 1,
             "frozen_final_cases_accessed": 0,
             "locked_test_accessed": False,
