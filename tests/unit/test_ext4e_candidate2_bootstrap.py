@@ -64,3 +64,13 @@ def test_python_unavailability_has_distinct_power_shell_failure():
     runner = (ROOT / "scripts/training/run_ext4e_candidate2.ps1").read_text(encoding="utf-8")
     assert "Governed Python interpreter is unavailable" in runner
     assert "CANDIDATE2_BOOTSTRAP_FAILED_CLOSED" in runner
+
+
+def test_load_failure_classifications_and_b8233_arguments_are_explicit():
+    helper = (ROOT / "scripts/training/bootstrap_ext4e_candidate2.py").read_text(encoding="utf-8")
+    assert "INVALID_SERVER_ARGUMENT" in helper
+    assert "SERVER_EXITED_DURING_LOAD" in helper
+    assert "GPU_OOM" in helper
+    assert "MODEL_LOAD_TIMEOUT" in helper
+    assert "--cors-origins" not in helper
+    assert '"--health"' not in helper

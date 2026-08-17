@@ -58,6 +58,17 @@ def startup_probe() -> dict:
     }
 
 
+def classify_server_failure(log_path: Path, process: subprocess.Popen) -> str:
+    text = log_path.read_text(encoding="utf-8", errors="replace") if log_path.is_file() else ""
+    if "invalid argument" in text:
+        return "INVALID_SERVER_ARGUMENT"
+    if "out of memory" in text.lower() or "cuda" in text.lower() and "alloc" in text.lower():
+        return "GPU_OOM"
+    if process.poll() is not None:
+        return "SERVER_EXITED_DURING_LOAD"
+    return "MODEL_LOAD_TIMEOUT"
+
+
 def runtime_source_identity() -> dict:
     def git(*args: str) -> str:
         result = subprocess.run(
@@ -274,8 +285,6 @@ def main() -> int:
             "2048",
             "--n-gpu-layers",
             "999",
-            "--cors-origins",
-            "localhost",
             "--no-webui",
             "--reasoning",
             "off",
@@ -286,16 +295,42 @@ def main() -> int:
         env=runtime_environment(),
     )
     try:
-        deadline = time.monotonic() + 180
+        timeout_seconds = 180
+        deadline = time.monotonic() + timeout_seconds
+        health_last_status = None
         while time.monotonic() < deadline:
+            if server.poll() is not None:
+                raise RuntimeError(classify_server_failure(evidence / "llama_server.log", server))
             try:
                 with urllib.request.urlopen("http://127.0.0.1:18080/health", timeout=2) as response:
+                    health_last_status = response.status
                     if response.status == 200:
                         break
+            except urllib.error.HTTPError as error:
+                health_last_status = error.code
+                time.sleep(1)
             except (urllib.error.URLError, TimeoutError):
                 time.sleep(1)
         else:
-            raise RuntimeError("LOAD_TIMEOUT")
+            diagnostic = {
+                "server_pid": server.pid,
+                "server_alive_at_timeout": server.poll() is None,
+                "server_exit_code": server.poll(),
+                "elapsed_seconds": timeout_seconds,
+                "configured_timeout_seconds": timeout_seconds,
+                "health_last_status": health_last_status,
+                "failure_classification": classify_server_failure(
+                    evidence / "llama_server.log", server
+                ),
+                "inference_requests": 0,
+                "development_cases_accessed": 0,
+                "final_cases_accessed": 0,
+                "locked_test_accessed": False,
+            }
+            (evidence / "load_failure_diagnostic.json").write_text(
+                json.dumps(diagnostic, indent=2), encoding="utf-8"
+            )
+            raise RuntimeError(diagnostic["failure_classification"])
         (evidence / "load_only_metadata.json").write_text(
             json.dumps(
                 {
