@@ -65,6 +65,41 @@ class HttpRequestFailure(RuntimeError):
         }
 
 
+class ResponseProcessingFailure(ValueError):
+    """A classified failure after an HTTP response was received."""
+
+    def __init__(self, status: str, message: str) -> None:
+        self.status = status
+        super().__init__(message)
+
+
+def extract_model_content(raw_response: bytes) -> tuple[dict, str, dict]:
+    try:
+        response = json.loads(raw_response)
+    except json.JSONDecodeError as exc:
+        raise ResponseProcessingFailure(
+            "RESPONSE_ENVELOPE_INVALID", "API response is not JSON."
+        ) from exc
+    try:
+        message = response["choices"][0]["message"]
+        content = message["content"]
+    except (KeyError, IndexError, TypeError) as exc:
+        raise ResponseProcessingFailure(
+            "MODEL_CONTENT_MISSING", "choices[0].message.content is missing."
+        ) from exc
+    if not isinstance(content, str) or not content:
+        raise ResponseProcessingFailure(
+            "MODEL_CONTENT_MISSING", "Model content is empty or not text."
+        )
+    try:
+        candidate = json.loads(content)
+    except json.JSONDecodeError as exc:
+        raise ResponseProcessingFailure(
+            "MODEL_CONTENT_JSON_INVALID", "Model content is not JSON."
+        ) from exc
+    return response, content, candidate
+
+
 def request_json(url: str, payload: dict, timeout: int) -> bytes:
     body = json.dumps(payload, ensure_ascii=True, sort_keys=True).encode("utf-8")
     request = urllib.request.Request(
@@ -147,6 +182,8 @@ def main() -> int:
     request_error: dict | None = None
     generation_started = False
     generation_completed = False
+    response_parse_valid = False
+    reasoning_content_present = False
     try:
         deadline = time.monotonic() + 180
         while time.monotonic() < deadline:
@@ -184,12 +221,18 @@ def main() -> int:
             "http://127.0.0.1:18080/v1/chat/completions", output_payload, 180
         )
         generation_started = True
-        response = json.loads(raw_response)
+        generation_completed = True
+        (run_root / "raw_http_response.json").write_bytes(raw_response)
+        response, content, candidate = extract_model_content(raw_response)
+        response_parse_valid = True
         choice = response["choices"][0]["message"]
-        if choice.get("reasoning_content") or response.get("reasoning_content"):
+        reasoning_content_present = bool(
+            choice.get("reasoning_content") or response.get("reasoning_content")
+        )
+        if reasoning_content_present:
             status = "SAFETY_GATE_FAILURE"
             raise RuntimeError("Reasoning content was returned despite non-thinking mode.")
-        candidate = json.loads(choice["content"])
+        (run_root / "raw_model_content.txt").write_text(content, encoding="utf-8")
         validated = GroundedOutputEnvelope.model_validate(candidate)
         references = {item.evidence_id: item.status.value for item in envelope.evidence_items}
         if any(ref.evidence_id not in references for ref in validated.evidence_references):
@@ -202,7 +245,6 @@ def main() -> int:
         }
         score = score_case(case, candidate)
         status = "DEV_CASE_SMOKE_PASS" if score["case_passed"] else "SAFETY_GATE_FAILURE"
-        generation_completed = True
         (run_root / "raw_response.json").write_text(
             json.dumps(response, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
@@ -221,8 +263,11 @@ def main() -> int:
         raise RuntimeError(
             f"HTTP request failed with {exc.status_code} {exc.reason}; response body preserved."
         ) from exc
+    except ResponseProcessingFailure as exc:
+        status = exc.status
+        raise RuntimeError(str(exc)) from exc
     except json.JSONDecodeError as exc:
-        status = "STRUCTURED_OUTPUT_INVALID"
+        status = "RESPONSE_ENVELOPE_INVALID"
         raise RuntimeError("Model response was not valid JSON.") from exc
     except (KeyError, TypeError, ValueError) as exc:
         status = "GROUNDING_VALIDATION_FAILURE"
@@ -253,6 +298,8 @@ def main() -> int:
             "inference_request_attempted": request_count == 1,
             "generation_started": generation_started,
             "generation_completed": generation_completed,
+            "response_parse_valid": response_parse_valid,
+            "reasoning_content_present": reasoning_content_present,
             "http_error": request_error,
             "development_cases_accessed": 1,
             "frozen_final_cases_accessed": 0,

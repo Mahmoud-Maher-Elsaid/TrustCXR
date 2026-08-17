@@ -14,6 +14,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 
 
+class ResponseProcessingFailure(ValueError):
+    """A classified failure after an HTTP response was received."""
+
+    def __init__(self, status: str, message: str) -> None:
+        self.status = status
+        super().__init__(message)
+
+
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -51,6 +59,42 @@ def request_json(url: str, payload: dict, timeout: int) -> bytes:
                 sort_keys=True,
             )
         ) from exc
+
+
+def extract_model_content(raw_response: bytes) -> tuple[dict, str, dict]:
+    try:
+        response = json.loads(raw_response)
+    except json.JSONDecodeError as exc:
+        raise ResponseProcessingFailure(
+            "RESPONSE_ENVELOPE_INVALID", "API response is not JSON."
+        ) from exc
+    try:
+        message = response["choices"][0]["message"]
+        content = message["content"]
+    except (KeyError, IndexError, TypeError) as exc:
+        raise ResponseProcessingFailure(
+            "MODEL_CONTENT_MISSING", "choices[0].message.content is missing."
+        ) from exc
+    if not isinstance(content, str) or not content:
+        raise ResponseProcessingFailure(
+            "MODEL_CONTENT_MISSING", "Model content is empty or not text."
+        )
+    try:
+        parsed = json.loads(content)
+    except json.JSONDecodeError as exc:
+        raise ResponseProcessingFailure(
+            "MODEL_CONTENT_JSON_INVALID", "Model content is not JSON."
+        ) from exc
+    return response, content, parsed
+
+
+def validate_synthetic_output(parsed: object) -> None:
+    expected = {"status": "PASS", "message": "structured output compatibility"}
+    if parsed != expected:
+        raise ResponseProcessingFailure(
+            "SYNTHETIC_SCHEMA_VALIDATION_FAILURE",
+            "Synthetic structured output failed deterministic validation.",
+        )
 
 
 def main() -> int:
@@ -100,8 +144,10 @@ def main() -> int:
     status = "MODEL_SERVER_FAILURE"
     generation_started = False
     generation_completed = False
-    raw_response: bytes | None = None
     error: str | None = None
+    response_parse_valid = False
+    synthetic_validation_passed = False
+    reasoning_content_present = False
     try:
         deadline = time.monotonic() + 180
         while time.monotonic() < deadline:
@@ -140,12 +186,17 @@ def main() -> int:
         request_count = 1
         raw_response = request_json(config["endpoint"], payload, 180)
         generation_started = True
-        response = json.loads(raw_response)
-        content = response["choices"][0]["message"]["content"]
-        parsed = json.loads(content)
-        if parsed != {"message": "structured output compatibility", "status": "PASS"}:
-            raise RuntimeError("Synthetic structured output failed deterministic validation.")
         generation_completed = True
+        (run_root / "raw_http_response.json").write_bytes(raw_response)
+        response, content, parsed = extract_model_content(raw_response)
+        response_parse_valid = True
+        reasoning_content_present = bool(
+            response.get("reasoning_content")
+            or response.get("choices", [{}])[0].get("message", {}).get("reasoning_content")
+        )
+        (run_root / "raw_model_content.txt").write_text(content, encoding="utf-8")
+        validate_synthetic_output(parsed)
+        synthetic_validation_passed = True
         status = "STRUCTURED_OUTPUT_COMPATIBILITY_PASS"
         (run_root / "raw_response.json").write_text(
             json.dumps(response, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -153,6 +204,9 @@ def main() -> int:
         (run_root / "parsed_content.json").write_text(
             json.dumps(parsed, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
+    except ResponseProcessingFailure as exc:
+        error = str(exc)
+        status = exc.status
     except Exception as exc:
         error = str(exc)
         if status == "MODEL_SERVER_FAILURE":
@@ -183,6 +237,9 @@ def main() -> int:
             "retry_count": 0,
             "generation_started": generation_started,
             "generation_completed": generation_completed,
+            "response_parse_valid": response_parse_valid,
+            "synthetic_validation_passed": synthetic_validation_passed,
+            "reasoning_content_present": reasoning_content_present,
             "error": error,
             "server_cleanup_confirmed": cleanup,
             "latency_seconds": round(time.monotonic() - started, 3),
