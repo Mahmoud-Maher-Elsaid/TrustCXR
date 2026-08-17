@@ -17,6 +17,8 @@ REPOSITORY = "mistralai/Ministral-3-8B-Instruct-2512-GGUF"
 FILENAME = "Ministral-3-8B-Instruct-2512-Q4_K_M.gguf"
 RUNTIME_RELEASE = "b8233"
 RUNTIME_COMMIT_PREFIX = "c5a7788"
+RUNTIME_COMMIT = "c5a778891ba0ddbd4cbb507c823f970595b1adc2"
+CUDA_ROOT = Path(r"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.1")
 
 
 def sha256_file(path: Path) -> str:
@@ -102,7 +104,22 @@ def main() -> int:
         / "build_cuda/bin/Release/llama-server.exe"
     )
     if not runtime.is_file():
-        raise RuntimeError("PINNED_RUNTIME_INCOMPATIBLE_WITH_CANDIDATE2")
+        raise RuntimeError("CANDIDATE2_CUDA_RUNTIME_MISSING")
+    nvcc = CUDA_ROOT / "bin" / "nvcc.exe"
+    if not nvcc.is_file():
+        raise RuntimeError("CANDIDATE2_CUDA_TOOLKIT_MISSING")
+    identity.update(
+        {
+            "runtime_release": RUNTIME_RELEASE,
+            "runtime_commit": RUNTIME_COMMIT,
+            "cuda_root": str(CUDA_ROOT),
+            "nvcc_path": str(nvcc),
+            "cuda_server_sha256": sha256_file(runtime),
+        }
+    )
+    (evidence / "candidate2_identity.json").write_text(
+        json.dumps(identity, indent=2), encoding="utf-8"
+    )
     version = subprocess.run(
         [str(runtime), "--version"], capture_output=True, text=True, check=False
     )
@@ -112,7 +129,7 @@ def main() -> int:
         or "8233" not in identity_text
         or RUNTIME_COMMIT_PREFIX not in identity_text
     ):
-        raise RuntimeError("PINNED_RUNTIME_INCOMPATIBLE_WITH_CANDIDATE2")
+        raise RuntimeError("CANDIDATE2_RUNTIME_IDENTITY_FAILED")
     server = subprocess.Popen(
         [
             str(runtime),

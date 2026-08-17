@@ -29,3 +29,11 @@ def test_candidate2_fast_path_is_local_and_single_request():
     assert config["policy"]["development_cases_accessed"] == 0
     assert config["policy"]["frozen_final_cases_accessed"] == 0
     assert config["policy"]["locked_test_accessed"] is False
+
+
+def test_b8233_runtime_replaces_obsolete_runtime_failure_path():
+    runner = (ROOT / "scripts/training/bootstrap_ext4e_candidate2.py").read_text(encoding="utf-8")
+    assert 'RUNTIME_RELEASE = "b8233"' in runner
+    assert "c5a778891ba0ddbd4cbb507c823f970595b1adc2" in runner
+    assert "PINNED_RUNTIME_INCOMPATIBLE_WITH_CANDIDATE2" not in runner
+    assert "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.1" in runner
