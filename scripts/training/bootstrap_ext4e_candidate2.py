@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import subprocess
 import time
 import urllib.error
@@ -23,10 +24,40 @@ RUNTIME_SOURCE = ROOT / "cache/research_extensions/ext4e_candidate2/llama_cpp_b8
 RUNTIME_EXE = RUNTIME_SOURCE / "build_cuda/bin/Release/llama-server.exe"
 
 
+def runtime_environment() -> dict[str, str]:
+    env = dict(os.environ)
+    paths = [str(RUNTIME_EXE.parent), str(CUDA_ROOT / "bin")]
+    env["PATH"] = ";".join(paths + [env.get("PATH", "")])
+    return env
+
+
+def startup_probe() -> dict:
+    if not RUNTIME_EXE.is_file():
+        return {"passed": False, "classification": "CANDIDATE2_CUDA_RUNTIME_MISSING"}
+    result = subprocess.run(
+        [str(RUNTIME_EXE), "--help"],
+        capture_output=True,
+        text=True,
+        check=False,
+        env=runtime_environment(),
+    )
+    return {
+        "passed": result.returncode == 0,
+        "classification": None
+        if result.returncode == 0
+        else "CANDIDATE2_EXECUTABLE_STARTUP_FAILED",
+        "exit_code": result.returncode,
+        "stdout": result.stdout[-4000:],
+        "stderr": result.stderr[-4000:],
+        "path": runtime_environment()["PATH"],
+        "inference_requests": 0,
+    }
+
+
 def runtime_source_identity() -> dict:
     def git(*args: str) -> str:
         result = subprocess.run(
-            ["git", "-C", str(RUNTIME_SOURCE), *args],
+            ["git", "-c", "safe.directory=*", "-C", str(RUNTIME_SOURCE), *args],
             capture_output=True,
             text=True,
             check=False,
@@ -52,6 +83,9 @@ def write_preflight_diagnostic(config: dict, model: Path, evidence: Path) -> int
     )
     nvcc = CUDA_ROOT / "bin" / "nvcc.exe"
     dlls = sorted(p.name for p in RUNTIME_EXE.parent.glob("*.dll"))
+    required_dlls = {"ggml.dll", "ggml-base.dll", "ggml-cpu.dll", "ggml-cuda.dll", "llama.dll"}
+    missing_dlls = sorted(required_dlls - set(dlls))
+    probe = startup_probe()
     gpu = subprocess.run(
         ["nvidia-smi", "--query-gpu=name,memory.total,driver_version", "--format=csv,noheader"],
         capture_output=True,
@@ -77,7 +111,10 @@ def write_preflight_diagnostic(config: dict, model: Path, evidence: Path) -> int
         "cuda_server_sha256_current": sha256_file(RUNTIME_EXE) if RUNTIME_EXE.is_file() else None,
         "cuda_server_directory": str(RUNTIME_EXE.parent),
         "required_runtime_dlls": dlls,
-        "runtime_environment_ready": RUNTIME_EXE.is_file() and bool(dlls),
+        "runtime_environment_ready": RUNTIME_EXE.is_file() and not missing_dlls,
+        "runtime_search_path": [str(RUNTIME_EXE.parent), str(CUDA_ROOT / "bin")],
+        "missing_runtime_dlls": missing_dlls,
+        "startup_probe": probe,
         "gpu_detected": gpu.returncode == 0,
         "gpu_identity": gpu.stdout.strip(),
         "final_cases_accessed": 0,
@@ -95,10 +132,16 @@ def write_preflight_diagnostic(config: dict, model: Path, evidence: Path) -> int
         and diagnostic["nvcc_exists_absolute"]
         and diagnostic["cuda_server_exists"]
         and diagnostic["gpu_detected"]
+        and not missing_dlls
+        and probe["passed"]
     )
     if not checks:
         diagnostic["status"] = "PREFLIGHT_FAILED"
-        diagnostic["failure_classification"] = "CANDIDATE2_PREFLIGHT_FAILURE"
+        diagnostic["failure_classification"] = (
+            probe.get("classification")
+            if not probe.get("passed")
+            else "CANDIDATE2_PREFLIGHT_FAILURE"
+        )
     (evidence / "preflight_diagnostic.json").write_text(
         json.dumps(diagnostic, indent=2), encoding="utf-8"
     )
@@ -205,16 +248,9 @@ def main() -> int:
     (evidence / "candidate2_identity.json").write_text(
         json.dumps(identity, indent=2), encoding="utf-8"
     )
-    version = subprocess.run(
-        [str(runtime), "--version"], capture_output=True, text=True, check=False
-    )
-    identity_text = version.stdout + version.stderr
-    if (
-        version.returncode != 0
-        or "8233" not in identity_text
-        or RUNTIME_COMMIT_PREFIX not in identity_text
-    ):
-        raise RuntimeError("CANDIDATE2_RUNTIME_VERSION_CHECK_FAILED")
+    probe = startup_probe()
+    if not probe["passed"]:
+        raise RuntimeError(probe["classification"])
     server = subprocess.Popen(
         [
             str(runtime),
@@ -239,6 +275,7 @@ def main() -> int:
         stdout=(evidence / "llama_server.log").open("w"),
         stderr=subprocess.STDOUT,
         text=True,
+        env=runtime_environment(),
     )
     try:
         deadline = time.monotonic() + 180

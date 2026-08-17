@@ -47,3 +47,19 @@ def test_preflight_mode_is_non_inference_and_uses_source_identity():
     assert "runtime_commit_actual" in helper
     assert '"final_cases_accessed": 0' in helper
     assert '"locked_test_accessed": False' in helper
+
+
+def test_child_runtime_path_and_startup_probe_are_deterministic():
+    helper = (ROOT / "scripts/training/bootstrap_ext4e_candidate2.py").read_text(encoding="utf-8")
+    assert "runtime_environment" in helper
+    assert "build_cuda/bin/Release" in helper
+    assert 'CUDA_ROOT / "bin"' in helper
+    assert '"--help"' in helper
+    assert '"inference_requests": 0' in helper
+    assert "CANDIDATE2_EXECUTABLE_STARTUP_FAILED" in helper
+
+
+def test_python_unavailability_has_distinct_power_shell_failure():
+    runner = (ROOT / "scripts/training/run_ext4e_candidate2.ps1").read_text(encoding="utf-8")
+    assert "Governed Python interpreter is unavailable" in runner
+    assert "CANDIDATE2_BOOTSTRAP_FAILED_CLOSED" in runner
