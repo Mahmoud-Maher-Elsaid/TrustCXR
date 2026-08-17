@@ -214,7 +214,7 @@ def main() -> int:
         or "8233" not in identity_text
         or RUNTIME_COMMIT_PREFIX not in identity_text
     ):
-        raise RuntimeError("CANDIDATE2_RUNTIME_IDENTITY_FAILED")
+        raise RuntimeError("CANDIDATE2_RUNTIME_VERSION_CHECK_FAILED")
     server = subprocess.Popen(
         [
             str(runtime),
