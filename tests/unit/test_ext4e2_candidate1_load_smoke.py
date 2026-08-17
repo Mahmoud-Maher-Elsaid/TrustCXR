@@ -1,6 +1,7 @@
 """EXT-4E2C load-only GPU smoke contract tests."""
 
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).parents[2]
@@ -34,7 +35,10 @@ def test_smoke_is_localhost_only_and_has_bounded_readiness():
     assert config["port"] == 18080
     assert config["load_timeout_seconds"] == 180
     assert '"--host", "127.0.0.1"' in script
-    assert '"/health"' in script
+    assert re.search(r'Invoke-WebRequest\s+-Uri\s+"http://127\.0\.0\.1:\$Port/health"', script)
+    assert config["readiness_endpoint"] == "/health"
+    assert "-Method Post" not in script
+    assert "-Method Put" not in script
     assert "AddSeconds($TimeoutSeconds)" in script
     assert "Start-Sleep -Seconds 2" in script
 
