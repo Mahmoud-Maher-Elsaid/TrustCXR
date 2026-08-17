@@ -1,9 +1,19 @@
 """Offline Candidate #2 bootstrap contract tests."""
 
+import importlib.util
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).parents[2]
+
+
+def _runner_module():
+    path = ROOT / "scripts/training/bootstrap_ext4e_candidate2.py"
+    spec = importlib.util.spec_from_file_location("candidate2_bootstrap", path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_candidate2_identity_is_explicit_and_revision_is_not_guessed():
@@ -106,3 +116,14 @@ def test_exact_server_argv_is_minimal_and_unambiguous():
     assert "--reasoning" not in text
     assert "--no-webui" not in text
     assert "server_argv.json" in text
+
+
+def test_candidate2_request_contract_freezes_thinking_control():
+    module = _runner_module()
+    payload = module.build_candidate2_request_payload(
+        "model.gguf", [{"role": "user", "content": "synthetic"}], {"type": "object"}
+    )
+    assert payload["chat_template_kwargs"] == {"enable_thinking": False}
+    assert payload["reasoning_format"] == "none"
+    assert "reasoning_effort" not in payload
+    assert payload["response_format"]["type"] == "json_object"

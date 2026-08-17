@@ -89,6 +89,23 @@ def build_server_argv(model: Path, port: int = 18080) -> list[str]:
     ]
 
 
+def build_candidate2_request_payload(model: str, messages: list[dict], schema: dict) -> dict:
+    """Single governed request contract for synthetic and future development calls."""
+
+    return {
+        "model": model,
+        "messages": messages,
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "seed": 20260806,
+        "max_tokens": 768,
+        "stream": False,
+        "chat_template_kwargs": {"enable_thinking": False},
+        "reasoning_format": "none",
+        "response_format": {"type": "json_object", "schema": schema},
+    }
+
+
 def runtime_source_identity() -> dict:
     def git(*args: str) -> str:
         result = subprocess.run(
@@ -359,18 +376,11 @@ def main() -> int:
             "required": ["status", "message"],
             "additionalProperties": False,
         }
-        payload = {
-            "model": FILENAME,
-            "messages": [{"role": "user", "content": "Return the required synthetic object."}],
-            "temperature": 0.0,
-            "top_p": 1.0,
-            "seed": 20260806,
-            "max_tokens": 768,
-            "stream": False,
-            "chat_template_kwargs": {"enable_thinking": False},
-            "reasoning_format": "none",
-            "response_format": {"type": "json_object", "schema": schema},
-        }
+        payload = build_candidate2_request_payload(
+            FILENAME,
+            [{"role": "user", "content": "Return the required synthetic object."}],
+            schema,
+        )
         (evidence / "synthetic_request.json").write_text(
             json.dumps(payload, indent=2), encoding="utf-8"
         )
