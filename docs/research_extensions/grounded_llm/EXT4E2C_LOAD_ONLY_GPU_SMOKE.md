@@ -2,6 +2,10 @@
 
 Status: `LOAD_ONLY_GPU_SMOKE_PREPARED`
 
+Observed local result: `LOAD_ONLY_PASS` — the candidate is technically loadable and has not been
+scientifically evaluated. The recorded load took 4.098 seconds, used approximately 5017 MiB of the
+8192 MiB GPU, and shut down cleanly. No inference or benchmark access occurred.
+
 This is technical load validation only. It does not evaluate language behavior, read benchmark
 cases, generate tokens, or select a scientific model.
 
@@ -20,6 +24,10 @@ cases, generate tokens, or select a scientific model.
 The script starts `llama-server`, waits for the non-generative `/health` endpoint, samples
 `nvidia-smi`, and then shuts the process down. It never sends a completion or chat request.
 
+The pinned build's local `--help` output confirms `--cors-origins`, `--no-webui`, and `--parallel`.
+Future first-case execution should use `--host 127.0.0.1 --cors-origins localhost --no-webui
+--parallel 1`; API-key authentication is not added because the server remains localhost-only.
+
 ## Outcomes
 
 The machine-readable evidence records one of `LOAD_ONLY_PASS`, `GPU_OOM`, `LOAD_TIMEOUT`,
@@ -29,7 +37,9 @@ The machine-readable evidence records one of `LOAD_ONLY_PASS`, `GPU_OOM`, `LOAD_
 Evidence is written under the ignored path
 `artifacts/research_extensions/ext4e2_candidate1/load_only_smoke/` as
 `load_only_smoke.json`, `llama_server.log`, and `vram_samples.csv`. Cleanup is required and is
-recorded explicitly.
+recorded explicitly. Future JSON evidence records numeric VRAM fields. The tracked closure summary
+labels the existing numeric values as `DERIVED_FROM_RECORDED_VRAM_SAMPLES` and preserves the raw
+historical JSON/CSV unchanged.
 
 ## Isolation
 

@@ -24,6 +24,7 @@ if ($smokeConfig.context_size -ne 2048 -or $smokeConfig.port -ne $Port) { throw 
 if ($smokeConfig.model_sha256 -ne "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785") { throw "Unexpected model SHA-256." }
 if ($smokeConfig.runtime_release -ne "b10453" -or $smokeConfig.runtime_commit_prefix -ne "3cb7ffb") { throw "Unexpected runtime identity." }
 if ($smokeConfig.cuda_backend -ne "CUDA_12.4") { throw "Unexpected CUDA backend." }
+if ($smokeConfig.cors_origins -ne "localhost" -or $smokeConfig.webui -ne $false -or $smokeConfig.parallel_slots -ne 1) { throw "Unexpected local server hardening configuration." }
 if ($TimeoutSeconds -ne 180) { throw "The first smoke attempt requires the frozen 180-second timeout." }
 if ($smokeConfig.generation_performed -or $smokeConfig.development_cases_accessed -ne 0 -or $smokeConfig.frozen_final_cases_accessed -ne 0) { throw "Generation or benchmark access is prohibited." }
 
@@ -59,7 +60,15 @@ function Get-VramSample {
     )
     $line = ($result.StdOut -split "`r?`n" | Where-Object { $_.Trim() } | Select-Object -First 1).Trim()
     if (-not $line) { throw "nvidia-smi returned no GPU sample." }
-    $line
+    $parts = $line.Split(',')
+    if ($parts.Count -ne 4) { throw "Unexpected nvidia-smi sample format." }
+    [pscustomobject]@{
+        Raw = $line
+        Name = $parts[0].Trim()
+        Driver = $parts[1].Trim()
+        Total = [int]$parts[2].Trim()
+        Used = [int]$parts[3].Trim()
+    }
 }
 function Write-Evidence([hashtable]$Evidence) {
     $Evidence | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $jsonPath
@@ -78,7 +87,7 @@ $status = "RUNTIME_FAILURE"
 $cleanup = $false
 $loadStart = Get-Date
 $readyAt = $null
-$vramRows = New-Object System.Collections.Generic.List[string]
+$vramSamples = New-Object System.Collections.Generic.List[object]
 "timestamp_utc,gpu_name,driver,memory_total_mib,memory_used_mib" | Set-Content -LiteralPath $samplesPath
 try {
     $versionResult = Invoke-NativeCapture $cli.FullName @("--version")
@@ -86,12 +95,17 @@ try {
     if ($versionText -notmatch "build\s+10453" -or $versionText -notmatch "commit\s+3cb7ffb(?:[0-9a-f]+)?") { throw "Runtime identity mismatch." }
     $versionText | Set-Content -LiteralPath (Join-Path $evidenceRoot "runtime_version.txt")
     $before = Get-VramSample
+    $vramSamples.Add($before)
+    Add-Content -LiteralPath $samplesPath -Value ("{0:o},{1}" -f (Get-Date).ToUniversalTime(), $before.Raw)
     $serverArgs = @(
         "--model", $modelPath,
         "--ctx-size", "2048",
         "--n-gpu-layers", "999",
         "--host", "127.0.0.1",
-        "--port", "$Port"
+        "--port", "$Port",
+        "--cors-origins", "localhost",
+        "--no-webui",
+        "--parallel", "1"
     )
     $process = Start-Process -FilePath $server.FullName -ArgumentList $serverArgs -RedirectStandardOutput $logOut `
         -RedirectStandardError $logErr -PassThru -NoNewWindow
@@ -100,7 +114,8 @@ try {
     $loadedSample = $null
     while ((Get-Date) -lt $deadline) {
         $sample = Get-VramSample
-        $row = "{0:o},{1}" -f (Get-Date).ToUniversalTime(), $sample
+        $vramSamples.Add($sample)
+        $row = "{0:o},{1}" -f (Get-Date).ToUniversalTime(), $sample.Raw
         Add-Content -LiteralPath $samplesPath -Value $row
         try {
             $health = Invoke-WebRequest -Uri "http://127.0.0.1:$Port/health" -UseBasicParsing -TimeoutSec 2
@@ -124,13 +139,16 @@ catch {
 finally {
     if ($process) {
         $process.Refresh()
-        if (-not $process.HasExited) { Stop-Process -Id $process.Id -Force; $process.WaitForExit(10000) }
+        if (-not $process.HasExited) { Stop-Process -Id $process.Id -Force; [void]$process.WaitForExit(10000) }
         $process.Refresh(); $cleanup = $process.HasExited
     }
     if ($status -eq "LOAD_ONLY_PASS" -and -not $cleanup) { $status = "RUNTIME_FAILURE" }
     if (Test-Path -LiteralPath $logOut) { Get-Content -LiteralPath $logOut | Set-Content -LiteralPath $logPath }
     if (Test-Path -LiteralPath $logErr) { Get-Content -LiteralPath $logErr | Add-Content -LiteralPath $logPath }
     $after = Get-VramSample
+    $vramSamples.Add($after)
+    Add-Content -LiteralPath $samplesPath -Value ("{0:o},{1}" -f (Get-Date).ToUniversalTime(), $after.Raw)
+    $peak = ($vramSamples | Measure-Object -Property Used -Maximum).Maximum
     $latency = if ($readyAt) { [math]::Round(($readyAt - $loadStart).TotalSeconds, 3) } else { $null }
     Write-Evidence @{
         status = $status
@@ -142,10 +160,15 @@ finally {
         model_sha256 = $config.model_sha256
         model_bytes = $modelItem.Length
         context_size = 2048
-        gpu_before = $before
-        gpu_loaded = $loadedSample
-        gpu_after_shutdown = $after
-        peak_vram = "SEE_VRAM_SAMPLES_CSV"
+        gpu_before = $before.Raw
+        gpu_loaded = $loadedSample.Raw
+        gpu_after_shutdown = $after.Raw
+        vram_total_mib = $loadedSample.Total
+        vram_used_before_mib = $before.Used
+        vram_used_loaded_mib = $loadedSample.Used
+        peak_vram_mib = [int]$peak
+        vram_remaining_loaded_mib = $loadedSample.Total - $loadedSample.Used
+        vram_used_after_shutdown_mib = $after.Used
         load_latency_seconds = $latency
         process_id = if ($process) { $process.Id } else { $null }
         process_cleanup_confirmed = $cleanup
