@@ -81,8 +81,21 @@ def test_native_runtime_identity_capture_checks_exit_code_not_stderr():
 
 def test_large_artifact_magic_check_is_streamed_and_truncation_safe():
     script = (ROOT / "scripts" / "training" / "run_ext4e2_candidate1_preflight.ps1").read_text()
+    assert "function Test-ZipHeader" in script
+    assert "function Test-GgufHeader" in script
+    assert 'Test-Header $Path ([byte[]](0x50, 0x4B, 0x03, 0x04)) "ZIP"' in script
+    assert 'Test-Header $Path ([byte[]](0x47, 0x47, 0x55, 0x46)) "GGUF"' in script
     assert "[System.IO.File]::OpenRead($Path)" in script
     assert "$stream.Read($magic, 0, $magic.Length)" in script
     assert "Downloaded artifact header is truncated" in script
     assert "ReadAllBytes" not in script
     assert "ReadToEnd" not in script
+
+
+def test_artifact_validation_dispatch_is_type_specific():
+    script = (ROOT / "scripts" / "training" / "run_ext4e2_candidate1_preflight.ps1").read_text()
+    assert '"ZIP"' in script
+    assert '"GGUF"' in script
+    assert 'runtimeArchive $config.runtime.runtime_asset_sha256 "ZIP"' in script
+    assert 'cudaArchive $config.runtime.cuda_runtime_asset_sha256 "ZIP"' in script
+    assert 'modelPath $config.model_sha256 "GGUF"' in script

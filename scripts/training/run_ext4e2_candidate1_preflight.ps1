@@ -67,14 +67,16 @@ function Invoke-NativeCapture([string]$FilePath, [string[]]$ArgumentList) {
     }
 }
 
-function Assert-ZipHeader([string]$Path) {
+function Test-Header([string]$Path, [byte[]]$ExpectedMagic, [string]$ArtifactType) {
     $stream = [System.IO.File]::OpenRead($Path)
     try {
-        [byte[]]$magic = New-Object -TypeName "System.Byte[]" -ArgumentList 4
+        [byte[]]$magic = New-Object -TypeName "System.Byte[]" -ArgumentList $ExpectedMagic.Length
         $bytesRead = $stream.Read($magic, 0, $magic.Length)
         if ($bytesRead -ne $magic.Length) { throw "Downloaded artifact header is truncated: $Path" }
-        if (-not ($magic[0] -eq 0x50 -and $magic[1] -eq 0x4B)) {
-            throw "Downloaded artifact is not a ZIP: $Path"
+        for ($index = 0; $index -lt $ExpectedMagic.Length; $index++) {
+            if ($magic[$index] -ne $ExpectedMagic[$index]) {
+                throw "Downloaded artifact is not a valid ${ArtifactType}: $Path"
+            }
         }
     }
     finally {
@@ -82,17 +84,25 @@ function Assert-ZipHeader([string]$Path) {
     }
 }
 
-function Download-And-Verify([string]$Url, [string]$Path, [string]$ExpectedSha) {
+function Test-ZipHeader([string]$Path) {
+    Test-Header $Path ([byte[]](0x50, 0x4B, 0x03, 0x04)) "ZIP"
+}
+
+function Test-GgufHeader([string]$Path) {
+    Test-Header $Path ([byte[]](0x47, 0x47, 0x55, 0x46)) "GGUF"
+}
+
+function Download-And-Verify([string]$Url, [string]$Path, [string]$ExpectedSha, [ValidateSet("ZIP", "GGUF")][string]$ArtifactType) {
     if ($ExpectedSha -match "TO_BE_") { throw "Pinned SHA-256 is unresolved for $Path." }
     if (-not (Test-Path -LiteralPath $Path)) {
         Invoke-WebRequest -Uri $Url -OutFile $Path -UseBasicParsing
     }
     if ((Get-Sha256 $Path) -ne $ExpectedSha.ToLowerInvariant()) { throw "SHA-256 mismatch: $Path" }
-    Assert-ZipHeader $Path
+    if ($ArtifactType -eq "ZIP") { Test-ZipHeader $Path } else { Test-GgufHeader $Path }
 }
 
-Download-And-Verify $config.runtime.windows_asset_url $runtimeArchive $config.runtime.runtime_asset_sha256
-Download-And-Verify $config.runtime.cuda_runtime_asset_url $cudaArchive $config.runtime.cuda_runtime_asset_sha256
+Download-And-Verify $config.runtime.windows_asset_url $runtimeArchive $config.runtime.runtime_asset_sha256 "ZIP"
+Download-And-Verify $config.runtime.cuda_runtime_asset_url $cudaArchive $config.runtime.cuda_runtime_asset_sha256 "ZIP"
 if ((Get-Item -LiteralPath $runtimeArchive).Length -ne $config.runtime.runtime_asset_bytes) { throw "Runtime asset byte size mismatch." }
 Expand-Archive -LiteralPath $runtimeArchive -DestinationPath $runtimeRoot -Force
 Expand-Archive -LiteralPath $cudaArchive -DestinationPath $runtimeRoot -Force
@@ -109,7 +119,7 @@ $gpuResult = Invoke-NativeCapture "nvidia-smi.exe" @("--query-gpu=name,memory.to
 ($gpuResult.StdOut + $gpuResult.StdErr).Trim() | Set-Content (Join-Path $evidenceRoot "gpu_identity.txt")
 
 $modelUrl = "https://huggingface.co/$($config.model_repository)/resolve/$($config.revision)/$($config.model_filename)?download=true"
-Download-And-Verify $modelUrl $modelPath $config.model_sha256
+Download-And-Verify $modelUrl $modelPath $config.model_sha256 "GGUF"
 $modelBytes = (Get-Item -LiteralPath $modelPath).Length
 $evidence = [ordered]@{
     runtime_release = $config.runtime.release
