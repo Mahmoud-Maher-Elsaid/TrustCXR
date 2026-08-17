@@ -6,7 +6,7 @@
   "repository": "mistralai/Ministral-3-8B-Instruct-2512-GGUF",
   "filename": "Ministral-3-8B-Instruct-2512-Q4_K_M.gguf",
   "quantization": "Q4_K_M",
-  "revision": "MUST_BE_RESOLVED_FROM_OFFICIAL_HF_METADATA",
+  "revision": "0102285ad796bd99af90f58de616092e5630e970",
   "runtime": {"release": "b8233", "commit": "c5a778891ba0ddbd4cbb507c823f970595b1adc2", "host": "127.0.0.1", "port": 18080, "parallel": 1, "context_size": 2048, "gpu_layers": 999, "cors_origins": "localhost", "webui": false},
   "generation": {"temperature": 0.0, "top_p": 1.0, "seed": 20260806, "max_tokens": 768, "stream": false, "request_count": 1, "retry_count": 0, "free_form_fallback": false, "response_format_type": "json_object"},
   "policy": {"text_only": true, "mmproj": false, "raw_images": false, "patient_data": false, "development_cases_accessed": 0, "frozen_final_cases_accessed": 0, "locked_test_accessed": false, "runtime_upgrade": false}

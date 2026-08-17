@@ -12,7 +12,7 @@ def test_candidate2_identity_is_explicit_and_revision_is_not_guessed():
     )
     assert config["repository"] == "mistralai/Ministral-3-8B-Instruct-2512-GGUF"
     assert config["filename"] == "Ministral-3-8B-Instruct-2512-Q4_K_M.gguf"
-    assert config["revision"] == "MUST_BE_RESOLVED_FROM_OFFICIAL_HF_METADATA"
+    assert config["revision"] == "0102285ad796bd99af90f58de616092e5630e970"
     assert config["policy"]["mmproj"] is False
 
 
@@ -37,3 +37,13 @@ def test_b8233_runtime_replaces_obsolete_runtime_failure_path():
     assert "c5a778891ba0ddbd4cbb507c823f970595b1adc2" in runner
     assert "PINNED_RUNTIME_INCOMPATIBLE_WITH_CANDIDATE2" not in runner
     assert "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.1" in runner
+
+
+def test_preflight_mode_is_non_inference_and_uses_source_identity():
+    runner = (ROOT / "scripts/training/run_ext4e_candidate2.ps1").read_text(encoding="utf-8")
+    helper = (ROOT / "scripts/training/bootstrap_ext4e_candidate2.py").read_text(encoding="utf-8")
+    assert "PreflightOnly" in runner
+    assert "--preflight-only" in helper
+    assert "runtime_commit_actual" in helper
+    assert '"final_cases_accessed": 0' in helper
+    assert '"locked_test_accessed": False' in helper

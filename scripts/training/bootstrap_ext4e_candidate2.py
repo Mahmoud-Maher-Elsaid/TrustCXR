@@ -19,6 +19,92 @@ RUNTIME_RELEASE = "b8233"
 RUNTIME_COMMIT_PREFIX = "c5a7788"
 RUNTIME_COMMIT = "c5a778891ba0ddbd4cbb507c823f970595b1adc2"
 CUDA_ROOT = Path(r"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.1")
+RUNTIME_SOURCE = ROOT / "cache/research_extensions/ext4e_candidate2/llama_cpp_b8233"
+RUNTIME_EXE = RUNTIME_SOURCE / "build_cuda/bin/Release/llama-server.exe"
+
+
+def runtime_source_identity() -> dict:
+    def git(*args: str) -> str:
+        result = subprocess.run(
+            ["git", "-C", str(RUNTIME_SOURCE), *args],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode != 0:
+            raise RuntimeError("CANDIDATE2_RUNTIME_SOURCE_GIT_FAILURE")
+        return result.stdout.strip()
+
+    return {
+        "source_path": str(RUNTIME_SOURCE),
+        "commit_actual": git("rev-parse", "HEAD"),
+        "tag_actual": git("tag", "--points-at", "HEAD"),
+    }
+
+
+def write_preflight_diagnostic(config: dict, model: Path, evidence: Path) -> int:
+    source = runtime_source_identity()
+    branch = subprocess.run(
+        ["git", "-C", str(ROOT), "branch", "--show-current"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    nvcc = CUDA_ROOT / "bin" / "nvcc.exe"
+    dlls = sorted(p.name for p in RUNTIME_EXE.parent.glob("*.dll"))
+    gpu = subprocess.run(
+        ["nvidia-smi", "--query-gpu=name,memory.total,driver_version", "--format=csv,noheader"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    diagnostic = {
+        "repository_branch": branch.stdout.strip(),
+        "model_exists": model.is_file(),
+        "model_size_actual": model.stat().st_size if model.is_file() else None,
+        "model_size_expected": 5198911904,
+        "model_sha256_actual": sha256_file(model) if model.is_file() else None,
+        "model_sha256_expected": "33e7a72cf5e6e2cfc2f2847075acc013d68bba023e35310cef86b5cf8fdca761",
+        "runtime_source_exists": RUNTIME_SOURCE.is_dir(),
+        "runtime_tag_actual": source["tag_actual"],
+        "runtime_tag_expected": "b8233",
+        "runtime_commit_actual": source["commit_actual"],
+        "runtime_commit_expected": RUNTIME_COMMIT,
+        "cuda_root_exists": CUDA_ROOT.is_dir(),
+        "nvcc_exists_absolute": nvcc.is_file(),
+        "nvcc_path": str(nvcc),
+        "cuda_server_exists": RUNTIME_EXE.is_file(),
+        "cuda_server_sha256_current": sha256_file(RUNTIME_EXE) if RUNTIME_EXE.is_file() else None,
+        "cuda_server_directory": str(RUNTIME_EXE.parent),
+        "required_runtime_dlls": dlls,
+        "runtime_environment_ready": RUNTIME_EXE.is_file() and bool(dlls),
+        "gpu_detected": gpu.returncode == 0,
+        "gpu_identity": gpu.stdout.strip(),
+        "final_cases_accessed": 0,
+        "locked_test_accessed": False,
+        "status": "PREFLIGHT_PASS",
+    }
+    checks = (
+        diagnostic["model_exists"]
+        and diagnostic["model_size_actual"] == diagnostic["model_size_expected"]
+        and diagnostic["model_sha256_actual"] == diagnostic["model_sha256_expected"]
+        and diagnostic["runtime_source_exists"]
+        and diagnostic["runtime_tag_expected"] in diagnostic["runtime_tag_actual"]
+        and diagnostic["runtime_commit_actual"] == diagnostic["runtime_commit_expected"]
+        and diagnostic["cuda_root_exists"]
+        and diagnostic["nvcc_exists_absolute"]
+        and diagnostic["cuda_server_exists"]
+        and diagnostic["gpu_detected"]
+    )
+    if not checks:
+        diagnostic["status"] = "PREFLIGHT_FAILED"
+        diagnostic["failure_classification"] = "CANDIDATE2_PREFLIGHT_FAILURE"
+    (evidence / "preflight_diagnostic.json").write_text(
+        json.dumps(diagnostic, indent=2), encoding="utf-8"
+    )
+    if not checks:
+        raise RuntimeError("CANDIDATE2_PREFLIGHT_FAILED")
+    return 0
 
 
 def sha256_file(path: Path) -> str:
@@ -65,16 +151,19 @@ def main() -> int:
     parser.add_argument(
         "--config", default="configs/research_extensions/ext4e_candidate2_ministral.json"
     )
+    parser.add_argument("--preflight-only", action="store_true")
     args = parser.parse_args()
     config = json.loads((ROOT / args.config).read_text(encoding="utf-8"))
     if config["repository"] != REPOSITORY or config["filename"] != FILENAME:
         raise RuntimeError("Candidate #2 identity contract mismatch.")
-    if config["revision"] != "MUST_BE_RESOLVED_FROM_OFFICIAL_HF_METADATA":
-        raise RuntimeError("Candidate #2 revision must be resolved at bootstrap time.")
-    metadata = official_metadata()
+    if config["revision"] != "0102285ad796bd99af90f58de616092e5630e970":
+        raise RuntimeError("CANDIDATE2_MODEL_REVISION_MISMATCH")
     evidence = ROOT / "artifacts/research_extensions/ext4e_candidate2"
     model = ROOT / "cache/research_extensions/ext4e_candidate2/models" / FILENAME
     evidence.mkdir(parents=True, exist_ok=True)
+    if args.preflight_only:
+        return write_preflight_diagnostic(config, model, evidence)
+    metadata = official_metadata()
     identity = {
         "candidate_id": 2,
         "model_family": config["model_family"],
@@ -98,11 +187,7 @@ def main() -> int:
     (evidence / "candidate2_identity.json").write_text(
         json.dumps(identity, indent=2), encoding="utf-8"
     )
-    runtime = (
-        ROOT
-        / "cache/research_extensions/ext4e_candidate2/llama_cpp_b8233"
-        / "build_cuda/bin/Release/llama-server.exe"
-    )
+    runtime = RUNTIME_EXE
     if not runtime.is_file():
         raise RuntimeError("CANDIDATE2_CUDA_RUNTIME_MISSING")
     nvcc = CUDA_ROOT / "bin" / "nvcc.exe"
