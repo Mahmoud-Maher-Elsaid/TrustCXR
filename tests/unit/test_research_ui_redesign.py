@@ -230,12 +230,11 @@ def test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_bou
         "EXT-4E2B Qwen Runtime/Model Identity:** `RUNTIME_AND_MODEL_IDENTITY_FROZEN`",
         "EXT-4E2C Qwen Load-Only GPU Smoke:** `LOAD_ONLY_PASS — TECHNICALLY "
         "LOADABLE; NOT SCIENTIFICALLY EVALUATED`",
-        "EXT-4E2D Candidate #1 Single Development-Case Smoke:** `SINGLE_"
-        "DEVELOPMENT_CASE_INFERENCE_PREPARED`",
+        "EXT-4E2D Candidate #1 Single Development-Case Smoke:** `CLOSED / PASS",
         "EXT-4E2D0 Structured Output Compatibility Smoke:** `CLOSED / PASS — "
         "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA_VERIFIED`",
         "Structured-output compatibility:** `VERIFIED`",
-        "Next authorized stage:** `EXT-4E2D CANDIDATE #1 SINGLE DEVELOPMENT-CASE EXECUTION`",
+        "Next authorized stage:** `SIX_DEVELOPMENT_CASE_CANDIDATE1_RUN",
         "Grounded LLM reporting:** `NOT STARTED`",
         "attention or attribution is not validated lesion localization",
         "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",

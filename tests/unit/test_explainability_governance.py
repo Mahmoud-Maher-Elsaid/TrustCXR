@@ -30,10 +30,9 @@ def test_roadmap_records_current_extension_lifecycle_and_boundaries() -> None:
         "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA_VERIFIED`" in roadmap
     )
     assert "Structured-output compatibility:** `VERIFIED`" in roadmap
-    assert (
-        "Next authorized stage:** `EXT-4E2D CANDIDATE #1 SINGLE DEVELOPMENT-CASE EXECUTION`"
-        in roadmap
-    )
+    assert "EXT-4E2D Candidate #1 Single Development-Case Smoke:** `CLOSED / PASS" in roadmap
+    assert "Candidate NOT SCIENTIFICALLY SELECTED" in roadmap
+    assert "Next authorized stage:** `SIX_DEVELOPMENT_CASE_CANDIDATE1_RUN" in roadmap
     assert "True pathology localization follow-on experiments:** `CLOSED" in roadmap
     assert "Grounded LLM reporting:** `NOT STARTED`" in roadmap
     assert "Multimodal VLM:** `NOT STARTED`" in roadmap
