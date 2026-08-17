@@ -4,7 +4,9 @@ $expectedBranch = "research-extension/pathology-localization"
 $branch = (git -C $repo branch --show-current).Trim()
 if ($branch -ne $expectedBranch) { throw "Unexpected branch: $branch" }
 Write-Output ("HEAD=" + (git -C $repo rev-parse HEAD).Trim())
-if ((git -C $repo status --porcelain) -ne "") { throw "Working tree must be clean." }
+$gitStatus = @(git -C $repo status --porcelain)
+if ($LASTEXITCODE -ne 0) { throw "Unable to determine Git working-tree status." }
+if ($gitStatus.Count -gt 0) { throw "Working tree must be clean." }
 
 $configHash = (Get-FileHash (Join-Path $repo "configs\research_extensions\ext4d_benchmark.json") -Algorithm SHA256).Hash.ToLower()
 $casesHash = (Get-FileHash (Join-Path $repo "tests\fixtures\ext4d_benchmark_cases.json") -Algorithm SHA256).Hash.ToLower()
