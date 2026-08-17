@@ -1,6 +1,8 @@
 """Offline EXT-4E1 six-development-case preparation tests."""
 
+import importlib.util
 import json
+import shutil
 from pathlib import Path
 
 import pytest
@@ -76,3 +78,44 @@ def test_defer_scoring_policy_is_explicit_without_mutating_fixture():
     defer_case = next(case for case in development if case["case_id"] == "dev_defer")
     assert "expected_statuses" not in defer_case
     assert scoring_case(defer_case)["expected_statuses"] == ["DEFERRED", "ABSTAINED"]
+
+
+def test_consumed_case_discovery_never_selects_failed_case_again():
+    path = ROOT / "scripts/training/run_ext4e_candidate1_development_evaluation.py"
+    spec = importlib.util.spec_from_file_location("batch_runner", path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    root, consumed = module.discover_consumed_cases(
+        ROOT / "artifacts/research_extensions/ext4e_candidate1/development_evaluation",
+        {"dev_uncertainty", "dev_defer", "dev_withheld", "dev_missing", "dev_conflict"},
+    )
+    assert root is not None
+    assert consumed == {"dev_uncertainty"}
+
+
+def test_aggregate_accepts_completed_semantic_failure(tmp_path):
+    from trustcxr.grounded_llm.development_evaluation import aggregate_evidence
+
+    source = EVIDENCE / "20260817T091916Z"
+    paths = {"dev_supported": source}
+    failed = ROOT / "artifacts/research_extensions/ext4e_candidate1/development_evaluation"
+    failed = failed / "20260817T095827Z/dev_uncertainty"
+    paths["dev_uncertainty"] = failed
+    for case_id in ["dev_defer", "dev_withheld", "dev_missing", "dev_conflict"]:
+        target = tmp_path / case_id
+        target.mkdir()
+        metadata = json.loads((source / "run_metadata.json").read_text(encoding="utf-8"))
+        metadata.update(
+            {"case_id": case_id, "generation_completed": True, "response_parse_valid": True}
+        )
+        (target / "run_metadata.json").write_text(json.dumps(metadata), encoding="utf-8")
+        shutil.copy2(source / "parsed_output.json", target / "parsed_output.json")
+        paths[case_id] = target
+    aggregate = aggregate_evidence(CASES, paths)
+    assert aggregate["total_cases"] == 6
+    assert aggregate["case_fail_count"] >= 1
+    failed_result = next(
+        item for item in aggregate["case_results"] if item["case_id"] == "dev_uncertainty"
+    )
+    assert failed_result["contract_status"] == "EXT4C_SEMANTIC_VALIDATION_FAIL"

@@ -10,6 +10,8 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 
+from pydantic import ValidationError
+
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
@@ -45,6 +47,23 @@ def _write_json(path: Path, value: object) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def discover_consumed_cases(artifact_base: Path, allowed: set[str]) -> tuple[Path | None, set[str]]:
+    for candidate_root in sorted(artifact_base.glob("*"), reverse=True):
+        if not candidate_root.is_dir() or not (candidate_root / "evaluation_plan.json").is_file():
+            continue
+        found = set()
+        for case_root in candidate_root.iterdir():
+            metadata_path = case_root / "run_metadata.json"
+            if case_root.is_dir() and metadata_path.is_file():
+                metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+                found.add(metadata.get("case_id"))
+        if found:
+            if "dev_supported" in found or not found.issubset(allowed):
+                raise RuntimeError("Evaluation evidence contains an invalid or duplicate case.")
+            return candidate_root, found
+    return None, set()
+
+
 def main() -> int:
     runner = _load_runner()
     config = runner.load_json(CONFIG_PATH)
@@ -61,24 +80,46 @@ def main() -> int:
     if len(remaining) != 5 or "dev_supported" in remaining:
         raise RuntimeError("The governed remaining-case set is invalid.")
 
-    run_id = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
-    evaluation_root = (
-        ROOT
-        / config.get(
-            "evaluation_artifact_root",
-            "artifacts/research_extensions/ext4e_candidate1/development_evaluation",
-        )
-        / run_id
+    artifact_base = ROOT / config.get(
+        "evaluation_artifact_root",
+        "artifacts/research_extensions/ext4e_candidate1/development_evaluation",
     )
-    evaluation_root.mkdir(parents=True, exist_ok=False)
+    evaluation_root, consumed = discover_consumed_cases(artifact_base, set(remaining))
+    if evaluation_root is None:
+        run_id = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+        evaluation_root = artifact_base / run_id
+        evaluation_root.mkdir(parents=True, exist_ok=False)
+    remaining_to_execute = [case_id for case_id in remaining if case_id not in consumed]
     prompt_path = ROOT / config["prompt_template"]
     prompt_bytes = prompt_path.read_bytes()
     if runner.sha256_bytes(prompt_bytes) != config["prompt_sha256"]:
         raise RuntimeError("Prompt template SHA-256 mismatch.")
     schema = GroundedOutputEnvelope.model_json_schema()
-    _write_json(evaluation_root / "evaluation_plan.json", plan)
-    (evaluation_root / "prompt_template.txt").write_bytes(prompt_bytes)
-    _write_json(evaluation_root / "ext4c_output_schema.json", schema)
+    if not (evaluation_root / "evaluation_plan.json").is_file():
+        _write_json(evaluation_root / "evaluation_plan.json", plan)
+        (evaluation_root / "prompt_template.txt").write_bytes(prompt_bytes)
+        _write_json(evaluation_root / "ext4c_output_schema.json", schema)
+
+    if not remaining_to_execute:
+        evidence_paths = {"dev_supported": HISTORICAL_ROOT / "20260817T091916Z"}
+        evidence_paths.update({case_id: evaluation_root / case_id for case_id in consumed})
+        aggregate = aggregate_evidence(CASES_PATH, evidence_paths)
+        _write_json(evaluation_root / "development_summary.json", aggregate)
+        _write_json(evaluation_root / "development_case_results.json", aggregate["case_results"])
+        _write_json(
+            evaluation_root / "development_violation_totals.json", aggregate["violation_counts"]
+        )
+        print(
+            json.dumps(
+                {
+                    "status": "DEVELOPMENT_EVALUATION_COMPLETE_REQUIRES_GOVERNANCE_DECISION",
+                    **aggregate,
+                },
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 0
 
     server = config["server"]
     server_args = [
@@ -102,11 +143,16 @@ def main() -> int:
         server["reasoning"],
     ]
     process = None
+    log_name = (
+        "llama_server.log"
+        if not consumed
+        else f"llama_server_resume_{datetime.now(UTC):%Y%m%dT%H%M%SZ}.log"
+    )
     evidence_paths = {"dev_supported": HISTORICAL_ROOT / "20260817T091916Z"}
     try:
         process = subprocess.Popen(
             server_args,
-            stdout=(evaluation_root / "llama_server.log").open("w"),
+            stdout=(evaluation_root / log_name).open("w"),
             stderr=subprocess.STDOUT,
         )
         deadline = time.monotonic() + 180
@@ -124,7 +170,7 @@ def main() -> int:
         else:
             raise RuntimeError("llama-server readiness timeout.")
 
-        for case_id in remaining:
+        for case_id in remaining_to_execute:
             case = by_id[case_id]
             case_root = evaluation_root / case_id
             case_root.mkdir()
@@ -160,10 +206,42 @@ def main() -> int:
                 response, content, candidate = runner.extract_model_content(raw)
                 metadata["response_parse_valid"] = True
                 (case_root / "raw_model_content.txt").write_text(content, encoding="utf-8")
-                validated = GroundedOutputEnvelope.model_validate(candidate)
+                try:
+                    validated = GroundedOutputEnvelope.model_validate(candidate)
+                except ValidationError as exc:
+                    metadata["status"] = "COMPLETED"
+                    metadata["technical_status"] = "COMPLETED"
+                    metadata["contract_status"] = "EXT4C_SEMANTIC_VALIDATION_FAIL"
+                    metadata["validation_error"] = exc.errors()
+                    _write_json(
+                        case_root / "validation_error.json",
+                        {
+                            "case_id": case_id,
+                            "classification": "EXT4C_SEMANTIC_VALIDATION_FAIL",
+                            "validation_stage": "GroundedOutputEnvelope.model_validate",
+                            "errors": exc.errors(),
+                            "request_count": 1,
+                            "retry_count": 0,
+                        },
+                    )
+                    continue
                 references = {item.evidence_id for item in envelope.evidence_items}
                 if any(ref.evidence_id not in references for ref in validated.evidence_references):
-                    raise RuntimeError("Output references evidence outside the supplied envelope.")
+                    metadata["status"] = "COMPLETED"
+                    metadata["technical_status"] = "COMPLETED"
+                    metadata["contract_status"] = "EXT4C_SEMANTIC_VALIDATION_FAIL"
+                    _write_json(
+                        case_root / "validation_error.json",
+                        {
+                            "case_id": case_id,
+                            "classification": "EXT4C_SEMANTIC_VALIDATION_FAIL",
+                            "validation_stage": "grounding_reference_check",
+                            "message": "Output references evidence outside the supplied envelope.",
+                            "request_count": 1,
+                            "retry_count": 0,
+                        },
+                    )
+                    continue
                 (case_root / "raw_response.json").write_text(
                     json.dumps(response, indent=2, sort_keys=True) + "\n", encoding="utf-8"
                 )
@@ -180,11 +258,22 @@ def main() -> int:
                 metadata["status"] = "MODEL_REQUEST_FAILURE"
                 _write_json(case_root / "http_error.json", exc.as_dict())
                 raise RuntimeError(f"Technical request failure for {case_id}.") from exc
-            except (
-                runner.ResponseProcessingFailure,
-                runner.ConfigContractFailure,
-                runner.RequestConstructionFailure,
-            ) as exc:
+            except runner.ResponseProcessingFailure as exc:
+                metadata["status"] = "COMPLETED"
+                metadata["technical_status"] = "COMPLETED"
+                metadata["contract_status"] = exc.status
+                _write_json(
+                    case_root / "validation_error.json",
+                    {
+                        "case_id": case_id,
+                        "classification": exc.status,
+                        "validation_stage": "response_processing",
+                        "message": str(exc),
+                        "request_count": 1,
+                        "retry_count": 0,
+                    },
+                )
+            except (runner.ConfigContractFailure, runner.RequestConstructionFailure) as exc:
                 metadata["status"] = "TECHNICAL_CASE_FAILURE"
                 metadata["error"] = str(exc)
                 raise RuntimeError(f"Technical case failure for {case_id}.") from exc

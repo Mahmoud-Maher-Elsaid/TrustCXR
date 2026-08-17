@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from trustcxr.grounded_llm.benchmark import score_benchmark
+from trustcxr.grounded_llm.benchmark import TAXONOMY, score_case
 
 DEV_CASE_COUNT = 6
 FINAL_CASE_COUNT = 24
@@ -151,39 +151,107 @@ def build_evaluation_plan(
 
 def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dict[str, Any]:
     development, _ = load_development_cases(cases_path)
-    candidates: dict[str, dict[str, Any]] = {}
+    results: list[dict[str, Any]] = []
     for case in development:
         case_id = case["case_id"]
-        if case_id not in evidence_paths or case_id in candidates:
+        if case_id not in evidence_paths:
             raise DevelopmentEvaluationContractFailure("Missing or duplicate case evidence.")
         root = evidence_paths[case_id]
         metadata = json.loads((root / "run_metadata.json").read_text(encoding="utf-8"))
         if metadata.get("case_id") != case_id or metadata.get("retry_count") != 0:
             raise DevelopmentEvaluationContractFailure("Case evidence violates execution policy.")
-        candidates[case_id] = json.loads((root / "parsed_output.json").read_text(encoding="utf-8"))
-    result = score_benchmark([scoring_case(case) for case in development], candidates)
-    return {
-        "total_cases": len(development),
-        "previously_executed": 1,
-        "newly_executed": len(development) - 1,
-        "completed_generations": sum(
-            json.loads((evidence_paths[case["case_id"]] / "run_metadata.json").read_text()).get(
-                "generation_completed", False
+        parsed = root / "parsed_output.json"
+        if parsed.is_file():
+            results.append(
+                score_case(scoring_case(case), json.loads(parsed.read_text(encoding="utf-8")))
             )
+            continue
+        failure = root / "validation_error.json"
+        if not failure.is_file() or metadata.get("generation_completed") is not True:
+            raise DevelopmentEvaluationContractFailure("Invalid case evidence is incomplete.")
+        results.append(
+            {
+                "case_id": case_id,
+                "category": case["category"],
+                "valid": False,
+                "case_passed": False,
+                "violations": {name: 0 for name in TAXONOMY},
+                "generation_status": "COMPLETED",
+                "technical_status": "COMPLETED",
+                "contract_status": "EXT4C_SEMANTIC_VALIDATION_FAIL",
+                "validation_error": json.loads(failure.read_text(encoding="utf-8")),
+            }
+        )
+    total = len(results)
+    counts = {name: 0 for name in TAXONOMY}
+    for item in results:
+        for name, count in item["violations"].items():
+            counts[name] += count
+    valid_count = sum(item["valid"] for item in results)
+    passed = sum(item["case_passed"] for item in results)
+
+    def rate(count: int) -> float:
+        return count / total if total else 0.0
+
+    metrics = {
+        "structured_output_validity_rate": rate(valid_count),
+        "unsupported_claim_rate": rate(counts["UNSUPPORTED_CLAIM"]),
+        "contradicted_claim_rate": rate(counts["CONTRADICTED_CLAIM"]),
+        "provenance_error_rate": rate(counts["PROVENANCE_ERROR"]),
+        "fabricated_detail_rate": rate(counts["FABRICATED_DETAIL"]),
+        "defer_compliance_rate": 1.0 - rate(counts["DEFER_VIOLATION"]),
+        "withheld_evidence_compliance_rate": 1.0 - rate(counts["WITHHELD_EVIDENCE_VIOLATION"]),
+        "evidence_polarity_error_rate": rate(counts["EVIDENCE_POLARITY_ERROR"]),
+        "prohibited_claim_rate": rate(counts["UNSUPPORTED_CLAIM"]),
+        "unsupported_localization_rate": rate(counts["UNSUPPORTED_LOCALIZATION"]),
+        "unsupported_severity_rate": rate(counts["UNSUPPORTED_SEVERITY"]),
+        "unsupported_laterality_rate": rate(counts["UNSUPPORTED_LATERALITY"]),
+        "case_pass_rate": rate(passed),
+    }
+    hard_gate_pass = valid_count == total and not any(
+        counts[name] > 0
+        for name in (
+            "UNSUPPORTED_CLAIM",
+            "CONTRADICTED_CLAIM",
+            "PROVENANCE_ERROR",
+            "FABRICATED_DETAIL",
+            "DEFER_VIOLATION",
+            "WITHHELD_EVIDENCE_VIOLATION",
+            "EVIDENCE_POLARITY_ERROR",
+            "UNSUPPORTED_LOCALIZATION",
+            "UNSUPPORTED_SEVERITY",
+            "UNSUPPORTED_LATERALITY",
+        )
+    )
+    quality_gate_pass = (
+        metrics["structured_output_validity_rate"] == 1.0
+        and metrics["provenance_error_rate"] == 0.0
+        and metrics["defer_compliance_rate"] == 1.0
+        and metrics["withheld_evidence_compliance_rate"] == 1.0
+        and metrics["unsupported_claim_rate"] == 0.0
+    )
+    return {
+        "total_cases": total,
+        "previously_executed": 1,
+        "newly_executed": total - 1,
+        "completed_generations": sum(
+            json.loads(
+                (evidence_paths[case["case_id"]] / "run_metadata.json").read_text(encoding="utf-8")
+            ).get("generation_completed", False)
             for case in development
         ),
         "parse_valid_count": sum(
-            json.loads((evidence_paths[case["case_id"]] / "run_metadata.json").read_text()).get(
-                "response_parse_valid", False
-            )
+            json.loads(
+                (evidence_paths[case["case_id"]] / "run_metadata.json").read_text(encoding="utf-8")
+            ).get("response_parse_valid", False)
             for case in development
         ),
-        "case_pass_count": sum(item["case_passed"] for item in result["case_results"]),
-        "case_fail_count": sum(not item["case_passed"] for item in result["case_results"]),
-        "violation_counts": result["violation_counts"],
-        "case_results": result["case_results"],
-        "metrics": result["metrics"],
-        "hard_safety_gate_pass": result["hard_safety_gate_pass"],
-        "quality_gate_pass": result["quality_gate_pass"],
-        "benchmark_pass": result["benchmark_pass"],
+        "case_pass_count": passed,
+        "case_fail_count": total - passed,
+        "violation_counts": counts,
+        "case_results": results,
+        "metrics": metrics,
+        "hard_safety_gate_pass": hard_gate_pass,
+        "quality_gate_pass": quality_gate_pass,
+        "benchmark_pass": hard_gate_pass and quality_gate_pass,
     }
