@@ -67,14 +67,28 @@ function Invoke-NativeCapture([string]$FilePath, [string[]]$ArgumentList) {
     }
 }
 
+function Assert-ZipHeader([string]$Path) {
+    $stream = [System.IO.File]::OpenRead($Path)
+    try {
+        [byte[]]$magic = New-Object -TypeName "System.Byte[]" -ArgumentList 4
+        $bytesRead = $stream.Read($magic, 0, $magic.Length)
+        if ($bytesRead -ne $magic.Length) { throw "Downloaded artifact header is truncated: $Path" }
+        if (-not ($magic[0] -eq 0x50 -and $magic[1] -eq 0x4B)) {
+            throw "Downloaded artifact is not a ZIP: $Path"
+        }
+    }
+    finally {
+        $stream.Dispose()
+    }
+}
+
 function Download-And-Verify([string]$Url, [string]$Path, [string]$ExpectedSha) {
     if ($ExpectedSha -match "TO_BE_") { throw "Pinned SHA-256 is unresolved for $Path." }
     if (-not (Test-Path -LiteralPath $Path)) {
         Invoke-WebRequest -Uri $Url -OutFile $Path -UseBasicParsing
     }
     if ((Get-Sha256 $Path) -ne $ExpectedSha.ToLowerInvariant()) { throw "SHA-256 mismatch: $Path" }
-    $magic = [System.IO.File]::ReadAllBytes($Path)[0..3]
-    if (-not ($magic[0] -eq 0x50 -and $magic[1] -eq 0x4B)) { throw "Downloaded artifact is not a ZIP: $Path" }
+    Assert-ZipHeader $Path
 }
 
 Download-And-Verify $config.runtime.windows_asset_url $runtimeArchive $config.runtime.runtime_asset_sha256

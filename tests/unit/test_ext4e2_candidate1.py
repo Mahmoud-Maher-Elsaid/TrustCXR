@@ -77,3 +77,12 @@ def test_native_runtime_identity_capture_checks_exit_code_not_stderr():
     assert "build\\s+10453" in script
     assert "commit\\s+3cb7ffb" in script
     assert "& $cli.FullName --version" not in script
+
+
+def test_large_artifact_magic_check_is_streamed_and_truncation_safe():
+    script = (ROOT / "scripts" / "training" / "run_ext4e2_candidate1_preflight.ps1").read_text()
+    assert "[System.IO.File]::OpenRead($Path)" in script
+    assert "$stream.Read($magic, 0, $magic.Length)" in script
+    assert "Downloaded artifact header is truncated" in script
+    assert "ReadAllBytes" not in script
+    assert "ReadToEnd" not in script
