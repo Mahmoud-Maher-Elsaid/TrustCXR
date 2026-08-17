@@ -54,6 +54,7 @@ def test_child_runtime_path_and_startup_probe_are_deterministic():
     assert "runtime_environment" in helper
     assert "build_cuda/bin/Release" in helper
     assert 'CUDA_ROOT / "bin"' in helper
+    assert 'CUDA_ROOT / "bin" / "x64"' in helper
     assert '"--help"' in helper
     assert '"inference_requests": 0' in helper
     assert "CANDIDATE2_EXECUTABLE_STARTUP_FAILED" in helper

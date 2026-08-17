@@ -26,7 +26,11 @@ RUNTIME_EXE = RUNTIME_SOURCE / "build_cuda/bin/Release/llama-server.exe"
 
 def runtime_environment() -> dict[str, str]:
     env = dict(os.environ)
-    paths = [str(RUNTIME_EXE.parent), str(CUDA_ROOT / "bin")]
+    paths = [
+        str(RUNTIME_EXE.parent),
+        str(CUDA_ROOT / "bin"),
+        str(CUDA_ROOT / "bin" / "x64"),
+    ]
     env["PATH"] = ";".join(paths + [env.get("PATH", "")])
     return env
 
@@ -112,7 +116,11 @@ def write_preflight_diagnostic(config: dict, model: Path, evidence: Path) -> int
         "cuda_server_directory": str(RUNTIME_EXE.parent),
         "required_runtime_dlls": dlls,
         "runtime_environment_ready": RUNTIME_EXE.is_file() and not missing_dlls,
-        "runtime_search_path": [str(RUNTIME_EXE.parent), str(CUDA_ROOT / "bin")],
+        "runtime_search_path": [
+            str(RUNTIME_EXE.parent),
+            str(CUDA_ROOT / "bin"),
+            str(CUDA_ROOT / "bin" / "x64"),
+        ],
         "missing_runtime_dlls": missing_dlls,
         "startup_probe": probe,
         "gpu_detected": gpu.returncode == 0,
