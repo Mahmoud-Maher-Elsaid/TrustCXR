@@ -1,16 +1,40 @@
 {
-  "schema_id": "EXT4E_CANDIDATE2_DEVELOPMENT_CLOSURE",
-  "schema_version": "1",
-  "candidate_id": 2,
-  "candidate": "Ministral-3-8B-Instruct-2512-Q4_K_M",
-  "model_sha256": "33e7a72cf5e6e2cfc2f2847075acc013d68bba023e35310cef86b5cf8fdca761",
-  "runtime": {
-    "release": "b8233",
-    "commit": "c5a778891ba0ddbd4cbb507c823f970595b1adc2"
+  "aggregate": {
+    "benchmark_pass": false,
+    "case_fail_count": 6,
+    "case_pass_count": 0,
+    "completed_generations": 6,
+    "ext4c_invalid_count": 6,
+    "ext4c_valid_count": 0,
+    "hard_safety_gate_pass": false,
+    "parse_valid_count": 6,
+    "quality_gate_pass": false,
+    "total_cases": 6
   },
-  "cuda_version": "13.1",
-  "gpu_identity": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
-  "gpu_offload_observed": "35/35 layers",
+  "run_id": "20260817T204639Z",
+  "run_path": "artifacts/research_extensions/ext4e_candidate2/development_evaluation/20260817T204639Z",
+  "evaluator_defect_found": false,
+  "request_contract_verification": {
+    "all_request_count": 1,
+    "all_http_status": 200,
+    "all_generation_completed": true,
+    "all_parse_valid": true,
+    "thinking_disabled": true,
+    "reasoning_format": "none",
+    "response_format_type": "json_object",
+    "reasoning_effort_present": false,
+    "schema_matches_grounded_output_envelope": true
+  },
+  "case_failure_reasons": {
+    "dev_supported": "Invalid generation_status object; legacy evidence claim wrapper; wrong limitation shape; missing uncertainty interpretation; missing defer decision.",
+    "dev_uncertainty": "Invalid generation_status object; legacy evidence/claim wrappers; invalid uncertainty fields; invalid reviewer flag; missing defer decision.",
+    "dev_defer": "Invalid generation_status object; legacy evidence wrapper; wrong limitation shape; missing defer decision and extra active field.",
+    "dev_withheld": "Invalid generation_status object; legacy evidence wrapper; wrong limitation shape; missing defer decision.",
+    "dev_missing": "Invalid generation_status object; legacy evidence fields; invalid uncertainty interpretation; missing defer decision.",
+    "dev_conflict": "Invalid generation_status object; legacy evidence wrapper; invalid uncertainty interpretation; wrong limitation shape; missing defer decision."
+  },
+  "candidate": "Ministral-3-8B-Instruct-2512-Q4_K_M",
+  "candidate_id": 2,
   "development_case_ids": [
     "dev_supported",
     "dev_uncertainty",
@@ -19,9 +43,16 @@
     "dev_missing",
     "dev_conflict"
   ],
-  "status": "TEMPLATE_PENDING_GOVERNED_EXECUTION",
-  "scientific_decision": null,
+  "development_cases_accessed": 6,
   "final_cases_accessed": 0,
   "locked_test_accessed": false,
-  "next_stage": "EXPLICIT_GOVERNANCE_DECISION_BEFORE_FROZEN_FINAL_ACCESS"
+  "next_stage": "CANDIDATE_3_IDENTITY_AND_RUNTIME_BOOTSTRAP",
+  "runtime": {
+    "commit": "c5a778891ba0ddbd4cbb507c823f970595b1adc2",
+    "release": "b8233"
+  },
+  "schema_id": "EXT4E_CANDIDATE2_DEVELOPMENT_CLOSURE",
+  "schema_version": "1",
+  "scientific_decision": "DEVELOPMENT_GATE_FAILED / NOT_SCIENTIFICALLY_SELECTED",
+  "status": "CLOSED"
 }
