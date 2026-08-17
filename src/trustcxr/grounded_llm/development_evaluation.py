@@ -197,6 +197,40 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
         if metadata.get("case_id") != case_id or metadata.get("retry_count") != 0:
             raise DevelopmentEvaluationContractFailure("Case evidence violates execution policy.")
         parsed = root / "parsed_output.json"
+        failure = root / "validation_error.json"
+        # A preserved parsed candidate may coexist with a semantic validation
+        # failure; the contract result, not JSON parseability, is authoritative.
+        if failure.is_file() and metadata.get("ext4c_valid") is False:
+            if metadata.get("generation_completed") is not True:
+                raise DevelopmentEvaluationContractFailure("Invalid case evidence is incomplete.")
+            request_count = metadata.get("inference_request_count", 0)
+            attempt_state = metadata.get("attempt_state", "ATTEMPTED_COMPLETE")
+            if not evidence_is_complete(root):
+                attempt_state = "ATTEMPTED_INCOMPLETE"
+            results.append(
+                {
+                    "case_id": case_id,
+                    "category": case["category"],
+                    "valid": False,
+                    "case_passed": False,
+                    "violations": {name: None for name in TAXONOMY},
+                    "generation_status": "COMPLETED",
+                    "technical_status": "COMPLETED",
+                    "contract_status": "EXT4C_SEMANTIC_VALIDATION_FAIL",
+                    "validation_error": json.loads(failure.read_text(encoding="utf-8")),
+                    "evidence_path": str(root),
+                    "attempt_state": "HISTORICAL_REUSED"
+                    if case_id == "dev_supported"
+                    else attempt_state,
+                    "request_attempted": request_count == 1,
+                    "request_count": request_count,
+                    "generation_completed": metadata.get("generation_completed", False),
+                    "parse_valid": metadata.get("response_parse_valid", True),
+                    "ext4c_valid": False,
+                    "scorer_executed": False,
+                }
+            )
+            continue
         if parsed.is_file():
             result = score_case(scoring_case(case), json.loads(parsed.read_text(encoding="utf-8")))
             result["technical_status"] = "COMPLETED"
@@ -220,7 +254,6 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
             )
             results.append(result)
             continue
-        failure = root / "validation_error.json"
         if not failure.is_file() or metadata.get("generation_completed") is not True:
             raise DevelopmentEvaluationContractFailure("Invalid case evidence is incomplete.")
         request_count = metadata.get("inference_request_count", 0)

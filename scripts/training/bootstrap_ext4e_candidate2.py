@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 import subprocess
+import sys
 import time
 import urllib.error
 import urllib.request
@@ -14,6 +16,12 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "src"))
+from trustcxr.grounded_llm.candidate2_request import (  # noqa: E402
+    build_candidate2_request_payload,
+)
+from trustcxr.grounded_llm.contracts import GroundedOutputEnvelope  # noqa: E402
+
 REPOSITORY = "mistralai/Ministral-3-8B-Instruct-2512-GGUF"
 FILENAME = "Ministral-3-8B-Instruct-2512-Q4_K_M.gguf"
 RUNTIME_RELEASE = "b8233"
@@ -89,21 +97,31 @@ def build_server_argv(model: Path, port: int = 18080) -> list[str]:
     ]
 
 
-def build_candidate2_request_payload(model: str, messages: list[dict], schema: dict) -> dict:
-    """Single governed request contract for synthetic and future development calls."""
+def run_candidate2_development_evaluation(
+    *,
+    server_url: str,
+    model: str,
+    schema: dict,
+    run_root: Path | None = None,
+    request_fn=None,
+) -> dict:
+    """Invoke the evaluator after synthetic PASS while retaining server ownership."""
 
-    return {
-        "model": model,
-        "messages": messages,
-        "temperature": 0.0,
-        "top_p": 1.0,
-        "seed": 20260806,
-        "max_tokens": 768,
-        "stream": False,
-        "chat_template_kwargs": {"enable_thinking": False},
-        "reasoning_format": "none",
-        "response_format": {"type": "json_object", "schema": schema},
-    }
+    evaluator_path = ROOT / "scripts/training/run_ext4e_candidate2_development.py"
+    evaluator_spec = importlib.util.spec_from_file_location(
+        "ext4e_candidate2_development", evaluator_path
+    )
+    if evaluator_spec is None or evaluator_spec.loader is None:
+        raise RuntimeError("CANDIDATE2_DEVELOPMENT_EVALUATOR_MISSING")
+    evaluator = importlib.util.module_from_spec(evaluator_spec)
+    evaluator_spec.loader.exec_module(evaluator)
+    return evaluator.run_development_evaluation(
+        server_url=server_url,
+        model=model,
+        schema=schema,
+        run_root=run_root,
+        request_fn=request_fn,
+    )
 
 
 def runtime_source_identity() -> dict:
@@ -438,11 +456,17 @@ def main() -> int:
             ),
             encoding="utf-8",
         )
+        evaluation = run_candidate2_development_evaluation(
+            server_url="http://127.0.0.1:18080",
+            model=FILENAME,
+            schema=GroundedOutputEnvelope.model_json_schema(),
+        )
         (evidence / "run_metadata.json").write_text(
             json.dumps(
                 {
                     "status": "CANDIDATE2_FAST_BOOTSTRAP_PASS",
                     "generation_completed": True,
+                    "development_evaluation_status": evaluation["scientific_decision"],
                     "cleanup": True,
                 },
                 indent=2,

@@ -97,7 +97,8 @@ def test_b8233_http_contract_is_schema_capable_without_newer_reasoning_field():
     assert 'json_value(response_format, "schema"' in source
     assert "reasoning_effort" not in source
     assert '"chat_template_kwargs"' in source
-    assert '"reasoning_format": "none"' in source
+    assert 'body.contains("reasoning_format")' in source
+    assert "common_reasoning_format_from_name" in source
 
 
 def test_http_error_evidence_is_persisted_without_retry():
