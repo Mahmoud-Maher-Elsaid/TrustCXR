@@ -6,7 +6,9 @@ import shutil
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
+from trustcxr.grounded_llm.contracts import GroundedOutputEnvelope
 from trustcxr.grounded_llm.development_evaluation import (
     DevelopmentEvaluationContractFailure,
     build_evaluation_plan,
@@ -91,7 +93,7 @@ def test_consumed_case_discovery_never_selects_failed_case_again():
         {"dev_uncertainty", "dev_defer", "dev_withheld", "dev_missing", "dev_conflict"},
     )
     assert root is not None
-    assert consumed == {"dev_uncertainty"}
+    assert consumed == {"dev_uncertainty", "dev_defer"}
 
 
 def test_aggregate_accepts_completed_semantic_failure(tmp_path):
@@ -119,3 +121,23 @@ def test_aggregate_accepts_completed_semantic_failure(tmp_path):
         item for item in aggregate["case_results"] if item["case_id"] == "dev_uncertainty"
     )
     assert failed_result["contract_status"] == "EXT4C_SEMANTIC_VALIDATION_FAIL"
+
+
+def test_validation_error_with_value_error_context_is_json_safe():
+    path = ROOT / "scripts/training/run_ext4e_candidate1_development_evaluation.py"
+    spec = importlib.util.spec_from_file_location("batch_runner_errors", path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    candidate_path = (
+        ROOT
+        / "artifacts/research_extensions/ext4e_candidate1/development_evaluation"
+        / "20260817T095827Z/dev_uncertainty/raw_model_content.txt"
+    )
+    candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+
+    with pytest.raises(ValidationError) as captured:
+        GroundedOutputEnvelope.model_validate(candidate)
+    safe = module.serialize_validation_error(captured.value)
+    assert json.loads(json.dumps(safe)) == safe
+    assert all("ctx" not in item for item in safe)

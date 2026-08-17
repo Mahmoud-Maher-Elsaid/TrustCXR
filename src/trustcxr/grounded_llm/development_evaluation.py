@@ -152,19 +152,36 @@ def build_evaluation_plan(
 def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dict[str, Any]:
     development, _ = load_development_cases(cases_path)
     results: list[dict[str, Any]] = []
+
+    def metadata_for(case_id: str, root: Path) -> dict[str, Any]:
+        metadata_path = root / "run_metadata.json"
+        if metadata_path.is_file():
+            return json.loads(metadata_path.read_text(encoding="utf-8"))
+        failure_path = root / "validation_error.json"
+        if failure_path.is_file():
+            failure = json.loads(failure_path.read_text(encoding="utf-8"))
+            return {
+                "case_id": case_id,
+                "retry_count": failure.get("retry_count"),
+                "generation_completed": failure.get("generation_completed"),
+                "response_parse_valid": True,
+            }
+        raise DevelopmentEvaluationContractFailure("Case evidence metadata is missing.")
+
     for case in development:
         case_id = case["case_id"]
         if case_id not in evidence_paths:
             raise DevelopmentEvaluationContractFailure("Missing or duplicate case evidence.")
         root = evidence_paths[case_id]
-        metadata = json.loads((root / "run_metadata.json").read_text(encoding="utf-8"))
+        metadata = metadata_for(case_id, root)
         if metadata.get("case_id") != case_id or metadata.get("retry_count") != 0:
             raise DevelopmentEvaluationContractFailure("Case evidence violates execution policy.")
         parsed = root / "parsed_output.json"
         if parsed.is_file():
-            results.append(
-                score_case(scoring_case(case), json.loads(parsed.read_text(encoding="utf-8")))
-            )
+            result = score_case(scoring_case(case), json.loads(parsed.read_text(encoding="utf-8")))
+            result["technical_status"] = "COMPLETED"
+            result["contract_status"] = "EXT4C_VALID"
+            results.append(result)
             continue
         failure = root / "validation_error.json"
         if not failure.is_file() or metadata.get("generation_completed") is not True:
@@ -235,15 +252,15 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
         "previously_executed": 1,
         "newly_executed": total - 1,
         "completed_generations": sum(
-            json.loads(
-                (evidence_paths[case["case_id"]] / "run_metadata.json").read_text(encoding="utf-8")
-            ).get("generation_completed", False)
+            metadata_for(case["case_id"], evidence_paths[case["case_id"]]).get(
+                "generation_completed", False
+            )
             for case in development
         ),
         "parse_valid_count": sum(
-            json.loads(
-                (evidence_paths[case["case_id"]] / "run_metadata.json").read_text(encoding="utf-8")
-            ).get("response_parse_valid", False)
+            metadata_for(case["case_id"], evidence_paths[case["case_id"]]).get(
+                "response_parse_valid", False
+            )
             for case in development
         ),
         "case_pass_count": passed,

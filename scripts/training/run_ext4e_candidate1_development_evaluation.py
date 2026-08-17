@@ -47,16 +47,37 @@ def _write_json(path: Path, value: object) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def _write_json_atomic(path: Path, value: object) -> None:
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    _write_json(temporary, value)
+    temporary.replace(path)
+
+
+def serialize_validation_error(error: ValidationError) -> list[dict]:
+    """Return Pydantic errors without non-JSON-native context objects."""
+
+    return json.loads(error.json(include_url=False, include_context=False))
+
+
 def discover_consumed_cases(artifact_base: Path, allowed: set[str]) -> tuple[Path | None, set[str]]:
     for candidate_root in sorted(artifact_base.glob("*"), reverse=True):
         if not candidate_root.is_dir() or not (candidate_root / "evaluation_plan.json").is_file():
             continue
         found = set()
         for case_root in candidate_root.iterdir():
+            if not case_root.is_dir():
+                continue
             metadata_path = case_root / "run_metadata.json"
-            if case_root.is_dir() and metadata_path.is_file():
-                metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-                found.add(metadata.get("case_id"))
+            durable_request_evidence = any(
+                (case_root / name).is_file()
+                for name in ("request.json", "raw_http_response.json", "raw_model_content.txt")
+            )
+            if metadata_path.is_file() or durable_request_evidence:
+                if metadata_path.is_file():
+                    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+                    found.add(metadata.get("case_id"))
+                else:
+                    found.add(case_root.name)
         if found:
             if "dev_supported" in found or not found.issubset(allowed):
                 raise RuntimeError("Evaluation evidence contains an invalid or duplicate case.")
@@ -89,6 +110,30 @@ def main() -> int:
         run_id = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
         evaluation_root = artifact_base / run_id
         evaluation_root.mkdir(parents=True, exist_ok=False)
+    ledger_path = evaluation_root / "case_attempt_ledger.json"
+    if ledger_path.is_file():
+        ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        ledger_cases = ledger.get("cases", {})
+        consumed.update(
+            case_id
+            for case_id, entry in ledger_cases.items()
+            if entry.get("attempt_state") in {"ATTEMPTED_INCOMPLETE", "ATTEMPTED_COMPLETE"}
+        )
+    else:
+        ledger = {
+            "schema_id": "EXT4E1_CASE_ATTEMPT_LEDGER",
+            "schema_version": "1",
+            "evaluation_run_id": evaluation_root.name,
+            "cases": {},
+        }
+    if not consumed.issubset(set(remaining)):
+        raise RuntimeError("Ledger contains an invalid or duplicate case.")
+    ledger["consumed_case_ids"] = sorted({"dev_supported", *consumed})
+    ledger["resume_pending_case_ids"] = [
+        case_id for case_id in remaining if case_id not in consumed
+    ]
+    ledger["duplicate_request_protocol_deviation"] = False
+    _write_json_atomic(ledger_path, ledger)
     remaining_to_execute = [case_id for case_id in remaining if case_id not in consumed]
     prompt_path = ROOT / config["prompt_template"]
     prompt_bytes = prompt_path.read_bytes()
@@ -194,6 +239,16 @@ def main() -> int:
                 "frozen_final_cases_accessed": 0,
                 "locked_test_accessed": False,
             }
+            ledger["cases"][case_id] = {
+                "partition": "development",
+                "attempt_state": "ATTEMPTED_INCOMPLETE",
+                "request_may_have_been_sent": True,
+                "request_confirmed_sent": False,
+                "generation_completed": False,
+                "evidence_path": str(case_root),
+                "contract_status": "REQUEST_PENDING",
+            }
+            _write_json_atomic(ledger_path, ledger)
             output_payload = runner.build_request_payload(
                 config, prompt_bytes.decode("utf-8"), input_payload, schema
             )
@@ -202,6 +257,13 @@ def main() -> int:
                 raw = runner.request_json(runner.build_completion_url(config), output_payload, 180)
                 metadata["generation_started"] = True
                 metadata["generation_completed"] = True
+                ledger["cases"][case_id].update(
+                    {
+                        "request_confirmed_sent": True,
+                        "generation_completed": True,
+                    }
+                )
+                _write_json_atomic(ledger_path, ledger)
                 (case_root / "raw_http_response.json").write_bytes(raw)
                 response, content, candidate = runner.extract_model_content(raw)
                 metadata["response_parse_valid"] = True
@@ -212,14 +274,15 @@ def main() -> int:
                     metadata["status"] = "COMPLETED"
                     metadata["technical_status"] = "COMPLETED"
                     metadata["contract_status"] = "EXT4C_SEMANTIC_VALIDATION_FAIL"
-                    metadata["validation_error"] = exc.errors()
+                    safe_errors = serialize_validation_error(exc)
+                    metadata["validation_error"] = safe_errors
                     _write_json(
                         case_root / "validation_error.json",
                         {
                             "case_id": case_id,
                             "classification": "EXT4C_SEMANTIC_VALIDATION_FAIL",
                             "validation_stage": "GroundedOutputEnvelope.model_validate",
-                            "errors": exc.errors(),
+                            "errors": safe_errors,
                             "request_count": 1,
                             "retry_count": 0,
                         },
@@ -280,6 +343,18 @@ def main() -> int:
             finally:
                 metadata["latency_seconds"] = round(time.monotonic() - started, 3)
                 _write_json(case_root / "run_metadata.json", metadata)
+                ledger["cases"][case_id].update(
+                    {
+                        "attempt_state": (
+                            "ATTEMPTED_COMPLETE"
+                            if metadata.get("generation_completed")
+                            else "ATTEMPTED_INCOMPLETE"
+                        ),
+                        "contract_status": metadata.get("contract_status", metadata.get("status")),
+                        "generation_completed": metadata.get("generation_completed", False),
+                    }
+                )
+                _write_json_atomic(ledger_path, ledger)
             evidence_paths[case_id] = case_root
 
         aggregate = aggregate_evidence(CASES_PATH, evidence_paths)

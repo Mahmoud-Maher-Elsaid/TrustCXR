@@ -33,6 +33,22 @@ def main() -> int:
     )
     if plan["development_case_count"] != 6 or len(plan["remaining_case_ids"]) != 5:
         raise RuntimeError("The six-case development plan is incomplete.")
+    artifact_base = ROOT / "artifacts/research_extensions/ext4e_candidate1/development_evaluation"
+    ledger = None
+    for candidate in sorted(artifact_base.glob("*"), reverse=True):
+        path = candidate / "case_attempt_ledger.json"
+        if path.is_file():
+            ledger = json.loads(path.read_text(encoding="utf-8"))
+            break
+    consumed = {"dev_supported"}
+    if ledger is not None:
+        consumed.update(ledger.get("consumed_case_ids", ()))
+    pending = [case_id for case_id in plan["remaining_case_ids"] if case_id not in consumed]
+    if "dev_supported" in pending or len(set(pending)) != len(pending):
+        raise RuntimeError("Resume set violates the one-request case policy.")
+    plan["original_remaining_case_ids"] = plan.pop("remaining_case_ids")
+    plan["consumed_case_ids"] = sorted(consumed)
+    plan["resume_pending_case_ids"] = pending
     print("EXT-4E Candidate #1 six-development-case pre-inference gate: PASS")
     print(json.dumps(plan, indent=2, sort_keys=True))
     return 0
