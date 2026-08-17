@@ -23,13 +23,14 @@ model, download weights, load a model, or perform inference.
 - Commit: `3cb7ffb`
 - Platform/backend: Windows x64, CUDA 12.4
 - Runtime asset: `llama-b10453-bin-win-cuda-12.4-x64.zip`
+- Runtime asset size: `250790655` bytes
+- Runtime asset SHA-256: `84b863f70a8b4c2873e93385d0b208f24776ecd1b946a2cb6d5cda863d143c3d`
 - CUDA runtime asset: `cudart-llama-bin-win-cuda-12.4-x64.zip`
 - CUDA runtime SHA-256: `8c79a9b226de4b3cacfd1f83d24f962d0773be79f1e7b75c6af4ded7e32ae1d6`
 
-The official release metadata identifies the pinned release, commit, and assets, but the main
-Windows CUDA runtime asset digest was not exposed during this preparation. Its value remains
-`TO_BE_RESOLVED_OFFICIAL_RELEASE_METADATA`. The bootstrap fails closed until the official digest is
-resolved; it must not substitute another release, backend, or unverified local digest.
+The official release metadata identifies the pinned release, commit, asset size, and digest. The
+bootstrap fails closed on any runtime, CUDA runtime, or model hash/size mismatch; it must not
+substitute another release, backend, or unverified artifact.
 
 ## Isolated paths
 
@@ -50,9 +51,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File `
 ```
 
 The script verifies the branch, EXT-4D fingerprints, pinned identities, and development-only
-partition before downloading. It verifies every downloaded SHA-256 and stops before any model
-inference. Because the main runtime digest is unresolved, this command currently stops before
-network download, by design.
+partition before downloading. It verifies every downloaded SHA-256 and the pinned runtime size,
+then stops before any model inference.
 
 ## Execution boundary
 

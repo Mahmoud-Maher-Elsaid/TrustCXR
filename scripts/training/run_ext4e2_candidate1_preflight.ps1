@@ -23,9 +23,8 @@ if ($config.revision -ne "6a569868d07d3bd59e8b97fb001bf8c0b254bb20") { throw "Un
 if ($config.model_sha256 -ne "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785") { throw "Unexpected model SHA-256." }
 if ($config.runtime.release -ne "b10453" -or $config.runtime.commit -ne "3cb7ffb") { throw "Unexpected llama.cpp release identity." }
 if ($config.runtime.cuda_backend -ne "CUDA_12.4") { throw "Unexpected CUDA backend." }
-if ($config.runtime.runtime_asset_sha256 -eq "TO_BE_RESOLVED_OFFICIAL_RELEASE_METADATA") {
-    throw "Official SHA-256 for the pinned llama.cpp Windows CUDA asset is unresolved."
-}
+if ($config.runtime.runtime_asset_sha256 -ne "84b863f70a8b4c2873e93385d0b208f24776ecd1b946a2cb6d5cda863d143c3d") { throw "Unexpected llama.cpp runtime SHA-256." }
+if ($config.runtime.runtime_asset_bytes -ne 250790655) { throw "Unexpected llama.cpp runtime asset size." }
 if ($Partition -ne "development") { throw "Only the EXT-4D development partition is permitted." }
 
 $ext4dConfig = (Get-FileHash (Join-Path $RepositoryRoot "configs\research_extensions\ext4d_benchmark.json") -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -61,6 +60,7 @@ function Download-And-Verify([string]$Url, [string]$Path, [string]$ExpectedSha) 
 
 Download-And-Verify $config.runtime.windows_asset_url $runtimeArchive $config.runtime.runtime_asset_sha256
 Download-And-Verify $config.runtime.cuda_runtime_asset_url $cudaArchive $config.runtime.cuda_runtime_asset_sha256
+if ((Get-Item -LiteralPath $runtimeArchive).Length -ne $config.runtime.runtime_asset_bytes) { throw "Runtime asset byte size mismatch." }
 Expand-Archive -LiteralPath $runtimeArchive -DestinationPath $runtimeRoot -Force
 Expand-Archive -LiteralPath $cudaArchive -DestinationPath $runtimeRoot -Force
 

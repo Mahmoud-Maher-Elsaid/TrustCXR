@@ -16,7 +16,7 @@ def _config():
     )
 
 
-def test_candidate_identity_and_unresolved_execution_gates():
+def test_candidate_identity_and_execution_gates():
     config = _config()
     assert config["model_repository"] == "Qwen/Qwen3-8B-GGUF"
     assert config["quantization"] == "Q4_K_M"
@@ -54,7 +54,11 @@ def test_runtime_and_execution_order_fail_closed_before_download():
     assert config["runtime"]["release"] == "b10453"
     assert config["runtime"]["commit"] == "3cb7ffb"
     assert config["runtime"]["cuda_backend"] == "CUDA_12.4"
-    assert config["runtime"]["runtime_asset_sha256"] == "TO_BE_RESOLVED_OFFICIAL_RELEASE_METADATA"
+    assert (
+        config["runtime"]["runtime_asset_sha256"]
+        == "84b863f70a8b4c2873e93385d0b208f24776ecd1b946a2cb6d5cda863d143c3d"
+    )
+    assert config["runtime"]["runtime_asset_bytes"] == 250790655
     assert (
         config["runtime"]["cuda_runtime_asset_sha256"]
         == "8c79a9b226de4b3cacfd1f83d24f962d0773be79f1e7b75c6af4ded7e32ae1d6"
