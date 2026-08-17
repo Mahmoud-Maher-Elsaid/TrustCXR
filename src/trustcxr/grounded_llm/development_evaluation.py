@@ -47,6 +47,17 @@ def load_development_cases(path: Path) -> tuple[tuple[dict[str, Any], ...], int]
     return development, final_count
 
 
+def scoring_case(case: dict[str, Any]) -> dict[str, Any]:
+    """Add only deterministic development scoring defaults; never alter fixture data."""
+
+    result = dict(case)
+    if case.get("grounding_kind") == "defer":
+        result["expected_statuses"] = ["DEFERRED", "ABSTAINED"]
+    else:
+        result["expected_statuses"] = ["COMPLETED"]
+    return result
+
+
 def validate_frozen_identity(config: dict[str, Any]) -> None:
     expected = {
         "model_sha256": EXPECTED_MODEL_SHA256,
@@ -150,7 +161,7 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
         if metadata.get("case_id") != case_id or metadata.get("retry_count") != 0:
             raise DevelopmentEvaluationContractFailure("Case evidence violates execution policy.")
         candidates[case_id] = json.loads((root / "parsed_output.json").read_text(encoding="utf-8"))
-    result = score_benchmark(development, candidates)
+    result = score_benchmark([scoring_case(case) for case in development], candidates)
     return {
         "total_cases": len(development),
         "previously_executed": 1,

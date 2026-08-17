@@ -9,6 +9,7 @@ from trustcxr.grounded_llm.development_evaluation import (
     DevelopmentEvaluationContractFailure,
     build_evaluation_plan,
     load_development_cases,
+    scoring_case,
 )
 
 ROOT = Path(__file__).parents[2]
@@ -68,3 +69,10 @@ def test_duplicate_case_ids_fail_closed(tmp_path):
     mutated.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(DevelopmentEvaluationContractFailure):
         load_development_cases(mutated)
+
+
+def test_defer_scoring_policy_is_explicit_without_mutating_fixture():
+    development, _ = load_development_cases(CASES)
+    defer_case = next(case for case in development if case["case_id"] == "dev_defer")
+    assert "expected_statuses" not in defer_case
+    assert scoring_case(defer_case)["expected_statuses"] == ["DEFERRED", "ABSTAINED"]
