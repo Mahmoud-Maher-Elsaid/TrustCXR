@@ -47,9 +47,9 @@ def test_server_and_generation_policy_are_frozen():
         "parallel_slots": 1,
         "gpu_layers": 999,
         "reasoning": "off",
-        "prefill_assistant": False,
         "readiness_endpoint": "/health",
-        "json_schema_option": "--json-schema-file",
+        "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_SCHEMA",
+        "request_reasoning_effort": "none",
     }
     assert config["server"]["gpu_layers"] == 999
     assert generation["temperature"] == 0.0
@@ -90,8 +90,9 @@ def test_prompt_hash_and_non_thinking_safety_are_frozen():
     )
     assert "prompt_sha256" in script
     assert '"--reasoning",\n        "off"' in script
-    assert '"--no-prefill-assistant"' in script
-    assert "chat-template-kwargs" not in script
+    assert '"response_format"' in script
+    assert '"type": "json_schema"' in script
+    assert '"reasoning_effort"' in script
     assert "reasoning_content" in script
     assert "raw_response.json" in script
 
@@ -114,6 +115,9 @@ def test_request_error_evidence_and_single_constraint_path_are_required():
     assert '"http_error.json"' in script
     assert '"retry_count": 0' in script
     assert '"generation_completed": generation_completed' in script
-    assert '"response_format"' not in script
-    assert '"json_schema"' not in script
-    assert '"grammar"' not in script
+    assert '"--json-schema-file"' not in script
+    assert '"--json-schema"' not in script
+    assert '"--grammar"' not in script
+    assert '"--grammar-file"' not in script
+    assert '"json_schema":' not in script
+    assert '"grammar":' not in script

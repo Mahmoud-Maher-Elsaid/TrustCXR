@@ -138,9 +138,6 @@ def main() -> int:
         "1",
         "--reasoning",
         "off",
-        "--no-prefill-assistant",
-        "--json-schema-file",
-        str(schema_path),
     ]
     started = time.monotonic()
     process = subprocess.Popen(server_args, stdout=log_path.open("w"), stderr=subprocess.STDOUT)
@@ -166,6 +163,7 @@ def main() -> int:
             raise RuntimeError("llama-server readiness timeout.")
 
         output_payload = {
+            "model": config["model_filename"],
             "messages": [
                 {"role": "system", "content": prompt_bytes.decode("utf-8")},
                 {"role": "user", "content": json.dumps(input_payload, sort_keys=True)},
@@ -175,6 +173,11 @@ def main() -> int:
             "seed": 20260806,
             "max_tokens": 768,
             "stream": False,
+            "reasoning_effort": config["request_reasoning_effort"],
+            "response_format": {
+                "type": "json_schema",
+                "schema": GroundedOutputEnvelope.model_json_schema(),
+            },
         }
         request_count = 1
         raw_response = request_json(

@@ -21,9 +21,9 @@
     "parallel_slots": 1,
     "gpu_layers": 999,
     "reasoning": "off",
-    "prefill_assistant": false,
     "readiness_endpoint": "/health",
-    "json_schema_option": "--json-schema-file"
+    "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_SCHEMA",
+    "request_reasoning_effort": "none"
   },
   "generation": {
     "temperature": 0.0,
