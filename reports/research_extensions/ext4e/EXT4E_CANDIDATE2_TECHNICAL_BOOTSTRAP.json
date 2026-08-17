@@ -13,6 +13,7 @@
   "preflight_mode": "AVAILABLE_AS_RUN_EXT4E_CANDIDATE2_PS1_PREFLIGHTONLY",
   "gpu_load_status": "NOT_EXECUTED_IN_CODEX_ENVIRONMENT",
   "gpu_load_blocker": "No GPU execution performed in Codex; runtime startup remains a local gated step.",
+  "latest_gpu_load_failure": {"classification": "INVALID_SERVER_ARGUMENT", "evidence": "b8233 llama_server.log reported invalid argument: --cors-origins", "repair": "Removed unsupported --cors-origins flag and added process-exit classification before readiness timeout."},
   "synthetic_structured_output_status": "NOT_EXECUTED",
   "development_evaluation_status": "NOT_EXECUTED",
   "final_cases_accessed": 0,
