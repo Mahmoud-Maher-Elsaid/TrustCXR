@@ -10,6 +10,10 @@ $python = Join-Path $repo '.venv\Scripts\python.exe'
 if (-not (Test-Path -LiteralPath $python)) {
     throw "PYTHON_ENVIRONMENT_UNAVAILABLE: $python"
 }
+$pythonProbe = & $python --version 2>&1
+if ($LASTEXITCODE -ne 0) {
+    throw "PYTHON_ENVIRONMENT_UNAVAILABLE: $python ($pythonProbe)"
+}
 $pythonArgs = @()
 if ($PreflightOnly) { $pythonArgs += '--preflight-only' }
 & $python (Join-Path $repo 'scripts\training\bootstrap_ext4e_candidate2.py') @pythonArgs
