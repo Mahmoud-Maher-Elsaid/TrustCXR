@@ -26,7 +26,11 @@ def test_roadmap_records_current_extension_lifecycle_and_boundaries() -> None:
         in roadmap
     )
     assert (
-        "Next authorized stage:** `EXT-4E MODEL / PROVIDER SELECTION AND BASELINE EXECUTION`"
+        "EXT-4E2D0 Structured Output Compatibility Smoke:** `TECHNICAL_"
+        "COMPATIBILITY_SMOKE_PREPARED`" in roadmap
+    )
+    assert (
+        "Next authorized stage:** `EXT-4E2D0 LOCAL SYNTHETIC STRUCTURED-OUTPUT COMPATIBILITY CHECK`"
         in roadmap
     )
     assert "True pathology localization follow-on experiments:** `CLOSED" in roadmap
