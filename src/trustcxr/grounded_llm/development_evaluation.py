@@ -163,10 +163,30 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
             return {
                 "case_id": case_id,
                 "retry_count": failure.get("retry_count"),
+                "inference_request_count": failure.get("request_count", 0),
                 "generation_completed": failure.get("generation_completed"),
                 "response_parse_valid": True,
+                "attempt_state": "ATTEMPTED_COMPLETE",
             }
         raise DevelopmentEvaluationContractFailure("Case evidence metadata is missing.")
+
+    def evidence_is_complete(root: Path) -> bool:
+        required = (
+            "input_envelope.json",
+            "ext4c_output_schema.json",
+            "request.json",
+            "raw_http_response.json",
+            "raw_model_content.txt",
+            "validation_error.json",
+        )
+        if not all((root / name).is_file() for name in required):
+            return False
+        failure_path = root / "validation_error.json"
+        if failure_path.is_file():
+            failure = json.loads(failure_path.read_text(encoding="utf-8"))
+            if failure.get("evidence_complete") is False:
+                return False
+        return True
 
     for case in development:
         case_id = case["case_id"]
@@ -203,6 +223,10 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
         failure = root / "validation_error.json"
         if not failure.is_file() or metadata.get("generation_completed") is not True:
             raise DevelopmentEvaluationContractFailure("Invalid case evidence is incomplete.")
+        request_count = metadata.get("inference_request_count", 0)
+        attempt_state = metadata.get("attempt_state", "ATTEMPTED_COMPLETE")
+        if not evidence_is_complete(root):
+            attempt_state = "ATTEMPTED_INCOMPLETE"
         results.append(
             {
                 "case_id": case_id,
@@ -216,12 +240,10 @@ def aggregate_evidence(cases_path: Path, evidence_paths: dict[str, Path]) -> dic
                 "validation_error": json.loads(failure.read_text(encoding="utf-8")),
                 "evidence_path": str(root),
                 "attempt_state": (
-                    "HISTORICAL_REUSED"
-                    if case_id == "dev_supported"
-                    else metadata.get("attempt_state", "ATTEMPTED_INCOMPLETE")
+                    "HISTORICAL_REUSED" if case_id == "dev_supported" else attempt_state
                 ),
-                "request_attempted": metadata.get("inference_request_count", 0) == 1,
-                "request_count": metadata.get("inference_request_count", 0),
+                "request_attempted": request_count == 1,
+                "request_count": request_count,
                 "generation_completed": metadata.get("generation_completed", False),
                 "parse_valid": metadata.get("response_parse_valid", True),
                 "ext4c_valid": False,

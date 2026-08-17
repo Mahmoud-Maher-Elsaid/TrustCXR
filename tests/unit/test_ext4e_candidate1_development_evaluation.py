@@ -20,6 +20,32 @@ ROOT = Path(__file__).parents[2]
 CASES = ROOT / "tests/fixtures/ext4d_benchmark_cases.json"
 CONFIG = ROOT / "configs/research_extensions/ext4e2d_candidate1_dev_smoke.json"
 EVIDENCE = ROOT / "artifacts/research_extensions/ext4e2_candidate1/dev_case_smoke"
+CLOSURE = ROOT / "reports/research_extensions/ext4e/EXT4E_CANDIDATE1_DEVELOPMENT_CLOSURE.json"
+
+
+def test_candidate_one_closure_and_candidate_two_transition_are_explicit():
+    closure = json.loads(CLOSURE.read_text(encoding="utf-8"))
+    assert closure["result"] == "DEVELOPMENT_GATE_FAILED"
+    assert closure["candidate_decision"] == "NOT_SCIENTIFICALLY_SELECTED"
+    assert closure["frozen_final_evaluation"] == "NOT_AUTHORIZED"
+    assert closure["next_stage"] == "CANDIDATE_2_IDENTITY_AND_RUNTIME_BOOTSTRAP"
+    assert closure["candidate_2"] == "Ministral-3-8B-Instruct-2512"
+
+
+def test_defer_request_state_and_evidence_completeness_are_separate():
+    closure = json.loads(CLOSURE.read_text(encoding="utf-8"))
+    defer = closure["canonical_corrections"]["dev_defer"]
+    assert defer["request_attempted"] is True
+    assert defer["request_count"] == 1
+    assert defer["generation_completed"] is True
+    assert defer["evidence_completeness"] == "ATTEMPTED_INCOMPLETE"
+    assert closure["metrics"]["ext4c_invalid_count"] == 4
+    assert closure["metrics"]["incomplete_evidence_count"] == 1
+
+
+def test_scorer_not_executed_cases_do_not_receive_fake_zero_violations():
+    closure = json.loads(CLOSURE.read_text(encoding="utf-8"))
+    assert "null/not applicable" in closure["scoring_interpretation"]
 
 
 def test_six_case_partition_and_historical_reuse_are_frozen():
