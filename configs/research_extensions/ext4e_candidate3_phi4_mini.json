@@ -1,0 +1,84 @@
+{
+  "schema_id": "EXT4E_CANDIDATE3_IDENTITY_AND_RUNTIME",
+  "schema_version": "1",
+  "candidate_id": 3,
+  "model_family": "Phi-4-mini",
+  "model_variant": "Phi-4-mini-instruct",
+  "publisher": "Microsoft",
+  "repository": "microsoft/Phi-4-mini-instruct",
+  "resolved_revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+  "format": "safetensors",
+  "quantization": "none",
+  "license": "MIT",
+  "architecture": "Phi3ForCausalLM",
+  "text_only": true,
+  "context_length": 131072,
+  "artifacts": [
+    {
+      "filename": "model-00001-of-00002.safetensors",
+      "sha256": "bc703090b63eda16f639fa4de7ac54635c23105ab1da2f6ec4d3403151d38ee6",
+      "size_bytes": null,
+      "size_status": "REQUIRES_LOCAL_DOWNLOAD_VERIFICATION"
+    },
+    {
+      "filename": "model-00002-of-00002.safetensors",
+      "sha256": "7ff79b9d2d31076bac2663393451f6530f4fc8ca49b09002116c92c373dba983",
+      "size_bytes": null,
+      "size_status": "REQUIRES_LOCAL_DOWNLOAD_VERIFICATION"
+    },
+    {
+      "filename": "model.safetensors.index.json",
+      "sha256": null,
+      "size_bytes": null,
+      "size_status": "REQUIRES_LOCAL_DOWNLOAD_VERIFICATION"
+    }
+  ],
+  "runtime": {
+    "kind": "transformers",
+    "transformers_version": "4.57.6",
+    "torch_version": "2.12.1+cu130",
+    "trust_remote_code": true,
+    "reason": "Official config declares Phi3ForCausalLM; installed Transformers exposes Phi3ForCausalLM. llama.cpp compatibility is not assumed."
+  },
+  "server": {
+    "host": "127.0.0.1",
+    "port": 18082,
+    "context_size": 2048,
+    "parallel": 1,
+    "gpu_policy": "EXPLICIT_LOAD_ONLY_GATE_REQUIRED"
+  },
+  "generation": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "seed": 20260806,
+    "max_tokens": 768,
+    "stream": false,
+    "request_count": 1,
+    "retry_count": 0,
+    "free_form_fallback": false
+  },
+  "structured_output": {
+    "mechanism": "TRANSFORMERS_RUNTIME_REQUEST_PATH_UNPROVEN",
+    "response_format": "MUST_BE_PROVEN_BEFORE_SMOKE",
+    "schema": "GroundedOutputEnvelope.model_json_schema()"
+  },
+  "partitions": {
+    "development_case_ids": [
+      "dev_supported",
+      "dev_uncertainty",
+      "dev_defer",
+      "dev_withheld",
+      "dev_missing",
+      "dev_conflict"
+    ],
+    "development_cases_accessed": 0,
+    "final_cases_accessed": 0,
+    "locked_test_accessed": false
+  },
+  "download": {
+    "required": true,
+    "source": "https://huggingface.co/microsoft/Phi-4-mini-instruct/tree/cfbefacb99257ffa30c83adab238a50856ac3083",
+    "destination": "cache/research_extensions/ext4e_candidate3/models",
+    "status": "NOT_DOWNLOADED_IN_CODEX"
+  }
+}

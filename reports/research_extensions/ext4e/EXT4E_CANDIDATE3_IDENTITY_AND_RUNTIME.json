@@ -1,0 +1,34 @@
+{
+  "schema_id": "EXT4E_CANDIDATE3_IDENTITY_AND_RUNTIME",
+  "schema_version": "1",
+  "candidate_id": 3,
+  "model_family": "Phi-4-mini",
+  "model_variant": "Phi-4-mini-instruct",
+  "publisher": "Microsoft",
+  "repository": "microsoft/Phi-4-mini-instruct",
+  "resolved_revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+  "source": "https://huggingface.co/microsoft/Phi-4-mini-instruct/tree/cfbefacb99257ffa30c83adab238a50856ac3083",
+  "format": "safetensors",
+  "quantization": "none",
+  "license": "MIT",
+  "artifact_sha256s": {
+    "model-00001-of-00002.safetensors": "bc703090b63eda16f639fa4de7ac54635c23105ab1da2f6ec4d3403151d38ee6",
+    "model-00002-of-00002.safetensors": "7ff79b9d2d31076bac2663393451f6530f4fc8ca49b09002116c92c373dba983"
+  },
+  "artifact_sizes": "NOT_YET_LOCALLY_VERIFIED",
+  "runtime": {
+    "kind": "transformers",
+    "transformers_version": "4.57.6",
+    "torch_version": "2.12.1+cu130",
+    "architecture": "Phi3ForCausalLM",
+    "reason": "Official Phi-4 config identifies Phi3ForCausalLM; local Transformers exposes that class."
+  },
+  "download_required": true,
+  "model_path": "cache/research_extensions/ext4e_candidate3/models",
+  "structured_output_status": "UNPROVEN_PENDING_LOCAL_RUNTIME_BOOTSTRAP",
+  "development_cases_accessed": 0,
+  "final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "inference_requests": 0,
+  "next_action": "DOWNLOAD_OFFICIAL_ARTIFACTS_AND_RUN_IDENTITY_PREFLIGHT"
+}
