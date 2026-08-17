@@ -12,6 +12,7 @@
   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
   "runtime_release": "b10453",
   "runtime_commit_prefix": "3cb7ffb",
+  "request_reasoning_effort": "none",
   "context_size": 2048,
   "server": {
     "host": "127.0.0.1",
@@ -22,8 +23,7 @@
     "gpu_layers": 999,
     "reasoning": "off",
     "readiness_endpoint": "/health",
-    "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA",
-    "request_reasoning_effort": "none"
+    "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA"
   },
   "generation": {
     "temperature": 0.0,

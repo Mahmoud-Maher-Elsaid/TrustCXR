@@ -73,6 +73,79 @@ class ResponseProcessingFailure(ValueError):
         super().__init__(message)
 
 
+class ConfigContractFailure(RuntimeError):
+    """A missing or contradictory pre-request execution configuration field."""
+
+
+class RequestConstructionFailure(RuntimeError):
+    """A failure while constructing the single governed HTTP request."""
+
+
+def validate_config(config: dict) -> None:
+    required_top_level = (
+        "partition",
+        "case_id",
+        "case_category",
+        "model_repository",
+        "model_revision",
+        "model_filename",
+        "model_sha256",
+        "runtime_release",
+        "runtime_commit_prefix",
+        "request_reasoning_effort",
+        "structured_output_mechanism",
+    )
+    required_server = ("host", "port", "parallel_slots", "gpu_layers", "reasoning")
+    required_generation = (
+        "request_count",
+        "retry_count",
+        "temperature",
+        "top_p",
+        "seed",
+        "max_tokens",
+        "stream",
+    )
+    missing = [key for key in required_top_level if key not in config]
+    missing.extend(
+        f"server.{key}" for key in required_server if key not in config.get("server", {})
+    )
+    missing.extend(
+        f"generation.{key}"
+        for key in required_generation
+        if key not in config.get("generation", {})
+    )
+    if missing:
+        raise ConfigContractFailure(
+            f"Missing required EXT-4E2D config fields: {', '.join(missing)}"
+        )
+    if config["request_reasoning_effort"] != "none":
+        raise ConfigContractFailure("request_reasoning_effort must be exactly 'none'.")
+    if config["structured_output_mechanism"] != "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA":
+        raise ConfigContractFailure("Unexpected structured-output mechanism.")
+    if config["generation"]["request_count"] != 1 or config["generation"]["retry_count"] != 0:
+        raise ConfigContractFailure("EXT-4E2D requires exactly one request and zero retries.")
+
+
+def build_request_payload(config: dict, prompt: str, input_payload: dict, schema: dict) -> dict:
+    try:
+        return {
+            "model": config["model_filename"],
+            "messages": [
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": json.dumps(input_payload, sort_keys=True)},
+            ],
+            "temperature": config["generation"]["temperature"],
+            "top_p": config["generation"]["top_p"],
+            "seed": config["generation"]["seed"],
+            "max_tokens": config["generation"]["max_tokens"],
+            "stream": config["generation"]["stream"],
+            "reasoning_effort": config["request_reasoning_effort"],
+            "response_format": {"type": "json_object", "schema": schema},
+        }
+    except (KeyError, TypeError) as exc:
+        raise RequestConstructionFailure("Unable to construct governed request payload.") from exc
+
+
 def extract_model_content(raw_response: bytes) -> tuple[dict, str, dict]:
     try:
         response = json.loads(raw_response)
@@ -118,6 +191,7 @@ def request_json(url: str, payload: dict, timeout: int) -> bytes:
 
 def main() -> int:
     config = load_json(ROOT / "configs/research_extensions/ext4e2d_candidate1_dev_smoke.json")
+    validate_config(config)
     prompt_path = ROOT / config["prompt_template"]
     prompt_bytes = prompt_path.read_bytes()
     if sha256_bytes(prompt_bytes) != config["prompt_sha256"]:
@@ -199,23 +273,12 @@ def main() -> int:
             status = "MODEL_TIMEOUT"
             raise RuntimeError("llama-server readiness timeout.")
 
-        output_payload = {
-            "model": config["model_filename"],
-            "messages": [
-                {"role": "system", "content": prompt_bytes.decode("utf-8")},
-                {"role": "user", "content": json.dumps(input_payload, sort_keys=True)},
-            ],
-            "temperature": 0.0,
-            "top_p": 1.0,
-            "seed": 20260806,
-            "max_tokens": 768,
-            "stream": False,
-            "reasoning_effort": config["request_reasoning_effort"],
-            "response_format": {
-                "type": "json_object",
-                "schema": GroundedOutputEnvelope.model_json_schema(),
-            },
-        }
+        output_payload = build_request_payload(
+            config,
+            prompt_bytes.decode("utf-8"),
+            input_payload,
+            GroundedOutputEnvelope.model_json_schema(),
+        )
         request_count = 1
         raw_response = request_json(
             "http://127.0.0.1:18080/v1/chat/completions", output_payload, 180
@@ -263,6 +326,9 @@ def main() -> int:
         raise RuntimeError(
             f"HTTP request failed with {exc.status_code} {exc.reason}; response body preserved."
         ) from exc
+    except RequestConstructionFailure as exc:
+        status = "REQUEST_CONSTRUCTION_FAILURE"
+        raise RuntimeError(str(exc)) from exc
     except ResponseProcessingFailure as exc:
         status = exc.status
         raise RuntimeError(str(exc)) from exc

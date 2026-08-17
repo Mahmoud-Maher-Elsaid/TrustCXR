@@ -1,7 +1,10 @@
 """EXT-4E2D single development-case inference preparation tests."""
 
+import importlib.util
 import json
 from pathlib import Path
+
+import pytest
 
 ROOT = Path(__file__).parents[2]
 
@@ -18,6 +21,15 @@ def _script():
 
 def _powershell():
     return (ROOT / "scripts" / "training" / "run_ext4e2_candidate1_dev_smoke.ps1").read_text()
+
+
+def _runner():
+    path = ROOT / "scripts/training/run_ext4e2_candidate1_dev_smoke.py"
+    spec = importlib.util.spec_from_file_location("ext4e2d_runner", path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_exact_predefined_development_case_is_frozen():
@@ -49,8 +61,8 @@ def test_server_and_generation_policy_are_frozen():
         "reasoning": "off",
         "readiness_endpoint": "/health",
         "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA",
-        "request_reasoning_effort": "none",
     }
+    assert config["request_reasoning_effort"] == "none"
     assert config["server"]["gpu_layers"] == 999
     assert generation["temperature"] == 0.0
     assert generation["top_p"] == 1.0
@@ -107,6 +119,17 @@ def test_no_image_or_external_execution_path_is_present():
     assert "urllib.request.urlopen" in script
     assert "http://127.0.0.1" in script
     assert "process.terminate()" in script
+
+
+def test_config_preflight_requires_request_reasoning_effort_without_fallback():
+    runner = _runner()
+    config = _config()
+    assert config["request_reasoning_effort"] == "none"
+    runner.validate_config(config)
+    missing = dict(config)
+    del missing["request_reasoning_effort"]
+    with pytest.raises(runner.ConfigContractFailure):
+        runner.validate_config(missing)
 
 
 def test_request_error_evidence_and_single_constraint_path_are_required():

@@ -1,0 +1,19 @@
+{
+  "schema_id": "EXT4E2D_REQUEST_CONFIG_CONTRACT_REPAIR",
+  "schema_version": "1",
+  "classification": "PRE_REQUEST_CONFIG_CONTRACT_FAILURE",
+  "run_id": "20260817T082958Z",
+  "historical_evidence_preserved": true,
+  "request_attempted": false,
+  "request_count": 0,
+  "generation_started": false,
+  "generation_completed": false,
+  "server_received_completion_task": false,
+  "server_cleanup_confirmed": true,
+  "development_cases_scientifically_executed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "root_cause": "The runner required top-level request_reasoning_effort, while the config stored it only under server.",
+  "repair": "Require top-level request_reasoning_effort = none during preflight; do not provide a fallback.",
+  "historical_status_note": "The original run summary status was retained unchanged; its request count and server log establish that no completion request was sent."
+}
