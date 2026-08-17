@@ -26,11 +26,12 @@ def test_roadmap_records_current_extension_lifecycle_and_boundaries() -> None:
         in roadmap
     )
     assert (
-        "EXT-4E2D0 Structured Output Compatibility Smoke:** `TECHNICAL_"
-        "COMPATIBILITY_SMOKE_PREPARED`" in roadmap
+        "EXT-4E2D0 Structured Output Compatibility Smoke:** `CLOSED / PASS — "
+        "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA_VERIFIED`" in roadmap
     )
+    assert "Structured-output compatibility:** `VERIFIED`" in roadmap
     assert (
-        "Next authorized stage:** `EXT-4E2D0 LOCAL SYNTHETIC STRUCTURED-OUTPUT COMPATIBILITY CHECK`"
+        "Next authorized stage:** `EXT-4E2D CANDIDATE #1 SINGLE DEVELOPMENT-CASE EXECUTION`"
         in roadmap
     )
     assert "True pathology localization follow-on experiments:** `CLOSED" in roadmap
