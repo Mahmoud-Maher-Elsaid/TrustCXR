@@ -14,8 +14,9 @@
 **EXT-4D Hallucination / Faithfulness Benchmark:** `COMPLETED — FROZEN BENCHMARK DEFINITION ONLY`
 **EXT-4E Model Selection Protocol:** `MODEL_SELECTION_PROTOCOL_PREPARED`
 **EXT-4E2B Qwen Runtime/Model Identity:** `RUNTIME_AND_MODEL_IDENTITY_FROZEN`
+**EXT-4E2C Qwen Load-Only GPU Smoke:** `LOAD_ONLY_GPU_SMOKE_PREPARED`
 **Next authorized stage:** `EXT-4E MODEL / PROVIDER SELECTION AND BASELINE EXECUTION` (protocol prepared; execution not started)
-**Next local execution step:** `LOCAL DEVELOPMENT CANDIDATE EXECUTION`
+**Next local execution step:** `LOCAL LOAD-ONLY GPU SMOKE`
 **True pathology localization follow-on experiments:** `CLOSED — NO EXT-3B/EXT-3C OR ADDITIONAL LOCALIZATION TRAINING`
 **Grounded LLM reporting:** `NOT STARTED`
 **Multimodal VLM:** `NOT STARTED`
