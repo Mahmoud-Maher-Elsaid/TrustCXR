@@ -89,7 +89,7 @@ def validate_tokenizer_and_template() -> dict:
 def structured_output_preflight() -> dict:
     """Require an installed constrained-decoding mechanism; no fallback is allowed."""
     available = []
-    for name in ("lmformatenforcer",):
+    for name in ("outlines", "outlines_core"):
         try:
             importlib.import_module(name)
             available.append(name)
@@ -101,13 +101,15 @@ def structured_output_preflight() -> dict:
             "available_constrained_decoding": [],
             "reason": (
                 "Direct Transformers generation does not enforce JSON Schema; "
-                "no governed constrained-decoding dependency is installed."
+                "Outlines 1.3.3 and outlines-core 0.2.14 are not installed."
             ),
         }
     return {
         "status": "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_REQUIRES_ADAPTER_PROOF",
         "available_constrained_decoding": available,
-        "reason": "A dependency exists but no Candidate #3 adapter has been proven yet.",
+        "reason": (
+            "Outlines dependencies exist but the exact Candidate #3 adapter still requires proof."
+        ),
     }
 
 

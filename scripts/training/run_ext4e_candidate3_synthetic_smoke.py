@@ -146,7 +146,7 @@ def main() -> int:
             top_p=1.0,
             do_sample=False,
             pad_token_id=tokenizer.eos_token_id,
-            prefix_allowed_tokens_fn=constraint.prefix_allowed_tokens_fn,
+            logits_processor=[constraint.logits_processor],
         )
         record["generate_call_count"] = 1
         record["generation_completed"] = True
@@ -171,8 +171,8 @@ def main() -> int:
     except Candidate3StructuredOutputError as exc:
         record.update(
             technical_status=(
-                "CANDIDATE3_LMFE_SCHEMA_INCOMPATIBLE"
-                if "SCHEMA_OR_TOKENIZER" in str(exc)
+                "CANDIDATE3_OUTLINES_SCHEMA_SEMANTICS_INCOMPATIBLE"
+                if "SEMANTICS_INCOMPATIBLE" in str(exc)
                 else "CANDIDATE3_SYNTHETIC_GENERATION_FAILURE"
             ),
             validation_failure=f"{type(exc).__name__}: {exc}",

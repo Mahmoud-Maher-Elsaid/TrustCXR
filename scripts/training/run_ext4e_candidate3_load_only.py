@@ -77,9 +77,13 @@ def validate_identity(config: dict[str, Any]) -> dict[str, Any]:
         if record["size_bytes"] != artifact["size_bytes"] or record["sha256"] != artifact["sha256"]:
             raise RuntimeError("CANDIDATE3_WEIGHT_IDENTITY_MISMATCH")
         records.append(record)
-    lmfe_version = importlib.metadata.version("lm-format-enforcer")
-    if lmfe_version != "0.11.3":
-        raise RuntimeError("CANDIDATE3_LMFE_VERSION_MISMATCH")
+    try:
+        outlines_version = importlib.metadata.version("outlines")
+        core_version = importlib.metadata.version("outlines-core")
+    except importlib.metadata.PackageNotFoundError as exc:
+        raise RuntimeError("CANDIDATE3_OUTLINES_NOT_INSTALLED") from exc
+    if outlines_version != "1.3.3" or core_version != "0.2.14":
+        raise RuntimeError("CANDIDATE3_OUTLINES_VERSION_MISMATCH")
     if config["partitions"] != {
         "development_case_ids": config["partitions"]["development_case_ids"],
         "development_cases_accessed": 0,
@@ -87,7 +91,11 @@ def validate_identity(config: dict[str, Any]) -> dict[str, Any]:
         "locked_test_accessed": False,
     }:
         raise RuntimeError("CANDIDATE3_PARTITION_ACCESS_FORBIDDEN")
-    return {"artifacts": records, "lmfe_version": lmfe_version}
+    return {
+        "artifacts": records,
+        "outlines_version": outlines_version,
+        "outlines_core_version": core_version,
+    }
 
 
 def load_model_only() -> tuple[Any, dict[str, Any]]:

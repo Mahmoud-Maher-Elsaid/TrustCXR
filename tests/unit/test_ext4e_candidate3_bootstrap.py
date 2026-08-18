@@ -5,7 +5,8 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
-from types import SimpleNamespace
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -64,14 +65,14 @@ def test_candidate3_request_builder_preserves_schema_without_reasoning_fallback(
     assert "retry_count" not in payload
 
 
-def test_candidate3_structured_output_backend_detection_is_lmfe_only():
+def test_candidate3_structured_output_backend_is_outlines_only():
     module = _module()
     result = module.structured_output_preflight()
     assert result["status"] in {
         "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_REQUIRES_ADAPTER_PROOF",
         "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_NOT_YET_ESTABLISHED",
     }
-    assert result["available_constrained_decoding"] in ([], ["lmformatenforcer"])
+    assert result["available_constrained_decoding"] in ([], ["outlines"])
 
 
 def test_candidate3_exact_schema_identity_is_stable():
@@ -87,36 +88,25 @@ def test_candidate3_exact_schema_identity_is_stable():
     )
 
 
-def test_candidate3_lmfe_adapter_compiles_exact_schema_and_builds_prefix_fn():
+def test_candidate3_outlines_adapter_is_fail_closed_without_backend():
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
+        Candidate3StructuredOutputError,
         build_candidate3_prefix_allowed_tokens_fn,
-        governed_schema,
     )
 
-    calls = {}
-
-    class FakeParser:
-        def __init__(self, schema):
-            calls["schema"] = schema
-
-    fake_lmfe = SimpleNamespace(__version__="0.11.3", JsonSchemaParser=FakeParser)
-
-    def prefix_builder(tokenizer, parser):
-        return lambda input_ids, batch_id: (tokenizer, parser, input_ids, batch_id)
-
-    fake_integrations = SimpleNamespace(build_transformers_prefix_allowed_tokens_fn=prefix_builder)
-    result = build_candidate3_prefix_allowed_tokens_fn(
-        "tokenizer",
-        lmfe_module=fake_lmfe,
-        integration_module=fake_integrations,
-    )
-    assert result.backend == "lm-format-enforcer"
-    assert result.backend_version == "0.11.3"
-    assert callable(result.prefix_allowed_tokens_fn)
-    assert calls["schema"] == governed_schema()
+    try:
+        build_candidate3_prefix_allowed_tokens_fn("tokenizer")
+    except Candidate3StructuredOutputError as exc:
+        assert str(exc) in {
+            "CANDIDATE3_OUTLINES_NOT_INSTALLED",
+            "CANDIDATE3_OUTLINES_SCHEMA_SEMANTICS_INCOMPATIBLE",
+            "CANDIDATE3_OUTLINES_SCHEMA_OR_TOKENIZER_COMPILATION_FAILED",
+        }
+    else:
+        raise AssertionError("backend must not be assumed installed")
 
 
-def test_candidate3_lmfe_adapter_fails_closed_on_missing_backend(monkeypatch):
+def test_candidate3_outlines_adapter_fails_closed_on_missing_backend(monkeypatch):
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
         Candidate3StructuredOutputError,
         build_candidate3_prefix_allowed_tokens_fn,
@@ -126,7 +116,7 @@ def test_candidate3_lmfe_adapter_fails_closed_on_missing_backend(monkeypatch):
     original_import = module.importlib.import_module
 
     def missing(name):
-        if name == "lmformatenforcer":
+        if name == "outlines":
             raise ImportError("missing")
         return original_import(name)
 
@@ -134,7 +124,7 @@ def test_candidate3_lmfe_adapter_fails_closed_on_missing_backend(monkeypatch):
     try:
         build_candidate3_prefix_allowed_tokens_fn("tokenizer")
     except Candidate3StructuredOutputError as exc:
-        assert str(exc) == "CANDIDATE3_STRUCTURED_OUTPUT_BACKEND_UNAVAILABLE"
+        assert str(exc) == "CANDIDATE3_OUTLINES_NOT_INSTALLED"
     else:
         raise AssertionError("missing LMFE must fail closed")
 
@@ -153,45 +143,36 @@ def test_candidate3_load_only_strategy_is_explicit_and_generation_free():
     assert strategy["forward_pass"] is False
 
 
-def test_candidate3_lmfe_schema_failure_fails_closed_without_generation():
+def test_candidate3_outlines_schema_failure_fails_closed_without_generation():
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
         Candidate3StructuredOutputError,
         build_candidate3_prefix_allowed_tokens_fn,
     )
 
-    class RejectingParser:
-        def __init__(self, schema):
-            raise ValueError("pattern with min/max unsupported")
-
-    fake_lmfe = SimpleNamespace(__version__="0.11.3", JsonSchemaParser=RejectingParser)
-    try:
-        build_candidate3_prefix_allowed_tokens_fn(
-            "tokenizer", lmfe_module=fake_lmfe, integration_module=SimpleNamespace()
-        )
-    except Candidate3StructuredOutputError as exc:
-        assert str(exc) == "CANDIDATE3_LMFE_SCHEMA_OR_TOKENIZER_COMPILATION_FAILED"
-    else:
-        raise AssertionError("schema compilation failure must fail closed")
+    with pytest.raises(Candidate3StructuredOutputError):
+        build_candidate3_prefix_allowed_tokens_fn("tokenizer")
 
 
-def test_candidate3_lmfe_adapter_rejects_wrong_version_and_schema():
+def test_candidate3_outlines_backend_identity_is_pinned():
+    module = __import__("trustcxr.grounded_llm.candidate3_constrained_decoding", fromlist=["x"])
+    assert module.BACKEND == "outlines"
+    assert module.PINNED_VERSION == "1.3.3"
+    assert module.PINNED_CORE_VERSION == "0.2.14"
+
+
+def test_candidate3_outlines_rejects_frozen_combined_pattern_length_semantics():
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
-        Candidate3StructuredOutputError,
-        build_candidate3_prefix_allowed_tokens_fn,
+        _has_combined_pattern_length_constraint,
+        governed_schema,
     )
 
-    fake = SimpleNamespace(__version__="0.11.2", JsonSchemaParser=object)
-    try:
-        build_candidate3_prefix_allowed_tokens_fn("tokenizer", lmfe_module=fake)
-    except Candidate3StructuredOutputError as exc:
-        assert str(exc) == "CANDIDATE3_LMFE_VERSION_MISMATCH"
-    else:
-        raise AssertionError("wrong LMFE version must fail closed")
-    try:
-        build_candidate3_prefix_allowed_tokens_fn(
-            "tokenizer", schema={"type": "object"}, lmfe_module=fake
-        )
-    except Candidate3StructuredOutputError as exc:
-        assert str(exc) == "CANDIDATE3_SCHEMA_IDENTITY_MISMATCH"
-    else:
-        raise AssertionError("schema mismatch must fail closed")
+    assert _has_combined_pattern_length_constraint(governed_schema())
+
+
+def test_candidate3_has_no_active_backend_after_outlines_rejection():
+    config = json.loads(
+        (ROOT / "configs/research_extensions/ext4e_candidate3_phi4_mini.json").read_text()
+    )
+    assert config["structured_output"]["status"] == (
+        "CANDIDATE3_OUTLINES_SCHEMA_SEMANTICS_INCOMPATIBLE"
+    )

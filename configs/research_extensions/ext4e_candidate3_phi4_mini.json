@@ -138,9 +138,14 @@
     "free_form_fallback": false
   },
   "structured_output": {
-    "mechanism": "TRANSFORMERS_RUNTIME_REQUEST_PATH_UNPROVEN",
-    "response_format": "MUST_BE_PROVEN_BEFORE_SMOKE",
-    "schema": "GroundedOutputEnvelope.model_json_schema()"
+    "backend": "outlines",
+    "version": "1.3.3",
+    "core_version": "0.2.14",
+    "mechanism": "OUTLINES_CORE_JSON_SCHEMA_LOGITS_PROCESSOR",
+    "schema": "GroundedOutputEnvelope.model_json_schema()",
+    "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
+    "status": "CANDIDATE3_OUTLINES_SCHEMA_SEMANTICS_INCOMPATIBLE",
+    "fallback_allowed": false
   },
   "partitions": {
     "development_case_ids": [
