@@ -1,4 +1,4 @@
-"""Fail-closed XGrammar adapter for Candidate #3 structured generation."""
+"""Fail-closed LM Format Enforcer adapter for Candidate #3 generation."""
 
 from __future__ import annotations
 
@@ -10,8 +10,8 @@ from typing import Any
 
 from .contracts import GroundedOutputEnvelope
 
-BACKEND = "xgrammar"
-PINNED_VERSION = "0.2.5"
+BACKEND = "lm-format-enforcer"
+PINNED_VERSION = "0.11.3"
 
 
 class Candidate3StructuredOutputError(RuntimeError):
@@ -19,8 +19,6 @@ class Candidate3StructuredOutputError(RuntimeError):
 
 
 def governed_schema() -> dict[str, Any]:
-    """Return the one schema shared by generation and EXT4C validation."""
-
     return GroundedOutputEnvelope.model_json_schema()
 
 
@@ -35,59 +33,57 @@ GOVERNED_SCHEMA_SHA256 = schema_sha256()
 
 @dataclass(frozen=True)
 class Candidate3Constraint:
-    logits_processor: Any
+    prefix_allowed_tokens_fn: Any
+    parser: Any
     backend: str
     backend_version: str
     schema_sha256: str
 
 
-def build_candidate3_logits_processor(
+def build_candidate3_prefix_allowed_tokens_fn(
     tokenizer: Any,
     *,
-    vocab_size: int,
     schema: dict[str, Any] | None = None,
-    xgrammar_module: Any | None = None,
+    lmfe_module: Any | None = None,
+    integration_module: Any | None = None,
 ) -> Candidate3Constraint:
-    """Compile the exact schema and construct the HF LogitsProcessor.
-
-    There is deliberately no fallback path: an unavailable backend, schema
-    mismatch, or processor construction failure prevents generation.
-    """
+    """Compile the exact schema and build the Transformers prefix function."""
 
     selected_schema = schema if schema is not None else governed_schema()
     digest = schema_sha256(selected_schema)
     if digest != GOVERNED_SCHEMA_SHA256:
         raise Candidate3StructuredOutputError("CANDIDATE3_SCHEMA_IDENTITY_MISMATCH")
     try:
-        xgr = xgrammar_module or importlib.import_module("xgrammar")
+        lmfe = lmfe_module or importlib.import_module("lmformatenforcer")
     except ImportError as exc:
         raise Candidate3StructuredOutputError(
             "CANDIDATE3_STRUCTURED_OUTPUT_BACKEND_UNAVAILABLE"
         ) from exc
-    version = getattr(xgr, "__version__", None)
+    version = getattr(lmfe, "__version__", None)
     if version != PINNED_VERSION:
-        raise Candidate3StructuredOutputError("CANDIDATE3_XGRAMMAR_VERSION_MISMATCH")
+        raise Candidate3StructuredOutputError("CANDIDATE3_LMFE_VERSION_MISMATCH")
     try:
-        tokenizer_info = xgr.TokenizerInfo.from_huggingface(tokenizer, vocab_size=vocab_size)
-        compiler = xgr.GrammarCompiler(tokenizer_info)
-        compiled = compiler.compile_json_schema(
-            json.dumps(selected_schema, sort_keys=True, separators=(",", ":"))
+        parser = lmfe.JsonSchemaParser(selected_schema)
+        integrations = integration_module or importlib.import_module(
+            "lmformatenforcer.integrations.transformers"
         )
-        processor = xgr.contrib.hf.LogitsProcessor(compiled)
+        prefix_fn = integrations.build_transformers_prefix_allowed_tokens_fn(tokenizer, parser)
+        if not callable(prefix_fn):
+            raise TypeError("prefix_allowed_tokens_fn is not callable")
     except Exception as exc:
         raise Candidate3StructuredOutputError(
-            "CANDIDATE3_XGRAMMAR_SCHEMA_OR_TOKENIZER_COMPILATION_FAILED"
+            "CANDIDATE3_LMFE_SCHEMA_OR_TOKENIZER_COMPILATION_FAILED"
         ) from exc
-    return Candidate3Constraint(processor, BACKEND, version, digest)
+    return Candidate3Constraint(prefix_fn, parser, BACKEND, version, digest)
 
 
 def assert_generation_constraint(constraint: Candidate3Constraint) -> None:
-    """Tripwire used immediately before ``model.generate``."""
+    """Tripwire used immediately before any model.generate call."""
 
     if (
         constraint.backend != BACKEND
         or constraint.backend_version != PINNED_VERSION
         or constraint.schema_sha256 != GOVERNED_SCHEMA_SHA256
-        or constraint.logits_processor is None
+        or constraint.prefix_allowed_tokens_fn is None
     ):
         raise Candidate3StructuredOutputError("CANDIDATE3_STRUCTURED_OUTPUT_GATE_FAILED")

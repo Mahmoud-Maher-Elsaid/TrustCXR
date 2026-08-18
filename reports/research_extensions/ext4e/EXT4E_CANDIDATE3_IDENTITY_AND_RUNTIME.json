@@ -65,36 +65,51 @@
     "quantization": "NOT_APPLIED"
   },
   "structured_output": {
-    "status": "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_NOT_YET_ESTABLISHED",
-    "selected_backend": "xgrammar",
-    "required_version": "0.2.5",
-    "mechanism": "XGRAMMAR_GRAMMAR_COMPILER_AND_TRANSFORMERS_LOGITS_PROCESSOR",
+    "status": "CANDIDATE3_LMFE_NOT_INSTALLED",
+    "selected_backend": "lm-format-enforcer",
+    "required_version": "0.11.3",
+    "mechanism": "LMFE_JSON_SCHEMA_PARSER_AND_TRANSFORMERS_PREFIX_ALLOWED_TOKENS_FN",
     "schema_source": "GroundedOutputEnvelope.model_json_schema()",
     "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
-    "schema_compilation": "NOT_RUN_XGRAMMAR_UNAVAILABLE",
-    "tokenizer_integration": "NOT_RUN_XGRAMMAR_UNAVAILABLE",
-    "logits_processor": "NOT_CONSTRUCTED_XGRAMMAR_UNAVAILABLE",
+    "schema_compilation": "NOT_RUN_LMFE_UNAVAILABLE",
+    "tokenizer_integration": "NOT_RUN_LMFE_UNAVAILABLE",
+    "prefix_allowed_tokens_fn": "NOT_CONSTRUCTED_LMFE_UNAVAILABLE",
     "installed_constrained_decoding": [],
     "fallback_allowed": false,
     "alternatives": {
       "outlines": "NOT_INSTALLED_OR_SELECTED",
-      "lm_format_enforcer": "NOT_INSTALLED_OR_SELECTED",
-      "rationale": "XGrammar 0.2.5 provides the intended direct Transformers GrammarCompiler and HF LogitsProcessor integration; no competing backend was installed."
+      "lm_format_enforcer": "ACTIVE_CANDIDATE_BACKEND",
+      "rationale": "LM Format Enforcer 0.11.3 provides JSON Schema parsing and documented Transformers prefix_allowed_tokens_fn integration."
     }
   },
   "dependency_audit": {
     "production_interpreter": "UNAVAILABLE_IN_CODEX_ENVIRONMENT",
-    "requested_pin": "xgrammar==0.2.5",
+    "python_version": "3.12.10",
+    "requested_pin": "lm-format-enforcer==0.11.3",
+    "pypi_wheel": "lm_format_enforcer-0.11.3-py3-none-any.whl",
+    "pypi_wheel_sha256": "cf586350875def1ae7a8fba84fcbbfc8371424b6c9d05c1fcba70aa233fbf06f",
+    "requires_python": ">=3.8,<4.0",
+    "license": "MIT",
+    "direct_dependencies": ["pydantic>=1.10.8", "interegular>=0.3.2", "packaging", "pyyaml"],
     "dependency_resolution": "NOT_EXECUTED_IN_PRODUCTION_ENVIRONMENT",
     "torch_transformers_unchanged": "NOT_VERIFIABLE_IN_CODEX_PRODUCTION_ENVIRONMENT",
-    "installation_performed": false
+    "installation_performed": false,
+    "xgrammar_history": "REJECTED_WINDOWS_PYTHON312_BINARY_COMPATIBILITY"
   },
   "preflight": {
-    "status": "BLOCKED_ON_STRUCTURED_OUTPUT_MECHANISM",
+    "status": "CANDIDATE3_LMFE_NOT_INSTALLED",
     "development_cases_accessed": 0,
     "final_cases_accessed": 0,
     "locked_test_accessed": false,
     "real_model_inference_requests": 0
   },
-  "next_action": "ESTABLISH_AND_AUDIT_A_GOVERNED_TRANSFORMERS_CONSTRAINED_DECODING_MECHANISM_BEFORE_ANY_GENERATION"
+  "chronology": [
+    "PHI4_IDENTITY_FROZEN",
+    "WEIGHTS_AND_SUPPORT_FILES_VERIFIED",
+    "TRANSFORMERS_RUNTIME_VERIFIED",
+    "XGRAMMAR_0_2_5_REJECTED_WINDOWS_PYTHON312_BINARY_COMPATIBILITY",
+    "LMFE_0_11_3_AUDITED",
+    "LMFE_INSTALLATION_PENDING_PRODUCTION_ENVIRONMENT_ACCESS"
+  ],
+  "next_action": "INSTALL_LM_FORMAT_ENFORCER_0_11_3_IN_GOVERNED_ENVIRONMENT_THEN_RUN_EXACT_SCHEMA_PREFLIGHT"
 }

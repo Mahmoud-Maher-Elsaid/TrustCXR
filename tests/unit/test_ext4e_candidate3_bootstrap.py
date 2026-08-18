@@ -64,7 +64,7 @@ def test_candidate3_request_builder_preserves_schema_without_reasoning_fallback(
     assert "retry_count" not in payload
 
 
-def test_candidate3_structured_output_fails_closed_without_constrained_decoder():
+def test_candidate3_structured_output_fails_closed_without_lmfe():
     module = _module()
     result = module.structured_output_preflight()
     assert result["status"] == "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_NOT_YET_ESTABLISHED"
@@ -84,50 +84,67 @@ def test_candidate3_exact_schema_identity_is_stable():
     )
 
 
-def test_candidate3_xgrammar_adapter_compiles_exact_schema_and_builds_processor():
+def test_candidate3_lmfe_adapter_compiles_exact_schema_and_builds_prefix_fn():
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
-        build_candidate3_logits_processor,
+        build_candidate3_prefix_allowed_tokens_fn,
         governed_schema,
     )
 
     calls = {}
 
-    class FakeTokenizerInfo:
-        @staticmethod
-        def from_huggingface(tokenizer, vocab_size):
-            calls["tokenizer"] = (tokenizer, vocab_size)
-            return "tokenizer-info"
+    class FakeParser:
+        def __init__(self, schema):
+            calls["schema"] = schema
 
-    class FakeCompiler:
-        def __init__(self, info):
-            calls["info"] = info
+    fake_lmfe = SimpleNamespace(__version__="0.11.3", JsonSchemaParser=FakeParser)
 
-        def compile_json_schema(self, schema):
-            calls["schema"] = json.loads(schema)
-            return "compiled"
+    def prefix_builder(tokenizer, parser):
+        return lambda input_ids, batch_id: (tokenizer, parser, input_ids, batch_id)
 
-    fake = SimpleNamespace(
-        __version__="0.2.5",
-        TokenizerInfo=FakeTokenizerInfo,
-        GrammarCompiler=FakeCompiler,
-        contrib=SimpleNamespace(hf=SimpleNamespace(LogitsProcessor=lambda value: ("lp", value))),
+    fake_integrations = SimpleNamespace(build_transformers_prefix_allowed_tokens_fn=prefix_builder)
+    result = build_candidate3_prefix_allowed_tokens_fn(
+        "tokenizer",
+        lmfe_module=fake_lmfe,
+        integration_module=fake_integrations,
     )
-    result = build_candidate3_logits_processor("tokenizer", vocab_size=200064, xgrammar_module=fake)
-    assert result.backend == "xgrammar"
-    assert result.backend_version == "0.2.5"
-    assert result.logits_processor == ("lp", "compiled")
+    assert result.backend == "lm-format-enforcer"
+    assert result.backend_version == "0.11.3"
+    assert callable(result.prefix_allowed_tokens_fn)
     assert calls["schema"] == governed_schema()
 
 
-def test_candidate3_xgrammar_adapter_fails_closed_on_missing_backend():
+def test_candidate3_lmfe_adapter_fails_closed_on_missing_backend():
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
         Candidate3StructuredOutputError,
-        build_candidate3_logits_processor,
+        build_candidate3_prefix_allowed_tokens_fn,
     )
 
     try:
-        build_candidate3_logits_processor("tokenizer", vocab_size=200064, xgrammar_module=None)
+        build_candidate3_prefix_allowed_tokens_fn("tokenizer")
     except Candidate3StructuredOutputError as exc:
         assert str(exc) == "CANDIDATE3_STRUCTURED_OUTPUT_BACKEND_UNAVAILABLE"
     else:
-        raise AssertionError("missing XGrammar must fail closed")
+        raise AssertionError("missing LMFE must fail closed")
+
+
+def test_candidate3_lmfe_adapter_rejects_wrong_version_and_schema():
+    from trustcxr.grounded_llm.candidate3_constrained_decoding import (
+        Candidate3StructuredOutputError,
+        build_candidate3_prefix_allowed_tokens_fn,
+    )
+
+    fake = SimpleNamespace(__version__="0.11.2", JsonSchemaParser=object)
+    try:
+        build_candidate3_prefix_allowed_tokens_fn("tokenizer", lmfe_module=fake)
+    except Candidate3StructuredOutputError as exc:
+        assert str(exc) == "CANDIDATE3_LMFE_VERSION_MISMATCH"
+    else:
+        raise AssertionError("wrong LMFE version must fail closed")
+    try:
+        build_candidate3_prefix_allowed_tokens_fn(
+            "tokenizer", schema={"type": "object"}, lmfe_module=fake
+        )
+    except Candidate3StructuredOutputError as exc:
+        assert str(exc) == "CANDIDATE3_SCHEMA_IDENTITY_MISMATCH"
+    else:
+        raise AssertionError("schema mismatch must fail closed")

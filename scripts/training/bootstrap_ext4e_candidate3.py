@@ -89,7 +89,7 @@ def validate_tokenizer_and_template() -> dict:
 def structured_output_preflight() -> dict:
     """Require an installed constrained-decoding mechanism; no fallback is allowed."""
     available = []
-    for name in ("outlines", "xgrammar", "lmformatenforcer"):
+    for name in ("lmformatenforcer",):
         try:
             importlib.import_module(name)
             available.append(name)
