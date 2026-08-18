@@ -153,6 +153,27 @@ def test_candidate3_load_only_strategy_is_explicit_and_generation_free():
     assert strategy["forward_pass"] is False
 
 
+def test_candidate3_lmfe_schema_failure_fails_closed_without_generation():
+    from trustcxr.grounded_llm.candidate3_constrained_decoding import (
+        Candidate3StructuredOutputError,
+        build_candidate3_prefix_allowed_tokens_fn,
+    )
+
+    class RejectingParser:
+        def __init__(self, schema):
+            raise ValueError("pattern with min/max unsupported")
+
+    fake_lmfe = SimpleNamespace(__version__="0.11.3", JsonSchemaParser=RejectingParser)
+    try:
+        build_candidate3_prefix_allowed_tokens_fn(
+            "tokenizer", lmfe_module=fake_lmfe, integration_module=SimpleNamespace()
+        )
+    except Candidate3StructuredOutputError as exc:
+        assert str(exc) == "CANDIDATE3_LMFE_SCHEMA_OR_TOKENIZER_COMPILATION_FAILED"
+    else:
+        raise AssertionError("schema compilation failure must fail closed")
+
+
 def test_candidate3_lmfe_adapter_rejects_wrong_version_and_schema():
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
         Candidate3StructuredOutputError,

@@ -1,0 +1,41 @@
+{
+  "schema_id": "EXT4E_CANDIDATE3_SYNTHETIC_SMOKE",
+  "candidate_id": 3,
+  "model_revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+  "synthetic_attempt_id": "20260818T084907Z_3bc04792",
+  "model_load": "PASS",
+  "dtype": "torch.bfloat16",
+  "device_map": {"": "cpu"},
+  "lmfe_version": "0.11.3",
+  "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
+  "constraint_backend_active": true,
+  "generation_parameters": {
+    "max_new_tokens": 768,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "do_sample": false,
+    "seed": 20260806,
+    "stream": false
+  },
+  "request_attempted": false,
+  "request_count": 0,
+  "generate_call_count": 0,
+  "generation_started": false,
+  "generation_completed": false,
+  "generated_tokens": 0,
+  "json_parse": "NOT_RUN",
+  "ext4c_validation": "NOT_RUN",
+  "failure_classification": "CANDIDATE3_LMFE_SCHEMA_INCOMPATIBLE",
+  "failure_evidence": "LMFormatEnforcerException: String schema contains both a pattern and a min/max length, which is not currently supported",
+  "cpu_memory": {
+    "before_bytes": 683728896,
+    "after_load_bytes": 810901504
+  },
+  "cleanup_confirmed": true,
+  "development_cases_accessed": 0,
+  "final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "real_model_inference_requests": 0,
+  "technical_status": "CANDIDATE3_LMFE_SCHEMA_INCOMPATIBLE",
+  "next_gate": "GOVERNANCE_REVIEW_REQUIRED; DO_NOT_WEAKEN_EXT4C_OR_RETRY_AUTOMATICALLY"
+}
