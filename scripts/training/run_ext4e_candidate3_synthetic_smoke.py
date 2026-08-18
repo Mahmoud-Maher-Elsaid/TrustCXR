@@ -99,7 +99,7 @@ def main() -> int:
         "generate_call_count": 0,
         "model_revision": EXPECTED_REVISION,
         "schema_sha256": schema_sha,
-        "lmfe_version": identity["lmfe_version"],
+        "llguidance_version": identity["llguidance_version"],
         "generation_parameters": {
             "max_new_tokens": 768,
             "temperature": 0.0,

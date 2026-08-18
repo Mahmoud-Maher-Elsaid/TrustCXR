@@ -1,0 +1,17 @@
+{
+  "schema_id": "EXT4E_FINAL_CANDIDATE_SELECTION_REPORT",
+  "schema_version": "1",
+  "candidate1": "DEVELOPMENT_GATE_FAILED / NOT_SCIENTIFICALLY_SELECTED",
+  "candidate2": "DEVELOPMENT_GATE_FAILED / NOT_SCIENTIFICALLY_SELECTED",
+  "candidate3": {
+    "repository": "microsoft/Phi-4-mini-instruct",
+    "revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+    "load_strategy": "Phi3ForCausalLM; local_files_only; trust_remote_code=false; bfloat16; CPU-only",
+    "backend": "llguidance==1.8.0",
+    "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650"
+  },
+  "final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "final_disposition": "PENDING_REAL_LOCAL_RUN",
+  "next_stage": "RUN_ONE_GOVERNED_LOCAL_CANDIDATE3_END_TO_END_COMMAND"
+}
