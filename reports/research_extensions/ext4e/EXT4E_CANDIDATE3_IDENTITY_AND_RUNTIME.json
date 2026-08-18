@@ -65,52 +65,59 @@
     "quantization": "NOT_APPLIED"
   },
   "structured_output": {
-    "status": "CANDIDATE3_OUTLINES_SCHEMA_SEMANTICS_INCOMPATIBLE",
-    "selected_backend": "outlines",
-    "required_version": "1.3.3",
-    "core_version": "0.2.14",
-    "mechanism": "OUTLINES_CORE_JSON_SCHEMA_LOGITS_PROCESSOR",
+    "status": "LLGUIDANCE_APPROVED_FOR_CANDIDATE3_TECHNICAL_SMOKE",
+    "selected_backend": "llguidance",
+    "required_version": "1.8.0",
+    "mechanism": "LLGUIDANCE_JSON_SCHEMA_MATCHER_LOGITS_PROCESSOR",
     "schema_source": "GroundedOutputEnvelope.model_json_schema()",
     "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
-    "schema_compilation": "PASS_TEMPORARY_AUDIT_WHEEL",
-    "schema_semantics": "FAIL_PATTERN_IGNORED_WHEN_COMBINED_WITH_MIN_MAX_LENGTH",
+    "schema_keyword_inventory": [
+      "$defs", "$ref", "additionalProperties", "anyOf", "const", "enum",
+      "items", "maxLength", "minLength", "pattern", "properties", "required", "type"
+    ],
+    "schema_compilation": "PASS_STRICT_VALIDATE_GRAMMAR",
+    "schema_semantics": "PASS_MATCHER_ACCEPT_REJECT_PROBES",
     "semantic_probe": {
-      "schema": "string pattern ^[A-Z]+$ with minLength=1 and maxLength=8",
-      "compiled_expression": "generic JSON string character class with {1,8}",
-      "pattern_preserved": false,
-      "classification": "CANDIDATE3_OUTLINES_SCHEMA_SEMANTICS_INCOMPATIBLE"
+      "schema": "pattern + minLength + maxLength",
+      "valid": "ABC and ABCDEFGH accepted",
+      "pattern_violation": "abc rejected",
+      "below_minimum": "empty string rejected",
+      "above_maximum": "ABCDEFGHI rejected"
     },
-    "tokenizer_integration": "PASS_TEMPORARY_AUDIT_WHEEL_LOCAL_TOKENIZER",
-    "constraint_index": "PASS_EXACT_SCHEMA_AND_200029_TOKEN_VOCABULARY",
+    "tokenizer_integration": "PASS_GPT2TOKENIZERFAST_LOCAL_TOKENIZER",
+    "constraint_index": "PASS_INITIAL_25004_BYTE_MASK_200029_VOCABULARY",
+    "prompt_generation_boundary": "PASS_PROMPT_NOT_CONSUMED; GENERATED_TOKENS_CONSUMED_ONCE",
+    "eos_behavior": "MATCHER_MASK_CONTROLS_EOS_ONLY_AFTER_ACCEPTING_STATE",
     "installed_constrained_decoding": [],
     "fallback_allowed": false,
     "alternatives": {
       "outlines": "REJECTED_SCHEMA_SEMANTICS_INCOMPATIBILITY",
+      "llguidance": "ACTIVE_APPROVED_PENDING_PRODUCTION_INSTALL",
       "lm_format_enforcer": "REJECTED_EXACT_EXT4C_SCHEMA_INCOMPATIBILITY",
       "xgrammar": "REJECTED_WINDOWS_PYTHON312_BINARY_COMPATIBILITY",
-      "rationale": "Outlines 1.3.3 delegates exact JSON Schema compilation to outlines-core 0.2.14, but the backend drops pattern enforcement when pattern is combined with minLength/maxLength; it cannot govern EXT4C."
+      "rationale": "llguidance 1.8.0 strict compilation and matcher probes preserve the exact frozen schema, including combined pattern and length constraints."
     }
   },
   "dependency_audit": {
     "production_interpreter": "UNAVAILABLE_IN_CODEX_ENVIRONMENT; SITE_PACKAGES_AUDITED_WITH_PYTHON_3_12_10_TEST_INTERPRETER",
     "python_version": "3.12.10",
-    "requested_pin": "outlines==1.3.3",
-    "outlines_core_pin": "outlines-core==0.2.14",
-    "pypi_wheel": "outlines-1.3.3-py3-none-any.whl",
-    "pypi_wheel_sha256": "0e185dd5a0cfeb62e0268018972d3c22bb9b7d43db3dc1f39f3b754175a82c54",
+    "requested_pin": "llguidance==1.8.0",
+    "pypi_wheel": "llguidance-1.8.0-cp39-abi3-win_amd64.whl",
+    "pypi_wheel_sha256": "a8837ac2b3bf4c46e1b6363012a22de043b7f8ef013b04d8689d471eb573b766",
     "requires_python": ">=3.10,<3.14",
     "license": "Apache-2.0",
-    "direct_dependencies": ["jinja2", "cloudpickle", "diskcache", "pydantic>=2.0", "jsonschema", "pillow", "typing_extensions", "outlines_core==0.2.14", "genson"],
+    "direct_dependencies": [],
     "dependency_resolution": "PYPI_METADATA_AUDIT_ONLY; PRODUCTION_DRY_RUN_UNAVAILABLE",
     "pip_check": "UNAVAILABLE_PRODUCTION_INTERPRETER",
     "installation_performed": false,
-    "temporary_audit_artifacts": "OUTLINES_AND_OUTLINES_CORE_WHEELS_NOT_INSTALLED_IN_PRODUCTION",
+    "temporary_audit_artifacts": "LLGUIDANCE_CP39_ABI3_WHEEL_AUDITED_WITH_CACHED_PYTHON312",
     "torch_transformers_unchanged": "4.57.6_AND_2.12.1+cu130_EXPECTED; PRODUCTION_VERIFICATION_PENDING",
     "xgrammar_history": "REJECTED_WINDOWS_PYTHON312_BINARY_COMPATIBILITY",
-    "lmfe_history": "REJECTED_EXACT_EXT4C_SCHEMA_INCOMPATIBILITY"
+    "lmfe_history": "REJECTED_EXACT_EXT4C_SCHEMA_INCOMPATIBILITY",
+    "outlines_history": "REJECTED_SCHEMA_SEMANTICS_INCOMPATIBILITY"
   },
   "preflight": {
-    "status": "CANDIDATE3_OUTLINES_SCHEMA_SEMANTICS_INCOMPATIBLE",
+    "status": "LLGUIDANCE_APPROVED_FOR_CANDIDATE3_TECHNICAL_SMOKE",
     "development_cases_accessed": 0,
     "final_cases_accessed": 0,
     "locked_test_accessed": false,
@@ -122,8 +129,9 @@
     "TRANSFORMERS_RUNTIME_VERIFIED",
     "XGRAMMAR_0_2_5_REJECTED_WINDOWS_PYTHON312_BINARY_COMPATIBILITY",
     "LMFE_0_11_3_REJECTED_EXACT_EXT4C_SCHEMA_INCOMPATIBILITY",
-    "OUTLINES_1_3_3_AUDITED_OUTLINES_CORE_0_2_14_EXACT_SCHEMA_COMPILES",
-    "OUTLINES_PRODUCTION_INSTALLATION_PENDING_ENVIRONMENT_ACCESS"
+    "OUTLINES_1_3_3_REJECTED_PATTERN_LENGTH_SEMANTICS",
+    "LLGUIDANCE_1_8_0_STRICT_SCHEMA_AND_MATCHER_AUDIT_PASS",
+    "LLGUIDANCE_PRODUCTION_INSTALLATION_PENDING_ENVIRONMENT_ACCESS"
   ],
-    "next_action": "CANDIDATE3_BACKEND_REQUIRES_SEPARATE_GOVERNANCE_DECISION"
+    "next_action": "INSTALL_LLGUIDANCE_THEN_RUN_CANDIDATE3_TECHNICAL_SMOKE"
 }

@@ -121,12 +121,14 @@ def main() -> int:
         tokenizer = AutoTokenizer.from_pretrained(
             MODEL_ROOT, local_files_only=True, trust_remote_code=False
         )
-        constraint = build_candidate3_prefix_allowed_tokens_fn(tokenizer, schema=schema)
-        assert_generation_constraint(constraint)
         rendered = tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )
         inputs = tokenizer(rendered, return_tensors="pt")
+        constraint = build_candidate3_prefix_allowed_tokens_fn(
+            tokenizer, schema=schema, prompt_length=int(inputs["input_ids"].shape[1])
+        )
+        assert_generation_constraint(constraint)
         torch.manual_seed(20260806)
         (attempt_dir / "rendered_input.txt").write_text(rendered, encoding="utf-8")
         record["request_attempted"] = True
@@ -171,7 +173,7 @@ def main() -> int:
     except Candidate3StructuredOutputError as exc:
         record.update(
             technical_status=(
-                "CANDIDATE3_OUTLINES_SCHEMA_SEMANTICS_INCOMPATIBLE"
+                "CANDIDATE3_LLGUIDANCE_SCHEMA_INCOMPATIBLE"
                 if "SEMANTICS_INCOMPATIBLE" in str(exc)
                 else "CANDIDATE3_SYNTHETIC_GENERATION_FAILURE"
             ),

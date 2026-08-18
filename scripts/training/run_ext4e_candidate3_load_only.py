@@ -78,12 +78,11 @@ def validate_identity(config: dict[str, Any]) -> dict[str, Any]:
             raise RuntimeError("CANDIDATE3_WEIGHT_IDENTITY_MISMATCH")
         records.append(record)
     try:
-        outlines_version = importlib.metadata.version("outlines")
-        core_version = importlib.metadata.version("outlines-core")
+        llguidance_version = importlib.metadata.version("llguidance")
     except importlib.metadata.PackageNotFoundError as exc:
-        raise RuntimeError("CANDIDATE3_OUTLINES_NOT_INSTALLED") from exc
-    if outlines_version != "1.3.3" or core_version != "0.2.14":
-        raise RuntimeError("CANDIDATE3_OUTLINES_VERSION_MISMATCH")
+        raise RuntimeError("CANDIDATE3_LLGUIDANCE_NOT_INSTALLED") from exc
+    if llguidance_version != "1.8.0":
+        raise RuntimeError("CANDIDATE3_LLGUIDANCE_VERSION_MISMATCH")
     if config["partitions"] != {
         "development_case_ids": config["partitions"]["development_case_ids"],
         "development_cases_accessed": 0,
@@ -93,8 +92,7 @@ def validate_identity(config: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError("CANDIDATE3_PARTITION_ACCESS_FORBIDDEN")
     return {
         "artifacts": records,
-        "outlines_version": outlines_version,
-        "outlines_core_version": core_version,
+        "llguidance_version": llguidance_version,
     }
 
 

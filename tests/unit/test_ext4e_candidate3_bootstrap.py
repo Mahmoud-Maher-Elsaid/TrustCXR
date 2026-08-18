@@ -65,14 +65,14 @@ def test_candidate3_request_builder_preserves_schema_without_reasoning_fallback(
     assert "retry_count" not in payload
 
 
-def test_candidate3_structured_output_backend_is_outlines_only():
+def test_candidate3_structured_output_backend_is_llguidance_only():
     module = _module()
     result = module.structured_output_preflight()
     assert result["status"] in {
         "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_REQUIRES_ADAPTER_PROOF",
         "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_NOT_YET_ESTABLISHED",
     }
-    assert result["available_constrained_decoding"] in ([], ["outlines"])
+    assert result["available_constrained_decoding"] in ([], ["llguidance"])
 
 
 def test_candidate3_exact_schema_identity_is_stable():
@@ -88,25 +88,24 @@ def test_candidate3_exact_schema_identity_is_stable():
     )
 
 
-def test_candidate3_outlines_adapter_is_fail_closed_without_backend():
+def test_candidate3_llguidance_adapter_is_fail_closed_without_backend():
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
         Candidate3StructuredOutputError,
         build_candidate3_prefix_allowed_tokens_fn,
     )
 
     try:
-        build_candidate3_prefix_allowed_tokens_fn("tokenizer")
+        build_candidate3_prefix_allowed_tokens_fn("tokenizer", prompt_length=0)
     except Candidate3StructuredOutputError as exc:
         assert str(exc) in {
-            "CANDIDATE3_OUTLINES_NOT_INSTALLED",
-            "CANDIDATE3_OUTLINES_SCHEMA_SEMANTICS_INCOMPATIBLE",
-            "CANDIDATE3_OUTLINES_SCHEMA_OR_TOKENIZER_COMPILATION_FAILED",
+            "CANDIDATE3_LLGUIDANCE_NOT_INSTALLED",
+            "CANDIDATE3_LLGUIDANCE_SCHEMA_OR_TOKENIZER_COMPILATION_FAILED",
         }
     else:
         raise AssertionError("backend must not be assumed installed")
 
 
-def test_candidate3_outlines_adapter_fails_closed_on_missing_backend(monkeypatch):
+def test_candidate3_llguidance_adapter_fails_closed_on_missing_backend(monkeypatch):
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
         Candidate3StructuredOutputError,
         build_candidate3_prefix_allowed_tokens_fn,
@@ -116,15 +115,15 @@ def test_candidate3_outlines_adapter_fails_closed_on_missing_backend(monkeypatch
     original_import = module.importlib.import_module
 
     def missing(name):
-        if name == "outlines":
+        if name == "llguidance":
             raise ImportError("missing")
         return original_import(name)
 
     monkeypatch.setattr(module.importlib, "import_module", missing)
     try:
-        build_candidate3_prefix_allowed_tokens_fn("tokenizer")
+        build_candidate3_prefix_allowed_tokens_fn("tokenizer", prompt_length=0)
     except Candidate3StructuredOutputError as exc:
-        assert str(exc) == "CANDIDATE3_OUTLINES_NOT_INSTALLED"
+        assert str(exc) == "CANDIDATE3_LLGUIDANCE_NOT_INSTALLED"
     else:
         raise AssertionError("missing LMFE must fail closed")
 
@@ -143,36 +142,54 @@ def test_candidate3_load_only_strategy_is_explicit_and_generation_free():
     assert strategy["forward_pass"] is False
 
 
-def test_candidate3_outlines_schema_failure_fails_closed_without_generation():
+def test_candidate3_llguidance_schema_failure_fails_closed_without_generation():
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
         Candidate3StructuredOutputError,
         build_candidate3_prefix_allowed_tokens_fn,
     )
 
     with pytest.raises(Candidate3StructuredOutputError):
-        build_candidate3_prefix_allowed_tokens_fn("tokenizer")
+        build_candidate3_prefix_allowed_tokens_fn("tokenizer", prompt_length=0)
 
 
-def test_candidate3_outlines_backend_identity_is_pinned():
+def test_candidate3_llguidance_backend_identity_is_pinned():
     module = __import__("trustcxr.grounded_llm.candidate3_constrained_decoding", fromlist=["x"])
-    assert module.BACKEND == "outlines"
-    assert module.PINNED_VERSION == "1.3.3"
-    assert module.PINNED_CORE_VERSION == "0.2.14"
+    assert module.BACKEND == "llguidance"
+    assert module.PINNED_VERSION == "1.8.0"
 
 
-def test_candidate3_outlines_rejects_frozen_combined_pattern_length_semantics():
-    from trustcxr.grounded_llm.candidate3_constrained_decoding import (
-        _has_combined_pattern_length_constraint,
-        governed_schema,
-    )
-
-    assert _has_combined_pattern_length_constraint(governed_schema())
-
-
-def test_candidate3_has_no_active_backend_after_outlines_rejection():
+def test_candidate3_llguidance_backend_is_configured():
     config = json.loads(
         (ROOT / "configs/research_extensions/ext4e_candidate3_phi4_mini.json").read_text()
     )
-    assert config["structured_output"]["status"] == (
-        "CANDIDATE3_OUTLINES_SCHEMA_SEMANTICS_INCOMPATIBLE"
+    assert config["structured_output"]["backend"] == "llguidance"
+    assert config["structured_output"]["version"] == "1.8.0"
+
+
+def test_candidate3_llguidance_processor_preserves_prompt_boundary():
+    import torch
+
+    from trustcxr.grounded_llm.candidate3_constrained_decoding import (
+        Candidate3LLGuidanceLogitsProcessor,
     )
+
+    class Matcher:
+        def __init__(self):
+            self.consumed = []
+
+        def compute_bitmask(self):
+            return bytes([0b00000100])
+
+        def consume_token(self, token):
+            self.consumed.append(token)
+            return True
+
+    matcher = Matcher()
+    processor = Candidate3LLGuidanceLogitsProcessor(matcher, 8, prompt_length=3)
+    scores = torch.zeros((1, 8))
+    processor(torch.tensor([[10, 11, 12]]), scores)
+    assert matcher.consumed == []
+    masked = processor(torch.tensor([[10, 11, 12, 2]]), scores)
+    assert matcher.consumed == [2]
+    assert torch.isfinite(masked[0, 2])
+    assert torch.isneginf(masked[0, 0])
