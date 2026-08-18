@@ -139,6 +139,20 @@ def test_candidate3_lmfe_adapter_fails_closed_on_missing_backend(monkeypatch):
         raise AssertionError("missing LMFE must fail closed")
 
 
+def test_candidate3_load_only_strategy_is_explicit_and_generation_free():
+    config = json.loads(
+        (ROOT / "configs/research_extensions/ext4e_candidate3_phi4_mini.json").read_text()
+    )
+    strategy = config["load_only"]
+    assert strategy["dtype"] == "bfloat16"
+    assert strategy["device_strategy"] == "CPU_ONLY_BFLOAT16"
+    assert strategy["device_map"] == {"": "cpu"}
+    assert strategy["quantization"] == "none"
+    assert strategy["local_files_only"] is True
+    assert strategy["generation"] is False
+    assert strategy["forward_pass"] is False
+
+
 def test_candidate3_lmfe_adapter_rejects_wrong_version_and_schema():
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
         Candidate3StructuredOutputError,

@@ -1,0 +1,142 @@
+{
+  "candidate_id": 3,
+  "cleanup_confirmed": true,
+  "cpu_rss_after_load_bytes": 810901504,
+  "cpu_rss_before_bytes": 683728896,
+  "development_cases_accessed": 0,
+  "device_map": {
+    "": "cpu"
+  },
+  "device_strategy": {
+    "device_map": {
+      "": "cpu"
+    },
+    "device_strategy": "CPU_ONLY_BFLOAT16",
+    "dtype": "bfloat16",
+    "forward_pass": false,
+    "generation": false,
+    "local_files_only": true,
+    "quantization": "none",
+    "trust_remote_code": false
+  },
+  "devices": [
+    "cpu"
+  ],
+  "dtype": "bfloat16",
+  "dtypes": [
+    "torch.bfloat16"
+  ],
+  "final_cases_accessed": 0,
+  "generated_tokens": 0,
+  "generation_called": false,
+  "gpu_after_cleanup": {
+    "allocated_bytes": 0,
+    "available": true,
+    "device": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "free_bytes": 7441743872,
+    "reserved_bytes": 0,
+    "total_bytes": 8589410304
+  },
+  "gpu_after_load": {
+    "allocated_bytes": 0,
+    "available": true,
+    "device": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "free_bytes": 7441743872,
+    "reserved_bytes": 0,
+    "total_bytes": 8589410304
+  },
+  "gpu_before": {
+    "allocated_bytes": 0,
+    "available": true,
+    "device": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "free_bytes": 7441743872,
+    "reserved_bytes": 0,
+    "total_bytes": 8589410304
+  },
+  "identity": {
+    "artifacts": [
+      {
+        "filename": "model-00001-of-00002.safetensors",
+        "sha256": "bc703090b63eda16f639fa4de7ac54635c23105ab1da2f6ec4d3403151d38ee6",
+        "size_bytes": 4903637712
+      },
+      {
+        "filename": "model-00002-of-00002.safetensors",
+        "sha256": "7ff79b9d2d31076bac2663393451f6530f4fc8ca49b09002116c92c373dba983",
+        "size_bytes": 2768428504
+      },
+      {
+        "filename": "model.safetensors.index.json",
+        "sha256": "613a98d5e5716ca96fa75931abedc9c5a5d95f488ce4d62df71e639fe3ac6c59",
+        "size_bytes": 16273
+      },
+      {
+        "filename": "config.json",
+        "sha256": "ac65d86061d3d0d704ee2511fd0eb8713ef19eb6eedba17c3080a4165d5b933b",
+        "size_bytes": 2504
+      },
+      {
+        "filename": "generation_config.json",
+        "sha256": "3e3f48753753f92d2b958679151861d4fd7bf26e4dfc41fd47056116c4914dcd",
+        "size_bytes": 168
+      },
+      {
+        "filename": "tokenizer.json",
+        "sha256": "382cc235b56c725945e149cc25f191da667c836655efd0857b004320e90e91ea",
+        "size_bytes": 15524095
+      },
+      {
+        "filename": "tokenizer_config.json",
+        "sha256": "9c9b6bc0c94d95f69f826c41069a3e8b387ac3ced89601d201886e99240ac9db",
+        "size_bytes": 2932
+      },
+      {
+        "filename": "special_tokens_map.json",
+        "sha256": "aff38493227d813e29fcf8406e8e90062f1f031aa47d589325e9c31d89ac7cc3",
+        "size_bytes": 587
+      },
+      {
+        "filename": "added_tokens.json",
+        "sha256": "d4f2aceb0f20b71dd1f4bcc7e052e4412946bf281840b8f83d39f259571af486",
+        "size_bytes": 249
+      },
+      {
+        "filename": "merges.txt",
+        "sha256": "856ce61180bb689282eed6b3a6838bb1f438399be23aefe9d20eb379791fb4ad",
+        "size_bytes": 2418348
+      },
+      {
+        "filename": "vocab.json",
+        "sha256": "6cb65a857824fa6615bb1782d95d882617a8bbce1da0317118586b36f39e98bd",
+        "size_bytes": 3910310
+      },
+      {
+        "filename": "configuration_phi3.py",
+        "sha256": "ec2044b77d0b8111640ac134daa3af1f40dc552a739f8959626e7e58ea3352df",
+        "size_bytes": 10875
+      },
+      {
+        "filename": "modeling_phi3.py",
+        "sha256": "d5fd551a7fe759b1d25e5b16b5012aa98b9b8bd400d26c7ee69c0090a245d6cd",
+        "size_bytes": 54268
+      }
+    ],
+    "lmfe_version": "0.11.3"
+  },
+  "runtime_finding": {
+    "custom_remote_code": "INCOMPATIBLE_WITH_TRANSFORMERS_4.57.6_LossKwargs_IMPORT",
+    "selected_runtime_path": "BUILT_IN_TRANSFORMERS_PHI3_FOR_CAUSAL_LM",
+    "trust_remote_code": false
+  },
+  "load_duration_seconds": 0.40127750003011897,
+  "loaded_parameter_count": 3836021760,
+  "locked_test_accessed": false,
+  "missing_keys": [],
+  "model_class": "Phi3ForCausalLM",
+  "parameter_count": 3836021760,
+  "real_model_inference_requests": 0,
+  "revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+  "status": "CANDIDATE3_LOAD_ONLY_PASS",
+  "structured_output_preflight": "CANDIDATE3_STRUCTURED_OUTPUT_PREFLIGHT_PASS",
+  "unexpected_keys": []
+}

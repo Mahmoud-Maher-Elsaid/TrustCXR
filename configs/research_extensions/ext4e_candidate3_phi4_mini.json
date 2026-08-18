@@ -107,7 +107,7 @@
     "kind": "transformers",
     "transformers_version": "4.57.6",
     "torch_version": "2.12.1+cu130",
-    "trust_remote_code": true,
+    "trust_remote_code": false,
     "reason": "Official config declares Phi3ForCausalLM; installed Transformers exposes Phi3ForCausalLM. llama.cpp compatibility is not assumed."
   },
   "server": {
@@ -116,6 +116,16 @@
     "context_size": 2048,
     "parallel": 1,
     "gpu_policy": "EXPLICIT_LOAD_ONLY_GATE_REQUIRED"
+  },
+  "load_only": {
+    "dtype": "bfloat16",
+    "device_strategy": "CPU_ONLY_BFLOAT16",
+    "device_map": {"": "cpu"},
+    "quantization": "none",
+    "local_files_only": true,
+    "trust_remote_code": false,
+    "forward_pass": false,
+    "generation": false
   },
   "generation": {
     "temperature": 0.0,
