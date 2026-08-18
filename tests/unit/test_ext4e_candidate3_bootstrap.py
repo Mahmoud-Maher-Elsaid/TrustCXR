@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -68,3 +69,65 @@ def test_candidate3_structured_output_fails_closed_without_constrained_decoder()
     result = module.structured_output_preflight()
     assert result["status"] == "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_NOT_YET_ESTABLISHED"
     assert result["available_constrained_decoding"] == []
+
+
+def test_candidate3_exact_schema_identity_is_stable():
+    from trustcxr.grounded_llm.candidate3_constrained_decoding import (
+        GOVERNED_SCHEMA_SHA256,
+        governed_schema,
+        schema_sha256,
+    )
+
+    assert schema_sha256(governed_schema()) == GOVERNED_SCHEMA_SHA256
+    assert (
+        GOVERNED_SCHEMA_SHA256 == "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650"
+    )
+
+
+def test_candidate3_xgrammar_adapter_compiles_exact_schema_and_builds_processor():
+    from trustcxr.grounded_llm.candidate3_constrained_decoding import (
+        build_candidate3_logits_processor,
+        governed_schema,
+    )
+
+    calls = {}
+
+    class FakeTokenizerInfo:
+        @staticmethod
+        def from_huggingface(tokenizer, vocab_size):
+            calls["tokenizer"] = (tokenizer, vocab_size)
+            return "tokenizer-info"
+
+    class FakeCompiler:
+        def __init__(self, info):
+            calls["info"] = info
+
+        def compile_json_schema(self, schema):
+            calls["schema"] = json.loads(schema)
+            return "compiled"
+
+    fake = SimpleNamespace(
+        __version__="0.2.5",
+        TokenizerInfo=FakeTokenizerInfo,
+        GrammarCompiler=FakeCompiler,
+        contrib=SimpleNamespace(hf=SimpleNamespace(LogitsProcessor=lambda value: ("lp", value))),
+    )
+    result = build_candidate3_logits_processor("tokenizer", vocab_size=200064, xgrammar_module=fake)
+    assert result.backend == "xgrammar"
+    assert result.backend_version == "0.2.5"
+    assert result.logits_processor == ("lp", "compiled")
+    assert calls["schema"] == governed_schema()
+
+
+def test_candidate3_xgrammar_adapter_fails_closed_on_missing_backend():
+    from trustcxr.grounded_llm.candidate3_constrained_decoding import (
+        Candidate3StructuredOutputError,
+        build_candidate3_logits_processor,
+    )
+
+    try:
+        build_candidate3_logits_processor("tokenizer", vocab_size=200064, xgrammar_module=None)
+    except Candidate3StructuredOutputError as exc:
+        assert str(exc) == "CANDIDATE3_STRUCTURED_OUTPUT_BACKEND_UNAVAILABLE"
+    else:
+        raise AssertionError("missing XGrammar must fail closed")

@@ -66,9 +66,28 @@
   },
   "structured_output": {
     "status": "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_NOT_YET_ESTABLISHED",
-    "mechanism": "DIRECT_TRANSFORMERS_HAS_NO_RESPONSE_FORMAT_JSON_SCHEMA_ENFORCEMENT",
+    "selected_backend": "xgrammar",
+    "required_version": "0.2.5",
+    "mechanism": "XGRAMMAR_GRAMMAR_COMPILER_AND_TRANSFORMERS_LOGITS_PROCESSOR",
+    "schema_source": "GroundedOutputEnvelope.model_json_schema()",
+    "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
+    "schema_compilation": "NOT_RUN_XGRAMMAR_UNAVAILABLE",
+    "tokenizer_integration": "NOT_RUN_XGRAMMAR_UNAVAILABLE",
+    "logits_processor": "NOT_CONSTRUCTED_XGRAMMAR_UNAVAILABLE",
     "installed_constrained_decoding": [],
-    "fallback_allowed": false
+    "fallback_allowed": false,
+    "alternatives": {
+      "outlines": "NOT_INSTALLED_OR_SELECTED",
+      "lm_format_enforcer": "NOT_INSTALLED_OR_SELECTED",
+      "rationale": "XGrammar 0.2.5 provides the intended direct Transformers GrammarCompiler and HF LogitsProcessor integration; no competing backend was installed."
+    }
+  },
+  "dependency_audit": {
+    "production_interpreter": "UNAVAILABLE_IN_CODEX_ENVIRONMENT",
+    "requested_pin": "xgrammar==0.2.5",
+    "dependency_resolution": "NOT_EXECUTED_IN_PRODUCTION_ENVIRONMENT",
+    "torch_transformers_unchanged": "NOT_VERIFIABLE_IN_CODEX_PRODUCTION_ENVIRONMENT",
+    "installation_performed": false
   },
   "preflight": {
     "status": "BLOCKED_ON_STRUCTURED_OUTPUT_MECHANISM",

@@ -24,6 +24,9 @@ dev = [
     "pytest-cov>=6,<8",
     "ruff>=0.12,<1"
 ]
+candidate3 = [
+    "xgrammar==0.2.5"
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
