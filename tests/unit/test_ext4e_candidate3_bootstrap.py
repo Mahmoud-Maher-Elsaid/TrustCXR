@@ -64,11 +64,14 @@ def test_candidate3_request_builder_preserves_schema_without_reasoning_fallback(
     assert "retry_count" not in payload
 
 
-def test_candidate3_structured_output_fails_closed_without_lmfe():
+def test_candidate3_structured_output_backend_detection_is_lmfe_only():
     module = _module()
     result = module.structured_output_preflight()
-    assert result["status"] == "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_NOT_YET_ESTABLISHED"
-    assert result["available_constrained_decoding"] == []
+    assert result["status"] in {
+        "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_REQUIRES_ADAPTER_PROOF",
+        "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_NOT_YET_ESTABLISHED",
+    }
+    assert result["available_constrained_decoding"] in ([], ["lmformatenforcer"])
 
 
 def test_candidate3_exact_schema_identity_is_stable():
@@ -113,12 +116,21 @@ def test_candidate3_lmfe_adapter_compiles_exact_schema_and_builds_prefix_fn():
     assert calls["schema"] == governed_schema()
 
 
-def test_candidate3_lmfe_adapter_fails_closed_on_missing_backend():
+def test_candidate3_lmfe_adapter_fails_closed_on_missing_backend(monkeypatch):
     from trustcxr.grounded_llm.candidate3_constrained_decoding import (
         Candidate3StructuredOutputError,
         build_candidate3_prefix_allowed_tokens_fn,
     )
 
+    module = __import__("trustcxr.grounded_llm.candidate3_constrained_decoding", fromlist=["x"])
+    original_import = module.importlib.import_module
+
+    def missing(name):
+        if name == "lmformatenforcer":
+            raise ImportError("missing")
+        return original_import(name)
+
+    monkeypatch.setattr(module.importlib, "import_module", missing)
     try:
         build_candidate3_prefix_allowed_tokens_fn("tokenizer")
     except Candidate3StructuredOutputError as exc:

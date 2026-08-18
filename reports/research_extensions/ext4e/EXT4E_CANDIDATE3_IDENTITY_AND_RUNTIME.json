@@ -65,15 +65,15 @@
     "quantization": "NOT_APPLIED"
   },
   "structured_output": {
-    "status": "CANDIDATE3_LMFE_NOT_INSTALLED",
+    "status": "CANDIDATE3_STRUCTURED_OUTPUT_PREFLIGHT_PASS",
     "selected_backend": "lm-format-enforcer",
     "required_version": "0.11.3",
     "mechanism": "LMFE_JSON_SCHEMA_PARSER_AND_TRANSFORMERS_PREFIX_ALLOWED_TOKENS_FN",
     "schema_source": "GroundedOutputEnvelope.model_json_schema()",
     "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
-    "schema_compilation": "NOT_RUN_LMFE_UNAVAILABLE",
-    "tokenizer_integration": "NOT_RUN_LMFE_UNAVAILABLE",
-    "prefix_allowed_tokens_fn": "NOT_CONSTRUCTED_LMFE_UNAVAILABLE",
+    "schema_compilation": "PASS",
+    "tokenizer_integration": "PASS_GPT2TOKENIZERFAST_LOCAL_FILES_ONLY",
+    "prefix_allowed_tokens_fn": "PASS",
     "installed_constrained_decoding": [],
     "fallback_allowed": false,
     "alternatives": {
@@ -83,7 +83,7 @@
     }
   },
   "dependency_audit": {
-    "production_interpreter": "UNAVAILABLE_IN_CODEX_ENVIRONMENT",
+    "production_interpreter": "UNAVAILABLE_IN_CODEX_ENVIRONMENT; SITE_PACKAGES_AUDITED_WITH_PYTHON_3_12_10_TEST_INTERPRETER",
     "python_version": "3.12.10",
     "requested_pin": "lm-format-enforcer==0.11.3",
     "pypi_wheel": "lm_format_enforcer-0.11.3-py3-none-any.whl",
@@ -91,13 +91,14 @@
     "requires_python": ">=3.8,<4.0",
     "license": "MIT",
     "direct_dependencies": ["pydantic>=1.10.8", "interegular>=0.3.2", "packaging", "pyyaml"],
-    "dependency_resolution": "NOT_EXECUTED_IN_PRODUCTION_ENVIRONMENT",
-    "torch_transformers_unchanged": "NOT_VERIFIABLE_IN_CODEX_PRODUCTION_ENVIRONMENT",
-    "installation_performed": false,
+    "dependency_resolution": "SAFE_METADATA_AUDIT; NO_TORCH_OR_TRANSFORMERS_DEPENDENCY",
+    "torch_transformers_unchanged": "4.57.6_AND_2.12.1+cu130_IN_AUDITED_SITE_PACKAGES",
+    "pip_check": "PASS_NO_BROKEN_REQUIREMENTS_FOUND",
+    "installation_performed": true,
     "xgrammar_history": "REJECTED_WINDOWS_PYTHON312_BINARY_COMPATIBILITY"
   },
   "preflight": {
-    "status": "CANDIDATE3_LMFE_NOT_INSTALLED",
+    "status": "CANDIDATE3_STRUCTURED_OUTPUT_PREFLIGHT_PASS",
     "development_cases_accessed": 0,
     "final_cases_accessed": 0,
     "locked_test_accessed": false,
@@ -111,5 +112,5 @@
     "LMFE_0_11_3_AUDITED",
     "LMFE_INSTALLATION_PENDING_PRODUCTION_ENVIRONMENT_ACCESS"
   ],
-  "next_action": "INSTALL_LM_FORMAT_ENFORCER_0_11_3_IN_GOVERNED_ENVIRONMENT_THEN_RUN_EXACT_SCHEMA_PREFLIGHT"
+    "next_action": "CANDIDATE3_ZERO_MODEL_LOAD_COMPATIBILITY_GATE"
 }

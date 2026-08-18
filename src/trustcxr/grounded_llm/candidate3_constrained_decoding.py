@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import importlib
+import importlib.metadata
 import json
 from dataclasses import dataclass
 from typing import Any
@@ -59,7 +60,7 @@ def build_candidate3_prefix_allowed_tokens_fn(
         raise Candidate3StructuredOutputError(
             "CANDIDATE3_STRUCTURED_OUTPUT_BACKEND_UNAVAILABLE"
         ) from exc
-    version = getattr(lmfe, "__version__", None)
+    version = getattr(lmfe, "__version__", None) or importlib.metadata.version("lm-format-enforcer")
     if version != PINNED_VERSION:
         raise Candidate3StructuredOutputError("CANDIDATE3_LMFE_VERSION_MISMATCH")
     try:
