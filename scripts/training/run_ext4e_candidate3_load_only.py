@@ -56,7 +56,8 @@ def validate_identity(config: dict[str, Any]) -> dict[str, Any]:
     if config["load_only"] != {
         "dtype": "bfloat16",
         "device_strategy": "CPU_ONLY_BFLOAT16",
-        "device_map": {"": "cpu"},
+        "device_policy": "cpu_only",
+        "transformers_device_map": None,
         "quantization": "none",
         "local_files_only": True,
         "trust_remote_code": False,
@@ -104,7 +105,7 @@ def load_model_only() -> tuple[Any, dict[str, Any]]:
         MODEL_ROOT,
         local_files_only=True,
         trust_remote_code=False,
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
         output_loading_info=True,
     )
     model.to("cpu")
@@ -115,13 +116,18 @@ def load_model_only() -> tuple[Any, dict[str, Any]]:
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
     dtypes = sorted({str(parameter.dtype) for parameter in model.parameters()})
     devices = sorted({str(parameter.device) for parameter in model.parameters()})
+    buffer_devices = sorted({str(buffer.device) for buffer in model.buffers()})
+    if set(devices) != {"cpu"} or set(buffer_devices) != {"cpu"}:
+        raise RuntimeError("CANDIDATE3_CPU_PLACEMENT_FAILED")
     return model, {
         "model_class": model.__class__.__name__,
         "parameter_count": parameter_count,
         "loaded_parameter_count": parameter_count,
         "dtypes": dtypes,
         "devices": devices,
-        "device_map": {"": "cpu"},
+        "device_policy": "cpu_only",
+        "transformers_device_map": None,
+        "buffer_devices": buffer_devices,
         "missing_keys": loading_info.get("missing_keys", []),
         "unexpected_keys": loading_info.get("unexpected_keys", []),
         "load_duration_seconds": time.perf_counter() - started,

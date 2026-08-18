@@ -82,9 +82,12 @@ def load_model() -> tuple[Any, Any]:
         MODEL_ROOT,
         local_files_only=True,
         trust_remote_code=False,
-        torch_dtype=torch.bfloat16,
-        device_map={"": "cpu"},
+        dtype=torch.bfloat16,
     )
+    devices = {str(parameter.device) for parameter in model.parameters()}
+    devices.update(str(buffer.device) for buffer in model.buffers())
+    if devices != {"cpu"}:
+        raise RuntimeError("CANDIDATE3_CPU_PLACEMENT_FAILED")
     return model, tokenizer
 
 

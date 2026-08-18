@@ -4,9 +4,8 @@
   "cpu_rss_after_load_bytes": 810901504,
   "cpu_rss_before_bytes": 683728896,
   "development_cases_accessed": 0,
-  "device_map": {
-    "": "cpu"
-  },
+  "device_policy": "cpu_only",
+  "transformers_device_map": null,
   "device_strategy": {
     "device_map": {
       "": "cpu"
@@ -137,6 +136,6 @@
   "real_model_inference_requests": 0,
   "revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
   "status": "CANDIDATE3_LOAD_ONLY_PASS",
-  "structured_output_preflight": "CANDIDATE3_STRUCTURED_OUTPUT_PREFLIGHT_PASS",
+  "structured_output_preflight": "LLGUIDANCE_APPROVED_FOR_CANDIDATE3_TECHNICAL_SMOKE",
   "unexpected_keys": []
 }

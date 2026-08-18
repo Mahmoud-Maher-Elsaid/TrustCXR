@@ -135,7 +135,8 @@ def test_candidate3_load_only_strategy_is_explicit_and_generation_free():
     strategy = config["load_only"]
     assert strategy["dtype"] == "bfloat16"
     assert strategy["device_strategy"] == "CPU_ONLY_BFLOAT16"
-    assert strategy["device_map"] == {"": "cpu"}
+    assert strategy["device_policy"] == "cpu_only"
+    assert strategy["transformers_device_map"] is None
     assert strategy["quantization"] == "none"
     assert strategy["local_files_only"] is True
     assert strategy["generation"] is False
@@ -193,3 +194,44 @@ def test_candidate3_llguidance_processor_preserves_prompt_boundary():
     assert matcher.consumed == [2]
     assert torch.isfinite(masked[0, 2])
     assert torch.isneginf(masked[0, 0])
+
+
+def test_candidate3_cpu_loader_uses_native_cpu_without_device_map(monkeypatch):
+    import torch
+
+    path = ROOT / "scripts/training/run_ext4e_candidate3_load_only.py"
+    spec = importlib.util.spec_from_file_location("candidate3_load_test", path)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    calls = {}
+
+    class Phi3ForCausalLM:
+        class Tensor:
+            dtype = torch.bfloat16
+            device = torch.device("cpu")
+
+            def numel(self):
+                return 1
+
+        def parameters(self):
+            return iter((self.Tensor(),))
+
+        def buffers(self):
+            return iter((self.Tensor(),))
+
+        def to(self, device):
+            assert device == "cpu"
+            return self
+
+    def fake_load(*args, **kwargs):
+        calls["model_path"] = args[0]
+        calls.update(kwargs)
+        return Phi3ForCausalLM(), {"missing_keys": [], "unexpected_keys": []}
+
+    monkeypatch.setattr(module.AutoModelForCausalLM, "from_pretrained", fake_load)
+    model, info = module.load_model_only()
+    assert calls["dtype"].__str__() == "torch.bfloat16"
+    assert "device_map" not in calls
+    assert "torch_dtype" not in calls
+    assert info["devices"] == ["cpu"]

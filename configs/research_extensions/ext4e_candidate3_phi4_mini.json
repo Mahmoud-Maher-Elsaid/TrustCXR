@@ -120,7 +120,8 @@
   "load_only": {
     "dtype": "bfloat16",
     "device_strategy": "CPU_ONLY_BFLOAT16",
-    "device_map": {"": "cpu"},
+    "device_policy": "cpu_only",
+    "transformers_device_map": null,
     "quantization": "none",
     "local_files_only": true,
     "trust_remote_code": false,
