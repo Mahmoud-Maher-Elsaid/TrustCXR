@@ -8,11 +8,67 @@
     "revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
     "load_strategy": "Phi3ForCausalLM; local_files_only; trust_remote_code=false; bfloat16; CPU-only",
     "backend": "llguidance==1.8.0",
-    "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650"
+    "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
+    "status": "CLOSED",
+    "decision": "SYNTHETIC_EXT4C_GATE_FAILED / NOT_ELIGIBLE_FOR_DEVELOPMENT_EVALUATION",
+    "gate_reached": "SYNTHETIC_EXT4C_SEMANTIC_VALIDATION",
+    "gate_result": "FAIL",
+    "development_evaluation_opened": false
+  },
+  "candidate_table": [
+    {
+      "candidate": 1,
+      "model": "Qwen3-8B",
+      "status": "CLOSED",
+      "result": "DEVELOPMENT_GATE_FAILED / NOT_SCIENTIFICALLY_SELECTED"
+    },
+    {
+      "candidate": 2,
+      "model": "Ministral-3-8B-Instruct-2512",
+      "status": "CLOSED",
+      "result": "DEVELOPMENT_GATE_FAILED / NOT_SCIENTIFICALLY_SELECTED"
+    },
+    {
+      "candidate": 3,
+      "model": "Phi-4-mini-instruct",
+      "status": "CLOSED",
+      "result": "SYNTHETIC_EXT4C_GATE_FAILED / NOT_ELIGIBLE_FOR_DEVELOPMENT_EVALUATION"
+    }
+  ],
+  "latest_real_run": {
+    "run_id": "20260818T094959Z_14a6e900",
+    "artifact_path": "artifacts/research_extensions/ext4e_candidate3/development_evaluation/20260818T094959Z_14a6e900",
+    "ledger_path": "artifacts/research_extensions/ext4e_candidate3/development_evaluation/20260818T094959Z_14a6e900/run_ledger.json",
+    "synthetic_request_path": "artifacts/research_extensions/ext4e_candidate3/development_evaluation/20260818T094959Z_14a6e900/synthetic_smoke/request.json",
+    "raw_generated_continuation_path": "artifacts/research_extensions/ext4e_candidate3/development_evaluation/20260818T094959Z_14a6e900/synthetic_smoke/raw_model_content.txt",
+    "parsed_json_path": null,
+    "validation_artifact": "GroundedOutputEnvelope.model_validate(raw_json)",
+    "final_report_path": "reports/research_extensions/ext4e/EXT4E_FINAL_CANDIDATE_SELECTION_REPORT.json",
+    "model_load_pass": true,
+    "structured_backend": "llguidance==1.8.0",
+    "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
+    "vocabulary_alignment": "PASS; model 200064, constraint domain 200029, tail 35 forbidden",
+    "synthetic_attempted": true,
+    "generate_call_count": 1,
+    "generation_started": true,
+    "generation_completed": false,
+    "generated_tokens": 0,
+    "json_parse_result": "PASS",
+    "ext4c_validation_executed": true,
+    "ext4c_valid": false,
+    "validation_failure": "Unavailable uncertainty cannot carry a value or source",
+    "development_cases_accessed": 0,
+    "final_cases_accessed": 0,
+    "locked_test_accessed": false,
+    "cleanup_result": "NOT_RECORDED_IN_IMMUTABLE_RUN_LEDGER"
   },
   "final_cases_accessed": 0,
   "locked_test_accessed": false,
-  "final_disposition": "PENDING_REAL_LOCAL_RUN",
+  "selected_candidate": "NONE",
+  "final_disposition": "RETAIN_DETERMINISTIC_REPORTING",
+  "stage18_reporting": "RETAINED_GOVERNED_DETERMINISTIC_REPORTING; LLM extension did not demonstrate sufficient governed reliability to replace it",
+  "frozen_final_status": "UNOPENED",
+  "locked_test_status": "UNOPENED",
   "technical_history": [
     "FINAL_RUN_LLGUIDANCE_INSTALLATION_PASS",
     "FINAL_RUN_PIP_CHECK_PASS",
@@ -21,7 +77,10 @@
     "FINAL_RUN_LLGUIDANCE_ACTIVE_FIRST_GENERATE_ENTERED",
     "FINAL_RUN_MASK_SHAPE_FAILURE_CONSTRAINT_VOCAB_200029_MODEL_LOGITS_200064",
     "MODEL_ONLY_UNREGISTERED_VOCAB_TAIL_IDS_200029_200063_COUNT_35",
-    "TECHNICAL_VOCABULARY_SPACE_ALIGNMENT_REPAIR_FAIL_CLOSED_TAIL_MASKING"
+    "TECHNICAL_VOCABULARY_SPACE_ALIGNMENT_REPAIR_FAIL_CLOSED_TAIL_MASKING",
+    "FINAL_RUN_SYNTHETIC_JSON_PARSE_PASS_EXT4C_SEMANTIC_FAIL",
+    "CANDIDATE3_CLOSED_BEFORE_DEVELOPMENT_EVALUATION",
+    "EXT4E_CLOSED_RETAIN_DETERMINISTIC_REPORTING"
   ],
   "latest_failed_attempt": {
     "classification": "CANDIDATE3_VOCAB_ALIGNMENT_FAILED",
@@ -48,5 +107,5 @@
     "pad_token_id": 199999,
     "policy": "identity_prefix_model_only_tail_forbidden"
   },
-  "next_stage": "RUN_ONE_GOVERNED_LOCAL_CANDIDATE3_END_TO_END_COMMAND"
+  "next_stage": "RETAIN_DETERMINISTIC_REPORTING; NO_CANDIDATE4_OR_BACKEND5"
 }
