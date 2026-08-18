@@ -28,6 +28,16 @@ def test_candidate3_identity_is_official_and_immutable():
     assert config["format"] == "safetensors"
     assert config["license"] == "MIT"
     assert all(item["sha256"] for item in config["artifacts"][:2])
+    assert config["artifacts"][0]["size_bytes"] == 4903637712
+    assert config["artifacts"][1]["size_bytes"] == 2768428504
+    assert config["download"]["required"] is False
+    assert {item["filename"] for item in config["artifacts"]} >= {
+        "config.json",
+        "tokenizer.json",
+        "tokenizer_config.json",
+        "configuration_phi3.py",
+        "modeling_phi3.py",
+    }
 
 
 def test_candidate3_preflight_is_partition_safe_and_generation_free():
@@ -51,3 +61,10 @@ def test_candidate3_request_builder_preserves_schema_without_reasoning_fallback(
     assert "grammar" not in payload
     assert payload["temperature"] == 0.0
     assert "retry_count" not in payload
+
+
+def test_candidate3_structured_output_fails_closed_without_constrained_decoder():
+    module = _module()
+    result = module.structured_output_preflight()
+    assert result["status"] == "CANDIDATE3_STRUCTURED_OUTPUT_MECHANISM_NOT_YET_ESTABLISHED"
+    assert result["available_constrained_decoding"] == []
