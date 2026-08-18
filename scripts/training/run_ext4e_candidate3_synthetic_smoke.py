@@ -102,7 +102,6 @@ def main() -> int:
         "llguidance_version": identity["llguidance_version"],
         "generation_parameters": {
             "max_new_tokens": 768,
-            "temperature": 0.0,
             "top_p": 1.0,
             "do_sample": False,
             "seed": 20260806,
@@ -126,7 +125,10 @@ def main() -> int:
         )
         inputs = tokenizer(rendered, return_tensors="pt")
         constraint = build_candidate3_prefix_allowed_tokens_fn(
-            tokenizer, schema=schema, prompt_length=int(inputs["input_ids"].shape[1])
+            tokenizer,
+            schema=schema,
+            prompt_length=int(inputs["input_ids"].shape[1]),
+            model_vocab_size=int(model.config.vocab_size),
         )
         assert_generation_constraint(constraint)
         torch.manual_seed(20260806)
@@ -144,7 +146,6 @@ def main() -> int:
         output_ids = model.generate(
             **inputs,
             max_new_tokens=768,
-            temperature=0.0,
             top_p=1.0,
             do_sample=False,
             pad_token_id=tokenizer.eos_token_id,

@@ -84,11 +84,27 @@ def load_model() -> tuple[Any, Any]:
         trust_remote_code=False,
         dtype=torch.bfloat16,
     )
+    output_embeddings = model.get_output_embeddings()
+    if output_embeddings is None or int(output_embeddings.weight.shape[0]) != int(
+        model.config.vocab_size
+    ):
+        raise RuntimeError("CANDIDATE3_MODEL_OUTPUT_VOCABULARY_MISMATCH")
     devices = {str(parameter.device) for parameter in model.parameters()}
     devices.update(str(buffer.device) for buffer in model.buffers())
     if devices != {"cpu"}:
         raise RuntimeError("CANDIDATE3_CPU_PLACEMENT_FAILED")
     return model, tokenizer
+
+
+def governed_generation_kwargs(tokenizer: Any, constraint: Any) -> dict[str, Any]:
+    """Deterministic generation settings; sampling-only temperature is omitted."""
+    return {
+        "max_new_tokens": 768,
+        "top_p": 1.0,
+        "do_sample": False,
+        "pad_token_id": tokenizer.eos_token_id,
+        "logits_processor": [constraint.logits_processor],
+    }
 
 
 def generate_one(
@@ -98,11 +114,15 @@ def generate_one(
     run_dir: Path,
     label: str,
     schema_value: dict[str, Any],
+    before_generate: Any | None = None,
 ) -> dict[str, Any]:
     rendered = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     inputs = tokenizer(rendered, return_tensors="pt")
     constraint = build_candidate3_logits_processor(
-        tokenizer, schema=schema_value, prompt_length=int(inputs["input_ids"].shape[1])
+        tokenizer,
+        schema=schema_value,
+        prompt_length=int(inputs["input_ids"].shape[1]),
+        model_vocab_size=int(model.config.vocab_size),
     )
     assert_generation_constraint(constraint)
     write_json(
@@ -111,24 +131,17 @@ def generate_one(
             "messages": messages,
             "generation": {
                 "max_new_tokens": 768,
-                "temperature": 0.0,
                 "top_p": 1.0,
                 "do_sample": False,
                 "seed": 20260806,
             },
         },
     )
+    if before_generate is not None:
+        before_generate()
     input_len = int(inputs["input_ids"].shape[1])
     started = time.perf_counter()
-    output_ids = model.generate(
-        **inputs,
-        max_new_tokens=768,
-        temperature=0.0,
-        top_p=1.0,
-        do_sample=False,
-        pad_token_id=tokenizer.eos_token_id,
-        logits_processor=[constraint.logits_processor],
-    )
+    output_ids = model.generate(**inputs, **governed_generation_kwargs(tokenizer, constraint))
     continuation = output_ids[0][input_len:]
     text = tokenizer.decode(continuation, skip_special_tokens=True).strip()
     (run_dir / "raw_model_content.txt").write_text(text, encoding="utf-8")
@@ -183,8 +196,27 @@ def main() -> int:
         ]
         smoke_dir = run_root / "synthetic_smoke"
         smoke_dir.mkdir()
-        smoke = generate_one(model, tokenizer, messages, smoke_dir, "synthetic", schema_value)
-        ledger["generate_call_count"] = 1
+
+        def mark_synthetic_started() -> None:
+            ledger["generate_call_count"] = 1
+            ledger["synthetic_attempt"] = {
+                "request_attempted": True,
+                "request_count": 1,
+                "generation_started": True,
+                "generation_completed": False,
+            }
+            write_json(run_root / "run_ledger.json", ledger)
+
+        smoke = generate_one(
+            model,
+            tokenizer,
+            messages,
+            smoke_dir,
+            "synthetic",
+            schema_value,
+            before_generate=mark_synthetic_started,
+        )
+        ledger["synthetic_attempt"]["generation_completed"] = True
         candidate = json.loads(smoke["text"])
         GroundedOutputEnvelope.model_validate(candidate)
         write_json(
@@ -217,6 +249,12 @@ def main() -> int:
             ledger["development_cases_accessed"] += 1
             ledger["development_requests_attempted"] += 1
             write_json(run_root / "run_ledger.json", ledger)
+
+            def mark_case_started(case_id: str = case_id) -> None:
+                ledger["generate_call_count"] += 1
+                ledger["cases"][case_id]["generation_started"] = True
+                write_json(run_root / "run_ledger.json", ledger)
+
             result = generate_one(
                 model,
                 tokenizer,
@@ -224,13 +262,13 @@ def main() -> int:
                 case_dir,
                 case_id,
                 schema_value,
+                before_generate=mark_case_started,
             )
             (case_dir / "raw_http_response.json").write_text(
                 json.dumps({"choices": [{"message": {"content": result["text"]}}]}) + "\n",
                 encoding="utf-8",
             )
             write_json(case_dir / "ext4c_output_schema.json", schema_value)
-            ledger["generate_call_count"] += 1
             ledger["cases"][case_id].update(
                 {
                     "generation_started": True,

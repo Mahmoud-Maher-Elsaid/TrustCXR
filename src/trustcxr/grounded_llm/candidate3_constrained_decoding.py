@@ -39,6 +39,27 @@ class Candidate3Constraint:
     backend: str
     backend_version: str
     schema_sha256: str
+    vocab_alignment: dict[str, Any]
+
+
+def _validate_tokenizer_domain(tokenizer: Any, constraint_vocab_size: int) -> dict[str, Any]:
+    """Prove that llguidance IDs are an identity prefix of HF tokenizer IDs."""
+    try:
+        vocabulary = tokenizer.get_vocab()
+        ids = list(vocabulary.values())
+    except Exception as exc:  # pragma: no cover - defensive runtime guard
+        raise Candidate3StructuredOutputError("CANDIDATE3_VOCAB_ALIGNMENT_FAILED") from exc
+    if len(ids) != len(set(ids)) or sorted(ids) != list(range(constraint_vocab_size)):
+        raise Candidate3StructuredOutputError("CANDIDATE3_VOCAB_ALIGNMENT_FAILED")
+    max_id = max(ids, default=-1)
+    return {
+        "tokenizer_vocab_size": int(getattr(tokenizer, "vocab_size", len(ids))),
+        "tokenizer_len": len(tokenizer),
+        "tokenizer_max_id": max_id,
+        "constraint_vocab_size": constraint_vocab_size,
+        "mapping_identity_verified": True,
+        "alignment_policy": "identity_prefix_model_only_tail_forbidden",
+    }
 
 
 def build_candidate3_logits_processor(
@@ -46,6 +67,7 @@ def build_candidate3_logits_processor(
     *,
     schema: dict[str, Any] | None = None,
     prompt_length: int,
+    model_vocab_size: int | None = None,
 ) -> Candidate3Constraint:
     """Compile the exact schema and construct a Transformers processor."""
 
@@ -72,10 +94,24 @@ def build_candidate3_logits_processor(
         matcher = llg.LLMatcher(ll_tokenizer, grammar, log_level=0)
         if matcher.is_error():
             raise ValueError(matcher.get_error())
+        alignment = _validate_tokenizer_domain(tokenizer, ll_tokenizer.vocab_size)
+        if model_vocab_size is not None:
+            if ll_tokenizer.vocab_size > model_vocab_size:
+                raise Candidate3StructuredOutputError("CANDIDATE3_VOCAB_ALIGNMENT_FAILED")
+            alignment.update(
+                {
+                    "model_vocab_size": model_vocab_size,
+                    "output_logits_vocab_size": model_vocab_size,
+                    "unregistered_model_tail_start": ll_tokenizer.vocab_size,
+                    "unregistered_model_tail_end": model_vocab_size - 1,
+                    "unregistered_model_tail_count": model_vocab_size - ll_tokenizer.vocab_size,
+                }
+            )
         processor = Candidate3LLGuidanceLogitsProcessor(
             matcher,
             ll_tokenizer.vocab_size,
             prompt_length,
+            alignment=alignment,
         )
     except Candidate3StructuredOutputError:
         raise
@@ -83,24 +119,53 @@ def build_candidate3_logits_processor(
         raise Candidate3StructuredOutputError(
             "CANDIDATE3_LLGUIDANCE_SCHEMA_OR_TOKENIZER_COMPILATION_FAILED"
         ) from exc
-    return Candidate3Constraint(processor, matcher, BACKEND, version, digest)
+    return Candidate3Constraint(processor, matcher, BACKEND, version, digest, alignment)
 
 
 class Candidate3LLGuidanceLogitsProcessor:
     """Transformers logits processor that advances one matcher per token."""
 
-    def __init__(self, matcher: Any, vocab_size: int, prompt_length: int):
+    def __init__(
+        self,
+        matcher: Any,
+        vocab_size: int,
+        prompt_length: int,
+        *,
+        alignment: dict[str, Any] | None = None,
+    ):
         self.matcher = matcher
         self.vocab_size = vocab_size
         self.prompt_length = prompt_length
+        self.alignment = alignment or {
+            "constraint_vocab_size": vocab_size,
+            "mapping_identity_verified": False,
+        }
         self._last_length: int | None = None
 
-    def _mask(self, torch: Any, device: Any) -> Any:
+    def _mask(self, torch: Any, device: Any, logits_vocab_size: int) -> Any:
+        if self.vocab_size > logits_vocab_size:
+            raise Candidate3StructuredOutputError("CANDIDATE3_VOCAB_ALIGNMENT_FAILED")
+        if not self.alignment.get("mapping_identity_verified", False):
+            raise Candidate3StructuredOutputError("CANDIDATE3_VOCAB_ALIGNMENT_FAILED")
         bits = self.matcher.compute_bitmask()
-        allowed = torch.zeros(self.vocab_size, dtype=torch.bool, device=device)
+        allowed_domain = torch.zeros(self.vocab_size, dtype=torch.bool, device=device)
         for token_id in range(self.vocab_size):
             if bits[token_id // 8] & (1 << (token_id % 8)):
-                allowed[token_id] = True
+                allowed_domain[token_id] = True
+        if self.vocab_size == logits_vocab_size:
+            return allowed_domain
+        # IDs are proven identity-aligned; unregistered model-only tail stays false.
+        allowed = torch.zeros(logits_vocab_size, dtype=torch.bool, device=device)
+        allowed[: self.vocab_size] = allowed_domain
+        self.alignment.update(
+            {
+                "model_vocab_size": logits_vocab_size,
+                "output_logits_vocab_size": logits_vocab_size,
+                "unregistered_model_tail_start": self.vocab_size,
+                "unregistered_model_tail_end": logits_vocab_size - 1,
+                "unregistered_model_tail_count": logits_vocab_size - self.vocab_size,
+            }
+        )
         return allowed
 
     def __call__(self, input_ids: Any, scores: Any) -> Any:
@@ -116,7 +181,12 @@ class Candidate3LLGuidanceLogitsProcessor:
             if not self.matcher.consume_token(token_id):
                 raise Candidate3StructuredOutputError("CANDIDATE3_LLGUIDANCE_TOKEN_CONSUME_FAILED")
             self._last_length += 1
-        allowed = self._mask(torch, scores.device)
+        if scores.ndim != 2:
+            raise Candidate3StructuredOutputError("CANDIDATE3_VOCAB_ALIGNMENT_FAILED")
+        expected = self.alignment.get("model_vocab_size")
+        if expected is not None and int(scores.shape[-1]) != int(expected):
+            raise Candidate3StructuredOutputError("CANDIDATE3_VOCAB_ALIGNMENT_FAILED")
+        allowed = self._mask(torch, scores.device, int(scores.shape[-1]))
         return scores.masked_fill(~allowed.unsqueeze(0), float("-inf"))
 
 

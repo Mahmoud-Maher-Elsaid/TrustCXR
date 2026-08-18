@@ -186,7 +186,12 @@ def test_candidate3_llguidance_processor_preserves_prompt_boundary():
             return True
 
     matcher = Matcher()
-    processor = Candidate3LLGuidanceLogitsProcessor(matcher, 8, prompt_length=3)
+    processor = Candidate3LLGuidanceLogitsProcessor(
+        matcher,
+        8,
+        prompt_length=3,
+        alignment={"mapping_identity_verified": True, "constraint_vocab_size": 8},
+    )
     scores = torch.zeros((1, 8))
     processor(torch.tensor([[10, 11, 12]]), scores)
     assert matcher.consumed == []
@@ -194,6 +199,74 @@ def test_candidate3_llguidance_processor_preserves_prompt_boundary():
     assert matcher.consumed == [2]
     assert torch.isfinite(masked[0, 2])
     assert torch.isneginf(masked[0, 0])
+
+
+def test_candidate3_llguidance_expands_identity_domain_and_forbids_model_tail():
+    import torch
+
+    from trustcxr.grounded_llm.candidate3_constrained_decoding import (
+        Candidate3LLGuidanceLogitsProcessor,
+    )
+
+    class Matcher:
+        def compute_bitmask(self):
+            bits = bytearray(200029 // 8 + 1)
+            bits[7 // 8] |= 1 << (7 % 8)
+            return bytes(bits)
+
+        def consume_token(self, token):
+            return True
+
+    processor = Candidate3LLGuidanceLogitsProcessor(
+        Matcher(),
+        200029,
+        prompt_length=1,
+        alignment={
+            "mapping_identity_verified": True,
+            "constraint_vocab_size": 200029,
+            "model_vocab_size": 200064,
+        },
+    )
+    masked = processor(torch.tensor([[42]]), torch.zeros((1, 200064)))
+    assert tuple(masked.shape) == (1, 200064)
+    assert torch.isfinite(masked[0, 7])
+    assert torch.isneginf(masked[0, 6])
+    assert torch.isneginf(masked[0, 200029:]).all()
+
+
+def test_candidate3_vocab_alignment_rejects_unproven_mapping():
+    import torch
+
+    from trustcxr.grounded_llm.candidate3_constrained_decoding import (
+        Candidate3LLGuidanceLogitsProcessor,
+        Candidate3StructuredOutputError,
+    )
+
+    class Matcher:
+        def compute_bitmask(self):
+            return bytes([1])
+
+    processor = Candidate3LLGuidanceLogitsProcessor(Matcher(), 8, prompt_length=0)
+    with pytest.raises(Candidate3StructuredOutputError, match="VOCAB_ALIGNMENT_FAILED"):
+        processor(torch.empty((1, 0), dtype=torch.long), torch.zeros((1, 8)))
+
+
+def test_candidate3_deterministic_generation_omits_inert_temperature():
+    path = ROOT / "scripts/training/run_ext4e_candidate3.py"
+    spec = importlib.util.spec_from_file_location("candidate3_generation_test", path)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    class Tokenizer:
+        eos_token_id = 199999
+
+    class Constraint:
+        logits_processor = object()
+
+    kwargs = module.governed_generation_kwargs(Tokenizer(), Constraint())
+    assert kwargs["do_sample"] is False
+    assert "temperature" not in kwargs
 
 
 def test_candidate3_cpu_loader_uses_native_cpu_without_device_map(monkeypatch):
