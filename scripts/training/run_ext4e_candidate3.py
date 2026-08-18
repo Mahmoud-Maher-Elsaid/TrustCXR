@@ -265,6 +265,25 @@ def main() -> int:
                         "failure_classification": "EXT4C_SEMANTIC_VALIDATION_FAIL",
                     }
                 )
+            write_json(
+                case_dir / "run_metadata.json",
+                {
+                    "case_id": case_id,
+                    "partition": "development",
+                    "inference_request_count": 1,
+                    "retry_count": 0,
+                    "generation_started": True,
+                    "generation_completed": True,
+                    "response_parse_valid": ledger["cases"][case_id].get("parse_valid", False),
+                    "attempt_state": "ATTEMPTED_COMPLETE",
+                    "ext4c_valid": ledger["cases"][case_id].get("ext4c_valid"),
+                    "scorer_executed": ledger["cases"][case_id].get("scorer_executed", False),
+                    "case_passed": ledger["cases"][case_id].get("case_pass", False),
+                    "development_cases_accessed": 1,
+                    "frozen_final_cases_accessed": 0,
+                    "locked_test_accessed": False,
+                },
+            )
             write_json(run_root / "run_ledger.json", ledger)
             evidence[case_id] = case_dir
         aggregate = aggregate_evidence(CASES_PATH, evidence)
