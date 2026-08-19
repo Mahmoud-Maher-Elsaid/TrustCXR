@@ -1,0 +1,30 @@
+{
+  "report_id": "EXT4F1_SEMANTIC_PLANNER_AND_CONTRACT_V1_REPORT",
+  "status": "EXT4F1_SEMANTIC_PLANNER_AND_CONTRACT_V1_PASS",
+  "contract_version": "EXT4F_SEMANTIC_GENERATION_CONTRACT_V1",
+  "planner_entry_point": "trustcxr.grounded_llm.ext4f_contracts.build_ext4f_semantic_plan",
+  "validator_entry_point": "trustcxr.grounded_llm.ext4f_contracts.validate_ext4f_semantic_plan",
+  "canonicalization_version": "EXT4F_CANONICAL_JSON_V1",
+  "invariant_total": 22,
+  "invariant_implemented": 22,
+  "invariant_blocked": 0,
+  "cross_field_invariants_enforced": 15,
+  "state_variants": ["AvailableUncertainty", "UnavailableUncertainty"],
+  "not_applicable_policy": "Retained as an evidence status; the upstream uncertainty contract has no NOT_APPLICABLE state.",
+  "uncertainty_policy": "Discriminated available/unavailable variants make NOT_AVAILABLE payload fields impossible in a valid plan.",
+  "defer_policy": "Planner copies governed decision state and emits no claims when DEFER is active.",
+  "reference_policy": "All plan claim, limitation, contradiction, and realization references must resolve; duplicates and unknown IDs fail closed.",
+  "realization_authority": {
+    "deterministic": ["evidence states", "claim IDs", "references", "provenance", "uncertainty", "DEFER", "WITHHELD", "contradictions", "limitations", "forbidden additions"],
+    "future_llm_only": ["bounded wording fields"]
+  },
+  "semantic_plan_hash": "SHA-256 over canonical EXT4F_CANONICAL_JSON_V1 content excluding plan_id and semantic_plan_sha256",
+  "fixtures": {"valid": 6, "invalid": 8, "benchmark": false},
+  "model_generation_calls": 0,
+  "development_benchmark_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "frozen_ext4c_schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
+  "stage18_modified": false,
+  "next_stage": "EXT4F.2_DETERMINISTIC_SEMANTIC_UNIT_VALIDATION"
+}
