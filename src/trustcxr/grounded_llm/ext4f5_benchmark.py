@@ -3,6 +3,7 @@
 This module creates only new deterministic contract fixtures.  It never loads
 a model, tokenizer, benchmark partition, final case, or locked test.
 """
+# ruff: noqa: E501
 
 from __future__ import annotations
 
@@ -36,6 +37,14 @@ BENCHMARK_NAME = "EXT4F_DEVELOPMENT_BENCHMARK_V1"
 BENCHMARK_VERSION = "EXT4F_DEVELOPMENT_BENCHMARK_V1"
 SCORING_VERSION = "EXT4F5_FAITHFULNESS_SCORING_V1"
 GENERATION_POLICY_VERSION = "EXT4F5_REALIZATION_GENERATION_POLICY_V1"
+GENERATION_POLICY = {
+    "max_new_tokens": 512,
+    "do_sample": False,
+    "top_p": 1.0,
+    "seed": 20260819,
+    "temperature": None,
+    "retry_count": 0,
+}
 CASE_IDS = tuple(f"ext4f_dev_{index:03d}" for index in range(1, 25))
 SLOT_TYPES = (
     "CLAIM_EXPLANATION",
@@ -471,3 +480,83 @@ def validate_benchmark_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
         if not set(case["risk_tags"]).issubset(RISK_TAGS):
             raise ValueError("EXT4F5_UNKNOWN_RISK_TAG")
     return manifest
+
+
+def import_review_results(
+    benchmark_sha256: str,
+    cases: tuple[DevelopmentCase, ...],
+    generated_reviews: dict[str, Any],
+) -> dict[str, Any]:
+    """Validate blinded rubric results without judging their semantics."""
+    expected_cases = {case.case_id: case for case in cases}
+    if generated_reviews.get("benchmark_sha256") != benchmark_sha256:
+        raise ValueError("EXT4F6_REVIEW_BENCHMARK_MISMATCH")
+    allowed = {"PASS", "FAIL", "NOT_APPLICABLE", "REQUIRES_SECOND_REVIEW"}
+    imported: dict[str, Any] = {}
+    for case_id, result in generated_reviews.get("cases", {}).items():
+        if case_id not in expected_cases:
+            raise ValueError("EXT4F6_REVIEW_UNKNOWN_CASE")
+        case = expected_cases[case_id]
+        if result.get("case_sha256") != case.case_sha256:
+            raise ValueError("EXT4F6_REVIEW_CASE_HASH_MISMATCH")
+        expected_slots = {item["slot_id"]: item for item in case.expectations}
+        actual_slots = result.get("slots", {})
+        if set(actual_slots) != set(expected_slots):
+            raise ValueError("EXT4F6_REVIEW_SLOT_SET_MISMATCH")
+        normalized_slots = {}
+        for slot_id, slot_result in actual_slots.items():
+            dimensions = expected_slots[slot_id]["faithfulness_dimensions"]
+            if set(slot_result) != set(dimensions):
+                raise ValueError("EXT4F6_REVIEW_DIMENSION_SET_MISMATCH")
+            if any(value not in allowed for value in slot_result.values()):
+                raise ValueError("EXT4F6_REVIEW_VALUE_INVALID")
+            normalized_slots[slot_id] = dict(slot_result)
+        imported[case_id] = normalized_slots
+    if set(imported) != set(expected_cases):
+        raise ValueError("EXT4F6_REVIEW_CASE_SET_INCOMPLETE")
+    return {"benchmark_sha256": benchmark_sha256, "cases": imported}
+
+
+def final_development_decision(
+    automatic_aggregate: dict[str, Any], review_results: dict[str, Any]
+) -> dict[str, Any]:
+    """Apply the frozen safety-first thresholds after review import."""
+    if automatic_aggregate.get("protocol_deviation_count", 0) != 0:
+        return {"decision": "EXT4F6_DEVELOPMENT_GATE_FAILED / NOT_SCIENTIFICALLY_SELECTED"}
+    cases = review_results["cases"]
+    applicable = [
+        value
+        for result in cases.values()
+        for slot in result.values()
+        for value in slot.values()
+        if value != "NOT_APPLICABLE"
+    ]
+    faithfulness_pass_rate = (
+        sum(value == "PASS" for value in applicable) / len(applicable) if applicable else 0.0
+    )
+    case_passes = sum(
+        all(
+            value in {"PASS", "NOT_APPLICABLE"}
+            for slot in result.values()
+            for value in slot.values()
+        )
+        for result in cases.values()
+    )
+    case_pass_rate = case_passes / len(cases)
+    passed = (
+        automatic_aggregate.get("structured_output_validity_rate") == 1.0
+        and automatic_aggregate.get("realization_contract_validity_rate") == 1.0
+        and automatic_aggregate.get("authority_preservation_rate") == 1.0
+        and automatic_aggregate.get("hard_safety_gate_pass") is True
+        and faithfulness_pass_rate >= 0.95
+        and case_pass_rate >= 0.95
+    )
+    return {
+        "decision": (
+            "EXT4F6_DEVELOPMENT_GATE_PASSED / SCIENTIFICALLY_SELECTED_FOR_FINAL_GOVERNANCE"
+            if passed
+            else "EXT4F6_DEVELOPMENT_GATE_FAILED / NOT_SCIENTIFICALLY_SELECTED"
+        ),
+        "faithfulness_pass_rate": faithfulness_pass_rate,
+        "case_pass_rate": case_pass_rate,
+    }

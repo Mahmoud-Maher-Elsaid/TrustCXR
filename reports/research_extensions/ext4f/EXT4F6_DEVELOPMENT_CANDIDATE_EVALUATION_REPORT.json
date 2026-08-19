@@ -1,0 +1,19 @@
+{
+  "stage": "EXT-4F.6",
+  "status": "READY_FOR_LOCAL_EXECUTION",
+  "candidate_id": "EXT4F_CANDIDATE_PHI4_MINI_V1",
+  "model": "microsoft/Phi-4-mini-instruct",
+  "model_revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+  "benchmark_name": "EXT4F_DEVELOPMENT_BENCHMARK_V1",
+  "benchmark_sha256": "671a04d2d859f1b1ffb9414a8c0f636596949748a00548e45abcbbfdb752db61",
+  "case_count": 24,
+  "generation_policy_version": "EXT4F5_REALIZATION_GENERATION_POLICY_V1",
+  "retry_policy": "exactly_one_request_per_case_no_retry",
+  "max_generate_calls": 24,
+  "automatic_evaluation": "NOT_EXECUTED",
+  "semantic_adjudication": "PENDING",
+  "development_cases_accessed": 0,
+  "final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "next_stage": "EXT-4F.7_SEPARATE_FINAL_GOVERNANCE_GATE"
+}
