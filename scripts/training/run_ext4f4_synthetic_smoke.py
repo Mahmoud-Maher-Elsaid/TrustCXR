@@ -291,6 +291,7 @@ def main() -> int:
         )
         record["generate_call_count"] = 1
         record["generation_completed"] = True
+        record["phase"] = "GENERATION_COMPLETED"
         record["generation_duration_seconds"] = time.perf_counter() - started
         continuation = output_ids[0][prompt_length:]
         record["generated_tokens"] = int(continuation.shape[0])
@@ -309,6 +310,7 @@ def main() -> int:
                 "technical_faithfulness_probes": (
                     "PASS; free-text faithfulness reserved for later evaluation"
                 ),
+                "phase": "VALIDATION_COMPLETED",
                 "terminal_status": "EXT4F4_SYNTHETIC_LLM_TECHNICAL_SMOKE_PASS",
             }
         )
@@ -348,6 +350,8 @@ def main() -> int:
         gc.collect()
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+        if record["terminal_status"] == "EXT4F4_SYNTHETIC_LLM_TECHNICAL_SMOKE_PASS":
+            record["phase"] = "TERMINAL"
         record["real_model_inference_requests"] = record["generate_call_count"]
         record["terminal_time"] = datetime.now(UTC).isoformat()
         ledger_path.write_text(json.dumps(record, indent=2, default=str) + "\n", encoding="utf-8")

@@ -1,7 +1,7 @@
 {
   "stage": "EXT-4F.4",
-  "run_id": "20260819T161035Z_de72650e",
-  "attempt_id": "ext4f4_realization_20260819T161035Z_de72650e",
+  "run_id": "20260819T162713Z_3ee2242f",
+  "attempt_id": "ext4f4_realization_20260819T162713Z_3ee2242f",
   "synthetic_case_id": "research_case_ext4f4_realization_001",
   "model": "microsoft/Phi-4-mini-instruct",
   "model_revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
@@ -9,16 +9,17 @@
   "realization_contract": "EXT4F_REALIZATION_CONTRACT_V1",
   "structured_backend": "llguidance",
   "backend_version": "1.8.0",
-  "generate_call_count": 0,
-  "generation_started": false,
-  "generation_completed": false,
-  "generated_tokens": 0,
+  "generate_call_count": 1,
+  "generation_started": true,
+  "generation_completed": true,
+  "generated_tokens": 373,
   "development_cases_accessed": 0,
   "frozen_final_cases_accessed": 0,
   "locked_test_accessed": false,
   "model_load_started": true,
   "model_load_completed": true,
-  "terminal_status": "EXT4F4_SYNTHETIC_TECHNICAL_GENERATION_FAILED",
+  "terminal_status": "EXT4F4_SYNTHETIC_LLM_TECHNICAL_SMOKE_PASS",
+  "phase": "GENERATION_STARTED",
   "runtime": {
     "python": "3.12.10",
     "torch": "2.12.1+cu130",
@@ -31,7 +32,7 @@
   "realization_request_sha256": "abc7b4f05a1d9a6724fe2b5d61dafa2ecb1531f08ac6ff555dc85506d18e13cf",
   "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
   "authority_preflight": "PASS",
-  "structured_decoding_preflight": "PENDING_TOKENIZER",
+  "structured_decoding_preflight": "EXT4F4_STRUCTURED_DECODING_PREFLIGHT_PASS",
   "prompt_token_count": 442,
   "model_load": {
     "model_class": "Phi3ForCausalLM",
@@ -50,7 +51,7 @@
     ],
     "missing_keys": [],
     "unexpected_keys": [],
-    "load_duration_seconds": 0.4112767999758944
+    "load_duration_seconds": 0.3568837999482639
   },
   "identity": {
     "artifacts": [
@@ -122,37 +123,41 @@
     ],
     "llguidance_version": "1.8.0"
   },
-  "failure": "Candidate3StructuredOutputError: CANDIDATE3_STRUCTURED_OUTPUT_GATE_FAILED",
-  "failure_classification": "PRE_GENERATION_TECHNICAL_PREFLIGHT_FAILURE",
-  "root_cause": "assert_generation_constraint compared the active EXT-4F realization schema hash against the historical EXT4C global schema hash.",
-  "stale_pending_tokenizer_lifecycle": true,
-  "old_ext4e_hard_coding_involved": true,
-  "repair": {
-    "status": "IMPLEMENTED",
-    "schema_gate": "explicit expected schema identity",
-    "initial_mask_required": true,
-    "runtime_tokenizer_finalization": "PASS",
-    "old_ext4e_behavior_preserved": true
-  },
-  "zero_generation_final_structured_preflight": {
-    "status": "EXT4F4_STRUCTURED_DECODING_PREFLIGHT_PASS",
-    "schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
-    "tokenizer_class": "GPT2TokenizerFast",
-    "tokenizer_vocab_size": 200019,
-    "tokenizer_length": 200029,
+  "tokenizer_identity": {
+    "class": "GPT2TokenizerFast",
+    "vocab_size": 200019,
+    "length": 200029,
     "max_registered_id": 200028,
     "eos_token_id": 199999,
-    "prompt_token_count": 442,
-    "grammar_compilation": "PASS",
-    "strict_grammar_validation": "PASS",
-    "matcher": "PASS",
-    "initial_mask": "PASS",
-    "processor": "PASS",
-    "processor_probe_shape": [1, 200064],
-    "model_only_tail_forbidden": true,
-    "model_generate_calls": 0
+    "status": "PASS"
   },
+  "generation_parameters": {
+    "max_new_tokens": 512,
+    "do_sample": false,
+    "top_p": 1.0,
+    "seed": 20260819,
+    "pad_token_id": 199999,
+    "temperature": null
+  },
+  "request_attempted": true,
+  "generation_start_time": "2026-08-19T16:27:33.232631+00:00",
+  "generation_duration_seconds": 214.44836040004157,
+  "json_parse": "PASS",
+  "realization_validation": "PASS",
+  "plan_identity_binding": "PASS",
+  "request_identity_binding": "PASS",
+  "slot_integrity": "PASS",
+  "authority_mutations": 0,
+  "technical_faithfulness_probes": "PASS; free-text faithfulness reserved for later evaluation",
   "cleanup_status": "PASS",
-  "real_model_inference_requests": 0,
-  "terminal_time": "2026-08-19T16:10:49.187831+00:00"
+  "real_model_inference_requests": 1,
+  "terminal_time": "2026-08-19T16:31:20.505679+00:00"
+  ,"formal_closure": {
+    "status": "EXT4F4_SYNTHETIC_LLM_TECHNICAL_SMOKE_PASS",
+    "allowed_conclusion": "EXT-4F authority-isolated realization architecture executed end-to-end for one governed synthetic technical smoke.",
+    "free_text_faithfulness": "UNPROVEN; deferred to EXT-4F.5 and later adjudication",
+    "ledger_phase_metadata": "NON_INVALIDATING_LEDGER_PHASE_METADATA_DEFECT",
+    "historical_phase_observed": "GENERATION_STARTED",
+    "raw_evidence_preserved": true
+  }
 }
