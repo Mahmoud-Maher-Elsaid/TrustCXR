@@ -11,8 +11,8 @@ and locked-test isolation. No stage may use EXT-4D frozen final cases.
 | EXT-4F.3 | Add bounded constrained wording realization | Synthetic plans and local tokenizer/runtime metadata | LLM receives plan-only authority and output remains validator-valid | Technical closure, no benchmark |
 | EXT-4F.4 | One synthetic technical smoke | Non-medical synthetic plan only | Exactly one constrained realization and valid contract | Close track as technical failure |
 | EXT-4F.5 | Design a new development benchmark | Newly governed fixtures, not EXT-4D/locked data | Separate governance approval and case partition | Do not evaluate |
-| EXT-4F.6 | Candidate evaluation | Explicitly approved EXT-4F development set | Frozen gates and one-request evidence ledger pass | Close candidate, retain Stage 18 |
-| EXT-4F.7 | Frozen-final governance gate | Only after explicit approval | Final access separately authorized and audited | Keep final unopened |
+| EXT-4F.6 | Candidate evaluation | Explicitly approved EXT-4F development set | **Development gate failed / not scientifically selected**; 22/24 contract-valid | Candidate closed; retain Stage 18 |
+| EXT-4F.7 | Frozen-final governance gate | Only after explicit approval | **Not authorized** because EXT-4F.6 failed | Keep final unopened |
 
 Every stage requires durable counters: `development_cases_accessed`,
 `final_cases_accessed`, `locked_test_accessed`, and model request counts.
