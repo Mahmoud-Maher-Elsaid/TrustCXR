@@ -159,6 +159,7 @@ def main() -> int:
         "model_load_started": False,
         "model_load_completed": False,
         "terminal_status": "EXT4F4_NOT_STARTED",
+        "phase": "PREPARED",
     }
     model = tokenizer = constraint = None
     try:
@@ -180,6 +181,7 @@ def main() -> int:
                 "structured_decoding_preflight": "PENDING_TOKENIZER",
             }
         )
+        record["phase"] = "AUTHORITY_PREFLIGHT_PASS"
         (attempt_dir / "synthetic_evidence.json").write_text(
             evidence.model_dump_json(indent=2) + "\n", encoding="utf-8"
         )
@@ -200,10 +202,18 @@ def main() -> int:
         if config["resolved_revision"] != EXPECTED_REVISION:
             raise RuntimeError("EXT4F4_MODEL_IDENTITY_MISMATCH")
         model, load_info = load_model_only()
-        record.update({"model_load_completed": True, "model_load": load_info, "identity": identity})
+        record.update(
+            {
+                "model_load_completed": True,
+                "model_load": load_info,
+                "identity": identity,
+                "phase": "MODEL_LOAD_PASS",
+            }
+        )
         tokenizer = AutoTokenizer.from_pretrained(
             MODEL_ROOT, local_files_only=True, trust_remote_code=False
         )
+        record["phase"] = "TOKENIZER_READY"
         messages = [
             {
                 "role": "system",
@@ -228,11 +238,31 @@ def main() -> int:
             prompt_length=prompt_length,
             model_vocab_size=int(model.config.vocab_size),
         )
-        assert_generation_constraint(constraint)
+        assert_generation_constraint(
+            constraint, expected_schema_sha256=EXPECTED_REALIZATION_SCHEMA_SHA
+        )
         alignment = constraint.vocab_alignment
         if alignment.get("unregistered_model_tail_count") != 35:
             raise RuntimeError("EXT4F4_VOCAB_ALIGNMENT_FAILED")
+        tokenizer_ids = list(tokenizer.get_vocab().values())
+        if (
+            tokenizer.__class__.__name__ != "GPT2TokenizerFast"
+            or int(getattr(tokenizer, "vocab_size", -1)) != 200019
+            or len(tokenizer) != 200029
+            or max(tokenizer_ids) != 200028
+            or tokenizer.eos_token_id != 199999
+        ):
+            raise RuntimeError("EXT4F4_TOKENIZER_IDENTITY_FAILED")
+        record["tokenizer_identity"] = {
+            "class": tokenizer.__class__.__name__,
+            "vocab_size": int(tokenizer.vocab_size),
+            "length": len(tokenizer),
+            "max_registered_id": max(tokenizer_ids),
+            "eos_token_id": tokenizer.eos_token_id,
+            "status": "PASS",
+        }
         record["structured_decoding_preflight"] = "EXT4F4_STRUCTURED_DECODING_PREFLIGHT_PASS"
+        record["phase"] = "STRUCTURED_PREFLIGHT_PASS"
         (attempt_dir / "rendered_prompt.txt").write_text(rendered, encoding="utf-8")
         record["generation_parameters"] = {
             "max_new_tokens": 512,
@@ -243,7 +273,10 @@ def main() -> int:
             "temperature": None,
         }
         record["request_attempted"] = True
+        record["phase"] = "GENERATION_AUTHORIZED"
+        ledger_path.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
         record["generation_started"] = True
+        record["phase"] = "GENERATION_STARTED"
         record["generation_start_time"] = datetime.now(UTC).isoformat()
         ledger_path.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
         torch.manual_seed(SEED)

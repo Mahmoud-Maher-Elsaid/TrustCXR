@@ -1,43 +1,158 @@
 {
-  "report_id": "EXT4F4_SYNTHETIC_LLM_TECHNICAL_SMOKE_REPORT",
   "stage": "EXT-4F.4",
-  "status": "READY_FOR_GOVERNED_LOCAL_EXECUTION",
+  "run_id": "20260819T161035Z_de72650e",
+  "attempt_id": "ext4f4_realization_20260819T161035Z_de72650e",
+  "synthetic_case_id": "research_case_ext4f4_realization_001",
   "model": "microsoft/Phi-4-mini-instruct",
   "model_revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
   "semantic_contract": "EXT4F_SEMANTIC_GENERATION_CONTRACT_V1",
   "realization_contract": "EXT4F_REALIZATION_CONTRACT_V1",
-  "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
-  "backend": "llguidance",
+  "structured_backend": "llguidance",
   "backend_version": "1.8.0",
-  "semantic_plan_sha256": "a482598eb427ab92ca2e922638d234591f9e4f48615bc9ba2066781cb803e9c3",
-  "realization_request_sha256": "abc7b4f05a1d9a6724fe2b5d61dafa2ecb1531f08ac6ff555dc85506d18e13cf",
-  "offline_structured_decoding_preflight": "PASS",
-  "vocabulary_alignment": {
-    "model_vocab_size": 200064,
-    "constraint_vocab_size": 200029,
-    "model_only_tail_start": 200029,
-    "model_only_tail_end": 200063,
-    "model_only_tail_count": 35,
-    "tail_policy": "always_forbidden"
-  },
-  "synthetic_case_id": "research_case_ext4f4_realization_001",
-  "llm_controlled_fields": ["slot_text"],
-  "retry_policy": "exactly_one_request_no_retry",
+  "generate_call_count": 0,
+  "generation_started": false,
+  "generation_completed": false,
+  "generated_tokens": 0,
   "development_cases_accessed": 0,
   "frozen_final_cases_accessed": 0,
   "locked_test_accessed": false,
-  "model_load_calls": 0,
-  "model_generate_calls": 0,
-  "focused_tests": "PASS (62 tests)",
-  "full_pytest": {
-    "status": "NONBLOCKING_UNRELATED_ENVIRONMENT_FAILURES",
-    "passed": 965,
-    "failed": 2,
-    "failures": [
-      "test_execution_handoff::test_stage9b_move_helper_preserves_collision_and_protected_files",
-      "test_execution_handoff::test_stage9b_atomic_json_replaces_compatibly_without_three_argument_move"
-    ],
-    "classification": "PowerShell launcher/execution-policy environment limitation; no EXT-4F failures."
+  "model_load_started": true,
+  "model_load_completed": true,
+  "terminal_status": "EXT4F4_SYNTHETIC_TECHNICAL_GENERATION_FAILED",
+  "runtime": {
+    "python": "3.12.10",
+    "torch": "2.12.1+cu130",
+    "transformers": "4.57.6",
+    "llguidance": "1.8.0",
+    "pip_check": "PASS",
+    "pip_check_output": "No broken requirements found."
   },
-  "next_stage": "EXT4F.5_FROZEN_DEVELOPMENT_BENCHMARK_DESIGN"
+  "semantic_plan_sha256": "a482598eb427ab92ca2e922638d234591f9e4f48615bc9ba2066781cb803e9c3",
+  "realization_request_sha256": "abc7b4f05a1d9a6724fe2b5d61dafa2ecb1531f08ac6ff555dc85506d18e13cf",
+  "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
+  "authority_preflight": "PASS",
+  "structured_decoding_preflight": "PENDING_TOKENIZER",
+  "prompt_token_count": 442,
+  "model_load": {
+    "model_class": "Phi3ForCausalLM",
+    "parameter_count": 3836021760,
+    "loaded_parameter_count": 3836021760,
+    "dtypes": [
+      "torch.bfloat16"
+    ],
+    "devices": [
+      "cpu"
+    ],
+    "device_policy": "cpu_only",
+    "transformers_device_map": null,
+    "buffer_devices": [
+      "cpu"
+    ],
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "load_duration_seconds": 0.4112767999758944
+  },
+  "identity": {
+    "artifacts": [
+      {
+        "filename": "model-00001-of-00002.safetensors",
+        "size_bytes": 4903637712,
+        "sha256": "bc703090b63eda16f639fa4de7ac54635c23105ab1da2f6ec4d3403151d38ee6"
+      },
+      {
+        "filename": "model-00002-of-00002.safetensors",
+        "size_bytes": 2768428504,
+        "sha256": "7ff79b9d2d31076bac2663393451f6530f4fc8ca49b09002116c92c373dba983"
+      },
+      {
+        "filename": "model.safetensors.index.json",
+        "size_bytes": 16273,
+        "sha256": "613a98d5e5716ca96fa75931abedc9c5a5d95f488ce4d62df71e639fe3ac6c59"
+      },
+      {
+        "filename": "config.json",
+        "size_bytes": 2504,
+        "sha256": "ac65d86061d3d0d704ee2511fd0eb8713ef19eb6eedba17c3080a4165d5b933b"
+      },
+      {
+        "filename": "generation_config.json",
+        "size_bytes": 168,
+        "sha256": "3e3f48753753f92d2b958679151861d4fd7bf26e4dfc41fd47056116c4914dcd"
+      },
+      {
+        "filename": "tokenizer.json",
+        "size_bytes": 15524095,
+        "sha256": "382cc235b56c725945e149cc25f191da667c836655efd0857b004320e90e91ea"
+      },
+      {
+        "filename": "tokenizer_config.json",
+        "size_bytes": 2932,
+        "sha256": "9c9b6bc0c94d95f69f826c41069a3e8b387ac3ced89601d201886e99240ac9db"
+      },
+      {
+        "filename": "special_tokens_map.json",
+        "size_bytes": 587,
+        "sha256": "aff38493227d813e29fcf8406e8e90062f1f031aa47d589325e9c31d89ac7cc3"
+      },
+      {
+        "filename": "added_tokens.json",
+        "size_bytes": 249,
+        "sha256": "d4f2aceb0f20b71dd1f4bcc7e052e4412946bf281840b8f83d39f259571af486"
+      },
+      {
+        "filename": "merges.txt",
+        "size_bytes": 2418348,
+        "sha256": "856ce61180bb689282eed6b3a6838bb1f438399be23aefe9d20eb379791fb4ad"
+      },
+      {
+        "filename": "vocab.json",
+        "size_bytes": 3910310,
+        "sha256": "6cb65a857824fa6615bb1782d95d882617a8bbce1da0317118586b36f39e98bd"
+      },
+      {
+        "filename": "configuration_phi3.py",
+        "size_bytes": 10875,
+        "sha256": "ec2044b77d0b8111640ac134daa3af1f40dc552a739f8959626e7e58ea3352df"
+      },
+      {
+        "filename": "modeling_phi3.py",
+        "size_bytes": 54268,
+        "sha256": "d5fd551a7fe759b1d25e5b16b5012aa98b9b8bd400d26c7ee69c0090a245d6cd"
+      }
+    ],
+    "llguidance_version": "1.8.0"
+  },
+  "failure": "Candidate3StructuredOutputError: CANDIDATE3_STRUCTURED_OUTPUT_GATE_FAILED",
+  "failure_classification": "PRE_GENERATION_TECHNICAL_PREFLIGHT_FAILURE",
+  "root_cause": "assert_generation_constraint compared the active EXT-4F realization schema hash against the historical EXT4C global schema hash.",
+  "stale_pending_tokenizer_lifecycle": true,
+  "old_ext4e_hard_coding_involved": true,
+  "repair": {
+    "status": "IMPLEMENTED",
+    "schema_gate": "explicit expected schema identity",
+    "initial_mask_required": true,
+    "runtime_tokenizer_finalization": "PASS",
+    "old_ext4e_behavior_preserved": true
+  },
+  "zero_generation_final_structured_preflight": {
+    "status": "EXT4F4_STRUCTURED_DECODING_PREFLIGHT_PASS",
+    "schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
+    "tokenizer_class": "GPT2TokenizerFast",
+    "tokenizer_vocab_size": 200019,
+    "tokenizer_length": 200029,
+    "max_registered_id": 200028,
+    "eos_token_id": 199999,
+    "prompt_token_count": 442,
+    "grammar_compilation": "PASS",
+    "strict_grammar_validation": "PASS",
+    "matcher": "PASS",
+    "initial_mask": "PASS",
+    "processor": "PASS",
+    "processor_probe_shape": [1, 200064],
+    "model_only_tail_forbidden": true,
+    "model_generate_calls": 0
+  },
+  "cleanup_status": "PASS",
+  "real_model_inference_requests": 0,
+  "terminal_time": "2026-08-19T16:10:49.187831+00:00"
 }

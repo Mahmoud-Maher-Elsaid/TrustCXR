@@ -113,7 +113,11 @@ def build_llguidance_logits_processor(
         matcher = llg.LLMatcher(ll_tokenizer, grammar, log_level=0)
         if matcher.is_error():
             raise ValueError(matcher.get_error())
+        initial_bits = matcher.compute_bitmask()
+        if len(initial_bits) * 8 < ll_tokenizer.vocab_size:
+            raise Candidate3StructuredOutputError("CANDIDATE3_INITIAL_MASK_FAILED")
         alignment = _validate_tokenizer_domain(tokenizer, ll_tokenizer.vocab_size)
+        alignment["initial_mask_available"] = True
         if model_vocab_size is not None:
             if ll_tokenizer.vocab_size > model_vocab_size:
                 raise Candidate3StructuredOutputError("CANDIDATE3_VOCAB_ALIGNMENT_FAILED")
@@ -209,15 +213,20 @@ class Candidate3LLGuidanceLogitsProcessor:
         return scores.masked_fill(~allowed.unsqueeze(0), float("-inf"))
 
 
-def assert_generation_constraint(constraint: Candidate3Constraint) -> None:
+def assert_generation_constraint(
+    constraint: Candidate3Constraint,
+    *,
+    expected_schema_sha256: str = GOVERNED_SCHEMA_SHA256,
+) -> None:
     """Tripwire immediately before any model.generate call."""
 
     if (
         constraint.backend != BACKEND
         or constraint.backend_version != PINNED_VERSION
-        or constraint.schema_sha256 != GOVERNED_SCHEMA_SHA256
+        or constraint.schema_sha256 != expected_schema_sha256
         or constraint.matcher is None
         or constraint.logits_processor is None
+        or not constraint.vocab_alignment.get("initial_mask_available", False)
     ):
         raise Candidate3StructuredOutputError("CANDIDATE3_STRUCTURED_OUTPUT_GATE_FAILED")
 
