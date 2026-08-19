@@ -21,10 +21,15 @@
 **EXT-4E2D0 Structured Output Compatibility Smoke:** `CLOSED / PASS — REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA_VERIFIED`
 **Structured-output compatibility:** `VERIFIED`
 **Candidate #1 frozen-final benchmark:** `NOT RUN — NOT AUTHORIZED`
-**Next authorized stage:** `CANDIDATE_2_IDENTITY_AND_RUNTIME_BOOTSTRAP — Ministral-3-8B-Instruct-2512; exact revision, file, quantization, checksum, and runtime compatibility must be verified before inference`
-**Next local execution step:** `CANDIDATE_2_IDENTITY_AND_RUNTIME_BOOTSTRAP`
+**EXT-4E candidate search:** `CLOSED — no LLM selected; RETAIN_DETERMINISTIC_REPORTING`
+**EXT-4F.0 Semantic Contract Gap Audit:** `PASS`
+**EXT-4F.1 Semantic Planner and Contract V1:** `PASS`
+**EXT-4F.2 Deterministic Semantic Unit Validation:** `PASS`
+**EXT-4F.3 Constrained Natural-Language Realization Adapter:** `PASS — ZERO GENERATION`
+**Next authorized stage:** `EXT4F.4_SYNTHETIC_LLM_TECHNICAL_SMOKE — NOT STARTED`
+**Next local execution step:** `EXT4F.4_SYNTHETIC_LLM_TECHNICAL_SMOKE — NOT STARTED`
 **True pathology localization follow-on experiments:** `CLOSED — NO EXT-3B/EXT-3C OR ADDITIONAL LOCALIZATION TRAINING`
-**Grounded LLM reporting:** `NOT STARTED`
+**Grounded LLM reporting:** `EXT-4F REALIZATION ADAPTER IMPLEMENTED — ZERO GENERATION`
 **Multimodal VLM:** `NOT STARTED`
 
 ```text

@@ -1,0 +1,53 @@
+{
+  "report_id": "EXT4F3_CONSTRAINED_REALIZATION_ADAPTER_REPORT",
+  "final_status": "EXT4F3_CONSTRAINED_NATURAL_LANGUAGE_REALIZATION_ADAPTER_PASS",
+  "semantic_contract_version": "EXT4F_SEMANTIC_GENERATION_CONTRACT_V1",
+  "realization_contract_version": "EXT4F_REALIZATION_CONTRACT_V1",
+  "realization_request_compiler": "trustcxr.grounded_llm.ext4f_realization.build_ext4f_realization_request",
+  "realization_validator": "trustcxr.grounded_llm.ext4f_realization.validate_ext4f_realization_response",
+  "prompt_compiler": "trustcxr.grounded_llm.ext4f_realization.compile_ext4f_realization_prompt",
+  "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
+  "authority_counts": {"deterministic": 12, "llm_controlled": 1, "forbidden": 19},
+  "slot_types": ["CLAIM_EXPLANATION", "UNCERTAINTY_EXPLANATION", "LIMITATION_EXPLANATION", "CONTRADICTION_EXPLANATION", "DEFER_EXPLANATION", "REVIEWER_QUESTION"],
+  "plan_identity_binding": "PASS",
+  "request_identity_binding": "PASS",
+  "defer_isolation": "PASS",
+  "uncertainty_isolation": "PASS",
+  "evidence_state_isolation": "PASS",
+  "provenance_isolation": "PASS",
+  "contradiction_isolation": "PASS",
+  "mock_valid_cases": 6,
+  "mock_invalid_cases": 8,
+  "authority_mutation_attempts": 8,
+  "authority_mutation_rejections": 8,
+  "unexpected_authority_escapes": 0,
+  "faithfulness_evaluation_required": ["unsupported meaning expressed only through valid free text", "subtle negation or implication drift", "clinical paraphrase fidelity"],
+  "llguidance": {"version": "1.8.0", "strict_schema_compile": "PASS", "tokenizer_mask": "PASS; local tokenizer domain 200029; mask bytes 25004"},
+  "model_load_calls": 0,
+  "model_generate_calls": 0,
+  "llm_api_calls": 0,
+  "development_benchmark_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "stale_roadmap_tests": {
+    "status": "RESOLVED",
+    "tests": [
+      "test_explainability_governance::test_roadmap_records_current_extension_lifecycle_and_boundaries",
+      "test_research_ui_redesign::test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_boundaries"
+    ],
+    "resolution": "Updated expectations to the authorized EXT-4F.3 zero-generation lifecycle; no scientific semantics changed."
+  },
+  "full_pytest": {
+    "status": "NONBLOCKING_UNRELATED_ENVIRONMENT_FAILURES",
+    "passed": 961,
+    "failed": 2,
+    "failures": [
+      "test_execution_handoff::test_stage9b_move_helper_preserves_collision_and_protected_files",
+      "test_execution_handoff::test_stage9b_atomic_json_replaces_compatibly_without_three_argument_move"
+    ],
+    "classification": "PowerShell launcher/execution-policy environment limitation; no EXT-4F failures."
+  },
+  "frozen_ext4c_schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
+  "stage18_modified": false,
+  "next_stage": "EXT4F.4_SYNTHETIC_LLM_TECHNICAL_SMOKE"
+}

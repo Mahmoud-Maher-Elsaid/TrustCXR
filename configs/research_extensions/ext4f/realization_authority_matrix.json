@@ -1,0 +1,9 @@
+{
+  "contract_version": "EXT4F_REALIZATION_CONTRACT_V1",
+  "AUTHORITATIVE_DETERMINISTIC": ["evidence_states", "claim_ids", "claim_evidence_relationships", "provenance", "uncertainty_state", "defer_state", "withheld_state", "contradictions", "support_status", "allowed_information", "contract_version", "semantic_plan_identity"],
+  "LLM_REALIZATION_ONLY": ["slot_text"],
+  "FORBIDDEN_TO_LLM": ["evidence_status", "uncertainty_status", "defer", "withheld", "supported", "contradicted", "claim_ids", "provenance_ids", "diagnosis", "treatment", "management", "prognosis", "severity", "laterality", "localization", "urgency", "history", "demographics", "measurements"],
+  "deterministic_response_fields": ["contract_version", "semantic_plan_sha256", "realization_request_sha256", "slot_id"],
+  "llm_response_fields": ["text"],
+  "faithfulness_evaluation_required": ["unsupported meaning expressed only through otherwise valid free text", "subtle negation or implication drift", "clinical paraphrase fidelity"]
+}

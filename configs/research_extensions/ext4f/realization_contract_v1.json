@@ -1,0 +1,11 @@
+{
+  "contract_version": "EXT4F_REALIZATION_CONTRACT_V1",
+  "semantic_contract_version": "EXT4F_SEMANTIC_GENERATION_CONTRACT_V1",
+  "canonicalization_version": "EXT4F_REALIZATION_CANONICAL_JSON_V1",
+  "response_model": "trustcxr.grounded_llm.ext4f_realization.RealizationResponse",
+  "slot_types": ["CLAIM_EXPLANATION", "UNCERTAINTY_EXPLANATION", "LIMITATION_EXPLANATION", "CONTRADICTION_EXPLANATION", "DEFER_EXPLANATION", "REVIEWER_QUESTION"],
+  "response_editable_fields": ["slots[].text"],
+  "response_immutable_fields": ["contract_version", "semantic_plan_sha256", "realization_request_sha256", "slots[].slot_id"],
+  "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
+  "llm_generation": false
+}

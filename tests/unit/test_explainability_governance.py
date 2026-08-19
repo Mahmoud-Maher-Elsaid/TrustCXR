@@ -32,9 +32,14 @@ def test_roadmap_records_current_extension_lifecycle_and_boundaries() -> None:
     assert "Structured-output compatibility:** `VERIFIED`" in roadmap
     assert "EXT-4E2D Candidate #1 Single Development-Case Smoke:** `CLOSED / PASS" in roadmap
     assert "Candidate NOT SCIENTIFICALLY SELECTED" in roadmap
-    assert "Next authorized stage:** `SIX_DEVELOPMENT_CASE_CANDIDATE1_RUN" in roadmap
+    assert (
+        "Next authorized stage:** `EXT4F.4_SYNTHETIC_LLM_TECHNICAL_SMOKE — NOT STARTED`" in roadmap
+    )
     assert "True pathology localization follow-on experiments:** `CLOSED" in roadmap
-    assert "Grounded LLM reporting:** `NOT STARTED`" in roadmap
+    assert (
+        "Grounded LLM reporting:** `EXT-4F REALIZATION ADAPTER IMPLEMENTED — ZERO GENERATION`"
+        in roadmap
+    )
     assert "Multimodal VLM:** `NOT STARTED`" in roadmap
     assert "Class-specific model attribution" in (
         ROOT / "docs/research_extensions/explainability/EXPLAINABILITY_CLAIMS_POLICY.md"
