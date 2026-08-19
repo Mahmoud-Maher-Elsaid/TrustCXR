@@ -1,0 +1,73 @@
+{
+    "track": "EXT-4G.0",
+    "contract": "EXT4F_REALIZATION_CONTRACT_V1",
+    "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
+    "benchmark_sha256": "671a04d2d859f1b1ffb9414a8c0f636596949748a00548e45abcbbfdb752db61",
+    "candidates": [
+        {
+            "candidate_id": "EXT4G_CANDIDATE_QWEN35_4B_V1",
+            "repository": "Qwen/Qwen3.5-4B",
+            "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+            "revision_source": "official Hub main ref",
+            "architecture": "Qwen3_5ForConditionalGeneration",
+            "parameter_count_label": "4B",
+            "license": "Apache-2.0",
+            "runtime_compatibility": "FAIL_CURRENT_TRANSFORMERS_CLASS_UNREGISTERED",
+            "structured_compatibility": "UNVERIFIED",
+            "tokenizer": "Qwen tokenizer; vocab 248320, EOS 248044 from official config",
+            "resource_estimate": "approximately 9.34 GB BF16 files; CPU possible but impractical; exceeds 8 GB GPU",
+            "ranking_score": 2.35,
+            "selection_status": "AUDITED_NOT_SELECTED"
+        },
+        {
+            "candidate_id": "EXT4G_CANDIDATE_GEMMA3_4B_IT_V1",
+            "repository": "google/gemma-3-4b-it",
+            "revision": "main (immutable SHA unavailable without gated Hub authentication)",
+            "revision_source": "official model card/config; identity sub-gate required before download",
+            "architecture": "Gemma3ForConditionalGeneration",
+            "parameter_count_label": "4B",
+            "license": "Gemma Terms (gated)",
+            "runtime_compatibility": "PASS_ARCHITECTURE_REGISTERED; official card states Transformers >=4.50",
+            "structured_compatibility": "CANDIDATE_FOR_OFFLINE_TOKENIZER_AUDIT",
+            "tokenizer": "SentencePiece tokenizer.model plus tokenizer.json; vocab 262208, EOS 106 from official config",
+            "resource_estimate": "approximately 8.60 GB BF16 weights; CPU feasible but slow; exceeds 8 GB GPU",
+            "ranking_score": 4.15,
+            "selection_status": "SELECTED_PENDING_IMMUTABLE_REVISION_GATE"
+        },
+        {
+            "candidate_id": "EXT4G_CANDIDATE_MINISTRAL3_3B_V1",
+            "repository": "mistralai/Ministral-3-3B-Instruct-2512",
+            "revision": "b35d4df (official latest main commit short ID; full SHA to resolve at G.1)",
+            "revision_source": "official Hub commit history",
+            "architecture": "Mistral 3 multimodal / mistral-common runtime",
+            "parameter_count_label": "3B",
+            "license": "Apache-2.0",
+            "runtime_compatibility": "FAIL_CURRENT_TRANSFORMERS_CLASS_UNREGISTERED; official generation config says Transformers 5 dev",
+            "structured_compatibility": "UNVERIFIED",
+            "tokenizer": "Tekken tokenizer, vocab 131072, EOS 2; not the current HF tokenizer path",
+            "resource_estimate": "official main FP8 about 4.67 GB; official BF16 variant about 7.7 GB; runtime migration required",
+            "ranking_score": 2.55,
+            "selection_status": "AUDITED_NOT_SELECTED"
+        }
+    ],
+    "frozen_policy": {
+        "dtype": "torch.bfloat16",
+        "device": "CPU-only native placement",
+        "quantization_authorized": false,
+        "backend": "llguidance==1.8.0",
+        "model_generation_calls": 0,
+        "development_cases_accessed": 0,
+        "frozen_final_cases_accessed": 0,
+        "locked_test_accessed": false,
+        "phi4_reruns": 0,
+        "benchmark_changes": 0,
+        "threshold_changes": 0
+    },
+    "sources": [
+        "https://huggingface.co/Qwen/Qwen3.5-4B/tree/main",
+        "https://huggingface.co/google/gemma-3-4b-it",
+        "https://huggingface.co/google/gemma-3-4b-it/tree/main",
+        "https://huggingface.co/mistralai/Ministral-3-3B-Instruct-2512/tree/main",
+        "https://huggingface.co/mistralai/Ministral-3-3B-Instruct-2512/commits/main"
+    ]
+}
