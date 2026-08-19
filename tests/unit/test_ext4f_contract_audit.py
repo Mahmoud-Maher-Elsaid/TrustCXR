@@ -37,6 +37,20 @@ def test_ext4f_catalog_has_unique_resolvable_invariants():
     )
 
 
+def test_ext4f_all_catalog_invariants_have_coverage():
+    catalog = json.loads(
+        Path("configs/research_extensions/ext4f_semantic_invariants.json").read_text()
+    )
+    coverage = json.loads(
+        Path("configs/research_extensions/ext4f/semantic_contract_v1_coverage.json").read_text()
+    )
+    catalog_ids = {item["invariant_id"] for item in catalog["invariants"]}
+    covered = {item["invariant_id"] for item in coverage["coverage"]}
+    assert catalog_ids == covered
+    assert coverage["implemented_invariants"] == 22
+    assert coverage["blocked_invariants"] == 0
+
+
 def test_ext4f_duplicate_invariant_ids_fail_closed(tmp_path, monkeypatch):
     catalog = json.loads(audit_ext4f_contract.CATALOG_PATH.read_text())
     catalog["invariants"].append(dict(catalog["invariants"][0]))
