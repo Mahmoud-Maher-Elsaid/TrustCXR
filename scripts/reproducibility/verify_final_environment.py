@@ -47,7 +47,7 @@ def tracked_import_roots(root: Path) -> set[str]:
             for node in ast.walk(tree):
                 if isinstance(node, ast.Import):
                     imports.update(alias.name.split(".")[0] for alias in node.names)
-                elif isinstance(node, ast.ImportFrom) and node.module:
+                elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
                     imports.add(node.module.split(".")[0])
     return imports
 
