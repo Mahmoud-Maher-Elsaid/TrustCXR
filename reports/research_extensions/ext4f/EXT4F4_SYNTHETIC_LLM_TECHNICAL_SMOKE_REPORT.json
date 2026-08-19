@@ -1,0 +1,43 @@
+{
+  "report_id": "EXT4F4_SYNTHETIC_LLM_TECHNICAL_SMOKE_REPORT",
+  "stage": "EXT-4F.4",
+  "status": "READY_FOR_GOVERNED_LOCAL_EXECUTION",
+  "model": "microsoft/Phi-4-mini-instruct",
+  "model_revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+  "semantic_contract": "EXT4F_SEMANTIC_GENERATION_CONTRACT_V1",
+  "realization_contract": "EXT4F_REALIZATION_CONTRACT_V1",
+  "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
+  "backend": "llguidance",
+  "backend_version": "1.8.0",
+  "semantic_plan_sha256": "a482598eb427ab92ca2e922638d234591f9e4f48615bc9ba2066781cb803e9c3",
+  "realization_request_sha256": "abc7b4f05a1d9a6724fe2b5d61dafa2ecb1531f08ac6ff555dc85506d18e13cf",
+  "offline_structured_decoding_preflight": "PASS",
+  "vocabulary_alignment": {
+    "model_vocab_size": 200064,
+    "constraint_vocab_size": 200029,
+    "model_only_tail_start": 200029,
+    "model_only_tail_end": 200063,
+    "model_only_tail_count": 35,
+    "tail_policy": "always_forbidden"
+  },
+  "synthetic_case_id": "research_case_ext4f4_realization_001",
+  "llm_controlled_fields": ["slot_text"],
+  "retry_policy": "exactly_one_request_no_retry",
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "model_load_calls": 0,
+  "model_generate_calls": 0,
+  "focused_tests": "PASS (62 tests)",
+  "full_pytest": {
+    "status": "NONBLOCKING_UNRELATED_ENVIRONMENT_FAILURES",
+    "passed": 965,
+    "failed": 2,
+    "failures": [
+      "test_execution_handoff::test_stage9b_move_helper_preserves_collision_and_protected_files",
+      "test_execution_handoff::test_stage9b_atomic_json_replaces_compatibly_without_three_argument_move"
+    ],
+    "classification": "PowerShell launcher/execution-policy environment limitation; no EXT-4F failures."
+  },
+  "next_stage": "EXT4F.5_FROZEN_DEVELOPMENT_BENCHMARK_DESIGN"
+}

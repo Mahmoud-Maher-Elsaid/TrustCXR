@@ -71,9 +71,28 @@ def build_candidate3_logits_processor(
 ) -> Candidate3Constraint:
     """Compile the exact schema and construct a Transformers processor."""
 
-    selected_schema = schema if schema is not None else governed_schema()
+    return build_llguidance_logits_processor(
+        tokenizer,
+        schema=schema,
+        prompt_length=prompt_length,
+        model_vocab_size=model_vocab_size,
+        expected_schema_sha256=GOVERNED_SCHEMA_SHA256,
+    )
+
+
+def build_llguidance_logits_processor(
+    tokenizer: Any,
+    *,
+    schema: dict[str, Any],
+    prompt_length: int,
+    model_vocab_size: int | None = None,
+    expected_schema_sha256: str,
+) -> Candidate3Constraint:
+    """Compile an explicitly identified schema for an isolated realization path."""
+
+    selected_schema = schema
     digest = schema_sha256(selected_schema)
-    if digest != GOVERNED_SCHEMA_SHA256:
+    if digest != expected_schema_sha256:
         raise Candidate3StructuredOutputError("CANDIDATE3_SCHEMA_IDENTITY_MISMATCH")
     if prompt_length < 0:
         raise Candidate3StructuredOutputError("CANDIDATE3_PROMPT_BOUNDARY_INVALID")
