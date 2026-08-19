@@ -234,8 +234,8 @@ def test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_bou
         "EXT-4E2D0 Structured Output Compatibility Smoke:** `CLOSED / PASS — "
         "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA_VERIFIED`",
         "Structured-output compatibility:** `VERIFIED`",
-        "Next authorized stage:** `EXT4F.4_SYNTHETIC_LLM_TECHNICAL_SMOKE — NOT STARTED`",
-        "Grounded LLM reporting:** `EXT-4F REALIZATION ADAPTER IMPLEMENTED — ZERO GENERATION`",
+        "Next authorized stage:** `EXT4F.6_GOVERNED_DEVELOPMENT_CANDIDATE_EVALUATION — NOT STARTED`",
+        "Grounded LLM reporting:** `EXT-4F.4 TECHNICAL SMOKE CLOSED; EXT-4F.5 FAITHFULNESS BENCHMARK FROZEN — ZERO EVALUATION`",
         "attention or attribution is not validated lesion localization",
         "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",
         "LOCALIZATION_ABSENCE_MUST_NOT_CONTRADICT_CLASSIFIER_EVIDENCE",

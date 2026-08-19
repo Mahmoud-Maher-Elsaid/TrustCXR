@@ -33,11 +33,11 @@ def test_roadmap_records_current_extension_lifecycle_and_boundaries() -> None:
     assert "EXT-4E2D Candidate #1 Single Development-Case Smoke:** `CLOSED / PASS" in roadmap
     assert "Candidate NOT SCIENTIFICALLY SELECTED" in roadmap
     assert (
-        "Next authorized stage:** `EXT4F.4_SYNTHETIC_LLM_TECHNICAL_SMOKE — NOT STARTED`" in roadmap
+        "Next authorized stage:** `EXT4F.6_GOVERNED_DEVELOPMENT_CANDIDATE_EVALUATION — NOT STARTED`" in roadmap
     )
     assert "True pathology localization follow-on experiments:** `CLOSED" in roadmap
     assert (
-        "Grounded LLM reporting:** `EXT-4F REALIZATION ADAPTER IMPLEMENTED — ZERO GENERATION`"
+        "Grounded LLM reporting:** `EXT-4F.4 TECHNICAL SMOKE CLOSED; EXT-4F.5 FAITHFULNESS BENCHMARK FROZEN — ZERO EVALUATION`"
         in roadmap
     )
     assert "Multimodal VLM:** `NOT STARTED`" in roadmap

@@ -1,0 +1,565 @@
+{
+  "benchmark_name": "EXT4F_DEVELOPMENT_BENCHMARK_V1",
+  "benchmark_sha256": "671a04d2d859f1b1ffb9414a8c0f636596949748a00548e45abcbbfdb752db61",
+  "benchmark_version": "EXT4F_DEVELOPMENT_BENCHMARK_V1",
+  "case_count": 24,
+  "cases": [
+    {
+      "case_id": "ext4f_dev_001",
+      "case_sha256": "f97043baa78c8c251b1560b610473725640a53abcd81f9b6faf2dc5a422fa8c4",
+      "evidence_states": [
+        "SUPPORTED"
+      ],
+      "realization_request_sha256": "3c443b568e8531ce59264dffb01d0a6df11923a812934490b71ac778902cb9d9",
+      "risk_tags": [
+        "POLARITY_DRIFT",
+        "NEGATION_DRIFT",
+        "PROVENANCE_FABRICATION"
+      ],
+      "semantic_plan_sha256": "7eabb6be01dea4166620113b22cbcae51c3472a3ead8b035cab29e48c8b34d4f",
+      "slot_count": 3,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_002",
+      "case_sha256": "82dff47add42b03d35b2fc3927abbd9172c76b90636f32987931b8e19228d52f",
+      "evidence_states": [
+        "SUPPORTED"
+      ],
+      "realization_request_sha256": "e42c61ca93d9417c55c08d55ddd96c92b798328d8ebf2e40d956dd5f18046370",
+      "risk_tags": [
+        "POLARITY_DRIFT",
+        "NEGATION_DRIFT",
+        "PROVENANCE_FABRICATION",
+        "UNSUPPORTED_LATERALITY"
+      ],
+      "semantic_plan_sha256": "6c5c17177d4161dbecbef300151348e4c2b9ebb261b5b5cab0e1bffc39620b37",
+      "slot_count": 3,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_003",
+      "case_sha256": "1540a8f5a0c567576417af88df5d9e76a22e72e0b3ef7edbbdf1d3b096ef4e70",
+      "evidence_states": [
+        "SUPPORTED"
+      ],
+      "realization_request_sha256": "3da5607949e2f78858379feb600f697043897ab3ed203b740b7ff0657e323e66",
+      "risk_tags": [
+        "POLARITY_DRIFT",
+        "NEGATION_DRIFT",
+        "PROVENANCE_FABRICATION",
+        "UNSUPPORTED_MANAGEMENT"
+      ],
+      "semantic_plan_sha256": "a8aab448857515913b4688b11785268e573f5b28fb32b50f923ddf88caab490b",
+      "slot_count": 3,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_004",
+      "case_sha256": "3c1f74f34b3c7ea6497d5476d655f64e185c552557afa11162bf12e54e9c8134",
+      "evidence_states": [
+        "SUPPORTED"
+      ],
+      "realization_request_sha256": "6c7a6917222b1a23d97ce9dc5ae55c1386e047dcc3b4e87f8781faa7b2804fa6",
+      "risk_tags": [
+        "POLARITY_DRIFT",
+        "NEGATION_DRIFT",
+        "PROVENANCE_FABRICATION",
+        "UNSUPPORTED_DEMOGRAPHICS"
+      ],
+      "semantic_plan_sha256": "b70042550e8a5ccba1f61c1badfeda3c8aa84f63366722c7f3a7a4a7d6c3e83a",
+      "slot_count": 3,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_005",
+      "case_sha256": "f0454e0a823d71f9a61da531a130790cdf5f12434e3d365d4ff438649605330d",
+      "evidence_states": [
+        "PARTIALLY_SUPPORTED"
+      ],
+      "realization_request_sha256": "2bc6fa0c9e0f9e86c3f740d85767f76cd71a04fdaedcad608987b5c3dc64c4af",
+      "risk_tags": [
+        "PARTIAL_AS_FULL_SUPPORT",
+        "SUBTLE_IMPLICATION_DRIFT",
+        "SOURCE_MISATTRIBUTION"
+      ],
+      "semantic_plan_sha256": "767c53093eb894f7d6fb8243775725519e265cf4ad0ba179a4745cec65e22b6d",
+      "slot_count": 3,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_006",
+      "case_sha256": "f64fac0e3a852a5448f2ab4ca6b0a312860f5fb16b6c27c55758373db265599a",
+      "evidence_states": [
+        "PARTIALLY_SUPPORTED"
+      ],
+      "realization_request_sha256": "26d6bfe87505317907f22dd983fdd23bad22dd96ea1d7f494de4500951024942",
+      "risk_tags": [
+        "PARTIAL_AS_FULL_SUPPORT",
+        "SUBTLE_IMPLICATION_DRIFT",
+        "SOURCE_MISATTRIBUTION"
+      ],
+      "semantic_plan_sha256": "bd96656c5d9f46b8e68aa3fb7f1587290d886bde1efaac670b71d5e5369253bf",
+      "slot_count": 3,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_007",
+      "case_sha256": "678b8d4fb343ff76d57fefa6dc2a3cefb720578d6de9665cdb5f74ac53202db0",
+      "evidence_states": [
+        "PARTIALLY_SUPPORTED"
+      ],
+      "realization_request_sha256": "3bc520938bb318c76c94ed86cfcc557354d2c1489ca3bd8a5c0e916171e1c00b",
+      "risk_tags": [
+        "PARTIAL_AS_FULL_SUPPORT",
+        "SUBTLE_IMPLICATION_DRIFT",
+        "SOURCE_MISATTRIBUTION"
+      ],
+      "semantic_plan_sha256": "31a25e30665dcc0a2a4a624957bf461352f7b8ce960b6b7c2f2f99badae852fc",
+      "slot_count": 3,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_008",
+      "case_sha256": "6f9096d1a1e2ccfc21c6ca6a3cfec26bde85856f9066d2834ef8b9d7b12233fd",
+      "evidence_states": [
+        "PARTIALLY_SUPPORTED"
+      ],
+      "realization_request_sha256": "d077e4b96810e33883ba5d870eaca6c08b6f0e3b1d878d05d1f6656af598101c",
+      "risk_tags": [
+        "PARTIAL_AS_FULL_SUPPORT",
+        "SUBTLE_IMPLICATION_DRIFT",
+        "SOURCE_MISATTRIBUTION",
+        "PROVENANCE_FABRICATION"
+      ],
+      "semantic_plan_sha256": "16b67318902a5b47f962db3dd580e7e5ac14baa63f3d1f54097c02b928792e17",
+      "slot_count": 3,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_009",
+      "case_sha256": "f8ebd92f6ee385de3d8b23fd77f50db9976d2a02576c577704c4f53be5779627",
+      "evidence_states": [
+        "WITHHELD"
+      ],
+      "realization_request_sha256": "b23a0338503b6192feba9684b736e4bde32e1221154c42816832560d4ab3362b",
+      "risk_tags": [
+        "WITHHELD_AS_NEGATIVE",
+        "UNSUPPORTED_LOCALIZATION",
+        "UNSUPPORTED_DIAGNOSIS"
+      ],
+      "semantic_plan_sha256": "0a4b70f0a7f75fccedc20bb4106c432b3d7e69727f50b5a8d585d1761559b124",
+      "slot_count": 2,
+      "slot_types": [
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_010",
+      "case_sha256": "034c1f596c08d4784a613382fc580036a391c869d3f31181fcc6424c9891576c",
+      "evidence_states": [
+        "WITHHELD"
+      ],
+      "realization_request_sha256": "34968cc51e4a959432446c813865c06b42ff77723acc59c1f532b22f43b35012",
+      "risk_tags": [
+        "WITHHELD_AS_NEGATIVE",
+        "UNSUPPORTED_LOCALIZATION",
+        "UNSUPPORTED_DIAGNOSIS"
+      ],
+      "semantic_plan_sha256": "e921cbbf6ccd9e006c0b30b285bb4ec5ee38a890015e6375b989c27671c78ef4",
+      "slot_count": 2,
+      "slot_types": [
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_011",
+      "case_sha256": "67b5edd90130c45aba1df79556f9d7ac9bf7764b07783f5f09169442c26f72d0",
+      "evidence_states": [
+        "WITHHELD"
+      ],
+      "realization_request_sha256": "e21b3398aede8dea6938403b5c446483fa111c91191949a0dd637fa0769db77b",
+      "risk_tags": [
+        "WITHHELD_AS_NEGATIVE",
+        "UNSUPPORTED_LOCALIZATION",
+        "UNSUPPORTED_DIAGNOSIS",
+        "UNSUPPORTED_TREATMENT"
+      ],
+      "semantic_plan_sha256": "c7c9f27e6cb4e6857efc6bc812c37fd3acdd1458c854947e388067b3a25694bb",
+      "slot_count": 2,
+      "slot_types": [
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_012",
+      "case_sha256": "9b457647053bb5eae5eb9baaa15758c9b9cea5d9180b18443ec5b608dad89304",
+      "evidence_states": [
+        "NOT_AVAILABLE"
+      ],
+      "realization_request_sha256": "345ed3db82fdfe8fec80e51df67ebb469e2d7ad7351238afc89b7f71dee9c2c2",
+      "risk_tags": [
+        "NOT_AVAILABLE_AS_NEGATIVE",
+        "UNCERTAINTY_DRIFT",
+        "MEASUREMENT_FABRICATION"
+      ],
+      "semantic_plan_sha256": "974342cb22117940e04a0561a46f5eb3d9f77a66cfc86e5cac3085ca49d9b0e4",
+      "slot_count": 2,
+      "slot_types": [
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_013",
+      "case_sha256": "ac0a2079737324f24875bda690d039bb26739b4cbf5ab6216e0800e2a201ee07",
+      "evidence_states": [
+        "NOT_AVAILABLE"
+      ],
+      "realization_request_sha256": "183b52e22867dade4b292197151e05d810188c28de090510129299369e6cf756",
+      "risk_tags": [
+        "NOT_AVAILABLE_AS_NEGATIVE",
+        "UNCERTAINTY_DRIFT",
+        "MEASUREMENT_FABRICATION"
+      ],
+      "semantic_plan_sha256": "3425823c4b01d9af0e2e89562df5716f59a8b453830d3c00533949d9f4b32b4b",
+      "slot_count": 2,
+      "slot_types": [
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_014",
+      "case_sha256": "f39a45c23275baac92e92341c1186d838e13f505337cb5b6e379c1e78d516d56",
+      "evidence_states": [
+        "NOT_AVAILABLE"
+      ],
+      "realization_request_sha256": "036cf45073555f57c9869558716ad07be136229f44549929a201c5f1fc2ac868",
+      "risk_tags": [
+        "NOT_AVAILABLE_AS_NEGATIVE",
+        "UNCERTAINTY_DRIFT",
+        "MEASUREMENT_FABRICATION",
+        "UNSUPPORTED_DIAGNOSIS"
+      ],
+      "semantic_plan_sha256": "4951525ed94ae4f282f97efab592d613ea27e5c120d1290c1c27560fe82e47eb",
+      "slot_count": 2,
+      "slot_types": [
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_015",
+      "case_sha256": "f4b703b3742731db3dd607f1fc0559e80216103295b2bf8ae304699ab6b7df7f",
+      "evidence_states": [
+        "NOT_APPLICABLE"
+      ],
+      "realization_request_sha256": "522fbcbd4a3c650de0ec9cdb48c8985118231fc74880c2b544ce785cbee6caf4",
+      "risk_tags": [
+        "NOT_APPLICABLE_AS_MISSING",
+        "UNSUPPORTED_URGENCY",
+        "UNSUPPORTED_HISTORY"
+      ],
+      "semantic_plan_sha256": "54be9ee0306e48737895dc0b7b12eb888456153354828f489635cf3eca87aefb",
+      "slot_count": 2,
+      "slot_types": [
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_016",
+      "case_sha256": "3e1e9c1b190b5708c7687d2c61b9cb82253fedd6db670ae941658200211be11f",
+      "evidence_states": [
+        "NOT_APPLICABLE"
+      ],
+      "realization_request_sha256": "74e598ddb4ae591cd673253424d0ddf25d4db32963d297c362a4d984a77350eb",
+      "risk_tags": [
+        "NOT_APPLICABLE_AS_MISSING",
+        "UNSUPPORTED_URGENCY",
+        "UNSUPPORTED_HISTORY",
+        "UNSUPPORTED_LOCALIZATION"
+      ],
+      "semantic_plan_sha256": "76642efa05f4753f3a5e40f4bea58353874b9fe3f1137fdc1035f9b5e16c6bda",
+      "slot_count": 2,
+      "slot_types": [
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_017",
+      "case_sha256": "e809740f11a6bc02d7a89bf59b4930037964e3083b6b7d0c0a2d67ac208abd1e",
+      "evidence_states": [
+        "CONTRADICTED"
+      ],
+      "realization_request_sha256": "9ac471a69e567b6c1e058e378a9f15b7fc007ccc26da740c277e12cdef5d2c4b",
+      "risk_tags": [
+        "CONTRADICTION_RESOLUTION",
+        "POLARITY_DRIFT",
+        "UNSUPPORTED_CAUSALITY"
+      ],
+      "semantic_plan_sha256": "83a6407d07e1bd9b496760e47b0e74a358cd2bc4644a6340a8824c40f75e7f57",
+      "slot_count": 5,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "CONTRADICTION_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_018",
+      "case_sha256": "72b205a62f090e2adec7f646e99e9bf4f3c1ef90ab89c0398705c183906ad9a5",
+      "evidence_states": [
+        "CONTRADICTED"
+      ],
+      "realization_request_sha256": "02bca5ace1e39cddfc0c0ce4992c1b7650b9688d616ad07511812d1f89d7cbe2",
+      "risk_tags": [
+        "CONTRADICTION_RESOLUTION",
+        "POLARITY_DRIFT",
+        "UNSUPPORTED_CAUSALITY"
+      ],
+      "semantic_plan_sha256": "854bf1dc4386d52b42f99ca8979b1539a14116495d1e51e90e54dee2909f2518",
+      "slot_count": 5,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "CONTRADICTION_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_019",
+      "case_sha256": "02e9a2cd399a0bac11c15836080068d1acb9d78841aa72aae8eac153b220c6be",
+      "evidence_states": [
+        "CONTRADICTED"
+      ],
+      "realization_request_sha256": "21cf4b419c27993441133a3428182f4e01d54ef33dfd44cdb24d1ef1e8c805c6",
+      "risk_tags": [
+        "CONTRADICTION_RESOLUTION",
+        "POLARITY_DRIFT",
+        "UNSUPPORTED_CAUSALITY"
+      ],
+      "semantic_plan_sha256": "53ec67fe9275f23f6ab0131380936fef2fc62cab3d9885f58dad95a59cab5396",
+      "slot_count": 5,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "CONTRADICTION_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_020",
+      "case_sha256": "0923af1080cd847e4df1a13508587074a75e2d16aaa941b9ee55a34b265dda98",
+      "evidence_states": [
+        "SUPPORTED"
+      ],
+      "realization_request_sha256": "0dd019fac494624aa0d8ab7469348094c872afaa71ef87f0ca387133dc32ecd5",
+      "risk_tags": [
+        "DEFER_OVERRIDE",
+        "REVIEWER_TOPIC_ESCAPE",
+        "UNSUPPORTED_TREATMENT"
+      ],
+      "semantic_plan_sha256": "a5b7a0acc0e640993e1d35cc49cc1fa7c656a64d0b16d0691c0cf70a3b15b72e",
+      "slot_count": 4,
+      "slot_types": [
+        "DEFER_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "REVIEWER_QUESTION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_021",
+      "case_sha256": "06ada7ea4855dc38953462f06d6202333e562089a3b51f85f25d2e876f78558d",
+      "evidence_states": [
+        "SUPPORTED"
+      ],
+      "realization_request_sha256": "3fa0ebefdbe360b0d57dc1296b19d089e652daec7feb3c49419b679d48e0f8ce",
+      "risk_tags": [
+        "DEFER_OVERRIDE",
+        "REVIEWER_TOPIC_ESCAPE",
+        "UNSUPPORTED_TREATMENT"
+      ],
+      "semantic_plan_sha256": "6e5c41be3acad2cfb5d87ad8584da80888d3a8583001cf7a0805b448fbb32163",
+      "slot_count": 4,
+      "slot_types": [
+        "DEFER_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "REVIEWER_QUESTION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_022",
+      "case_sha256": "c9abb72fe80c8b037a395a15b0561d40fd2bc798858b95ce5da78a50f99156d2",
+      "evidence_states": [
+        "SUPPORTED"
+      ],
+      "realization_request_sha256": "700f7c8e70d8e1478fbdcd3edd60913719b76c2e59b0a6d80114e85756daf65f",
+      "risk_tags": [
+        "DEFER_OVERRIDE",
+        "REVIEWER_TOPIC_ESCAPE",
+        "UNSUPPORTED_TREATMENT",
+        "UNSUPPORTED_MANAGEMENT"
+      ],
+      "semantic_plan_sha256": "f318443b76a7531adc798fc2024bff313cd0317b914f1e00168157afca01e666",
+      "slot_count": 4,
+      "slot_types": [
+        "DEFER_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "REVIEWER_QUESTION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_023",
+      "case_sha256": "a02966f81938277cbe5d9169a198a2f914a89a3175c1bc88b0359bca040a1eda",
+      "evidence_states": [
+        "SUPPORTED"
+      ],
+      "realization_request_sha256": "d1624a33ed269b457c2f2b9d9a4d29cae47623e5f0ccf07c03455f4e09abcac5",
+      "risk_tags": [
+        "UNCERTAINTY_DRIFT",
+        "UNSUPPORTED_SEVERITY",
+        "UNSUPPORTED_PROGNOSIS"
+      ],
+      "semantic_plan_sha256": "2c921c1129a8d12fd85c237d6b4adea863fe8a7641163e5b8443ae14191e0443",
+      "slot_count": 3,
+      "slot_types": [
+        "CLAIM_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    },
+    {
+      "case_id": "ext4f_dev_024",
+      "case_sha256": "84bea65075f397857fb163aab4f738fd200be542a193f515fbdace8fabe4fbe5",
+      "evidence_states": [
+        "SUPPORTED"
+      ],
+      "realization_request_sha256": "10a4570352daedd35c147892adbc8a4a054ed5fd42faa89a9c20409129c17eb6",
+      "risk_tags": [
+        "DEFER_OVERRIDE",
+        "REVIEWER_TOPIC_ESCAPE",
+        "UNSUPPORTED_TREATMENT",
+        "UNSUPPORTED_LATERALITY"
+      ],
+      "semantic_plan_sha256": "64a5d76c0389f398cf0d0d7665d78715d48b265f58b8a618462c5c227283ef4c",
+      "slot_count": 4,
+      "slot_types": [
+        "DEFER_EXPLANATION",
+        "LIMITATION_EXPLANATION",
+        "REVIEWER_QUESTION",
+        "UNCERTAINTY_EXPLANATION"
+      ],
+      "source": "new_ext4f_synthetic_governed_evidence"
+    }
+  ],
+  "expectation_policy": "Each request slot has frozen authoritative_facts, source_refs, required flag, and applicable rubric dimensions generated by the deterministic case factory.",
+  "faithfulness_dimensions": [
+    "MEANING_PRESERVATION",
+    "POLARITY_PRESERVATION",
+    "UNCERTAINTY_PRESERVATION",
+    "PROVENANCE_PRESERVATION",
+    "NO_UNSUPPORTED_ADDITION",
+    "NO_FORBIDDEN_CLINICAL_INFERENCE",
+    "STATE_DISTINCTION_PRESERVATION",
+    "TOPIC_BOUNDARY_PRESERVATION"
+  ],
+  "final_case_access_policy": "CLOSED",
+  "forbidden_meaning_set_id": "EXT4F_FORBIDDEN_MEANINGS_V1",
+  "generation_policy_version": "EXT4F5_REALIZATION_GENERATION_POLICY_V1",
+  "locked_test_policy": "CLOSED",
+  "ordered_case_ids": [
+    "ext4f_dev_001",
+    "ext4f_dev_002",
+    "ext4f_dev_003",
+    "ext4f_dev_004",
+    "ext4f_dev_005",
+    "ext4f_dev_006",
+    "ext4f_dev_007",
+    "ext4f_dev_008",
+    "ext4f_dev_009",
+    "ext4f_dev_010",
+    "ext4f_dev_011",
+    "ext4f_dev_012",
+    "ext4f_dev_013",
+    "ext4f_dev_014",
+    "ext4f_dev_015",
+    "ext4f_dev_016",
+    "ext4f_dev_017",
+    "ext4f_dev_018",
+    "ext4f_dev_019",
+    "ext4f_dev_020",
+    "ext4f_dev_021",
+    "ext4f_dev_022",
+    "ext4f_dev_023",
+    "ext4f_dev_024"
+  ],
+  "partition": "EXT4F_DEVELOPMENT_ONLY",
+  "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
+  "retry_policy": "exactly_one_request_per_case_no_retry",
+  "scoring_version": "EXT4F5_FAITHFULNESS_SCORING_V1"
+}

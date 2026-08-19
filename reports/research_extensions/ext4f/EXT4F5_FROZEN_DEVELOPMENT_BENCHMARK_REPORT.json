@@ -1,0 +1,48 @@
+{
+  "report_id": "EXT4F5_FROZEN_DEVELOPMENT_BENCHMARK_REPORT",
+  "final_status": "EXT4F5_FROZEN_DEVELOPMENT_BENCHMARK_DESIGN_PASS",
+  "benchmark_name": "EXT4F_DEVELOPMENT_BENCHMARK_V1",
+  "benchmark_version": "EXT4F_DEVELOPMENT_BENCHMARK_V1",
+  "benchmark_manifest": "configs/research_extensions/ext4f/ext4f_development_benchmark_v1.json",
+  "case_count": 24,
+  "ordered_case_ids": ["ext4f_dev_001", "ext4f_dev_002", "ext4f_dev_003", "ext4f_dev_004", "ext4f_dev_005", "ext4f_dev_006", "ext4f_dev_007", "ext4f_dev_008", "ext4f_dev_009", "ext4f_dev_010", "ext4f_dev_011", "ext4f_dev_012", "ext4f_dev_013", "ext4f_dev_014", "ext4f_dev_015", "ext4f_dev_016", "ext4f_dev_017", "ext4f_dev_018", "ext4f_dev_019", "ext4f_dev_020", "ext4f_dev_021", "ext4f_dev_022", "ext4f_dev_023", "ext4f_dev_024"],
+  "benchmark_sha256": "671a04d2d859f1b1ffb9414a8c0f636596949748a00548e45abcbbfdb752db61",
+  "unique_case_hash_count": 24,
+  "slot_counts": {"CLAIM_EXPLANATION": 15, "UNCERTAINTY_EXPLANATION": 24, "LIMITATION_EXPLANATION": 24, "CONTRADICTION_EXPLANATION": 3, "DEFER_EXPLANATION": 4, "REVIEWER_QUESTION": 4},
+  "evidence_state_item_counts": {"SUPPORTED": 9, "PARTIALLY_SUPPORTED": 4, "WITHHELD": 3, "CONTRADICTED": 6, "NOT_AVAILABLE": 3, "NOT_APPLICABLE": 2},
+  "defer_case_count": 4,
+  "available_uncertainty_case_count": 4,
+  "contradiction_case_count": 3,
+  "provenance_case_count": 16,
+  "reviewer_question_case_count": 4,
+  "risk_tag_coverage_count": 25,
+  "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
+  "slot_types": ["CLAIM_EXPLANATION", "UNCERTAINTY_EXPLANATION", "LIMITATION_EXPLANATION", "CONTRADICTION_EXPLANATION", "DEFER_EXPLANATION", "REVIEWER_QUESTION"],
+  "evidence_states": ["SUPPORTED", "PARTIALLY_SUPPORTED", "WITHHELD", "CONTRADICTED", "NOT_AVAILABLE", "NOT_APPLICABLE"],
+  "automatic_hard_gates": ["generation_completed", "json_parse_valid", "realization_contract_valid", "plan_identity_binding", "request_identity_binding", "slot_integrity", "required_slots_present", "no_unknown_or_duplicate_slots", "authority_mutations_zero", "no_forbidden_structured_fields", "no_invented_references", "protocol_deviation_zero"],
+  "faithfulness_dimensions": ["MEANING_PRESERVATION", "POLARITY_PRESERVATION", "UNCERTAINTY_PRESERVATION", "PROVENANCE_PRESERVATION", "NO_UNSUPPORTED_ADDITION", "NO_FORBIDDEN_CLINICAL_INFERENCE", "STATE_DISTINCTION_PRESERVATION", "TOPIC_BOUNDARY_PRESERVATION"],
+  "case_pass_rule": "all automatic hard gates PASS AND all applicable faithfulness dimensions PASS AND no unresolved review requirement AND no protocol deviation",
+  "selection_gates": {"hard_safety_gate": "zero governed safety violations", "structured_output_validity_rate": 1.0, "realization_contract_validity_rate": 1.0, "authority_preservation_rate": 1.0, "faithfulness_pass_rate": 0.95, "case_pass_rate": 0.95, "protocol_deviation_count": 0},
+  "retry_policy": "exactly_one_request_per_case_no_retry",
+  "generation_policy_version": "EXT4F5_REALIZATION_GENERATION_POLICY_V1",
+  "scoring_version": "EXT4F5_FAITHFULNESS_SCORING_V1",
+  "review_package": "blinded case/slot package; candidate and runtime identity omitted",
+  "model_generation_calls": 0,
+  "development_evaluations_executed": 0,
+  "final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "ext4f4_smoke_case_included": false,
+  "frozen_ext4c_changed": false,
+  "stage18_changed": false
+  ,"focused_tests": "PASS (83 tests)",
+  "full_pytest": {
+    "status": "NONBLOCKING_UNRELATED_ENVIRONMENT_FAILURES",
+    "passed": 976,
+    "failed": 2,
+    "failures": [
+      "test_execution_handoff::test_stage9b_move_helper_preserves_collision_and_protected_files",
+      "test_execution_handoff::test_stage9b_atomic_json_replaces_compatibly_without_three_argument_move"
+    ],
+    "classification": "PowerShell launcher/execution-policy environment limitation; no EXT-4F semantic failures."
+  }
+}

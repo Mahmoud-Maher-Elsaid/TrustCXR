@@ -26,10 +26,12 @@
 **EXT-4F.1 Semantic Planner and Contract V1:** `PASS`
 **EXT-4F.2 Deterministic Semantic Unit Validation:** `PASS`
 **EXT-4F.3 Constrained Natural-Language Realization Adapter:** `PASS — ZERO GENERATION`
-**Next authorized stage:** `EXT4F.4_SYNTHETIC_LLM_TECHNICAL_SMOKE — NOT STARTED`
-**Next local execution step:** `EXT4F.4_SYNTHETIC_LLM_TECHNICAL_SMOKE — NOT STARTED`
+**EXT-4F.4 Synthetic LLM Technical Smoke:** `PASS — ONE GOVERNED SYNTHETIC REQUEST`
+**EXT-4F.5 Development Faithfulness Benchmark Design:** `PASS — 24 CASES FROZEN, ZERO EVALUATION`
+**Next authorized stage:** `EXT4F.6_GOVERNED_DEVELOPMENT_CANDIDATE_EVALUATION — NOT STARTED`
+**Next local execution step:** `EXT4F.6_GOVERNED_DEVELOPMENT_CANDIDATE_EVALUATION — NOT STARTED`
 **True pathology localization follow-on experiments:** `CLOSED — NO EXT-3B/EXT-3C OR ADDITIONAL LOCALIZATION TRAINING`
-**Grounded LLM reporting:** `EXT-4F REALIZATION ADAPTER IMPLEMENTED — ZERO GENERATION`
+**Grounded LLM reporting:** `EXT-4F.4 TECHNICAL SMOKE CLOSED; EXT-4F.5 FAITHFULNESS BENCHMARK FROZEN — ZERO EVALUATION`
 **Multimodal VLM:** `NOT STARTED`
 
 ```text
