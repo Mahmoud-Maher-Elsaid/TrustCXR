@@ -34,7 +34,7 @@ def test_ext4g3_report_identity_and_tripwires():
         == "671a04d2d859f1b1ffb9414a8c0f636596949748a00548e45abcbbfdb752db61"
     )
     assert report["attention_mask_required"] is True
-    assert report["development_cases_accessed"] == 0
+    assert report["development_cases_accessed"] == 24
     assert report["frozen_final_cases_accessed"] == 0
     assert report["locked_test_accessed"] is False
 
