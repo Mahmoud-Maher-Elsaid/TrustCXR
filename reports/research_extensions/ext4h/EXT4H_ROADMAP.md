@@ -8,6 +8,7 @@
 | EXT-4H.G1 Gemma GPU INT8 Runtime Migration | PASS | `EXT4HG1_GEMMA3_GPU_INT8_TECHNICAL_SMOKE_PASS` |
 | EXT-4H.3 Fresh Development Benchmark Design and Freeze | NEXT AUTHORIZED | Fresh synthetic cases only; no historical benchmark access |
 | EXT-4H.4 Gemma GPU-INT8 Fresh Frozen Development Evaluation | PREPARED | Requires local pip/pytest/CUDA preflight PASS |
+| EXT-4H.5 Blinded Semantic Faithfulness Review | NEXT AUTHORIZED | Uses preserved H4 outputs only; no generation |
 
 EXT-4G remains closed and scientifically unchanged. Its 24-case benchmark is
 historical regression material only for a separately authorized future stage.
