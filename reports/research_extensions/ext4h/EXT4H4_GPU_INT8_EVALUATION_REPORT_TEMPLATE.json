@@ -1,0 +1,18 @@
+{
+  "stage": "EXT-4H.4",
+  "status_before_local_execution": "EXT4H4_READY_FOR_GOVERNED_LOCAL_GPU_EXECUTION",
+  "benchmark_id": "EXT4H_FRESH_DEVELOPMENT_BENCHMARK_V1",
+  "benchmark_sha256": "1c34ce622fbf68af9b5114ddbf0f73fcfabffabd36dfc7536ad0c01e5402d324",
+  "case_count": 24,
+  "slots_expected": 84,
+  "runtime_id": "EXT4H_GEMMA3_GPU_INT8_V1",
+  "model_revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+  "generation_policy": "EXT4H3_GPU_INT8_SLOT_GENERATION_POLICY_V1",
+  "maximum_generate_calls": 84,
+  "retry_count": 0,
+  "semantic_review_policy": "review only after all automatic hard gates pass; no automatic semantic PASS",
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "model_load_calls_before_local_run": 0,
+  "model_generate_calls_before_local_run": 0
+}
