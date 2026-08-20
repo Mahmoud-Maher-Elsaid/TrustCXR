@@ -15,6 +15,8 @@ EXT-4H.5 status: `EXT4H5_SEMANTIC_FAITHFULNESS_FAILED`.
 The completed blinded review was imported without rating changes. H4 remains
 technical PASS, but this candidate was not scientifically selected.
 
+EXT-4I.0/1 status: `EXT4I1_SEMANTICALLY_BOUNDED_REALIZATION_AND_REGRESSION_PASS`.
+
 EXT-4G remains closed and scientifically unchanged. Its 24-case benchmark is
 historical regression material only for a separately authorized future stage.
 Frozen final and locked partitions remain closed. Stage 18 remains the
