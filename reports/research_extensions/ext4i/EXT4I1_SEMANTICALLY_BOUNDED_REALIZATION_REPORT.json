@@ -1,5 +1,6 @@
 {
-  "status": "EXT4I1_SEMANTICALLY_BOUNDED_REALIZATION_AND_REGRESSION_PASS",
+  "status": "EXT4I1_REPAIR_INCOMPLETE",
+  "repair_provenance": {"pre_repair_commit": "afb100a52e9db5ee32f0ef808a3288977435ecc5", "authoritative_local_result": "1045 passed, 3 failed", "root_causes": ["FORBIDDEN_LEXICON_COVERAGE_GAP", "VALIDATOR_FALSE_POSITIVE", "STATE_TRANSITION_RULE_DEFECT"]},
   "architecture_id": "EXT4I_SEMANTICALLY_BOUNDED_REALIZATION_ARCHITECTURE_V1",
   "semantic_atom_contract_id": "EXT4I_SEMANTIC_ATOM_CONTRACT_V1",
   "proposition_boundary_id": "EXT4I_PROPOSITION_BOUNDARY_V1",
@@ -14,10 +15,10 @@
   "evidence_state_coverage": ["SUPPORTED", "PARTIALLY_SUPPORTED", "WITHHELD", "CONTRADICTED", "NOT_AVAILABLE", "NOT_APPLICABLE"],
   "defer_coverage": ["ACTIVE", "INACTIVE"],
   "historical_regression": {"suite_id": "EXT4I_H5_RESOLVED_FAILURE_REGRESSION_V1", "rejected": 16, "total": 16, "replacement_pass": 16, "total_replacements": 16},
-  "mutation_testing": {"attempted": 264, "rejected": 264, "unexpected_accepts": 0},
-  "positive_fixtures": {"pass": 12, "total": 12},
-  "round_trip_information_preservation": "PASS 100%",
-  "reproducibility": "PASS byte-stable deterministic materialization",
+  "mutation_testing": {"attempted": 264, "rejected": null, "unexpected_accepts": null, "post_repair_runtime_validation": "PENDING"},
+  "positive_fixtures": {"pass": null, "total": 12, "post_repair_runtime_validation": "PENDING"},
+  "round_trip_information_preservation": "IMPLEMENTED; runtime validation pending",
+  "reproducibility": "IMPLEMENTED; runtime validation pending",
   "review_context_v2": "PASS explicit authority fields; candidate/model/expected prose excluded",
   "model_load_calls": 0,
   "forward_calls": 0,
@@ -25,6 +26,8 @@
   "unbiased_development_cases_accessed": 0,
   "frozen_final_cases_accessed": 0,
   "locked_test_accessed": false,
+  "full_pytest": "PENDING_GOVERNED_LOCAL_RUNTIME",
+  "pip_check": "PENDING_GOVERNED_LOCAL_RUNTIME",
   "h5_closure_unchanged": true,
   "next_stage": "EXT-4I.2 Bounded Lexical Runtime Technical Smoke Governance and Preparation"
 }

@@ -71,6 +71,16 @@ def test_contract_has_no_free_text_model_field_and_explicit_states():
     assert set(contract["state_constraints"]) == set(EVIDENCE_STATES) | {"DEFER"}
 
 
+def test_authorized_topic_words_are_not_false_clinical_inference():
+    atoms, boundary, skeleton, result = _realize(_fixture("WITHHELD", topic="localization"))
+    assert validate_ext4i_realization(atoms, boundary, skeleton, result["realized_text"])["status"] == "PASS"
+
+
+def test_supported_state_substitution_is_rejected():
+    atoms, boundary, skeleton, _ = _realize(_fixture("SUPPORTED"))
+    assert validate_ext4i_realization(atoms, boundary, skeleton, "The finding is contradicted.")["status"] == "FAIL"
+
+
 def test_positive_matrix_covers_state_and_slot_paths():
     fixtures = [
         ("SUPPORTED", "claim"), ("PARTIALLY_SUPPORTED", "claim"),

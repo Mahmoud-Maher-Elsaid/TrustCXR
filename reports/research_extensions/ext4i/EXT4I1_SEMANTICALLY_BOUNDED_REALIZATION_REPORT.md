@@ -5,10 +5,19 @@ phrase skeletons, finite lexical choices, and a fail-closed semantic
 validator V2. Model-authorized free-text fields are zero; the one lexical
 choice field is finite and deterministic in this stage.
 
-All 16 resolved H5 failures are rejected by the historical regression suite,
-and all 16 deterministic replacements pass. The deterministic mutation suite
-attempts 264 forbidden mutations with zero unexpected accepts. Positive
-fixtures cover all six evidence states plus DEFER and contradiction paths.
+The prior static result was superseded by an authoritative local report of
+1045 passed and 3 failed. The repair tightens token-boundary clinical checks,
+exempts explicitly authorized topic wording, and adds explicit SUPPORTED
+state-substitution rejection. The governed Windows interpreter was not
+invocable in this session, so post-repair focused/full pytest and pip-check
+results remain pending; final PASS is not claimed.
 
 No model was loaded, no generation occurred, and no unbiased benchmark or
 final/locked partition was accessed.
+
+Repair provenance: the pre-repair static implementation commit was
+`afb100a52e9db5ee32f0ef808a3288977435ecc5`. The authoritative local gate
+reported 1045 passed and 3 failed. The bounded repair corrected token-boundary
+clinical checks (including authorized topic exemptions) and added explicit
+SUPPORTED state-substitution rejection. H5 and historical regression inputs
+were not changed.

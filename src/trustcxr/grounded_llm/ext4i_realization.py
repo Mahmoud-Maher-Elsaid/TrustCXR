@@ -17,7 +17,7 @@ SKELETON_ID = "EXT4I_PHRASE_SKELETON_V1"
 LEXICAL_ID = "EXT4I_BOUNDED_LEXICAL_CHOICE_V1"
 VALIDATOR_ID = "EXT4I_SEMANTIC_VALIDATOR_V2"
 EVIDENCE_STATES = ("SUPPORTED", "PARTIALLY_SUPPORTED", "WITHHELD", "CONTRADICTED", "NOT_AVAILABLE", "NOT_APPLICABLE")
-CLINICAL_FORBIDDEN = ("diagnos", "treat", "management", "urgent", "urgency", "severe", "left", "right", "localized", "localization", "caus", "measurement")
+CLINICAL_FORBIDDEN_PATTERNS = (r"\bdiagnos\w*\b", r"\btreat\w*\b", r"\bmanagement\b", r"\burgent\w*\b", r"\bsevere\w*\b", r"\bleft\b", r"\bright\b", r"\blocaliz(?:ed|ation)\b", r"\bcaus(?:al|ality|ation)?\b", r"\bmeasurement\w*\b")
 LEXICAL_CHOICES = {"connector": ("and", "while")}
 
 
@@ -40,7 +40,7 @@ def build_ext4i_semantic_atoms(authority: dict[str, Any]) -> dict[str, Any]:
         "defer_semantics": authority.get("defer_semantics", "INACTIVE"),
         "contradiction_semantics": authority.get("contradiction", "NOT_APPLICABLE"),
         "topic_boundary": topic,
-        "forbidden_clinical_inference_classes": list(CLINICAL_FORBIDDEN),
+        "forbidden_clinical_inference_classes": ["diagnosis", "treatment", "management", "urgency", "severity", "laterality", "localization", "causality", "measurement"],
     }
     state_atoms = {
         "SUPPORTED": (f"evidence supports {topic}", ["unsupported", "contradicted"]),
@@ -99,14 +99,18 @@ def validate_ext4i_realization(atoms: dict[str, Any], boundary: dict[str, Any], 
     if boundary.get("atom_sha256") != atoms.get("atom_sha256"): failures.append("EXT4I_AUTHORITY_IDENTITY_MISMATCH")
     text = realized_text.lower()
     state = atoms["evidence_state"]
+    # Remove the explicitly authorized topic before clinical-boundary checks;
+    # e.g. a WITHHELD localization topic is allowed to name localization.
+    clinical_text = text.replace(str(atoms.get("topic_boundary", "")).lower(), " ")
     if state == "WITHHELD" and any(x in text for x in ("not available", "unavailable", "absent", "negative", "no evidence")): failures.append("EXT4I_WITHHELD_TO_NOT_AVAILABLE")
     if state in {"NOT_AVAILABLE", "NOT_APPLICABLE"} and any(x in text for x in ("negative", "absent", "normal", "does not exist")): failures.append("EXT4I_STATE_TO_NEGATIVE_OR_ABSENCE")
     if state == "PARTIALLY_SUPPORTED" and any(x in text for x in ("fully supported", "strongly supports")): failures.append("EXT4I_PARTIAL_SUPPORT_INFLATION")
+    if state == "SUPPORTED" and any(x in text for x in ("unsupported", "not supported", "contradicted")): failures.append("EXT4I_SUPPORTED_STATE_SUBSTITUTION")
     if state == "CONTRADICTED" and any(x in text for x in ("reconciled", "resolved", "consistent", "supersedes")): failures.append("EXT4I_CONTRADICTION_RECONCILIATION")
     if state == "CONTRADICTED" and "uncertainty about" in text: failures.append("EXT4I_UNSUPPORTED_PROPOSITION")
     if state == "CONTRADICTED" and "authoritative" in text: failures.append("EXT4I_PROVENANCE_INVENTION")
     if atoms.get("defer_semantics") == "ACTIVE" and "explanation" in text and "active" in text: failures.append("EXT4I_DEFER_OBJECT_MISMATCH")
-    if any(word in text for word in CLINICAL_FORBIDDEN): failures.append("EXT4I_FORBIDDEN_CLINICAL_INFERENCE")
+    if any(re.search(pattern, clinical_text) for pattern in CLINICAL_FORBIDDEN_PATTERNS): failures.append("EXT4I_FORBIDDEN_CLINICAL_INFERENCE")
     if atoms.get("provenance_semantics") == "PLAN_BOUND_ONLY" and any(x in text for x in ("stage 16", "authoritative source")): failures.append("EXT4I_PROVENANCE_INVENTION")
     return {"validator_id": VALIDATOR_ID, "status": "FAIL" if failures else "PASS", "failure_codes": failures}
 
