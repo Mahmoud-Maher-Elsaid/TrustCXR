@@ -146,7 +146,7 @@ def audit_processor(root: Path, probe_text: str) -> dict[str, Any]:
         from transformers import AutoProcessor
 
         processor = AutoProcessor.from_pretrained(
-            str(root), local_files_only=True, trust_remote_code=False
+            str(root), local_files_only=True, trust_remote_code=False, use_fast=True
         )
         tokenizer = getattr(processor, "tokenizer", processor)
         encoded = processor.apply_chat_template(

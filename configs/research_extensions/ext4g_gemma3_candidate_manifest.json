@@ -1,0 +1,24 @@
+{
+  "candidate_id": "EXT4G_CANDIDATE_GEMMA3_4B_IT_V1",
+  "repository": "google/gemma-3-4b-it",
+  "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+  "manifest_scope": "IMMUTABLE_HUB_REVISION_REPOSITORY_FILES_ONLY",
+  "local_cache_metadata_scope": "LOCAL_DOWNLOAD_CACHE_METADATA_EXCLUDED",
+  "files": [
+    {"filename": ".gitattributes", "byte_size": 1760, "sha256": "f5560e52a0e066bf2d8c7d3f0ba64cc64396055e6754ef40aa779dec662747b0"},
+    {"filename": "added_tokens.json", "byte_size": 35, "sha256": "50b2f405ba56a26d4913fd772089992252d7f942123cc0a034d96424221ba946"},
+    {"filename": "chat_template.json", "byte_size": 1615, "sha256": "fe16baf728db49457cde32802cd7efc0ac8a7a9877dbe22fe3322b2d9dc6ccd9"},
+    {"filename": "config.json", "byte_size": 855, "sha256": "9059f680f4dbd1957f35cb44b9fdd6948f4792db7a7a35ee353ea42e68adf7ff"},
+    {"filename": "generation_config.json", "byte_size": 215, "sha256": "fd9324becc53c4be610db39e13a613006f09fd6ef71a95fb6320dc33157490a3"},
+    {"filename": "model-00001-of-00002.safetensors", "byte_size": 4961251752, "sha256": "eb5fd5e97ddd07b56778733e9653c07312529cb00980a318fc3e1c4e3b5a8f1f"},
+    {"filename": "model-00002-of-00002.safetensors", "byte_size": 3639026128, "sha256": "fdde0e5aa5ced0fa203b3d50f4ab78168b7e3a3e08c6349f5cc9326666e1bb13"},
+    {"filename": "model.safetensors.index.json", "byte_size": 90558, "sha256": "77f4b67de084c31c7bcd373b039908108eee6c6181607e6d53da730e5f0bc659"},
+    {"filename": "preprocessor_config.json", "byte_size": 570, "sha256": "f688d6bb20c5017601c4011de7ca656da8485b540b05013efdaf986c0fcc918d"},
+    {"filename": "processor_config.json", "byte_size": 70, "sha256": "3ffd5f11778dc73e2b69b3c00535e4121e1badf7018136263cd17b5b34fbaa53"},
+    {"filename": "README.md", "byte_size": 25122, "sha256": "eb6df732fd79f239d46a2bbc75302795cf293acd5b75fcc01995344da02aa0bf"},
+    {"filename": "special_tokens_map.json", "byte_size": 662, "sha256": "2f7b0adf4fb469770bb1490e3e35df87b1dc578246c5e7e6fc76ecf33213a397"},
+    {"filename": "tokenizer.json", "byte_size": 33384568, "sha256": "4667f2089529e8e7657cfb6d1c19910ae71ff5f28aa7ab2ff2763330affad795"},
+    {"filename": "tokenizer.model", "byte_size": 4689074, "sha256": "1299c11d7cf632ef3b4e11937501358ada021bbdf7c47638d13c0ee982f2e79c"},
+    {"filename": "tokenizer_config.json", "byte_size": 1156999, "sha256": "bfe25c2735e395407beb78456ea9a6984a1f00d8c16fa04a8b75f2a614cf53e1"}
+  ]
+}
