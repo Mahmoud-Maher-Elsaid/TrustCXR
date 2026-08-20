@@ -1,0 +1,29 @@
+{
+  "stage": "EXT-4H.G1",
+  "status": "PREPARED_FOR_GOVERNED_LOCAL_GPU_EXECUTION",
+  "runtime_id": "EXT4H_GEMMA3_GPU_INT8_V1",
+  "candidate_id": "EXT4G_CANDIDATE_GEMMA3_4B_IT_V1",
+  "repository": "google/gemma-3-4b-it",
+  "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+  "quantization": "bitsandbytes LLM.int8()",
+  "dtype": "torch.bfloat16",
+  "device_policy": "CUDA:0 only; CPU model fallback rejected",
+  "model_vocab_size": 262208,
+  "constraint_vocab_size": 262145,
+  "forbidden_model_tail": {
+    "start": 262145,
+    "end": 262207,
+    "count": 63
+  },
+  "attention_mask_policy": "explicit processor-derived mask moved to model input device",
+  "synthetic_case_id": "ext4h_gpu_int8_smoke_001",
+  "maximum_generate_calls": 3,
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "cpu_bf16_evidence_preserved": true,
+  "cpu_bf16_and_gpu_int8_are_distinct_variants": true,
+  "model_generation_calls_in_preparation": 0,
+  "next_stage": "EXT-4H.G2 governed GPU INT8 technical smoke",
+  "runtime_note": "CUDA and bitsandbytes gates execute only in the governed local runner; no GPU inference was performed during preparation."
+}
