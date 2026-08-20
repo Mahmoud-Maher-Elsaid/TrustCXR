@@ -9,6 +9,7 @@
 | EXT-4H.3 Fresh Development Benchmark Design and Freeze | NEXT AUTHORIZED | Fresh synthetic cases only; no historical benchmark access |
 | EXT-4H.4 Gemma GPU-INT8 Fresh Frozen Development Evaluation | PREPARED | Requires local pip/pytest/CUDA preflight PASS |
 | EXT-4H.5 Blinded Semantic Faithfulness Review | NEXT AUTHORIZED | Uses preserved H4 outputs only; no generation |
+| EXT-4I.0 Semantic Failure Root-Cause Audit | PASS | `EXT4I0_SEMANTIC_FAILURE_ROOT_CAUSE_AND_ARCHITECTURE_GOVERNANCE_PASS` |
 
 EXT-4H.5 status: `EXT4H5_SEMANTIC_FAITHFULNESS_FAILED`.
 The completed blinded review was imported without rating changes. H4 remains
