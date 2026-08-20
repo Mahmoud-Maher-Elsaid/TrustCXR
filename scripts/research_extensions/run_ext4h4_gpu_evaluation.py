@@ -30,6 +30,7 @@ from trustcxr.grounded_llm.ext4h3_benchmark import (
     build_ext4h3_cases,
     validate_ext4h3_design,
 )
+from trustcxr.grounded_llm.ext4h4_decision import automatic_gate_decision
 from trustcxr.grounded_llm.ext4h_gpu_runtime import (
     MODEL_REVISION,
     MODEL_VOCAB_SIZE,
@@ -302,6 +303,14 @@ def main() -> int:
         ]
         parse_valid = sum(slot.get("parse_status") == "PASS" for slot in slot_ledgers)
         contract_valid = sum(slot.get("slot_contract_status") == "PASS" for slot in slot_ledgers)
+        structured_rate = contract_valid / len(slot_ledgers) if slot_ledgers else 0.0
+        decision = automatic_gate_decision(
+            structured_validity=structured_rate,
+            assembled_contract_validity=gate_pass / 24,
+            authority_mutations=ledger["authority_mutations"],
+            protocol_deviations=ledger["protocol_deviation_count"],
+            cases_pass=gate_pass,
+        )
         ledger.update(
             {
                 "slot_generation_completed": sum(
@@ -315,6 +324,8 @@ def main() -> int:
                 else 0.0,
                 "slot_truncated": sum(slot.get("slot_truncation") is True for slot in slot_ledgers),
                 "assembled_cases": gate_pass,
+                "structured_validity_rate": structured_rate,
+                "assembled_contract_validity_rate": gate_pass / 24,
                 "generation_duration_total_seconds": sum(durations),
                 "generation_duration_mean_seconds": statistics.mean(durations)
                 if durations
@@ -330,10 +341,9 @@ def main() -> int:
                 "automatic_case_hard_gate_pass": gate_pass,
                 "automatic_case_hard_gate_fail": 24 - gate_pass,
                 "semantic_review_required_cases": gate_pass,
+                "semantic_review_status": decision["semantic_review_status"],
                 "phase": "TERMINAL",
-                "terminal_status": "EXT4H4_AUTOMATIC_GATE_PASS_REVIEW_REQUIRED"
-                if gate_pass == 24
-                else "EXT4H4_DEVELOPMENT_GATE_FAILED",
+                "terminal_status": decision["terminal_status"],
             }
         )
     except Exception as exc:

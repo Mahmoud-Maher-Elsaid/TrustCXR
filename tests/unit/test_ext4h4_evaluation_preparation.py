@@ -1,7 +1,9 @@
 import json
 from pathlib import Path
 
-CONFIG = Path("configs/research_extensions/ext4h\ext4h_fresh_development_benchmark_v1.json")
+from trustcxr.grounded_llm.ext4h4_decision import automatic_gate_decision
+
+CONFIG = Path("configs/research_extensions/ext4h/ext4h_fresh_development_benchmark_v1.json")
 RUNNER = Path("scripts/research_extensions/run_ext4h4_gpu_evaluation.py")
 
 
@@ -44,6 +46,32 @@ def test_h4_frozen_threshold_arithmetic():
 
 
 def test_h4_review_is_required_only_after_automatic_pass():
-    source = RUNNER.read_text()
-    assert '"semantic_review_status": "REVIEW_REQUIRED"' in source
-    assert "NOT_REQUIRED_FOR_SELECTION_AFTER_AUTOMATIC_GATE_FAILURE" in source
+    passed = automatic_gate_decision(
+        structured_validity=1.0,
+        assembled_contract_validity=1.0,
+        authority_mutations=0,
+        protocol_deviations=0,
+        cases_pass=24,
+    )
+    failed = automatic_gate_decision(
+        structured_validity=23 / 24,
+        assembled_contract_validity=23 / 24,
+        authority_mutations=0,
+        protocol_deviations=0,
+        cases_pass=23,
+    )
+    unsafe = automatic_gate_decision(
+        structured_validity=1.0,
+        assembled_contract_validity=1.0,
+        authority_mutations=1,
+        protocol_deviations=0,
+        cases_pass=24,
+    )
+    assert passed["semantic_review_status"] == "REVIEW_REQUIRED"
+    assert passed["terminal_status"] == "EXT4H4_AUTOMATIC_GATE_PASS_REVIEW_REQUIRED"
+    assert (
+        failed["semantic_review_status"]
+        == "NOT_REQUIRED_FOR_SELECTION_AFTER_AUTOMATIC_GATE_FAILURE"
+    )
+    assert failed["terminal_status"] == "EXT4H4_DEVELOPMENT_GATE_FAILED"
+    assert unsafe["terminal_status"] == "EXT4H4_DEVELOPMENT_GATE_FAILED"

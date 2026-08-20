@@ -56,6 +56,20 @@ def test_tracked_runtime_imports_are_governed() -> None:
     assert {"torch", "pydicom"} <= set(result["tracked_third_party_import_roots"])
 
 
+def test_ext4h_gpu_dependencies_are_scoped_outside_historical_lock() -> None:
+    manifest = json.loads(
+        (ROOT / "configs/research_extensions/ext4h/gpu_runtime_dependencies_v1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert manifest["runtime_id"] == "EXT4H_GEMMA3_GPU_INT8_V1"
+    assert manifest["dependencies"] == {"bitsandbytes": "0.50.0", "accelerate": "1.14.0"}
+    assert manifest["historical_stage25b_lock_mutation"] is False
+    pins = parse_lock(LOCK)
+    assert "bitsandbytes" not in pins
+    assert "accelerate" not in pins
+
+
 def test_bounded_environment_verification_passes_without_inference() -> None:
     result = verify(ROOT)
     assert result["status"] == "PASSED_FINAL_ENVIRONMENT_VERIFICATION"

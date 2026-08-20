@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
 
-CONFIG = Path("configs/research_extensions/ext4h\ext4h_fresh_development_benchmark_v1.json")
+CONFIG = Path("configs/research_extensions/ext4h/ext4h_fresh_development_benchmark_v1.json")
 REPORT = Path(
-    "reports/research_extensions/ext4h\EXT4H3_FRESH_DEVELOPMENT_BENCHMARK_DESIGN_REPORT.json"
+    "reports/research_extensions/ext4h/EXT4H3_FRESH_DEVELOPMENT_BENCHMARK_DESIGN_REPORT.json"
 )
 
 

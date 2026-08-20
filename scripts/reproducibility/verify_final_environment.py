@@ -19,6 +19,9 @@ EXPECTED_PYTHON = "3.12.10"
 EXPECTED_CUDA = "13.0"
 EXPECTED_GPU = "NVIDIA GeForce RTX 3070 Ti Laptop GPU"
 BOOTSTRAP_DISTRIBUTIONS = {"pip": "26.2", "setuptools": "78.1.0", "wheel": "0.47.0"}
+EXT4H_GPU_RUNTIME_MANIFEST = Path(
+    "configs/research_extensions/ext4h/gpu_runtime_dependencies_v1.json"
+)
 
 
 def sha256(path: Path) -> str:
@@ -52,12 +55,40 @@ def tracked_import_roots(root: Path) -> set[str]:
     return imports
 
 
+def scoped_extension_import_roots(root: Path) -> set[str]:
+    """Imports governed by an explicit research-extension runtime manifest."""
+    imports: set[str] = set()
+    scoped_paths = [root / "src/trustcxr/grounded_llm", root / "scripts/research_extensions"]
+    for source_root in scoped_paths:
+        for path in (
+            source_root.glob("ext4h*.py")
+            if source_root.name == "grounded_llm"
+            else source_root.glob("*.py")
+        ):
+            tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Import):
+                    imports.update(alias.name.split(".")[0] for alias in node.names)
+                elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+                    imports.add(node.module.split(".")[0])
+    return imports
+
+
 def audit_imports(root: Path, pins: dict[str, str]) -> dict[str, Any]:
     package_map = importlib.metadata.packages_distributions()
     local_roots = {"trustcxr", "scripts"}
     local_roots.update(path.stem for path in (root / "scripts").rglob("*.py"))
     third_party: dict[str, list[str]] = {}
     ungoverned: list[str] = []
+    scoped_manifest_path = root / EXT4H_GPU_RUNTIME_MANIFEST
+    scoped_manifest: dict[str, str] = {}
+    if scoped_manifest_path.is_file():
+        payload = json.loads(scoped_manifest_path.read_text(encoding="utf-8"))
+        scoped_manifest = {
+            canonicalize_name(name): version
+            for name, version in payload.get("dependencies", {}).items()
+        }
+    scoped_imports = scoped_extension_import_roots(root)
     for imported in sorted(tracked_import_roots(root)):
         if imported in sys.stdlib_module_names or imported in local_roots:
             continue
@@ -65,6 +96,12 @@ def audit_imports(root: Path, pins: dict[str, str]) -> dict[str, Any]:
         governed = sorted(
             name for name in {canonicalize_name(value) for value in distributions} if name in pins
         )
+        if not governed and imported in scoped_imports:
+            distribution = canonicalize_name(imported)
+            if distribution in scoped_manifest:
+                actual = importlib.metadata.version(distribution)
+                if actual == scoped_manifest[distribution]:
+                    governed = [f"EXT4H_SCOPED:{distribution}=={actual}"]
         if not governed:
             ungoverned.append(imported)
         else:
