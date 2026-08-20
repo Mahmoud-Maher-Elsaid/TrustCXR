@@ -40,7 +40,11 @@ def test_defer_and_contradiction_rules():
     assert "decision is deferred" in result["realized_text"]
     assert validate_ext4i_realization(atoms, boundary, skeleton, "The explanation for deferring is active.")["status"] == "FAIL"
     atoms, boundary, skeleton, _ = _realize(_fixture("CONTRADICTED", contradiction="UNRESOLVED_CONFLICT"))
+    valid = _realize(_fixture("CONTRADICTED", contradiction="UNRESOLVED_CONFLICT"))[3]["realized_text"]
+    assert validate_ext4i_realization(atoms, boundary, skeleton, valid)["status"] == "PASS"
     assert validate_ext4i_realization(atoms, boundary, skeleton, "The signals are reconciled.")["status"] == "FAIL"
+    assert validate_ext4i_realization(atoms, boundary, skeleton, "The conflict was resolved.")["status"] == "FAIL"
+    assert validate_ext4i_realization(atoms, boundary, skeleton, "The signals are consistent.")["status"] == "FAIL"
 
 
 def test_historical_sixteen_failures_are_rejected():

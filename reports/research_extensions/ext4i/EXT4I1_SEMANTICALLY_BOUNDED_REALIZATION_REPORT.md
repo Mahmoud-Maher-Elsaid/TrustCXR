@@ -21,3 +21,9 @@ reported 1045 passed and 3 failed. The bounded repair corrected token-boundary
 clinical checks (including authorized topic exemptions) and added explicit
 SUPPORTED state-substitution rejection. H5 and historical regression inputs
 were not changed.
+
+The current bounded repair also fixes the proven remaining defects:
+`resolved` is matched as a word, so `unresolved conflict` remains valid;
+WITHHELD explicitly rejects `normal`; and NOT_APPLICABLE explicitly rejects
+`unavailable` and `not available`. Local focused and full-suite validation
+remain required before restoring the PASS gate.

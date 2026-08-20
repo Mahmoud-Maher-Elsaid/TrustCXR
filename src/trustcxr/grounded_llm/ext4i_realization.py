@@ -102,11 +102,12 @@ def validate_ext4i_realization(atoms: dict[str, Any], boundary: dict[str, Any], 
     # Remove the explicitly authorized topic before clinical-boundary checks;
     # e.g. a WITHHELD localization topic is allowed to name localization.
     clinical_text = text.replace(str(atoms.get("topic_boundary", "")).lower(), " ")
-    if state == "WITHHELD" and any(x in text for x in ("not available", "unavailable", "absent", "negative", "no evidence")): failures.append("EXT4I_WITHHELD_TO_NOT_AVAILABLE")
-    if state in {"NOT_AVAILABLE", "NOT_APPLICABLE"} and any(x in text for x in ("negative", "absent", "normal", "does not exist")): failures.append("EXT4I_STATE_TO_NEGATIVE_OR_ABSENCE")
+    if state == "WITHHELD" and any(x in text for x in ("not available", "unavailable", "absent", "negative", "no evidence", "normal")): failures.append("EXT4I_WITHHELD_TO_NOT_AVAILABLE_OR_NORMAL")
+    if state == "NOT_AVAILABLE" and any(x in text for x in ("negative", "absent", "normal", "does not exist")): failures.append("EXT4I_STATE_TO_NEGATIVE_OR_ABSENCE")
+    if state == "NOT_APPLICABLE" and any(x in text for x in ("negative", "absent", "normal", "unavailable", "not available", "does not exist")): failures.append("EXT4I_NOT_APPLICABLE_STATE_SUBSTITUTION")
     if state == "PARTIALLY_SUPPORTED" and any(x in text for x in ("fully supported", "strongly supports")): failures.append("EXT4I_PARTIAL_SUPPORT_INFLATION")
     if state == "SUPPORTED" and any(x in text for x in ("unsupported", "not supported", "contradicted")): failures.append("EXT4I_SUPPORTED_STATE_SUBSTITUTION")
-    if state == "CONTRADICTED" and any(x in text for x in ("reconciled", "resolved", "consistent", "supersedes")): failures.append("EXT4I_CONTRADICTION_RECONCILIATION")
+    if state == "CONTRADICTED" and any(re.search(rf"\b{re.escape(x)}\b", text) for x in ("reconciled", "resolved", "consistent", "supersedes")): failures.append("EXT4I_CONTRADICTION_RECONCILIATION")
     if state == "CONTRADICTED" and "uncertainty about" in text: failures.append("EXT4I_UNSUPPORTED_PROPOSITION")
     if state == "CONTRADICTED" and "authoritative" in text: failures.append("EXT4I_PROVENANCE_INVENTION")
     if atoms.get("defer_semantics") == "ACTIVE" and "explanation" in text and "active" in text: failures.append("EXT4I_DEFER_OBJECT_MISMATCH")
