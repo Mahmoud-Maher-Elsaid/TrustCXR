@@ -1,0 +1,23 @@
+{
+  "status": "EXT4H5_BLINDED_SEMANTIC_REVIEW_BUNDLE_READY",
+  "h4_run_id": "20260820T070353Z_fc35947a",
+  "benchmark_id": "EXT4H_FRESH_DEVELOPMENT_BENCHMARK_V1",
+  "benchmark_sha256": "1c34ce622fbf68af9b5114ddbf0f73fcfabffabd36dfc7536ad0c01e5402d324",
+  "protocol_id": "EXT4H5_BLINDED_SEMANTIC_REVIEW_PROTOCOL_V1",
+  "bundle_id": "EXT4H5_BLINDED_REVIEW_BUNDLE_V1",
+  "bundle_sha256": "64a73ff5e7789e096ba0bbbd61966e62a22ca242f877fe26ddc887392225f0f4",
+  "blind_map_sha256": "218cf676c99b0323058ec9104052d802a3c18d85d42315564f694f883cd1161e",
+  "case_count": 24,
+  "generated_review_units": 80,
+  "non_generative_reviewer_question_topics": 4,
+  "rubric_dimensions": ["meaning_preservation", "polarity_preservation", "uncertainty_preservation", "evidence_state_preservation", "provenance_preservation", "reference_fidelity", "no_unsupported_addition", "no_forbidden_clinical_inference", "defer_fidelity", "contradiction_fidelity", "topic_boundary_fidelity", "appropriate_limitation_expression"],
+  "applicability_counts": {"meaning_preservation": {"applicable": 80, "not_applicable": 0}, "polarity_preservation": {"applicable": 80, "not_applicable": 0}, "uncertainty_preservation": {"applicable": 80, "not_applicable": 0}, "evidence_state_preservation": {"applicable": 80, "not_applicable": 0}, "provenance_preservation": {"applicable": 80, "not_applicable": 0}, "reference_fidelity": {"applicable": 80, "not_applicable": 0}, "no_unsupported_addition": {"applicable": 80, "not_applicable": 0}, "no_forbidden_clinical_inference": {"applicable": 80, "not_applicable": 0}, "defer_fidelity": {"applicable": 8, "not_applicable": 72}, "contradiction_fidelity": {"applicable": 3, "not_applicable": 77}, "topic_boundary_fidelity": {"applicable": 80, "not_applicable": 0}, "appropriate_limitation_expression": {"applicable": 34, "not_applicable": 46}},
+  "thresholds": {"semantic_faithfulness": 0.95, "overall_case_pass": 0.95, "minimum_passing_cases": 23},
+  "automatic_scoring_performed": false,
+  "model_load_calls": 0,
+  "model_generate_calls": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "portable_bundle_path": "artifacts/research_extensions/ext4h5/20260820T070353Z_fc35947a",
+  "next_action": "EXT-4H.5 blinded human semantic review import; no generation"
+}

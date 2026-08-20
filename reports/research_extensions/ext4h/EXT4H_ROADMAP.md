@@ -10,6 +10,10 @@
 | EXT-4H.4 Gemma GPU-INT8 Fresh Frozen Development Evaluation | PREPARED | Requires local pip/pytest/CUDA preflight PASS |
 | EXT-4H.5 Blinded Semantic Faithfulness Review | NEXT AUTHORIZED | Uses preserved H4 outputs only; no generation |
 
+EXT-4H.5 preparation status: `EXT4H5_BLINDED_SEMANTIC_REVIEW_BUNDLE_READY`.
+No semantic ratings have been assigned; the next action is a completed
+blinded review-form import.
+
 EXT-4G remains closed and scientifically unchanged. Its 24-case benchmark is
 historical regression material only for a separately authorized future stage.
 Frozen final and locked partitions remain closed. Stage 18 remains the
