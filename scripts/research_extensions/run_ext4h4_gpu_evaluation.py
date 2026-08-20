@@ -61,6 +61,8 @@ REPORT_PATH = ROOT / "reports/research_extensions/ext4h/EXT4H4_GPU_INT8_EVALUATI
 BENCHMARK_ID = "EXT4H_FRESH_DEVELOPMENT_BENCHMARK_V1"
 BENCHMARK_SHA = "1c34ce622fbf68af9b5114ddbf0f73fcfabffabd36dfc7536ad0c01e5402d324"
 SCHEMA_SHA = slot_realization_schema_sha256()
+TOTAL_FROZEN_SLOTS = 84
+REQUIRED_GENERATION_SLOTS = 80
 
 
 def _write(path: Path, value: object) -> None:
@@ -111,7 +113,8 @@ def main() -> int:
         "benchmark_sha256": BENCHMARK_SHA,
         "realization_slot_schema_sha256": SCHEMA_SHA,
         "cases_attempted": 0,
-        "slots_expected": 84,
+        "slots_expected": REQUIRED_GENERATION_SLOTS,
+        "total_frozen_slots": TOTAL_FROZEN_SLOTS,
         "slots_attempted": 0,
         "model_load_count": 0,
         "model_generate_calls": 0,
@@ -131,8 +134,16 @@ def main() -> int:
         ledger["runtime_preflight"] = _preflight()
         cases = build_ext4h3_cases()
         validate_ext4h3_design(cases)
-        if len(cases) != 24 or sum(len(case["slot_manifest"]["slots"]) for case in cases) != 84:
+        request_slots = sum(len(case["realization_request"]["slots"]) for case in cases)
+        required_slots = sum(len(case["slot_manifest"]["slots"]) for case in cases)
+        if (
+            len(cases) != 24
+            or request_slots != TOTAL_FROZEN_SLOTS
+            or required_slots != REQUIRED_GENERATION_SLOTS
+        ):
             raise RuntimeError("EXT4H4_FROZEN_BENCHMARK_SHAPE_FAILED")
+        ledger["frozen_request_slots"] = request_slots
+        ledger["required_generation_slots"] = required_slots
         ledger["phase"] = "BENCHMARK_PREFLIGHT_PASS"
         from transformers import AutoProcessor, Gemma3ForConditionalGeneration
 

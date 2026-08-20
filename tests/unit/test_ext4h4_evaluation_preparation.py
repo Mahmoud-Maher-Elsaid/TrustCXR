@@ -18,6 +18,12 @@ def test_h4_frozen_benchmark_identity_and_slot_budget():
     assert config["generation_policy"]["slot_max_new_tokens"] == 128
     assert config["generation_policy"]["retry_count"] == 0
     assert config["runtime_id"] == "EXT4H_GEMMA3_GPU_INT8_V1"
+    forensic = json.loads(
+        Path("reports/research_extensions/ext4h/EXT4H4_SHAPE_FORENSICS_REPORT.json").read_text()
+    )
+    assert forensic["independent_total_request_slot_total"] == 84
+    assert forensic["independent_required_slot_total"] == 80
+    assert forensic["benchmark_changed"] is False
 
 
 def test_h4_runner_has_single_load_no_retry_and_gpu_only_policy():
@@ -32,6 +38,8 @@ def test_h4_runner_has_single_load_no_retry_and_gpu_only_policy():
     assert "locked_test_accessed" in source
     assert "SLOT_MAX_NEW_TOKENS" in source
     assert "attention_mask" in source
+    assert "TOTAL_FROZEN_SLOTS = 84" in source
+    assert "REQUIRED_GENERATION_SLOTS = 80" in source
 
 
 def test_h4_frozen_threshold_arithmetic():
