@@ -191,18 +191,20 @@ def main() -> int:
             },
             {"role": "user", "content": [{"type": "text", "text": prompt_text}]},
         ]
-        inputs = processor.apply_chat_template(
-            messages, tokenize=True, add_generation_prompt=True, return_tensors="pt"
-        )
-        prompt_length = int(inputs.shape[-1])
         rendered = processor.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )
+        inputs = processor(text=rendered, return_tensors="pt", add_special_tokens=False)
+        if "attention_mask" not in inputs:
+            raise RuntimeError("EXT4G2_ATTENTION_MASK_MISSING")
+        prompt_length = int(inputs["input_ids"].shape[-1])
         record.update(
             {
                 "processor_class": type(processor).__name__,
                 "tokenizer_class": type(tokenizer).__name__,
                 "prompt_token_count": prompt_length,
+                "attention_mask_present": True,
+                "attention_mask_shape": list(inputs["attention_mask"].shape),
                 "prompt_sha256": _sha(rendered),
                 "model_vocab_size": 262208,
                 "constraint_vocab_size": 262145,
@@ -233,7 +235,7 @@ def main() -> int:
             model_vocab_size=262208,
         )
         assert_generation_constraint(constraint, expected_schema_sha256=SCHEMA_SHA)
-        probe = constraint.logits_processor(inputs, torch.zeros((1, 262208)))
+        probe = constraint.logits_processor(inputs["input_ids"], torch.zeros((1, 262208)))
         if tuple(probe.shape) != (1, 262208) or not torch.isinf(probe[0, 262145:]).all():
             raise RuntimeError("EXT4G2_STRUCTURED_PREFLIGHT_FAILED")
         record.update(
@@ -254,7 +256,8 @@ def main() -> int:
         torch.manual_seed(GENERATION_POLICY["seed"])
         started = time.perf_counter()
         output_ids = model.generate(
-            input_ids=inputs,
+            input_ids=inputs["input_ids"],
+            attention_mask=inputs["attention_mask"],
             max_new_tokens=GENERATION_POLICY["max_new_tokens"],
             do_sample=False,
             top_p=1.0,

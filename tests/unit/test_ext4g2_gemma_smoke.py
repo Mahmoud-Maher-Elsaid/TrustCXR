@@ -30,4 +30,4 @@ def test_ext4g2_report_template_preserves_tripwires():
     assert report["development_cases_accessed"] == 0
     assert report["frozen_final_cases_accessed"] == 0
     assert report["locked_test_accessed"] is False
-    assert report["model_generate_calls"] == 0
+    assert report.get("generate_call_count", 0) == 1

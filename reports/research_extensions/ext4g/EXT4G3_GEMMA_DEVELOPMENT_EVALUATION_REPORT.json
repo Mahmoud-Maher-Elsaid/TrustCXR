@@ -1,0 +1,17 @@
+{
+  "stage": "EXT-4G.3",
+  "status": "EXT4G3_READY_FOR_GOVERNED_LOCAL_EXECUTION",
+  "candidate_id": "EXT4G_CANDIDATE_GEMMA3_4B_IT_V1",
+  "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+  "benchmark_name": "EXT4F_DEVELOPMENT_BENCHMARK_V1",
+  "benchmark_sha256": "671a04d2d859f1b1ffb9414a8c0f636596949748a00548e45abcbbfdb752db61",
+  "development_cases": 24,
+  "attention_mask_required": true,
+  "attention_mask_present_per_case": true,
+  "checkpoint_top_k_warning": "INERT_CHECKPOINT_GENERATION_CONFIG_ONLY_DO_SAMPLE_FALSE",
+  "model_generate_calls": 0,
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "note": "Preparation only; no development cases or generation executed in Codex."
+}
