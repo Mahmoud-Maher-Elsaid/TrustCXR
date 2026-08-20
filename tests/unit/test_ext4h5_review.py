@@ -27,6 +27,25 @@ def test_bundle_has_80_blinded_generated_units_and_no_model_identity():
     assert bundle["protocol"]["thresholds"]["minimum_passing_cases"] == 23
 
 
+def test_all_h5_json_is_strict_utf8_without_bom_and_round_trips():
+    root = BUNDLE.parent
+    for path in sorted(root.glob("*.json")):
+        raw = path.read_bytes()
+        assert not raw.startswith(b"\xef\xbb\xbf"), path
+        value = json.loads(raw.decode("utf-8"))
+        canonical = json.dumps(value, sort_keys=True, separators=(",", ":"))
+        assert json.loads(canonical) == json.loads(json.dumps(json.loads(canonical), sort_keys=True, separators=(",", ":")))
+
+
+def test_internal_blind_map_is_strict_utf8_and_separate():
+    path = BUNDLE.parent / "internal_blind_map.json"
+    raw = path.read_bytes()
+    assert not raw.startswith(b"\xef\xbb\xbf")
+    value = json.loads(raw.decode("utf-8"))
+    assert value["map_id"] == "EXT4H5_INTERNAL_BLIND_MAP_V1"
+    assert len(value["entries"]) == 80
+
+
 def test_applicability_is_deterministic_and_reviewer_question_units_excluded():
     units = json.loads(UNITS.read_text(encoding="utf-8"))
     assert all("applicability" in u for u in units)

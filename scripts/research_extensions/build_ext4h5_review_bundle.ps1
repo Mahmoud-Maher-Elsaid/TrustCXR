@@ -5,6 +5,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 function Hash-Text([string]$Text) { $h=[Security.Cryptography.SHA256]::Create(); try { return (($h.ComputeHash([Text.Encoding]::UTF8.GetBytes($Text)) | ForEach-Object { $_.ToString('x2') }) -join '') } finally { $h.Dispose() } }
+function Write-Utf8NoBom([string]$Path, [string]$Text) { [IO.File]::WriteAllText($Path, $Text, (New-Object Text.UTF8Encoding($false))) }
 $manifest = Get-Content (Join-Path $RunRoot 'run_manifest.json') -Raw | ConvertFrom-Json
 if ($manifest.run_id -ne $RunId -or $manifest.benchmark_sha256 -ne '1c34ce622fbf68af9b5114ddbf0f73fcfabffabd36dfc7536ad0c01e5402d324') { throw 'EXT4H5_H4_IDENTITY_MISMATCH' }
 if ($manifest.cases_attempted -ne 24 -or $manifest.slots_attempted -ne 80 -or $manifest.model_generate_calls -ne 80) { throw 'EXT4H5_H4_AUTOMATIC_EVIDENCE_MISMATCH' }
@@ -47,14 +48,14 @@ $bundleCore = [ordered]@{bundle_id='EXT4H5_BLINDED_REVIEW_BUNDLE_V1'; source=[or
 $json = $bundleCore | ConvertTo-Json -Depth 30 -Compress
 $bundleSha = Hash-Text $json
 $integrity = [ordered]@{bundle_id='EXT4H5_BLINDED_REVIEW_BUNDLE_V1'; protocol_id='EXT4H5_BLINDED_SEMANTIC_REVIEW_PROTOCOL_V1'; bundle_sha256=$bundleSha; review_unit_count=80; case_count=24; generated_model_outputs_in_preparation=0; candidate_identity_in_reviewer_bundle=$false}
-$bundleCore | ConvertTo-Json -Depth 30 | Set-Content (Join-Path $OutputRoot 'review_bundle.json') -Encoding utf8
-$protocol | ConvertTo-Json -Depth 20 | Set-Content (Join-Path $OutputRoot 'review_protocol.json') -Encoding utf8
-@($units) | ConvertTo-Json -Depth 30 | Set-Content (Join-Path $OutputRoot 'review_units.json') -Encoding utf8
-$form | ConvertTo-Json -Depth 20 | Set-Content (Join-Path $OutputRoot 'review_form.json') -Encoding utf8
-$summary | ConvertTo-Json -Depth 20 | Set-Content (Join-Path $OutputRoot 'review_summary_template.json') -Encoding utf8
-$integrity | ConvertTo-Json -Depth 20 | Set-Content (Join-Path $OutputRoot 'integrity_manifest.json') -Encoding utf8
+Write-Utf8NoBom (Join-Path $OutputRoot 'review_bundle.json') ($bundleCore | ConvertTo-Json -Depth 30)
+Write-Utf8NoBom (Join-Path $OutputRoot 'review_protocol.json') ($protocol | ConvertTo-Json -Depth 20)
+Write-Utf8NoBom (Join-Path $OutputRoot 'review_units.json') (@($units) | ConvertTo-Json -Depth 30)
+Write-Utf8NoBom (Join-Path $OutputRoot 'review_form.json') ($form | ConvertTo-Json -Depth 20)
+Write-Utf8NoBom (Join-Path $OutputRoot 'review_summary_template.json') ($summary | ConvertTo-Json -Depth 20)
+Write-Utf8NoBom (Join-Path $OutputRoot 'integrity_manifest.json') ($integrity | ConvertTo-Json -Depth 20)
 $mapJson = @($map) | ConvertTo-Json -Depth 20 -Compress
 $mapSha = Hash-Text $mapJson
-[ordered]@{map_id='EXT4H5_INTERNAL_BLIND_MAP_V1'; map_sha256=$mapSha; entries=@($map)} | ConvertTo-Json -Depth 20 | Set-Content (Join-Path $OutputRoot 'internal_blind_map.json') -Encoding utf8
-@('# EXT-4H.5 blinded semantic review', '', 'This bundle contains 80 generated slot review units. The four reviewer-question topics are deterministic non-generative obligations and are excluded from LLM semantic scoring.', '', 'Rate each applicable dimension only as PASS, FAIL, or NOT_APPLICABLE. Do not score style or wording similarity. Unresolved decisions remain unresolved until adjudicated.') | Set-Content (Join-Path $OutputRoot 'review_instructions.md') -Encoding utf8
+[ordered]@{map_id='EXT4H5_INTERNAL_BLIND_MAP_V1'; map_sha256=$mapSha; entries=@($map)} | ConvertTo-Json -Depth 20 | ForEach-Object { Write-Utf8NoBom (Join-Path $OutputRoot 'internal_blind_map.json') $_ }
+Write-Utf8NoBom (Join-Path $OutputRoot 'review_instructions.md') "# EXT-4H.5 blinded semantic review`r`n`r`nThis bundle contains 80 generated slot review units. The four reviewer-question topics are deterministic non-generative obligations and are excluded from LLM semantic scoring.`r`n`r`nRate each applicable dimension only as PASS, FAIL, or NOT_APPLICABLE. Do not score style or wording similarity. Unresolved decisions remain unresolved until adjudicated.`r`n"
 Write-Output ([ordered]@{bundle_sha256=$bundleSha; blind_map_sha256=$mapSha; review_units=80; output_root=(Resolve-Path $OutputRoot).Path} | ConvertTo-Json -Compress)

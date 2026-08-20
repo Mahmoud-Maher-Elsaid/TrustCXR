@@ -7,6 +7,7 @@
   "bundle_id": "EXT4H5_BLINDED_REVIEW_BUNDLE_V1",
   "bundle_sha256": "64a73ff5e7789e096ba0bbbd61966e62a22ca242f877fe26ddc887392225f0f4",
   "blind_map_sha256": "218cf676c99b0323058ec9104052d802a3c18d85d42315564f694f883cd1161e",
+  "serialization": {"encoding": "UTF-8", "bom": false, "repair": "UTF8_BOM_SERIALIZATION_REPAIR_PRE_REVIEW", "content_unchanged": true, "bundle_hash_type": "CANONICAL_CONTENT_HASH", "blind_map_hash_type": "CANONICAL_CONTENT_HASH"},
   "case_count": 24,
   "generated_review_units": 80,
   "non_generative_reviewer_question_topics": 4,
