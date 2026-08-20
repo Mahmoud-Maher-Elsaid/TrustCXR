@@ -119,3 +119,79 @@ def score_review_rows(bundle: dict[str, Any], rows: list[dict[str, Any]]) -> dic
 
 def load_bundle(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def import_completed_review(bundle: dict[str, Any], completed: dict[str, Any], *, integrity: dict[str, Any], blind_map: dict[str, Any]) -> dict[str, Any]:
+    """Validate and score a completed frozen form without changing ratings."""
+    if completed.get("bundle_id") != BUNDLE_ID or integrity.get("bundle_id") != BUNDLE_ID:
+        raise ValueError("EXT4H5_BUNDLE_ID_MISMATCH")
+    if integrity.get("bundle_sha256") != "64a73ff5e7789e096ba0bbbd61966e62a22ca242f877fe26ddc887392225f0f4":
+        raise ValueError("EXT4H5_BUNDLE_SHA_MISMATCH")
+    units = bundle.get("review_units", [])
+    rows = completed.get("completed_reviews", [])
+    expected = {u["blind_slot_id"]: u for u in units}
+    mapping = {e["blind_slot_id"]: e for e in blind_map.get("entries", [])}
+    if len(units) != 80 or len(rows) != 80 or set(expected) != set(mapping):
+        raise ValueError("EXT4H5_REVIEW_UNIT_COUNT_OR_MAP_INVALID")
+    seen: set[str] = set()
+    applicable = passed = failed = not_applicable = 0
+    resolved_units = unresolved_units = 0
+    resolved_fail_decisions = 0
+    resolved_failing_slots: set[str] = set()
+    resolved_failing_cases: set[str] = set()
+    slot_pass = slot_fail = 0
+    case_bad: dict[str, bool] = {u["blind_case_id"]: False for u in units}
+    dimension_counts: dict[str, dict[str, int]] = {d: {"applicable": 0, "pass": 0, "fail": 0, "not_applicable": 0} for d in DIMENSIONS}
+    flags: dict[str, dict[str, int]] = {"RESOLVED": {}, "UNRESOLVED": {}}
+    for row in rows:
+        uid = row.get("blind_slot_id")
+        if uid not in expected or uid in seen:
+            raise ValueError("EXT4H5_UNKNOWN_OR_DUPLICATE_UNIT")
+        seen.add(uid)
+        unit = expected[uid]
+        if set(row.get("ratings", {})) != set(DIMENSIONS):
+            raise ValueError("EXT4H5_DIMENSION_SET_INVALID")
+        state = row.get("adjudication_metadata", {}).get("internal_state")
+        if state not in {"RESOLVED", "UNRESOLVED"}:
+            raise ValueError("EXT4H5_ADJUDICATION_STATE_INVALID")
+        flags_state = flags[state]
+        for flag in row.get("adjudication_metadata", {}).get("flags", []):
+            flags_state[flag] = flags_state.get(flag, 0) + 1
+        if state == "RESOLVED": resolved_units += 1
+        else: unresolved_units += 1
+        bad = False
+        for dimension, applicability_state in unit["applicability"].items():
+            rating = row["ratings"][dimension]
+            counts = dimension_counts[dimension]
+            if applicability_state == "NOT_APPLICABLE":
+                if rating != "NOT_APPLICABLE": raise ValueError("EXT4H5_NON_APPLICABLE_RATING_INVALID")
+                not_applicable += 1; counts["not_applicable"] += 1
+            else:
+                if rating not in {"PASS", "FAIL"}: raise ValueError("EXT4H5_APPLICABLE_RATING_INVALID")
+                applicable += 1; counts["applicable"] += 1
+                if rating == "PASS": passed += 1; counts["pass"] += 1
+                else:
+                    failed += 1; counts["fail"] += 1; bad = True
+                    if state == "RESOLVED": resolved_fail_decisions += 1
+        if state == "RESOLVED" and bad:
+            resolved_failing_slots.add(uid); resolved_failing_cases.add(unit["blind_case_id"])
+        # Frozen policy treats unresolved units as failing for final selection.
+        if state == "UNRESOLVED" or bad: case_bad[unit["blind_case_id"]] = True
+        if state == "RESOLVED" and not bad: slot_pass += 1
+        else: slot_fail += 1
+    if seen != set(expected): raise ValueError("EXT4H5_REVIEW_UNITS_INCOMPLETE")
+    case_fail = sum(case_bad.values()); case_pass = len(case_bad) - case_fail
+    return {
+        "review_units": len(rows), "resolved_units": resolved_units, "unresolved_units": unresolved_units,
+        "applicable_dimension_decisions": applicable, "pass_decisions": passed, "fail_decisions": failed, "not_applicable_decisions": not_applicable,
+        "semantic_dimension_pass_rate": passed / applicable if applicable else 0.0,
+        "slot_semantic_pass": slot_pass, "slot_semantic_fail": slot_fail, "slot_semantic_pass_rate": slot_pass / len(rows),
+        "case_semantic_pass": case_pass, "case_semantic_fail": case_fail, "case_semantic_pass_rate": case_pass / len(case_bad),
+        "resolved_failing_slots": len(resolved_failing_slots), "resolved_failing_cases": len(resolved_failing_cases),
+        "resolved_fail_decisions": resolved_fail_decisions,
+        "optimistic_max_semantic_pass_rate": (applicable - resolved_fail_decisions) / applicable,
+        "optimistic_max_case_pass_rate": (24 - len(resolved_failing_cases)) / 24,
+        "dimension_counts": dimension_counts, "flag_counts": flags,
+        "review_context_insufficiency_units": sum(1 for row in rows if "INSUFFICIENT_AUTHORIZED_EVIDENCE" in row.get("adjudication_metadata", {}).get("flags", [])),
+        "adjudication_cannot_rescue_selection": ((applicable - resolved_fail_decisions) / applicable < 0.95 or (24 - len(resolved_failing_cases)) / 24 < 0.95),
+    }
