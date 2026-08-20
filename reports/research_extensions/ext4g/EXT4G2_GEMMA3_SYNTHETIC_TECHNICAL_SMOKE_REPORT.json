@@ -1,0 +1,13 @@
+{
+  "stage": "EXT-4G.2",
+  "status": "EXT4G2_READY_FOR_GOVERNED_LOCAL_EXECUTION",
+  "candidate_id": "EXT4G_CANDIDATE_GEMMA3_4B_IT_V1",
+  "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+  "synthetic_case_id": "ext4g2_gemma_synthetic_001",
+  "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "model_generate_calls": 0,
+  "note": "Prepared only; real generation must be performed by the governed local command."
+}
