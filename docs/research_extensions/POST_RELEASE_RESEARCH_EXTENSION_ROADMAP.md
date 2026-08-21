@@ -1,8 +1,12 @@
 # TrustCXR Post-Release Research Extension Roadmap
 
-**Classification:** `OPTIONAL_POST_RELEASE_RESEARCH_EXTENSION`
-**Implementation status:** `EXT-4A GOVERNANCE COMPLETED — IMPLEMENTATION NOT STARTED`
-**Authorization:** `POST-CORE-RELEASE ONLY`
+**Classification:** `HISTORICAL_POST_RELEASE_RESEARCH_EXTENSION_RECORD`
+**Project status:** `CLOSED`
+**Authorization:** `NONE — NO NEXT STAGE AUTHORIZED`
+
+**Final closure:** `TRUSTCXR_RESEARCH_EXTENSION_FINAL_CLOSURE_PASS`
+**Final realization:** `FULLY_DETERMINISTIC_SEMANTICALLY_BOUNDED_REALIZATION`
+**Future LLM realization research:** `CLOSED`
 
 **EXT-1A Explainability Foundation:** `COMPLETED` (governance and compatibility audit only)
 **EXT-1B Grad-CAM Implementation and Technical Validation:** `COMPLETED`
@@ -17,7 +21,7 @@
 **EXT-4E2C Qwen Load-Only GPU Smoke:** `LOAD_ONLY_PASS — TECHNICALLY LOADABLE; NOT SCIENTIFICALLY EVALUATED`
 **EXT-4E2D Candidate #1 Single Development-Case Smoke:** `CLOSED / PASS — SAFETY, FORMAT, AND GROUNDING VERIFIED; CANDIDATE NOT SCIENTIFICALLY SELECTED`
 **EXT-4E1 Candidate #1 Six-Development-Case Evaluation:** `CLOSED / FAILED DEVELOPMENT GATE — 2/6 PASS; CANDIDATE NOT SCIENTIFICALLY SELECTED`
-**Candidate selection status:** `Candidate NOT SCIENTIFICALLY SELECTED — scientific selection requires the governed six-development-case evaluation under EXT-4E1; frozen final 24 cases and the locked test remain untouched`
+**Candidate selection status:** `No LLM candidate scientifically selected; all final and locked data remained untouched`
 **EXT-4E2D0 Structured Output Compatibility Smoke:** `CLOSED / PASS — REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA_VERIFIED`
 **Structured-output compatibility:** `VERIFIED`
 **Candidate #1 frozen-final benchmark:** `NOT RUN — NOT AUTHORIZED`
@@ -28,18 +32,27 @@
 **EXT-4F.3 Constrained Natural-Language Realization Adapter:** `PASS — ZERO GENERATION`
 **EXT-4F.4 Synthetic LLM Technical Smoke:** `PASS — ONE GOVERNED SYNTHETIC REQUEST`
 **EXT-4F.5 Development Faithfulness Benchmark Design:** `PASS — 24 CASES FROZEN, ZERO EVALUATION`
-**Next authorized stage:** `EXT4F.6_GOVERNED_DEVELOPMENT_CANDIDATE_EVALUATION — NOT STARTED`
-**Next local execution step:** `EXT4F.6_GOVERNED_DEVELOPMENT_CANDIDATE_EVALUATION — NOT STARTED`
+**Former EXT-4F next-stage entries:** `HISTORICAL — NOT AUTHORIZED AFTER FINAL CLOSURE`
 **True pathology localization follow-on experiments:** `CLOSED — NO EXT-3B/EXT-3C OR ADDITIONAL LOCALIZATION TRAINING`
 **Grounded LLM reporting:** `EXT-4F.4 TECHNICAL SMOKE CLOSED; EXT-4F.5 FAITHFULNESS BENCHMARK FROZEN — ZERO EVALUATION`
-**Multimodal VLM:** `NOT STARTED`
+**Multimodal VLM:** `NOT STARTED / NOT AUTHORIZED`
+
+**EXT-4I.1:** `COMPLETED / PASS`
+**EXT-4I.2:** `COMPLETED / PASS`
+**EXT-4I.3:** `NOT STARTED / NOT REQUIRED`
+**NEXT STAGE:** `NONE AUTHORIZED`
 
 ```text
-IMPLEMENTATION STATUS: EXT-4A GOVERNANCE COMPLETED — IMPLEMENTATION NOT STARTED
-AUTHORIZATION: POST-CORE-RELEASE ONLY
+PROJECT STATUS: CLOSED
+IMPLEMENTATION STATUS: HISTORICAL EXTENSION RECORD — NO ACTIVE IMPLEMENTATION
+AUTHORIZATION: NONE — NO NEXT STAGE AUTHORIZED
 ```
 
-This document records optional research directions after closure of the core TrustCXR release. It does not authorize implementation, add a current capability, or change any core scientific claim. Development should begin only after core release closure, on a separate future branch such as `research-extension/explainability-grounded-llm`. That branch is not created by this roadmap.
+This document preserves historical post-core governance and research-extension
+outcomes. It does not authorize implementation, add a current capability, or
+change any core scientific claim. The project is now closed; the former
+prospective sections below are retained as provenance, not as an active queue.
+No EXT-4I.3 or other follow-on stage is authorized.
 
 ## Core and extension boundary
 
@@ -155,7 +168,10 @@ Clinical usefulness must not be claimed without appropriate expert and clinical 
 
 ### Model-selection gate
 
-No model is selected or downloaded by this roadmap. A future gate must assess license, offline/local execution, model size, VRAM, reproducibility, context requirements, structured-output support, medical-domain evidence, privacy, latency, and deterministic or controlled decoding. Dependency and artifact hashes must be frozen before evaluation.
+No model was selected by this roadmap. The historical candidate gates and
+their negative outcomes are recorded in the EXT-4E through EXT-4H reports;
+the final EXT-4I decision retained deterministic realization and closed future
+LLM realization research.
 
 ## Future multimodal option
 
@@ -177,14 +193,17 @@ Chest X-ray
 
 If attribution exists without validated localization, both the interface and LLM must describe it only as **model attention** or **visual attribution**, never as a confirmed lesion location.
 
-## Authorization checklist
+## Historical authorization checklist (not active)
 
-Before any extension implementation begins, require a post-core-release authorization record, an isolated research branch, a frozen experiment contract, privacy and locked-test protections, dependency governance, bounded synthetic validation, and an explicit statement that core TrustCXR claims remain unchanged.
+Any separate future project would require a post-core-release authorization
+record, an isolated research branch, a frozen experiment contract, privacy and
+locked-test protections, dependency governance, bounded synthetic validation,
+and an explicit statement that core TrustCXR claims remain unchanged. This is
+historical governance context, not authorization for this closed project.
 
-EXT-3 is closed as a controlled negative result: its frozen development operating-point gate
-was not satisfied, so localization integration remains withheld and the locked test remains
-closed. EXT-4A governance, EXT-4B evidence grounding schema, EXT-4C output contract,
-and EXT-4D benchmark definition are complete; EXT-4E1 model-selection protocol is prepared;
-no
-LLM/provider/client has been selected or implemented. The next separately authorized work
-is local development candidate execution under the EXT-4E protocol.
+EXT-3 is closed as a controlled negative result: its frozen development
+operating-point gate was not satisfied, so localization integration remains
+withheld and the locked test remains closed. EXT-4A through EXT-4I.2 are
+preserved as historical governance and research evidence. The final decision
+is deterministic realization, the project is closed, and no next stage is
+authorized.
