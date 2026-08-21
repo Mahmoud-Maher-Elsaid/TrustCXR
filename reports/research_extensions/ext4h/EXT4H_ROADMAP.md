@@ -15,11 +15,14 @@ EXT-4H.5 status: `EXT4H5_SEMANTIC_FAITHFULNESS_FAILED`.
 The completed blinded review was imported without rating changes. H4 remains
 technical PASS, but this candidate was not scientifically selected.
 
-EXT-4I.1 status: `EXT4I1_REPAIR_INCOMPLETE`; governed local runtime validation
-is required before EXT-4I.2 authorization.
+EXT-4I.1 status: `EXT4I1_SEMANTICALLY_BOUNDED_REALIZATION_AND_REGRESSION_PASS`;
+authoritative local integrity gate passed.
 
 EXT-4I.2 status: `EXT4I2_BOUNDED_LEXICAL_RUNTIME_GOVERNANCE_PASS`;
 deterministic realization selected and no LLM needed for realization.
+
+PROJECT CLOSED: `TRUSTCXR_RESEARCH_EXTENSION_FINAL_CLOSURE_PASS`.
+NEXT STAGE: NONE AUTHORIZED.
 
 EXT-4G remains closed and scientifically unchanged. Its 24-case benchmark is
 historical regression material only for a separately authorized future stage.
