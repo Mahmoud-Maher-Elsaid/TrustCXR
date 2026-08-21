@@ -1,0 +1,6 @@
+{
+  "fixture_set": "EXT4F_DETERMINISTIC_SEMANTIC_UNIT_V1",
+  "benchmark": false,
+  "valid": ["supported", "partial_supported", "withheld", "contradicted", "not_available", "not_applicable"],
+  "invalid": ["unavailable_with_payload", "defer_confident_claim", "unknown_reference", "duplicate_identifier", "missing_provenance", "contradiction_one_source", "unsupported_state", "contract_version_mismatch"]
+}

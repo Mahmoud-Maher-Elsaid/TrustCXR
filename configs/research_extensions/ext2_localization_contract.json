@@ -1,0 +1,197 @@
+{
+  "schema_version": "trustcxr-ext2-localization-contract-v1",
+  "extension": "EXT-2",
+  "stage": "EXT-2B",
+  "status": "CONTRACT_FROZEN_PRE_TRAINING",
+  "dataset": {
+    "id": "RSNA_Pneumonia",
+    "source": "RSNA Pneumonia Detection Challenge 2018",
+    "annotation_semantics": "Lung Opacity",
+    "annotation_type": "BOUNDING_BOX",
+    "stage9_label_relationship": "SEMANTICALLY_NOT_EQUIVALENT_TO_STAGE9_PNEUMONIA",
+    "metadata_path": "TrustCXR-Data/06_RSNA_Pneumonia/rsna-pneumonia-detection-challenge/stage_2_train_labels.csv",
+    "identity_field": "patientId",
+    "license_decision": "APPROVED_FOR_RESEARCH_WITH_ATTRIBUTION"
+  },
+  "annotation_contract": {
+    "source_columns": ["patientId", "x", "y", "width", "height", "Target"],
+    "coordinate_space": "original_RSNA_DICOM_pixel_coordinates",
+    "source_box_convention": "XYWH",
+    "converted_box_convention": "XYXY_WITH_X2_X_PLUS_WIDTH_AND_Y2_Y_PLUS_HEIGHT",
+    "coordinate_origin": "zero_based_top_left",
+    "clipping": "none_in_historical_loader; out_of_bounds_or_non_finite_boxes_fail_closed_for_EXT2",
+    "valid_box_rule": "Target=1, finite x/y/width/height, width>0, height>0, x>=0, y>=0, x+width<=image_width, y+height<=image_height",
+    "lesion_area_formula": "(x2-x1)*(y2-y1)",
+    "image_area_denominator": "original_DICOM_tensor_height*original_DICOM_tensor_width",
+    "size_ratio_formula": "lesion_area/image_area_denominator",
+    "boundary_inclusivity": {
+      "small": "ratio >= 0.00 and ratio < 0.02",
+      "medium": "ratio >= 0.02 and ratio < 0.10",
+      "large": "ratio >= 0.10 and ratio <= 1.00"
+    }
+  },
+  "cohort": {
+    "inclusion": [
+      "RSNA train-source records with deterministic patient identity",
+      "valid image-to-row join",
+      "valid Lung Opacity bounding box when Target=1"
+    ],
+    "exclusion": [
+      "records without verified patient identity",
+      "malformed or non-positive bounding boxes",
+      "duplicate patient/image keys without deterministic resolution"
+    ],
+    "duplicate_policy": "fail_closed_and_report; never heuristic-merge"
+  },
+  "split": {
+    "source_artifact": "artifacts/stage10/stage10d_rsna_patient_splits.sqlite",
+    "method": "DETERMINISTIC_PATIENT_SHA256",
+    "seed": 20260806,
+    "train_fraction": 0.8,
+    "validation_fraction": 0.1,
+    "locked_test_fraction": 0.1,
+    "patient_overlap_required": 0,
+    "locked_test_access_before_freeze": false,
+    "split_artifact_sha256": "CC9F1A8C639843CAFA8E83135868D8C283E5FE6B35F6498EC5B70DF67580F3D2"
+  },
+  "development_cohort": {
+    "manifest_path": "artifacts/research_extensions/ext2e_dev_cohort/manifest.json",
+    "manifest_sha256_recorded_in_manifest": true,
+    "parent_split": "artifacts/stage10/stage10d_rsna_patient_splits.sqlite",
+    "selection_seed": 20260806,
+    "maximum_train_patients": 3000,
+    "maximum_validation_patients": 1000,
+    "selection_algorithm": "patient_level_stable_hash_stratified_round_robin_then_stable_fill",
+    "stratification": ["positive_negative", "small_medium_large_positive_lesion_presence"],
+    "locked_test_included": false
+  },
+  "ext2e_selected_checkpoint": {
+    "path": "artifacts/research_extensions/ext2e_runs/20260815T112946Z_1786793386180543800/best_validation_checkpoint.pt",
+    "sha256": "a668edf0166643ab533a32a3d823b43f6e606dbce479654bfe76ed74bf00484d",
+    "best_epoch": 6,
+    "cohort_manifest_sha256": "a9c6c90d49df5b89a60fa14859edf43358819c083875dbff9599a42f8535a38f"
+  },
+  "preprocessing": {
+    "input_representation": "pydicom.pixel_array.astype(float32)",
+    "per_image_scaling": "(pixels-pixels.min())/max(pixels.max()-pixels.min(),1.0)",
+    "channels": "single_channel_repeated_to_three_channels",
+    "tensor_dtype": "float32",
+    "source_pixel_range": "per_image_scaled_to_[0,1]",
+    "annotation_coordinates": "remain_in_original_DICOM_pixel_space_until_torchvision_transform",
+    "model_internal_transform": "torchvision GeneralizedRCNNTransform",
+    "model_internal_resize": "min_size=1024,max_size=1024",
+    "model_internal_interpolation": "torchvision_detector_default_bilinear_resize",
+    "model_internal_normalization": "torchvision_detector_default_mean_[0.485,0.456,0.406]_std_[0.229,0.224,0.225]",
+    "returned_prediction_coordinates": "torchvision_transform_postprocess_restores_original_image_coordinates",
+    "clipping": "torchvision_postprocess_clips_predictions_to_original_image_bounds",
+    "stage9_preprocessing_unchanged": true
+  },
+  "augmentation": {
+    "training": {
+      "horizontal_flip_probability": 0.5,
+      "box_transform": "x1_new=image_width-x2_old; x2_new=image_width-x1_old",
+      "other_transforms": "none"
+    },
+    "validation": "NONE_DETERMINISTIC_ONLY",
+    "locked_test": "NONE_DETERMINISTIC_ONLY",
+    "laterality_claim": false
+  },
+  "model_hypothesis": {
+    "identifier": "EXT2E_FIXED_1024_DEFAULT_FPN",
+    "hypothesis": "A fixed 1024-pixel detector input with default FPN anchor geometry may reduce resolution variability for small Lung Opacity boxes without repeating the failed Stage 10J custom-small-anchor intervention.",
+    "architecture": "fasterrcnn_resnet50_fpn_v2",
+    "initialization": "FROZEN_STAGE10E_CHECKPOINT_COPY_NO_NETWORK",
+    "initialization_checkpoint": "artifacts/stage10/stage10e_rsna_localization/best_checkpoint.pt",
+    "initialization_checkpoint_sha256": "11706f8a473155241b4865c066ef91e4d46df3c5f66cb57d60adfeecce3ce429",
+    "minimum_image_size": 1024,
+    "maximum_image_size": 1024,
+    "anchors": "torchvision_default_fpn_anchors",
+    "classification_classes": ["background", "Lung Opacity"],
+    "maximum_initial_variants": 1
+  },
+  "development_budget": {
+    "baseline": "historical Stage 10E fasterrcnn_resnet50_fpn_v2 comparison only",
+    "maximum_new_variants": 1,
+    "maximum_epochs": 12,
+    "minimum_epochs": 3,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 1,
+    "optimizer": "AdamW",
+    "learning_rate": 0.00005,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "automatic_mixed_precision": true,
+    "progress_interval_batches": 50,
+    "seed": 20260806,
+    "selection_split": "validation_only",
+    "early_stopping": {
+      "metric": "validation_AP50",
+      "minimum_improvement": 0.001,
+      "patience": 3,
+      "mode": "max"
+    },
+    "locked_test_used_for_selection": false
+  },
+  "metrics": {
+    "primary": "validation_AP50",
+    "secondary": [
+      "COCO_AP_0.50_0.95",
+      "AP75",
+      "lesion_level_sensitivity",
+      "false_positives_per_image",
+      "FROC_or_sensitivity_fp_tradeoff",
+      "best_match_IoU",
+      "patient_bootstrap_95_percent_CI"
+    ],
+    "size_strata": {
+      "source": "historical Stage 10G contract",
+      "small": [0.0, 0.02],
+      "medium": [0.02, 0.1],
+      "large": [0.1, 1.0],
+      "interval_convention": "small_left_closed_right_open; medium_left_closed_right_open; large_left_closed_right_closed",
+      "derived_from": "original_training_annotation_coordinates_and_original_image_area",
+      "quantiles_used": false
+    },
+    "iou_thresholds": [0.5, 0.75],
+    "score_threshold_grid": [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5],
+    "bootstrap": {
+      "method": "patient_level_bootstrap_percentile",
+      "replicates": 2000,
+      "seed": 20260806,
+      "confidence_level": 0.95
+    },
+    "small_lesion_analysis_required": true
+  },
+  "operating_point": {
+    "selection_data": "validation_only",
+    "selection_rule": "choose_highest_small_lesion_sensitivity_among_validation_points_with_overall_sensitivity_at_least_0.70_and_false_positives_per_image_at_most_1.0; if_none_exists_leave_unfrozen",
+    "threshold_frozen_before_locked_test": true,
+    "nms_policy_frozen_before_locked_test": true,
+    "iou_match_criterion": 0.5,
+    "nms_iou_threshold": 0.5,
+    "arbitrary_clinical_thresholds": false
+  },
+  "acceptance": {
+    "type": "technical_research_localization_acceptance",
+    "requirements": [
+      "zero patient leakage",
+      "finite reproducible metrics and confidence intervals",
+      "usable validation operating point",
+      "meaningful improvement over historical Stage 10 baseline where directly comparable",
+      "no catastrophic degradation in larger-lesion strata",
+      "explicit small-lesion analysis",
+      "no contract or semantic violation"
+    ],
+    "clinical_localization_claim_authorized": false,
+    "diagnosis_authorized": false,
+    "laterality_authorized": false,
+    "severity_authorized": false,
+    "localization_absence_may_contradict_classifier": false
+  },
+  "lock_policy": {
+    "final_test_evaluation_authorized": false,
+    "authorization_condition": "all validation gates pass and model/checkpoint/operating point hashes are frozen",
+    "final_test_evaluations_allowed": 1,
+    "test_consumed_after_evaluation": true
+  }
+}

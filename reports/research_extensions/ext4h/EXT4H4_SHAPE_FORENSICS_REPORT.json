@@ -1,0 +1,41 @@
+{
+  "stage": "EXT-4H.4",
+  "run_id": "20260820T065845Z_d7c5f347",
+  "classification": "PRE_EXECUTION_SYSTEMIC_DEFECT",
+  "primary_defect_category": "H3_REPORT_METADATA_DEFECT",
+  "failure_code": "EXT4H4_FROZEN_BENCHMARK_SHAPE_FAILED",
+  "failure_conditions": {
+    "case_count": {"expected": 24, "observed": 24, "match": true},
+    "request_slot_total": {"expected": 84, "observed": 84, "match": true},
+    "required_manifest_slot_total": {"expected_by_runner": 84, "observed": 80, "match": false},
+    "shape_gate_expression": "len(cases) == 24 and sum(len(case['slot_manifest']['slots']) for case in cases) == 84",
+    "failing_subcondition": "required_manifest_slot_total == 84",
+    "comparison": "80 != 84"
+  },
+  "frozen_benchmark_valid": true,
+  "benchmark_id": "EXT4H_FRESH_DEVELOPMENT_BENCHMARK_V1",
+  "benchmark_sha256": "1c34ce622fbf68af9b5114ddbf0f73fcfabffabd36dfc7536ad0c01e5402d324",
+  "benchmark_changed": false,
+  "case_count": 24,
+  "unique_case_hashes": 24,
+  "case_required_manifest_slot_counts": [3,3,4,3,5,2,2,2,3,4,4,5,4,3,3,3,4,5,3,3,4,3,2,3],
+  "independent_required_slot_total": 80,
+  "independent_total_request_slot_total": 84,
+  "required_slot_type_counts": {
+    "claim": 19,
+    "uncertainty": 24,
+    "limitation": 30,
+    "contradiction": 3,
+    "DEFER": 4,
+    "reviewer_question": 0
+  },
+  "optional_request_slot_type_counts": {"reviewer_question": 4},
+  "manifest_consistency": "24/24 deterministic planner/manifest identities consistent",
+  "root_cause": "The H3 report counted all 84 request slots, including four optional reviewer-question slots. EXT4H slot manifests intentionally retain required slots only, so the H4 gate incorrectly expected 84 required manifest entries.",
+  "repair": "H4 now verifies 84 total request slots and 80 required generation slots separately; no case content, manifest, benchmark SHA, threshold, or policy changed.",
+  "model_load_count": 0,
+  "model_generate_calls": 0,
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false
+}

@@ -1,0 +1,46 @@
+{
+  "benchmark_id": "EXT4H_FRESH_DEVELOPMENT_BENCHMARK_V1",
+  "benchmark_version": "1",
+  "canonicalization": "EXT4H3_CANONICAL_JSON_V1",
+  "benchmark_sha256": "1c34ce622fbf68af9b5114ddbf0f73fcfabffabd36dfc7536ad0c01e5402d324",
+  "case_count": 24,
+  "case_ids": [
+    "ext4h_dev_001", "ext4h_dev_002", "ext4h_dev_003", "ext4h_dev_004",
+    "ext4h_dev_005", "ext4h_dev_006", "ext4h_dev_007", "ext4h_dev_008",
+    "ext4h_dev_009", "ext4h_dev_010", "ext4h_dev_011", "ext4h_dev_012",
+    "ext4h_dev_013", "ext4h_dev_014", "ext4h_dev_015", "ext4h_dev_016",
+    "ext4h_dev_017", "ext4h_dev_018", "ext4h_dev_019", "ext4h_dev_020",
+    "ext4h_dev_021", "ext4h_dev_022", "ext4h_dev_023", "ext4h_dev_024"
+  ],
+  "case_source": "fresh synthetic recipes materialized by trustcxr.grounded_llm.ext4h3_benchmark.build_ext4h3_cases",
+  "historical_benchmark_accessed": 0,
+  "ext4g_outputs_accessed": 0,
+  "ext4h_smoke_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "runtime_id": "EXT4H_GEMMA3_GPU_INT8_V1",
+  "generation_policy": {
+    "slot_max_new_tokens": 128,
+    "do_sample": false,
+    "one_generation_per_slot": true,
+    "retry_count": 0,
+    "repair": false,
+    "fallback": false,
+    "attention_mask": "explicit_processor_derived",
+    "structured_backend": "llguidance==1.8.0",
+    "model_only_tail": [262145, 262207]
+  },
+  "selection_thresholds": {
+    "hard_safety_violations": 0,
+    "authority_mutations": 0,
+    "protocol_deviations": 0,
+    "structured_slot_validity": 1.0,
+    "assembled_contract_validity": 1.0,
+    "semantic_faithfulness": 0.95,
+    "overall_case_pass": 0.95,
+    "overall_case_pass_minimum_of_24": 23
+  },
+  "risk_taxonomy_version": "EXT4H3_RISK_TAXONOMY_V1",
+  "materialization_entrypoint": "trustcxr.grounded_llm.ext4h3_benchmark.build_ext4h3_cases",
+  "freeze_note": "The deterministic materializer is authoritative; no model is loaded or executed during benchmark design."
+}

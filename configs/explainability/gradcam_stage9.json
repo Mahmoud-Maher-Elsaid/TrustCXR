@@ -1,0 +1,85 @@
+{
+  "stage": "EXT-1B",
+  "status": "TECHNICAL_GRADCAM_BASELINE_ACCEPTED",
+  "method": "gradcam",
+  "purpose": "Class-specific model attribution for a selected frozen Stage 9 output",
+  "classifier": {
+    "model_family": "DenseNet121",
+    "variant": "original",
+    "output_labels": 14,
+    "label_order_reference": "configs/training/stage9_final_freeze.json",
+    "checkpoint": "artifacts/stage9/stage9b_ablation/original/best_checkpoint.pt",
+    "checkpoint_sha256": "bfbfb6d457d1d4440b44282dd05372dcdc4e82e658354ea9e07cefaf0756c8de",
+    "freeze_config": "configs/training/stage9_final_freeze.json",
+    "freeze_configuration_sha256": "75933fad8f47e7d637596edd935b02f8b8f5ed9d104acacc3e67500a9abdbd69",
+    "ablation_config": "configs/training/stage9b_segmentation_guided_ablation.json",
+    "ablation_config_sha256": "347e2a1bebbad2d48932d9d6163217d0194ae1eff507b2d717bfa932fca84ef4"
+  },
+  "preprocessing": {
+    "image_size": 224,
+    "resize": "224x224",
+    "interpolation": "bilinear_antialias",
+    "channels": "RGB",
+    "normalization": {
+      "mean": [0.485, 0.456, 0.406],
+      "std": [0.229, 0.224, 0.225]
+    },
+    "augmentation": false,
+    "contract_reference": "stage9_original_224_imagenet_rgb"
+  },
+  "target_layers": {
+    "candidates": ["features.denseblock4", "features.norm5"],
+    "preferred": "features.norm5",
+    "rationale": "The final named spatial module output before the functional ReLU and global average pooling in torchvision DenseNet121. This is an architectural and governance selection, not an empirical localization-quality claim."
+  },
+  "artifacts": {
+    "allowed_types": ["normalized_attribution_matrix", "overlay_image", "metadata_json"],
+    "persistence": "request-scoped by default",
+    "tracked_fixtures": "synthetic_non_patient_only",
+    "patient_images_in_git": false
+  },
+  "claims": {
+    "allowed_after_validation": ["class_specific_model_attribution", "relative_activation_visualization"],
+    "limited": ["spatial_interpretability_of_model_response"],
+    "prohibited": [
+      "lesion_segmentation",
+      "true_lesion_localization",
+      "disease_location_confirmation",
+      "anatomical_laterality",
+      "causal_explanation",
+      "radiologist_reasoning",
+      "clinical_diagnosis",
+      "clinical_certainty",
+      "severity",
+      "temporal_change"
+    ]
+  },
+  "validation": {
+    "implementation_required": true,
+    "technical_validation": "BOUNDED_SYNTHETIC_FIXTURE_VALIDATED",
+    "successful_labels_per_candidate": 7,
+    "candidate_activation_shape": [1, 1024, 7, 7],
+    "candidate_gradient_shape": [1, 1024, 7, 7],
+    "candidate_raw_heatmap_shape": [7, 7],
+    "normalized_range": [0, 1],
+    "deterministic_repeated_map_max_abs_difference": 0.0,
+    "class_specific_maps_identical": false,
+    "class_specific_map_max_abs_difference": {
+      "features.denseblock4": 0.8909317255020142,
+      "features.norm5": 0.903232216835022
+    },
+    "deterministic_output": true,
+    "safe_fixture_required": true,
+    "ui_gate_required": true,
+    "locked_test_dependence": false,
+    "checkpoint_mutation": false,
+    "training": false,
+    "seed": 20260815
+  },
+  "lifecycle": {
+    "ext1a": "COMPLETED",
+    "ext1b": "COMPLETED",
+    "ext1c": "COMPLETED",
+    "core_ui_integration": "NOT_PERFORMED"
+  }
+}

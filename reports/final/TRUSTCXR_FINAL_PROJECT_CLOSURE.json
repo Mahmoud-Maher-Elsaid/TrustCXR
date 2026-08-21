@@ -1,0 +1,21 @@
+{
+  "status": "TRUSTCXR_RESEARCH_EXTENSION_FINAL_CLOSURE_PASS",
+  "project_status": "CLOSED",
+  "starting_head": "39e048e5d5d621d9b654a3071b127d5bf7970eed",
+  "ext4i1": "COMPLETED / PASS",
+  "ext4i2": "COMPLETED / PASS",
+  "ext4i3": "NOT STARTED / NOT REQUIRED",
+  "final_realization_decision": "EXT4I2_DECISION_FULLY_DETERMINISTIC_REALIZATION",
+  "llm_final_scientific_disposition": "LLM free-form realization was not scientifically accepted; NO_LLM_NEEDED_FOR_REALIZATION",
+  "retained_architecture": "FULLY_DETERMINISTIC_SEMANTICALLY_BOUNDED_REALIZATION",
+  "h5_preserved": true,
+  "historical_experiments_preserved": true,
+  "fresh_development_access": 0,
+  "frozen_final_access": 0,
+  "locked_test_accessed": false,
+  "authoritative_pytest": "1050 passed, 0 failed",
+  "authoritative_pip_check": "PASS",
+  "next_stage": "NONE AUTHORIZED",
+  "clinical_deployment_claim": false,
+  "external_validation_claim": false
+}

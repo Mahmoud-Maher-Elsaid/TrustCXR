@@ -23,7 +23,10 @@ dev = [
     "pytest>=8.3,<10",
     "pytest-cov>=6,<8",
     "ruff>=0.12,<1"
-]
+  ]
+  candidate3 = [
+    "llguidance==1.8.0"
+  ]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -32,7 +35,8 @@ where = ["src"]
 testpaths = ["tests"]
 addopts = "-ra --strict-markers"
 markers = [
-    "gpu: tests that require an NVIDIA CUDA GPU"
+    "gpu: tests that require an NVIDIA CUDA GPU",
+    "integration: bounded integration tests that exercise multiple project components"
 ]
 
 [tool.ruff]

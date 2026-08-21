@@ -1,0 +1,18 @@
+{
+  "stage": "EXT-4H.4",
+  "status": "EXT4H4_PRE_EXECUTION_GATE_FAILURE_ONLY",
+  "model_load_count": 0,
+  "model_generate_calls": 0,
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "h4_root_cause": "brittle source-text assertion in review-state preparation test",
+  "stage25b_root_cause": "research-extension bitsandbytes import was not represented by a scoped dependency manifest",
+  "historical_lock_changed": false,
+  "historical_lock_sha_changed": false,
+  "historical_dependency_count": 53,
+  "ext4h_runtime_manifest": "configs/research_extensions/ext4h/gpu_runtime_dependencies_v1.json",
+  "ext4h_dependencies": {"bitsandbytes": "0.50.0", "accelerate": "1.14.0"},
+  "benchmark_sha256": "1c34ce622fbf68af9b5114ddbf0f73fcfabffabd36dfc7536ad0c01e5402d324",
+  "authorization": "NOT_AUTHORIZED_UNTIL_GOVERNED_FULL_PYTEST_PASS"
+}

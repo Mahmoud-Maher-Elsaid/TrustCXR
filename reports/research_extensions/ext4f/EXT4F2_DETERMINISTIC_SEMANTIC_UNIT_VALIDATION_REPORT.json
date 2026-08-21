@@ -1,0 +1,60 @@
+{
+  "allowed_information_boundary_cases": 14,
+  "canonicalization_version": "EXT4F_CANONICAL_JSON_V1",
+  "contract_version": "EXT4F_SEMANTIC_GENERATION_CONTRACT_V1",
+  "contradiction_cases": 5,
+  "defer_matrix_cases": 2,
+  "development_benchmark_cases_accessed": 0,
+  "duration_seconds": 0.003967799944803119,
+  "evidence_state_matrix_cases": 6,
+  "frozen_final_cases_accessed": 0,
+  "generated_at": "2026-08-19T15:43:19.428050+00:00",
+  "invalid_fixture_count": 8,
+  "invariants_executably_validated": 22,
+  "llguidance_initializations": 0,
+  "llm_api_calls": 0,
+  "locked_test_accessed": false,
+  "model_generation_calls": 0,
+  "mutation_attempts": 48,
+  "mutation_rejections": 48,
+  "permutation_failures": 0,
+  "plan_builds": 6,
+  "planner_validator_inconsistencies": 0,
+  "provenance_cases": 6,
+  "reference_integrity_cases": 18,
+  "report_id": "EXT4F2_DETERMINISTIC_SEMANTIC_UNIT_VALIDATION_REPORT",
+  "reproducibility_match": true,
+  "reproducibility_run_1_digest": "e254ea5589bf775d5a4767f97721385febe13e805d6fe4e8833f29061abbe195",
+  "reproducibility_run_2_digest": "e254ea5589bf775d5a4767f97721385febe13e805d6fe4e8833f29061abbe195",
+  "roundtrip_failures": 0,
+  "semantic_hash_failures": 0,
+  "semantic_hashes": {
+    "conflict": "6dd0138324532f287b4d2ab78c438159e15b5ea5cf7ea20942cd3722e6927278",
+    "defer": "7bb98d1863900d9a44a6c5fd242fd6249331d5200381d0214afd7de571e2135d",
+    "missing": "e7c85d2122f40852c4560366537aa6e6173ca9a7126b115718f1a9ad92e4df7b",
+    "supported": "0f16ad4f7af71706dc1da85e5d03388e521411cfc04608a6d2f8f64703349a9e",
+    "uncertainty": "da35c2c7f4dfe8007642f8614e1161dd4168fb341e87000d8011fc2fb0de41ff",
+    "withheld": "639ec2a97de664edad4804c676c19b2d576c6c1289d9d64ab69f11c246b31412"
+  },
+  "status": "EXT4F2_DETERMINISTIC_SEMANTIC_UNIT_VALIDATION_PASS",
+  "total_invariants": 22,
+  "uncertainty_matrix_cases": 8,
+  "uncertainty_regression_rejected": true,
+  "unexpected_mutation_acceptances": 0,
+  "valid_fixture_count": 6,
+  "valid_fixture_passes": 6,
+  "validator_calls": 60
+  ,"focused_tests": {"ext4f2": "PASS", "count": 17, "relevant_regressions": "PASS"}
+  ,"full_pytest": {
+    "status": "NONBLOCKING_UNRELATED_FAILURES",
+    "passed": 942,
+    "failed": 4,
+    "failures": [
+      "test_execution_handoff::test_stage9b_move_helper_preserves_collision_and_protected_files (PowerShell helper/environment)",
+      "test_execution_handoff::test_stage9b_atomic_json_replaces_compatibly_without_three_argument_move (PowerShell execution policy)",
+      "test_explainability_governance::test_roadmap_records_current_extension_lifecycle_and_boundaries (pre-existing roadmap expectation)",
+      "test_research_ui_redesign::test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_boundaries (pre-existing roadmap expectation)"
+    ],
+    "ext4f2_failures": 0
+  }
+}

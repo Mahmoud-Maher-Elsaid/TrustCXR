@@ -1,0 +1,42 @@
+{
+  "schema_id": "EXT4E1_CANDIDATE1_SIX_DEVELOPMENT_CASE_EVALUATION",
+  "schema_version": "1",
+  "status": "EVALUATION_PREPARED",
+  "candidate_number": 1,
+  "model_repository": "Qwen/Qwen3-8B-GGUF",
+  "model_revision": "6a569868d07d3bd59e8b97fb001bf8c0b254bb20",
+  "model_filename": "Qwen3-8B-Q4_K_M.gguf",
+  "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+  "runtime_release": "b10453",
+  "runtime_commit_prefix": "3cb7ffb",
+  "prompt_sha256": "41ef8d42303bdcfc238d64f9528796bf42c94935c55296c8c7a361c74b5d6a61",
+  "request_reasoning_effort": "none",
+  "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA",
+  "partition": "development",
+  "generation": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "seed": 20260806,
+    "max_tokens": 768,
+    "stream": false,
+    "request_count": 1,
+    "retry_count": 0,
+    "free_form_fallback": false
+  },
+  "historical_case": {
+    "case_id": "dev_supported",
+    "evidence_path": "artifacts/research_extensions/ext4e2_candidate1/dev_case_smoke/20260817T091916Z",
+    "reuse_without_rerun": true
+  },
+  "new_case_policy": {
+    "remaining_case_count": 5,
+    "one_request_per_case": true,
+    "zero_retries": true,
+    "no_prompt_tuning": true,
+    "no_automatic_retry": true
+  },
+  "artifact_root": "artifacts/research_extensions/ext4e2_candidate1/development_evaluation",
+  "final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "selection_rule": "Descriptive six-development-case results only; no new threshold is invented."
+}

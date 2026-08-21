@@ -1,0 +1,10 @@
+{
+  "architecture_id": "EXT4I_SEMANTICALLY_BOUNDED_REALIZATION_ARCHITECTURE_V1",
+  "pipeline": ["deterministic_evidence", "validated_semantic_plan", "deterministic_semantic_atoms", "allowed_forbidden_proposition_set", "bounded_surface_realization", "semantic_entailment_and_constraint_verification", "deterministic_final_assembly"],
+  "selected_realization_mode": "C",
+  "mode_comparison": {"A": "unrestricted slot_text; rejected because H5 exposed state and proposition drift", "B": "semantic-atoms-conditioned free sentence; safer but retains avoidable lexical implication freedom", "C": "deterministic phrase skeleton with bounded lexical realization; selected for strongest authority preservation while retaining limited natural language"},
+  "llm_authorized_field": "slot_text lexical realization only",
+  "deterministic_authority": ["slot identity", "slot type", "ordering", "required atoms", "states", "polarity", "uncertainty", "provenance", "references", "DEFER", "contradiction topology", "allowed/forbidden propositions", "outer envelope"],
+  "validator_v2": ["state substitution", "polarity inversion", "certainty inflation/suppression", "unsupported proposition", "provenance/reference fabrication", "DEFER object error", "contradiction collapse", "forbidden clinical inference", "topic drift"],
+  "zero_generation_in_this_stage": true
+}

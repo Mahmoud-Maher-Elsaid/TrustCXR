@@ -1,0 +1,38 @@
+{
+  "report_id": "EXT4F0_SEMANTIC_CONTRACT_GAP_AUDIT",
+  "report_version": "1",
+  "status": "EXT4F0_GOVERNANCE_AND_CONTRACT_DESIGN_PASS",
+  "frozen_ext4e_schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
+  "invariant_count": 22,
+  "schema_enforced_count": 6,
+  "partially_schema_enforced_count": 1,
+  "validator_only_count": 15,
+  "cross_field_invariant_count": 15,
+  "schema_keyword_inventory": ["$defs", "$ref", "additionalProperties", "anyOf", "const", "enum", "maxLength", "minLength", "pattern", "required", "type"],
+  "root_gap": "JSON Schema and grammar constrain structural vocabulary, but Pydantic model validators enforce state-dependent relationships, reference resolution, evidence-state compatibility, and DEFER semantics after generation. A syntactically valid object can therefore remain semantically invalid.",
+  "observed_ext4e_example": "UncertaintyState status NOT_AVAILABLE with non-null source_stage and interpretation was parse-valid but rejected by validate_uncertainty.",
+  "recommended_architecture": "EXT4F_SEMANTIC_PLANNER_PLUS_CONSTRAINED_REALIZATION",
+  "proposed_contract": "EXT4F_SEMANTIC_GENERATION_CONTRACT_V1",
+  "generation_authority": {
+    "deterministic": ["evidence state selection", "claim IDs", "evidence/provenance references", "uncertainty availability and payload legality", "DEFER state", "WITHHELD state", "contradiction relationships", "allowed-information boundary"],
+    "llm_controlled": ["natural-language realization of an already valid plan", "sentence ordering within an allowed plan", "concise explanation", "expert-review question wording within bounded fields"]
+  },
+  "alternatives": {
+    "explicit_variants": "Recommended as the contract representation for semantic states where it does not create unmanageable product combinations.",
+    "grammar_state_machine": "Useful for local state transitions, but reference existence and evidence compatibility require a deterministic planner context.",
+    "two_stage_skeleton": "Preferred implementation boundary: deterministic semantic plan first, constrained realization second.",
+    "planner_plus_llm_wording": "Preferred end-to-end architecture; preserves LLM contribution without granting semantic-state authority.",
+    "post_generation_rejection_only": "Insufficient as the primary control because it permits invalid semantic generation and retry pressure."
+  },
+  "partition_counters": {
+    "model_generation_calls": 0,
+    "development_cases_accessed": 0,
+    "final_cases_accessed": 0,
+    "locked_test_accessed": false
+  },
+  "ext4e_immutability": {
+    "scientific_artifacts_modified": false,
+    "stage18_modified": false
+  },
+  "next_stage": "EXT4F.1_SEMANTIC_PLANNER_AND_CONTRACT_V1_IMPLEMENTATION"
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="dark">
+  <title>TrustCXR Model Attribution</title>
+  <link rel="stylesheet" href="/research/explainability/ui/app.css">
+</head>
+<body>
+  <header>
+    <p class="eyebrow">TrustCXR research extension</p>
+    <h1>Model Attribution</h1>
+    <p class="lede">Class-specific Grad-CAM research view for the frozen Stage 9 classifier.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Generate one attribution</h2>
+      <p class="scope">Select a safe local PNG or JPEG and one governed Stage 9 model finding. Attribution is explicit and request-scoped.</p>
+      <label for="image-input">Local image</label>
+      <input id="image-input" type="file" accept=".png,.jpg,.jpeg,image/png,image/jpeg">
+      <label for="attribution-label">Model finding</label>
+      <select id="attribution-label"></select>
+      <button id="generate-attribution" type="button" disabled>Generate Attribution</button>
+      <p class="attribution-metadata"><strong>Raw attribution resolution:</strong> 7 × 7</p>
+      <p class="disclaimer">Research attribution only — not lesion localization or diagnostic evidence.</p>
+      <p id="status" class="status" role="status">Choose a local image to begin.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="visualization-title">
+      <h2 id="visualization-title">Attribution visualization</h2>
+      <div id="visuals" class="visuals is-hidden">
+        <figure><img id="original" alt="Original local research image"><figcaption>Original image</figcaption></figure>
+        <figure><img id="heatmap" alt="Model attribution intensity map"><figcaption>Model attribution intensity</figcaption></figure>
+        <figure><img id="overlay" alt="Model attribution overlay on the original image"><figcaption>Attribution overlay</figcaption></figure>
+      </div>
+      <dl id="metadata" class="metadata"></dl>
+      <p class="note">Target layer: <code>features.norm5</code> (fixed EXT-1B research contract).</p>
+      <p class="note">Color intensity reflects relative attribution strength within this map. Display resizing does not increase localization precision.</p>
+    </section>
+  </main>
+
+  <script src="/research/explainability/ui/app.js" defer></script>
+</body>
+</html>

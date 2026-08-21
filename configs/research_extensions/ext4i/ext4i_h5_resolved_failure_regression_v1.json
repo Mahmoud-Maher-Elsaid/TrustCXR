@@ -1,0 +1,362 @@
+{
+    "regression_id":  "EXT4I_H5_RESOLVED_FAILURE_REGRESSION_V1",
+    "purpose":  "architecture regression only; not model selection",
+    "source_h4_run":  "20260820T070353Z_fc35947a",
+    "source_h5_bundle_sha256":  "64a73ff5e7789e096ba0bbbd61966e62a22ca242f877fe26ddc887392225f0f4",
+    "resolved_failure_count":  16,
+    "unresolved_units_excluded":  43,
+    "cases":  [
+                  {
+                      "case_id":  "ext4h_dev_002",
+                      "case_sha256":  "eef370cdddf3e28641b090c17b0fd1d4c8c59da27f9ea2e502e3d2a80099c7fe",
+                      "slot_id":  "slot_limitation_LOCALIZATION_WITHHELD",
+                      "slot_type":  "LIMITATION_EXPLANATION",
+                      "model_authored_slot_text":  "Localization is not available.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "polarity_preservation",
+                                                "evidence_state_preservation",
+                                                "no_unsupported_addition",
+                                                "appropriate_limitation_expression"
+                                            ],
+                      "reviewer_flags":  [
+                                             "SEMANTIC_DRIFT",
+                                             "POLARITY_CHANGE",
+                                             "EVIDENCE_STATE_ERROR",
+                                             "UNSUPPORTED_ADDITION",
+                                             "LIMITATION_EXPRESSION_ERROR"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "state/polarity substitution",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_005",
+                      "case_sha256":  "2ccac469bc4226913c4b801b7ee6b0f97b151b37f6d8059ccb0b7a13e924a3a5",
+                      "slot_id":  "slot_limitation_CONTRADICTORY_EVIDENCE",
+                      "slot_type":  "LIMITATION_EXPLANATION",
+                      "model_authored_slot_text":  "The evidence presented contradicts itself, leading to uncertainty about the true situation.",
+                      "failed_dimensions":  [
+                                                "uncertainty_preservation",
+                                                "no_unsupported_addition"
+                                            ],
+                      "reviewer_flags":  [
+                                             "UNCERTAINTY_CHANGE",
+                                             "UNSUPPORTED_ADDITION"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "unsupported proposition or semantic drift",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_005",
+                      "case_sha256":  "2ccac469bc4226913c4b801b7ee6b0f97b151b37f6d8059ccb0b7a13e924a3a5",
+                      "slot_id":  "slot_contradiction_CLASSIFIER_SIGNAL",
+                      "slot_type":  "CONTRADICTION_EXPLANATION",
+                      "model_authored_slot_text":  "The conflicting signals are reconciled to preserve the core conflict.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "uncertainty_preservation",
+                                                "evidence_state_preservation",
+                                                "no_unsupported_addition",
+                                                "contradiction_fidelity"
+                                            ],
+                      "reviewer_flags":  [
+                                             "CONTRADICTION_ERROR",
+                                             "SEMANTIC_DRIFT",
+                                             "EVIDENCE_STATE_ERROR",
+                                             "UNCERTAINTY_CHANGE",
+                                             "UNSUPPORTED_ADDITION"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "contradiction collapse",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_008",
+                      "case_sha256":  "8c89172b7bba35ff0774c304b67eb36b5621958e05ae1b43b814b4ee9643a1a0",
+                      "slot_id":  "slot_limitation_LOCALIZATION_WITHHELD",
+                      "slot_type":  "LIMITATION_EXPLANATION",
+                      "model_authored_slot_text":  "Localization is not available.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "polarity_preservation",
+                                                "evidence_state_preservation",
+                                                "no_unsupported_addition",
+                                                "appropriate_limitation_expression"
+                                            ],
+                      "reviewer_flags":  [
+                                             "SEMANTIC_DRIFT",
+                                             "POLARITY_CHANGE",
+                                             "EVIDENCE_STATE_ERROR",
+                                             "UNSUPPORTED_ADDITION",
+                                             "LIMITATION_EXPRESSION_ERROR"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "state/polarity substitution",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_009",
+                      "case_sha256":  "da32a25edcdbe64ae08e0ae29fca5214d94f1d84f61ffb7be739261f61f7c936",
+                      "slot_id":  "slot_defer",
+                      "slot_type":  "DEFER_EXPLANATION",
+                      "model_authored_slot_text":  "The explanation for deferring is active.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "no_unsupported_addition",
+                                                "defer_fidelity",
+                                                "appropriate_limitation_expression"
+                                            ],
+                      "reviewer_flags":  [
+                                             "DEFER_ERROR",
+                                             "SEMANTIC_DRIFT",
+                                             "UNSUPPORTED_ADDITION",
+                                             "LIMITATION_EXPRESSION_ERROR"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "DEFER semantic object confusion",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_010",
+                      "case_sha256":  "c8868a200f73c62a7e4c07fa851a4fa70c9b30a4a7bd332786a7a8d456da5865",
+                      "slot_id":  "slot_defer",
+                      "slot_type":  "DEFER_EXPLANATION",
+                      "model_authored_slot_text":  "The explanation for deferring is active.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "no_unsupported_addition",
+                                                "defer_fidelity",
+                                                "appropriate_limitation_expression"
+                                            ],
+                      "reviewer_flags":  [
+                                             "DEFER_ERROR",
+                                             "SEMANTIC_DRIFT",
+                                             "UNSUPPORTED_ADDITION",
+                                             "LIMITATION_EXPRESSION_ERROR"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "DEFER semantic object confusion",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_011",
+                      "case_sha256":  "643c296a15b76fa329ce07446570768fd87e77395a4d5b50a1aea8dedbf62e24",
+                      "slot_id":  "slot_limitation_LOCALIZATION_WITHHELD",
+                      "slot_type":  "LIMITATION_EXPLANATION",
+                      "model_authored_slot_text":  "Localization is not available.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "polarity_preservation",
+                                                "evidence_state_preservation",
+                                                "no_unsupported_addition",
+                                                "appropriate_limitation_expression"
+                                            ],
+                      "reviewer_flags":  [
+                                             "SEMANTIC_DRIFT",
+                                             "POLARITY_CHANGE",
+                                             "EVIDENCE_STATE_ERROR",
+                                             "UNSUPPORTED_ADDITION",
+                                             "LIMITATION_EXPRESSION_ERROR"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "state/polarity substitution",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_012",
+                      "case_sha256":  "cd073c3ac486848c16ac9da9ca1cb892ec9818abbc07ae1b5ed4b7dd89390a50",
+                      "slot_id":  "slot_limitation_CONTRADICTORY_EVIDENCE",
+                      "slot_type":  "LIMITATION_EXPLANATION",
+                      "model_authored_slot_text":  "The evidence presented contradicts itself, leading to uncertainty about the true situation.",
+                      "failed_dimensions":  [
+                                                "uncertainty_preservation",
+                                                "no_unsupported_addition"
+                                            ],
+                      "reviewer_flags":  [
+                                             "UNCERTAINTY_CHANGE",
+                                             "UNSUPPORTED_ADDITION"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "unsupported proposition or semantic drift",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_012",
+                      "case_sha256":  "cd073c3ac486848c16ac9da9ca1cb892ec9818abbc07ae1b5ed4b7dd89390a50",
+                      "slot_id":  "slot_contradiction_CLASSIFIER_SIGNAL",
+                      "slot_type":  "CONTRADICTION_EXPLANATION",
+                      "model_authored_slot_text":  "The conflicting signals are reconciled to preserve the core facts.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "uncertainty_preservation",
+                                                "evidence_state_preservation",
+                                                "no_unsupported_addition",
+                                                "contradiction_fidelity"
+                                            ],
+                      "reviewer_flags":  [
+                                             "CONTRADICTION_ERROR",
+                                             "SEMANTIC_DRIFT",
+                                             "EVIDENCE_STATE_ERROR",
+                                             "UNCERTAINTY_CHANGE",
+                                             "UNSUPPORTED_ADDITION"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "contradiction collapse",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_015",
+                      "case_sha256":  "cf32bef02a9a7c7d8b258e97b347d858d87087160b57f5a3efad441f7d83b456",
+                      "slot_id":  "slot_limitation_LOCALIZATION_WITHHELD",
+                      "slot_type":  "LIMITATION_EXPLANATION",
+                      "model_authored_slot_text":  "Localization is not available.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "polarity_preservation",
+                                                "evidence_state_preservation",
+                                                "no_unsupported_addition",
+                                                "appropriate_limitation_expression"
+                                            ],
+                      "reviewer_flags":  [
+                                             "SEMANTIC_DRIFT",
+                                             "POLARITY_CHANGE",
+                                             "EVIDENCE_STATE_ERROR",
+                                             "UNSUPPORTED_ADDITION",
+                                             "LIMITATION_EXPRESSION_ERROR"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "state/polarity substitution",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_016",
+                      "case_sha256":  "f1fad01698a9a66bfad94778d7f21ba3b478ec08daf5835c549df147697b5b33",
+                      "slot_id":  "slot_limitation_LOCALIZATION_WITHHELD",
+                      "slot_type":  "LIMITATION_EXPLANATION",
+                      "model_authored_slot_text":  "Localization is not available.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "polarity_preservation",
+                                                "evidence_state_preservation",
+                                                "no_unsupported_addition",
+                                                "appropriate_limitation_expression"
+                                            ],
+                      "reviewer_flags":  [
+                                             "SEMANTIC_DRIFT",
+                                             "POLARITY_CHANGE",
+                                             "EVIDENCE_STATE_ERROR",
+                                             "UNSUPPORTED_ADDITION",
+                                             "LIMITATION_EXPRESSION_ERROR"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "state/polarity substitution",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_018",
+                      "case_sha256":  "2ec9a8d1afe5bb627f510939ded6431059fcfaea3a24dc5a1450827825588638",
+                      "slot_id":  "slot_limitation_CONTRADICTORY_EVIDENCE",
+                      "slot_type":  "LIMITATION_EXPLANATION",
+                      "model_authored_slot_text":  "The evidence presented contradicts itself, leading to uncertainty about the true situation.",
+                      "failed_dimensions":  [
+                                                "uncertainty_preservation",
+                                                "no_unsupported_addition"
+                                            ],
+                      "reviewer_flags":  [
+                                             "UNCERTAINTY_CHANGE",
+                                             "UNSUPPORTED_ADDITION"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "unsupported proposition or semantic drift",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_018",
+                      "case_sha256":  "2ec9a8d1afe5bb627f510939ded6431059fcfaea3a24dc5a1450827825588638",
+                      "slot_id":  "slot_contradiction_CLASSIFIER_SIGNAL",
+                      "slot_type":  "CONTRADICTION_EXPLANATION",
+                      "model_authored_slot_text":  "The conflicting signals are preserved because both are considered authoritative.",
+                      "failed_dimensions":  [
+                                                "provenance_preservation",
+                                                "no_unsupported_addition"
+                                            ],
+                      "reviewer_flags":  [
+                                             "PROVENANCE_ERROR",
+                                             "UNSUPPORTED_ADDITION"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "unsupported proposition or semantic drift",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_018",
+                      "case_sha256":  "2ec9a8d1afe5bb627f510939ded6431059fcfaea3a24dc5a1450827825588638",
+                      "slot_id":  "slot_defer",
+                      "slot_type":  "DEFER_EXPLANATION",
+                      "model_authored_slot_text":  "The explanation for deferring is active.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "no_unsupported_addition",
+                                                "defer_fidelity",
+                                                "appropriate_limitation_expression"
+                                            ],
+                      "reviewer_flags":  [
+                                             "DEFER_ERROR",
+                                             "SEMANTIC_DRIFT",
+                                             "UNSUPPORTED_ADDITION",
+                                             "LIMITATION_EXPRESSION_ERROR"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "DEFER semantic object confusion",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_021",
+                      "case_sha256":  "bd7871f6aaed5700be56e061914382257c5ee39ce34b30fbc9df3c3125b9d3b3",
+                      "slot_id":  "slot_limitation_LOCALIZATION_WITHHELD",
+                      "slot_type":  "LIMITATION_EXPLANATION",
+                      "model_authored_slot_text":  "Localization is not available.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "polarity_preservation",
+                                                "evidence_state_preservation",
+                                                "no_unsupported_addition",
+                                                "appropriate_limitation_expression"
+                                            ],
+                      "reviewer_flags":  [
+                                             "SEMANTIC_DRIFT",
+                                             "POLARITY_CHANGE",
+                                             "EVIDENCE_STATE_ERROR",
+                                             "UNSUPPORTED_ADDITION",
+                                             "LIMITATION_EXPRESSION_ERROR"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "state/polarity substitution",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  },
+                  {
+                      "case_id":  "ext4h_dev_022",
+                      "case_sha256":  "a81aafa43ed3a09085c39b8f11ae451671639c054e1d3e60572264cdf3def56e",
+                      "slot_id":  "slot_defer",
+                      "slot_type":  "DEFER_EXPLANATION",
+                      "model_authored_slot_text":  "The explanation for deferring is active.",
+                      "failed_dimensions":  [
+                                                "meaning_preservation",
+                                                "no_unsupported_addition",
+                                                "defer_fidelity",
+                                                "appropriate_limitation_expression"
+                                            ],
+                      "reviewer_flags":  [
+                                             "DEFER_ERROR",
+                                             "SEMANTIC_DRIFT",
+                                             "UNSUPPORTED_ADDITION",
+                                             "LIMITATION_EXPRESSION_ERROR"
+                                         ],
+                      "primary_failure_layer":  "LLM_SURFACE_REALIZATION_DRIFT",
+                      "failure_mechanism":  "DEFER semantic object confusion",
+                      "regression_expectation":  "bounded architecture must reject or prevent this semantic transition"
+                  }
+              ]
+}

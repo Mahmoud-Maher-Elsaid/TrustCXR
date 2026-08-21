@@ -205,15 +205,37 @@ def test_frozen_core_ui_final_polish_contract() -> None:
     assert "WITHHELD_INSUFFICIENT_EVIDENCE" not in html.split(marker, maxsplit=1)[0]
 
 
-def test_post_release_extension_roadmap_is_design_only() -> None:
+def test_post_release_extension_roadmap_preserves_current_lifecycle_and_core_boundaries() -> None:
     roadmap = (
         ROOT / "docs/research_extensions/POST_RELEASE_RESEARCH_EXTENSION_ROADMAP.md"
     ).read_text(encoding="utf-8")
+    governance = (
+        ROOT / "docs/research_extensions/grounded_llm/EXT4A_GROUNDED_LLM_GOVERNANCE.md"
+    ).read_text(encoding="utf-8")
+    governance_normalized = " ".join(governance.split())
 
     for required in (
         "OPTIONAL_POST_RELEASE_RESEARCH_EXTENSION",
-        "Implementation status:** `NOT STARTED`",
+        "Implementation status:** `EXT-4A GOVERNANCE COMPLETED — IMPLEMENTATION NOT STARTED`",
         "Authorization:** `POST-CORE-RELEASE ONLY`",
+        "EXT-1A Explainability Foundation:** `COMPLETED`",
+        "EXT-1B Grad-CAM Implementation and Technical Validation:** `COMPLETED`",
+        "Grad-CAM UI Integration / EXT-1C:** `COMPLETED`",
+        "EXT-3 Final RSNA Lung Opacity localization:** `CLOSED_CONTROLLED_NEGATIVE_RESULT`",
+        "EXT-4A Grounded LLM Governance:** `COMPLETED — GOVERNANCE ONLY`",
+        "EXT-4B Evidence Grounding Schema:** `COMPLETED — SCHEMA ONLY`",
+        "EXT-4C Output Contract:** `COMPLETED — OUTPUT CONTRACT ONLY`",
+        "EXT-4D Hallucination / Faithfulness Benchmark:** `COMPLETED — "
+        "FROZEN BENCHMARK DEFINITION ONLY`",
+        "EXT-4E2B Qwen Runtime/Model Identity:** `RUNTIME_AND_MODEL_IDENTITY_FROZEN`",
+        "EXT-4E2C Qwen Load-Only GPU Smoke:** `LOAD_ONLY_PASS — TECHNICALLY "
+        "LOADABLE; NOT SCIENTIFICALLY EVALUATED`",
+        "EXT-4E2D Candidate #1 Single Development-Case Smoke:** `CLOSED / PASS",
+        "EXT-4E2D0 Structured Output Compatibility Smoke:** `CLOSED / PASS — "
+        "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA_VERIFIED`",
+        "Structured-output compatibility:** `VERIFIED`",
+        "Next authorized stage:** `EXT4F.6_GOVERNED_DEVELOPMENT_CANDIDATE_EVALUATION — NOT STARTED`",
+        "Grounded LLM reporting:** `EXT-4F.4 TECHNICAL SMOKE CLOSED; EXT-4F.5 FAITHFULNESS BENCHMARK FROZEN — ZERO EVALUATION`",
         "attention or attribution is not validated lesion localization",
         "NO_RELIABLE_POSITIVE_LESION_LOCALIZATION",
         "LOCALIZATION_ABSENCE_MUST_NOT_CONTRADICT_CLASSIFIER_EVIDENCE",
@@ -221,7 +243,14 @@ def test_post_release_extension_roadmap_is_design_only() -> None:
         "GROUNDED_LLM_REPORTER",
         "Frozen vision models",
         "Deterministic verifier",
+        "Stage 18 deterministic renderer remains the safe fallback",
     ):
         assert required in roadmap
+
+    for required in (
+        "No provider or model is selected by EXT-4A.",
+        "No LLM client, provider, external API, UI, training, or fine-tuning is part of EXT-4A.",
+    ):
+        assert required in governance_normalized
 
     assert "research-extension/explainability-grounded-llm" in roadmap

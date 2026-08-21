@@ -1,0 +1,23 @@
+{
+  "contract_id": "EXT4I_SEMANTIC_ATOM_CONTRACT_V1",
+  "llm_authority": ["surface_wording_only"],
+  "required_atom_fields": ["required_propositions", "required_state_semantics", "required_polarity", "required_uncertainty", "required_provenance", "required_references", "required_defer_meaning", "required_contradiction_meaning", "allowed_paraphrase_scope", "forbidden_propositions", "forbidden_state_transitions", "forbidden_clinical_inference_classes"],
+  "state_constraints": {
+    "SUPPORTED": {"must_preserve": ["supported polarity"], "forbidden": ["certainty inflation", "unsupported diagnosis", "unsupported severity", "unsupported treatment"]},
+    "PARTIALLY_SUPPORTED": {"must_preserve": ["partial support boundary"], "forbidden": ["full support claim", "certainty inflation"]},
+    "WITHHELD": {"must_preserve": ["withheld state"], "forbidden": ["unavailable", "absent", "negative", "normal", "no localization"]},
+    "CONTRADICTED": {"must_preserve": ["unresolved contradiction"], "forbidden": ["reconciliation", "collapse", "selecting one signal"]},
+    "NOT_AVAILABLE": {"must_preserve": ["evidence unavailability only"], "forbidden": ["negative finding", "absence", "normality"]},
+    "NOT_APPLICABLE": {"must_preserve": ["non-applicability"], "forbidden": ["absence", "negative finding", "missing evidence"]},
+    "DEFER": {"must_preserve": ["decision or action is deferred"], "forbidden": ["explanation is active", "decision completed", "decision overridden"]}
+  },
+  "required_forbidden_model": {
+    "LOCALIZATION_WITHHELD": {"required_atoms": ["localization evidence is withheld"], "forbidden_atoms": ["localization unavailable", "localization negative", "localization absent", "left/right localization", "lesion localization"]},
+    "EVIDENCE_NOT_AVAILABLE": {"required_atoms": ["evidence is not available"], "forbidden_atoms": ["negative finding", "absence inferred", "normality inferred"]},
+    "NOT_APPLICABLE": {"required_atoms": ["topic does not apply"], "forbidden_atoms": ["topic absent", "topic negative", "topic missing"]},
+    "CONTRADICTORY_EVIDENCE": {"required_atoms": ["signals remain contradictory"], "forbidden_atoms": ["signals reconciled", "contradiction resolved"]},
+    "DEFER": {"required_atoms": ["action or decision is deferred"], "forbidden_atoms": ["defer applies only to explanation", "action completed"]}
+  },
+  "forbidden_clinical_inference_classes": ["diagnosis", "treatment", "management", "prognosis", "urgency", "severity", "laterality", "localization", "causality", "history", "demographics", "measurement"],
+  "validation_policy": "fail_closed; deterministic/state-specific checks precede any separately governed residual semantic judge"
+}

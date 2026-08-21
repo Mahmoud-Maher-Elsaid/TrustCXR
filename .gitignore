@@ -149,3 +149,8 @@ desktop.ini
 # BEGIN TRUSTCXR STAGE 9B
 /artifacts/stage9/stage9b_ablation/
 # END TRUSTCXR STAGE 9B
+backups/
+
+# EXT-4H.2 generated smoke evidence is preserved as run-local research data.
+/reports/research_extensions/ext4h/EXT4H2_SLOT_SYNTHETIC_SMOKE_REPORT.json
+/reports/research_extensions/ext4h/EXT4H4_GPU_INT8_EVALUATION_REPORT.json

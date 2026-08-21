@@ -1,0 +1,54 @@
+{
+  "schema_id": "EXT4E2D0_STRUCTURED_OUTPUT_COMPATIBILITY",
+  "schema_version": "1",
+  "status": "TECHNICAL_COMPATIBILITY_SMOKE_PREPARED",
+  "model_repository": "Qwen/Qwen3-8B-GGUF",
+  "model_revision": "6a569868d07d3bd59e8b97fb001bf8c0b254bb20",
+  "model_filename": "Qwen3-8B-Q4_K_M.gguf",
+  "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+  "runtime_release": "b10453",
+  "runtime_commit_prefix": "3cb7ffb",
+  "server": {
+    "host": "127.0.0.1",
+    "port": 18080,
+    "cors_origins": "localhost",
+    "webui": false,
+    "parallel_slots": 1,
+    "context_size": 2048,
+    "gpu_layers": 999,
+    "reasoning": "off"
+  },
+  "endpoint": "http://127.0.0.1:18080/v1/chat/completions",
+  "structured_output_mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA",
+  "response_format_type": "json_object",
+  "request_reasoning_effort": "none",
+  "synthetic_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "status": {
+        "const": "PASS"
+      },
+      "message": {
+        "const": "structured output compatibility"
+      }
+    },
+    "required": ["status", "message"]
+  },
+  "generation": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "seed": 20260806,
+    "max_tokens": 64,
+    "stream": false,
+    "request_count": 1,
+    "retry_count": 0,
+    "free_form_fallback": false
+  },
+  "evidence_root": "artifacts/research_extensions/ext4e2_candidate1/structured_output_compatibility",
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "no_patient_or_medical_payload": true,
+  "failure_policy": "FAIL_CLOSED_NO_RETRY_OR_FALLBACK"
+}

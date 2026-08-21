@@ -17,7 +17,7 @@ The following content must remain outside Git version control:
 
 ## Local dataset root
 
-`F:\AI\TrustCXR\TrustCXR-Data`
+`<governed-data-root>\TrustCXR-Data`
 
 ## Repository-safe content
 

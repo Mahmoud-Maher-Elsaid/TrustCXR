@@ -6,6 +6,13 @@
 
 TrustCXR is a local, deterministic chest X-ray research pipeline with frozen vision models, predictive-uncertainty evidence, conservative downstream safety logic, and an expert-review interface.
 
+**PROJECT STATUS: CLOSED** — `TRUSTCXR_RESEARCH_EXTENSION_FINAL_CLOSURE_PASS`
+
+The final reporting architecture is `FULLY_DETERMINISTIC_SEMANTICALLY_BOUNDED_REALIZATION`.
+No next stage is authorized. This repository records a completed research
+program, not an active clinical product or an invitation to run additional
+model-selection experiments.
+
 > **RESEARCH USE ONLY · NOT A MEDICAL DIAGNOSIS · EXPERT REVIEW REQUIRED**
 
 TrustCXR is not clinically or externally validated, is not medical-device software, and must not be used for diagnosis, treatment, autonomous release, or deployment decisions.
@@ -67,6 +74,24 @@ These values are copied from frozen reports; they are not recomputed here. Full 
 
 The frozen Stage 9 evidence is macro AUROC `0.7287231943`, macro AUPRC `0.1540464037`, F1 at 0.5 `0.2072496443`, across 17,061 test records and 4,715 patients. This is an internal frozen evaluation, not external validation.
 
+## Post-freeze research-extension outcome
+
+The post-freeze extension record is preserved under
+`reports/research_extensions/` and is separate from frozen-core model
+selection. Multiple EXT-4E candidates failed their scientific selection
+gates. EXT-4F advanced semantic contracts and constrained orchestration, but
+its candidate was not selected. EXT-4G Gemma 3 passed technical preparation
+but failed the development selection gate. EXT-4H deterministic slot
+orchestration passed the automatic structural gate; its blinded EXT-4H.5
+semantic review failed (`513/765` applicable decisions passed,
+`0/24` cases passed, and the optimistic ceiling was `701/765 = 0.9163`, so
+adjudication could not rescue selection). EXT-4I identified surface-realization
+drift, then passed deterministic semantic-atom, proposition-boundary,
+phrase-skeleton, and validator regression gates. A bounded lexical LLM role
+was evaluated and not selected because it provided no demonstrated scientific
+benefit over deterministic lexical selection. Free-form LLM realization was
+not scientifically accepted. The final reporting path is deterministic.
+
 ## Architecture
 
 <img src="docs/assets/trustcxr-core-architecture.svg" alt="TrustCXR frozen core architecture" />
@@ -102,7 +127,11 @@ Accepted image inputs are local PNG, JPG, and JPEG files. Real DICOM upload/disp
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-The final Stage 27 closure validation is 748 passing tests.
+The last authoritative runtime integrity before intentional `.venv` deletion
+was `1050 passed, 0 failed`; `pip check` also passed. This is historical
+closure evidence, not a claim that a deleted local environment is currently
+present. Recreate an environment only from the committed lock/specification
+if a separately authorized reproducibility check is ever required.
 
 ## Data governance
 
@@ -120,6 +149,8 @@ Raw datasets, patient-level records, DICOM files, checkpoints, logs, and local i
 
 ## Release documentation
 
+- [Professional Core Research Paper (PDF)](docs/paper/TRUSTCXR_CORE_RESEARCH_PAPER.pdf)
+- [Core Research Paper Source](docs/paper/TRUSTCXR_CORE_RESEARCH_PAPER.md)
 - [Core Technical Report](docs/release/TRUSTCXR_CORE_TECHNICAL_REPORT.md)
 - [Final Claims Matrix](docs/release/FINAL_CLAIMS_MATRIX.md)
 - [Final Dataset Use Summary](docs/release/FINAL_DATASET_USE_SUMMARY.md)
@@ -132,6 +163,16 @@ Raw datasets, patient-level records, DICOM files, checkpoints, logs, and local i
 - Core release: `TRUSTCXR_FROZEN_RESEARCH_RELEASE`
 - Version: `v1.0.0-research`
 - Mandatory core stages remaining: `0`
-- Post-release research extensions: **Not started**
+- EXT-4I.1: `COMPLETED / PASS`
+- EXT-4I.2: `COMPLETED / PASS`
+- EXT-4I.3: `NOT STARTED / NOT REQUIRED`
+- Next stage: `NONE AUTHORIZED`
+- Future LLM realization research: `CLOSED`
 
-Optional visual-explainability, true-localization, grounded-LLM, and multimodal studies are **not implemented** and are not part of the core release. They are design-only future work in [Post-Release Research Extension Roadmap](docs/research_extensions/POST_RELEASE_RESEARCH_EXTENSION_ROADMAP.md).
+Optional visual-explainability, true-localization, and multimodal studies are
+not implemented in the core and are not authorized by this closed project.
+The roadmap is retained as historical governance context, not as an active
+stage queue. Raw datasets, model caches, and `.venv` are intentionally
+untracked and may be absent; they are not part of the minimal archival source
+set. See the [final closure report](reports/final/TRUSTCXR_FINAL_PROJECT_CLOSURE.md)
+and [independent full-project audit](reports/final/TRUSTCXR_FINAL_INDEPENDENT_FULL_PROJECT_AUDIT.md).

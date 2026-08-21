@@ -1,0 +1,137 @@
+{
+  "schema_id": "EXT4E_CANDIDATE3_IDENTITY_AND_RUNTIME",
+  "schema_version": "1",
+  "candidate_id": 3,
+  "model_family": "Phi-4-mini",
+  "model_variant": "Phi-4-mini-instruct",
+  "publisher": "Microsoft",
+  "repository": "microsoft/Phi-4-mini-instruct",
+  "resolved_revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+  "source": "https://huggingface.co/microsoft/Phi-4-mini-instruct/tree/cfbefacb99257ffa30c83adab238a50856ac3083",
+  "format": "safetensors",
+  "quantization": "none",
+  "license": "MIT",
+  "architecture": "Phi3ForCausalLM",
+  "text_only": true,
+  "context_length": 131072,
+  "weights": {
+    "model-00001-of-00002.safetensors": {
+      "size_bytes": 4903637712,
+      "sha256": "bc703090b63eda16f639fa4de7ac54635c23105ab1da2f6ec4d3403151d38ee6"
+    },
+    "model-00002-of-00002.safetensors": {
+      "size_bytes": 2768428504,
+      "sha256": "7ff79b9d2d31076bac2663393451f6530f4fc8ca49b09002116c92c373dba983"
+    },
+    "model.safetensors.index.json": {
+      "size_bytes": 16273,
+      "sha256": "613a98d5e5716ca96fa75931abedc9c5a5d95f488ce4d62df71e639fe3ac6c59"
+    }
+  },
+  "support_files": {
+    "config.json": {"size_bytes": 2504, "sha256": "ac65d86061d3d0d704ee2511fd0eb8713ef19eb6eedba17c3080a4165d5b933b"},
+    "generation_config.json": {"size_bytes": 168, "sha256": "3e3f48753753f92d2b958679151861d4fd7bf26e4dfc41fd47056116c4914dcd"},
+    "tokenizer.json": {"size_bytes": 15524095, "sha256": "382cc235b56c725945e149cc25f191da667c836655efd0857b004320e90e91ea"},
+    "tokenizer_config.json": {"size_bytes": 2932, "sha256": "9c9b6bc0c94d95f69f826c41069a3e8b387ac3ced89601d201886e99240ac9db"},
+    "special_tokens_map.json": {"size_bytes": 587, "sha256": "aff38493227d813e29fcf8406e8e90062f1f031aa47d589325e9c31d89ac7cc3"},
+    "added_tokens.json": {"size_bytes": 249, "sha256": "d4f2aceb0f20b71dd1f4bcc7e052e4412946bf281840b8f83d39f259571af486"},
+    "merges.txt": {"size_bytes": 2418348, "sha256": "856ce61180bb689282eed6b3a6838bb1f438399be23aefe9d20eb379791fb4ad"},
+    "vocab.json": {"size_bytes": 3910310, "sha256": "6cb65a857824fa6615bb1782d95d882617a8bbce1da0317118586b36f39e98bd"},
+    "configuration_phi3.py": {"size_bytes": 10875, "sha256": "ec2044b77d0b8111640ac134daa3af1f40dc552a739f8959626e7e58ea3352df"},
+    "modeling_phi3.py": {"size_bytes": 54268, "sha256": "d5fd551a7fe759b1d25e5b16b5012aa98b9b8bd400d26c7ee69c0090a245d6cd"}
+  },
+  "runtime": {
+    "kind": "transformers",
+    "transformers_version": "4.57.6",
+    "torch_version": "2.12.1+cu130",
+    "architecture": "Phi3ForCausalLM",
+    "phi3_class_available": true,
+    "model_load_performed": false,
+    "reason": "Official config declares Phi3ForCausalLM; local Transformers exposes that class."
+  },
+  "tokenizer_and_chat_template": {
+    "config_class": "Phi3Config",
+    "tokenizer_class": "GPT2TokenizerFast",
+    "chat_template_present": true,
+    "rendered_token_count": 8,
+    "generation_performed": false
+  },
+  "memory_feasibility": {
+    "parameter_dtype": "bfloat16",
+    "weight_bytes": 7672066216,
+    "gpu_vram_bytes": 8589934592,
+    "full_gpu_placement": "NOT_FEASIBLE_WITH_RUNTIME_OVERHEAD",
+    "planned_device_strategy": "CPU_OR_CONTROLLED_CPU_GPU_DEVICE_MAP_REQUIRES_EXPLICIT_LOAD_GATE",
+    "quantization": "NOT_APPLIED"
+  },
+  "structured_output": {
+    "status": "LLGUIDANCE_APPROVED_FOR_CANDIDATE3_TECHNICAL_SMOKE",
+    "selected_backend": "llguidance",
+    "required_version": "1.8.0",
+    "mechanism": "LLGUIDANCE_JSON_SCHEMA_MATCHER_LOGITS_PROCESSOR",
+    "schema_source": "GroundedOutputEnvelope.model_json_schema()",
+    "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
+    "schema_keyword_inventory": [
+      "$defs", "$ref", "additionalProperties", "anyOf", "const", "enum",
+      "items", "maxLength", "minLength", "pattern", "properties", "required", "type"
+    ],
+    "schema_compilation": "PASS_STRICT_VALIDATE_GRAMMAR",
+    "schema_semantics": "PASS_MATCHER_ACCEPT_REJECT_PROBES",
+    "semantic_probe": {
+      "schema": "pattern + minLength + maxLength",
+      "valid": "ABC and ABCDEFGH accepted",
+      "pattern_violation": "abc rejected",
+      "below_minimum": "empty string rejected",
+      "above_maximum": "ABCDEFGHI rejected"
+    },
+    "tokenizer_integration": "PASS_GPT2TOKENIZERFAST_LOCAL_TOKENIZER",
+    "constraint_index": "PASS_INITIAL_25004_BYTE_MASK_200029_VOCABULARY",
+    "prompt_generation_boundary": "PASS_PROMPT_NOT_CONSUMED; GENERATED_TOKENS_CONSUMED_ONCE",
+    "eos_behavior": "MATCHER_MASK_CONTROLS_EOS_ONLY_AFTER_ACCEPTING_STATE",
+    "installed_constrained_decoding": [],
+    "fallback_allowed": false,
+    "alternatives": {
+      "outlines": "REJECTED_SCHEMA_SEMANTICS_INCOMPATIBILITY",
+      "llguidance": "ACTIVE_APPROVED_PENDING_PRODUCTION_INSTALL",
+      "lm_format_enforcer": "REJECTED_EXACT_EXT4C_SCHEMA_INCOMPATIBILITY",
+      "xgrammar": "REJECTED_WINDOWS_PYTHON312_BINARY_COMPATIBILITY",
+      "rationale": "llguidance 1.8.0 strict compilation and matcher probes preserve the exact frozen schema, including combined pattern and length constraints."
+    }
+  },
+  "dependency_audit": {
+    "production_interpreter": "UNAVAILABLE_IN_CODEX_ENVIRONMENT; SITE_PACKAGES_AUDITED_WITH_PYTHON_3_12_10_TEST_INTERPRETER",
+    "python_version": "3.12.10",
+    "requested_pin": "llguidance==1.8.0",
+    "pypi_wheel": "llguidance-1.8.0-cp39-abi3-win_amd64.whl",
+    "pypi_wheel_sha256": "a8837ac2b3bf4c46e1b6363012a22de043b7f8ef013b04d8689d471eb573b766",
+    "requires_python": ">=3.10,<3.14",
+    "license": "Apache-2.0",
+    "direct_dependencies": [],
+    "dependency_resolution": "PYPI_METADATA_AUDIT_ONLY; PRODUCTION_DRY_RUN_UNAVAILABLE",
+    "pip_check": "UNAVAILABLE_PRODUCTION_INTERPRETER",
+    "installation_performed": false,
+    "temporary_audit_artifacts": "LLGUIDANCE_CP39_ABI3_WHEEL_AUDITED_WITH_CACHED_PYTHON312",
+    "torch_transformers_unchanged": "4.57.6_AND_2.12.1+cu130_EXPECTED; PRODUCTION_VERIFICATION_PENDING",
+    "xgrammar_history": "REJECTED_WINDOWS_PYTHON312_BINARY_COMPATIBILITY",
+    "lmfe_history": "REJECTED_EXACT_EXT4C_SCHEMA_INCOMPATIBILITY",
+    "outlines_history": "REJECTED_SCHEMA_SEMANTICS_INCOMPATIBILITY"
+  },
+  "preflight": {
+    "status": "LLGUIDANCE_APPROVED_FOR_CANDIDATE3_TECHNICAL_SMOKE",
+    "development_cases_accessed": 0,
+    "final_cases_accessed": 0,
+    "locked_test_accessed": false,
+    "real_model_inference_requests": 0
+  },
+  "chronology": [
+    "PHI4_IDENTITY_FROZEN",
+    "WEIGHTS_AND_SUPPORT_FILES_VERIFIED",
+    "TRANSFORMERS_RUNTIME_VERIFIED",
+    "XGRAMMAR_0_2_5_REJECTED_WINDOWS_PYTHON312_BINARY_COMPATIBILITY",
+    "LMFE_0_11_3_REJECTED_EXACT_EXT4C_SCHEMA_INCOMPATIBILITY",
+    "OUTLINES_1_3_3_REJECTED_PATTERN_LENGTH_SEMANTICS",
+    "LLGUIDANCE_1_8_0_STRICT_SCHEMA_AND_MATCHER_AUDIT_PASS",
+    "LLGUIDANCE_PRODUCTION_INSTALLATION_PENDING_ENVIRONMENT_ACCESS"
+  ],
+    "next_action": "INSTALL_LLGUIDANCE_THEN_RUN_CANDIDATE3_TECHNICAL_SMOKE"
+}

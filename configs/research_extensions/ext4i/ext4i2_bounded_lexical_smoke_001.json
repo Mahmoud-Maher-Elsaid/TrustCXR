@@ -1,0 +1,12 @@
+{
+  "smoke_id": "ext4i2_bounded_lexical_smoke_001",
+  "purpose": "deterministic bounded-lexical governance smoke design; no model execution",
+  "synthetic_authority": {"evidence_state": "SUPPORTED", "topic": "the specified finding", "polarity": "SUPPORTED", "uncertainty": "PRESERVE_PLAN_STATE", "provenance": "PLAN_BOUND_ONLY", "defer_semantics": "INACTIVE", "contradiction": "NOT_APPLICABLE"},
+  "lexical_field": "connector",
+  "authorized_enum": ["and", "while"],
+  "deterministic_selection": "and",
+  "model_execution_authorized": false,
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false
+}

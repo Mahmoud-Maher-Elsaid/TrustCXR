@@ -1,0 +1,31 @@
+{
+  "stage": "EXT-4H.0/1",
+  "status": "EXT4H1_DETERMINISTIC_SLOT_ORCHESTRATION_PASS",
+  "historical_ext4g_status_preserved": true,
+  "historical_ext4g_candidate": "EXT4G_CANDIDATE_GEMMA3_4B_IT_V1",
+  "historical_failure_modes": [
+    "EXT4F_REALIZATION_REQUIRED_SLOT_MISSING",
+    "EXT4F_REALIZATION_DUPLICATE_SLOT",
+    "JSON_TRUNCATION"
+  ],
+  "architecture": "validated semantic plan -> deterministic required-slot manifest -> one-slot constrained realization -> deterministic outer-envelope assembly -> authoritative validation",
+  "slot_manifest_contract": "EXT4H_SLOT_REALIZATION_CONTRACT_V1 manifest",
+  "slot_manifest_hashing": "EXT4H_CANONICAL_JSON_V1",
+  "slot_realization_contract": "EXT4H_SLOT_REALIZATION_CONTRACT_V1",
+  "llm_authorized_fields": ["slot_text"],
+  "deterministic_authority_fields": ["slot_id", "slot_type", "slot_order", "source_refs", "authoritative_facts", "plan_identity", "request_identity", "outer_envelope"],
+  "slot_text_max_length": 512,
+  "slot_max_new_tokens": 128,
+  "slot_schema_sha256": "computed from SlotTextResponse JSON Schema at runtime",
+  "truncation_policy": "SLOT_GENERATION_TRUNCATED fail closed; no repair or retry",
+  "attention_mask_policy": "explicit processor-derived attention_mask required for every slot generation",
+  "vocab_policy": "Gemma identity prefix 0..262144; tail 262145..262207 permanently forbidden",
+  "ledger_policy": "generation_completed is monotonic and independent from parse/contract/assembly validation",
+  "synthetic_case_id": "ext4h_slot_smoke_001",
+  "historical_benchmark_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "model_generation_calls": 0,
+  "stage18_changed": false,
+  "next_stage": "EXT-4H.2 One New Synthetic Gemma Slot-Orchestrated Technical Smoke"
+}

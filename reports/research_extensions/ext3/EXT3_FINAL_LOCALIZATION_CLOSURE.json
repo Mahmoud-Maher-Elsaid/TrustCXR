@@ -1,0 +1,92 @@
+{
+  "stage": "EXT-3 FINAL",
+  "experiment_id": "EXT3_FINAL_FASTER_RCNN_SCALE_AWARE_DATA_EXPANSION",
+  "semantic_scope": "RSNA Lung Opacity bounding-box localization",
+  "hypothesis": "Increased patient-safe training coverage plus a frozen small-opacity-aware sampler improves technical Lung Opacity localization.",
+  "cohort": {
+    "train_patients": 12000,
+    "fresh_development_validation_patients": 1500,
+    "manifest_sha256": "8c53b5af4ac01fbadd3389cce027092e1b66d958c1f26962a63152c7f5ece1ce",
+    "parent_split_sha256": "cc9f1a8c639843cafa8e83135868d8c283e5fe6b35f6498ec5b70df67580f3d2",
+    "parent_validation_used": false,
+    "locked_test_used": false
+  },
+  "run": {
+    "run_id": "20260816T104314Z_1786876994516321500",
+    "selected_epoch": 1,
+    "selected_checkpoint": "artifacts/research_extensions/ext3_final_runs/20260816T104314Z_1786876994516321500/best_validation_checkpoint.pt",
+    "selected_checkpoint_sha256": "3e06c34890984fffa018d70c8938b7d2772f55f2328d5ac91230099d16ce3601",
+    "selection_metric": "validation_AP50",
+    "training_ap50_history": [
+      {"epoch": 1, "ap50": 0.3964011301},
+      {"epoch": 2, "ap50": 0.3655801295},
+      {"epoch": 3, "ap50": 0.3660825235},
+      {"epoch": 4, "ap50": 0.3599948767}
+    ],
+    "early_stopping": "triggered_after_epoch_4; epoch_1_remained_best"
+  },
+  "validation": {
+    "ap50": 0.3964011301424947,
+    "ap75": 0.04099668899507247,
+    "ap50_95": 0.1303488551840266,
+    "positive_image_count": 1125,
+    "negative_image_count": 375,
+    "ground_truth_lesion_count": 1837,
+    "detected_lesion_count_at_0_50": 1885,
+    "bootstrap": {
+      "method": "patient_level_percentile",
+      "replicates": 2000,
+      "seed": 20260806,
+      "confidence": 0.95,
+      "overall_sensitivity": {"lower": 0.49592455418093656, "upper": 0.5487854104859671},
+      "small_sensitivity": {"lower": 0.16389345428569768, "upper": 0.24130326781495592},
+      "false_positives_per_image": {"lower": 0.5786666666666667, "upper": 0.6573333333333333}
+    }
+  },
+  "frozen_evaluation": {
+    "size_bins": {
+      "small": "[0.00, 0.02)",
+      "medium": "[0.02, 0.10)",
+      "large": "[0.10, 1.00]"
+    },
+    "iou_threshold": 0.5,
+    "threshold_grid": [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5],
+    "operating_point_rule": "maximize small-lesion sensitivity subject to overall sensitivity >= 0.70 and false positives per image <= 1.0",
+    "froc_points": [
+      {"threshold": 0.05, "overall_sensitivity": 0.6722917800762113, "false_positives_per_image": 2.0166666666666666},
+      {"threshold": 0.1, "overall_sensitivity": 0.6374523679912901, "false_positives_per_image": 1.472},
+      {"threshold": 0.15, "overall_sensitivity": 0.6216657593903103, "false_positives_per_image": 1.2186666666666666},
+      {"threshold": 0.2, "overall_sensitivity": 0.6064235166031573, "false_positives_per_image": 1.084},
+      {"threshold": 0.25, "overall_sensitivity": 0.5906369080021775, "false_positives_per_image": 0.9866666666666667},
+      {"threshold": 0.3, "overall_sensitivity": 0.5753946652150245, "false_positives_per_image": 0.888},
+      {"threshold": 0.4, "overall_sensitivity": 0.5541643984757757, "false_positives_per_image": 0.7533333333333333},
+      {"threshold": 0.5, "overall_sensitivity": 0.5220468154599891, "false_positives_per_image": 0.6173333333333333}
+    ],
+    "threshold_table": [
+      {"threshold": 0.05, "overall_sensitivity": 0.6722917800762113, "small_sensitivity": 0.33729216152019004, "medium_sensitivity": 0.6583924349881797, "large_sensitivity": 0.9403508771929825, "false_positives_per_image": 2.0166666666666666},
+      {"threshold": 0.1, "overall_sensitivity": 0.6374523679912901, "small_sensitivity": 0.2992874109263658, "medium_sensitivity": 0.6122931442080378, "large_sensitivity": 0.9245614035087719, "false_positives_per_image": 1.472},
+      {"threshold": 0.15, "overall_sensitivity": 0.6216657593903103, "small_sensitivity": 0.2850356294536817, "medium_sensitivity": 0.5898345153664303, "large_sensitivity": 0.9175438596491228, "false_positives_per_image": 1.2186666666666666},
+      {"threshold": 0.2, "overall_sensitivity": 0.6064235166031573, "small_sensitivity": 0.2660332541567696, "medium_sensitivity": 0.5709219858156028, "large_sensitivity": 0.9105263157894737, "false_positives_per_image": 1.084},
+      {"threshold": 0.25, "overall_sensitivity": 0.5906369080021775, "small_sensitivity": 0.24703087885985747, "medium_sensitivity": 0.5531914893617021, "large_sensitivity": 0.9, "false_positives_per_image": 0.9866666666666667},
+      {"threshold": 0.3, "overall_sensitivity": 0.5753946652150245, "small_sensitivity": 0.23990498812351543, "medium_sensitivity": 0.524822695035461, "large_sensitivity": 0.8982456140350877, "false_positives_per_image": 0.888},
+      {"threshold": 0.4, "overall_sensitivity": 0.5541643984757757, "small_sensitivity": 0.22327790973871733, "medium_sensitivity": 0.4988179669030733, "large_sensitivity": 0.8807017543859649, "false_positives_per_image": 0.7533333333333333},
+      {"threshold": 0.5, "overall_sensitivity": 0.5220468154599891, "small_sensitivity": 0.20190023752969122, "medium_sensitivity": 0.46335697399527187, "large_sensitivity": 0.8456140350877193, "false_positives_per_image": 0.6173333333333333}
+    ]
+  },
+  "decision": {
+    "operating_point_status": "UNFROZEN",
+    "decision": "FAIL_OPERATING_POINT",
+    "disposition": "CONTROLLED_NEGATIVE_LOCALIZATION_RESULT",
+    "localization_integration": "WITHHELD",
+    "locked_test_accessed": false,
+    "final_test_images_accessed": 0,
+    "final_test_evaluation_authorized": false,
+    "follow_on_localization_training": "NOT_AUTHORIZED"
+  },
+  "limitations": [
+    "This is RSNA Lung Opacity bounding-box research evidence only, not clinical localization.",
+    "The fresh development cohort is not the locked test and no external validation was performed.",
+    "No threshold satisfied both frozen operating-point constraints.",
+    "Localization failure does not invalidate the frozen Stage 9 classifier."
+  ]
+}

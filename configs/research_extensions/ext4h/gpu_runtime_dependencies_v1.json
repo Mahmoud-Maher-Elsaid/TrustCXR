@@ -1,0 +1,13 @@
+{
+  "runtime_id": "EXT4H_GEMMA3_GPU_INT8_V1",
+  "scope": "research_extension_only",
+  "model": "google/gemma-3-4b-it",
+  "revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+  "dependencies": {
+    "bitsandbytes": "0.50.0",
+    "accelerate": "1.14.0"
+  },
+  "historical_stage25b_lock_mutation": false,
+  "cpu_fallback": false,
+  "governance": "EXT-4H.G1 GPU INT8 runtime only"
+}

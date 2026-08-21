@@ -1,0 +1,96 @@
+{
+  "stage": "EXT-4G.1",
+  "status": "EXT4G1_GEMMA3_IDENTITY_INTEGRITY_AND_LOAD_ONLY_PASS",
+  "candidate_id": "EXT4G_CANDIDATE_GEMMA3_4B_IT_V1",
+  "repository": "google/gemma-3-4b-it",
+  "immutable_revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+  "immutable_revision_evidence": "Authenticated local execution supplied this exact revision; no main/latest resolution used.",
+  "candidate_file_count": 15,
+  "cache_metadata_separated": true,
+  "cache_metadata_classification": "LOCAL_DOWNLOAD_CACHE_METADATA",
+  "candidate_manifest": "configs/research_extensions/ext4g_gemma3_candidate_manifest.json",
+  "safetensor_index": {
+    "tensor_count": 883,
+    "referenced_shards": ["model-00001-of-00002.safetensors", "model-00002-of-00002.safetensors"],
+    "declared_tensor_total_size": 8600158944,
+    "index_sha256": "77f4b67de084c31c7bcd373b039908108eee6c6181607e6d53da730e5f0bc659",
+    "status": "PASS"
+  },
+  "shards": [
+    {"filename": "model-00001-of-00002.safetensors", "byte_size": 4961251752, "sha256": "eb5fd5e97ddd07b56778733e9653c07312529cb00980a318fc3e1c4e3b5a8f1f"},
+    {"filename": "model-00002-of-00002.safetensors", "byte_size": 3639026128, "sha256": "fdde0e5aa5ced0fa203b3d50f4ab78168b7e3a3e08c6349f5cc9326666e1bb13"}
+  ],
+  "config": {
+    "model_type": "gemma3",
+    "architecture": "Gemma3ForConditionalGeneration",
+    "vocab_size": 262208,
+    "hidden_size": 2560,
+    "num_hidden_layers": 34,
+    "num_attention_heads": 8,
+    "dtype": "torch.bfloat16",
+    "vision_config_present": true,
+    "eos_token_id": [1, 106],
+    "bos_token_id": 2,
+    "pad_token_id": 0
+  },
+  "processor": {
+    "class": "Gemma3Processor",
+    "tokenizer_class": "GemmaTokenizerFast",
+    "tokenizer_vocab_size": 262144,
+    "tokenizer_len": 262145,
+    "max_registered_token_id": 262144,
+    "eos_token_id": 1,
+    "bos_token_id": 2,
+    "pad_token_id": 0,
+    "use_fast": true,
+    "text_only_template_deterministic": true,
+    "chat_template_sha256": "7de1c58e208eda46e9c7f86397df37ec49883aeece39fb961e0a6b24088dd3c4"
+  },
+  "realization_schema_sha256": "99a1c3a48a7bc262434bc52c116342b8dd81d741c74a549fa7ad4e2b6f4533a1",
+  "llguidance": {
+    "version": "1.8.0",
+    "grammar_compilation": "PASS",
+    "strict_validation": "PASS",
+    "tokenizer_integration": "PASS",
+    "matcher": "PASS",
+    "initial_mask": "PASS"
+  },
+  "vocabulary_alignment": {
+    "model_vocab_size": 262208,
+    "constraint_vocab_size": 262145,
+    "identity_mapping_prefix": "0..262144",
+    "mapping_identity_verified": true,
+    "model_only_tail_classification": "MODEL_ONLY_UNREGISTERED_VOCAB_TAIL",
+    "tail_start": 262145,
+    "tail_end": 262207,
+    "tail_count": 63,
+    "policy": "identity_prefix_only; model-only tail permanently forbidden"
+  },
+  "processor_probe": {
+    "shape": [1, 262208],
+    "tail_forbidden": true,
+    "registered_mask_preserved": true,
+    "eos_matcher_controlled": true,
+    "prompt_tokens_consumed": 0,
+    "status": "PASS"
+  },
+  "load_only": {
+    "status": "PASS",
+    "model_class": "Gemma3ForConditionalGeneration",
+    "parameter_count": 4300079472,
+    "dtype": "torch.bfloat16",
+    "parameter_devices": ["cpu"],
+    "buffer_devices": ["cpu"],
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "model_forward_calls": 0,
+    "model_generate_calls": 0
+  },
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "cleanup": "PASS",
+  "frozen_benchmark_changed": false,
+  "stage18_changed": false,
+  "next_stage": "EXT-4G.2 Gemma 3 Constrained Realization Synthetic Technical Smoke"
+}

@@ -1,0 +1,10 @@
+{
+  "context_id": "EXT4I_BLINDED_REVIEW_CONTEXT_V2",
+  "candidate_identity_excluded": true,
+  "model_identity_excluded": true,
+  "expected_prose_excluded": true,
+  "required_context": ["support_state", "evidence_state", "uncertainty_state", "provenance_semantics", "reference_bindings", "DEFER_semantics", "contradiction_topology", "limitation_semantics", "required_atoms", "forbidden_atoms"],
+  "opaque_hash_only_authority_forbidden": true,
+  "review_unit": "generated_slot",
+  "unresolved_context_is_not_model_failure": true
+}

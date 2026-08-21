@@ -1,0 +1,140 @@
+{
+  "stage": "EXT-4H.G1",
+  "runtime_id": "EXT4H_GEMMA3_GPU_INT8_V1",
+  "run_id": "20260820T034507Z_f202cbd4",
+  "candidate_id": "EXT4G_CANDIDATE_GEMMA3_4B_IT_V1",
+  "repository": "google/gemma-3-4b-it",
+  "model_revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+  "model_architecture": "Gemma3ForConditionalGeneration",
+  "quantization": "bitsandbytes LLM.int8()",
+  "device_policy": "cuda:0 only; CPU model fallback forbidden",
+  "dependency_versions": {
+    "python": "3.12.10",
+    "torch": "2.12.1+cu130",
+    "transformers": "4.57.6",
+    "llguidance": "1.8.0",
+    "bitsandbytes": "0.50.0",
+    "accelerate": "1.14.0"
+  },
+  "synthetic_case_id": "ext4h_gpu_int8_smoke_001",
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "model_forward_calls": 0,
+  "model_generate_calls": 3,
+  "slot_attempts": [
+    {
+      "slot_id": "slot_claim_claim_stage9_signal_01",
+      "attention_mask_present": true,
+      "attention_mask_shape": [
+        1,
+        104
+      ],
+      "input_ids_device": "cuda:0",
+      "attention_mask_device": "cuda:0",
+      "request_count": 1,
+      "generation_started": true,
+      "generation_completed": true,
+      "vram_before": 5061608448,
+      "generated_tokens": 13,
+      "generation_phase": "GENERATION_COMPLETED",
+      "generation_duration_seconds": 29.041076600027736,
+      "vram_after": 5070223360,
+      "vram_peak": 5149513216
+    },
+    {
+      "slot_id": "slot_uncertainty",
+      "attention_mask_present": true,
+      "attention_mask_shape": [
+        1,
+        112
+      ],
+      "input_ids_device": "cuda:0",
+      "attention_mask_device": "cuda:0",
+      "request_count": 1,
+      "generation_started": true,
+      "generation_completed": true,
+      "vram_before": 5070915584,
+      "generated_tokens": 21,
+      "generation_phase": "GENERATION_COMPLETED",
+      "generation_duration_seconds": 75.78726840001764,
+      "vram_after": 5070918144,
+      "vram_peak": 5149513216
+    },
+    {
+      "slot_id": "slot_limitation_LOCALIZATION_INTEGRATION_WITHHELD",
+      "attention_mask_present": true,
+      "attention_mask_shape": [
+        1,
+        106
+      ],
+      "input_ids_device": "cuda:0",
+      "attention_mask_device": "cuda:0",
+      "request_count": 1,
+      "generation_started": true,
+      "generation_completed": true,
+      "vram_before": 5070225920,
+      "generated_tokens": 13,
+      "generation_phase": "GENERATION_COMPLETED",
+      "generation_duration_seconds": 27.237553300044965,
+      "vram_after": 5070223360,
+      "vram_peak": 5149513216
+    }
+  ],
+  "retry_count": 0,
+  "phase": "TERMINAL",
+  "terminal_status": "EXT4HG1_GEMMA3_GPU_INT8_TECHNICAL_SMOKE_PASS",
+  "cuda": {
+    "cuda_available": true,
+    "gpu_count": 1,
+    "device": "cuda:0",
+    "gpu_name": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "compute_capability": "8.6",
+    "total_vram_bytes": 8589410304,
+    "torch_cuda_version": "13.0"
+  },
+  "bitsandbytes": {
+    "version": "0.50.0",
+    "backend": "bitsandbytes CUDA Linear8bitLt",
+    "linear8bitlt_cuda_smoke": "PASS",
+    "kernel_device": "cuda:0"
+  },
+  "vocab_alignment": {
+    "model_vocab_size": 262208,
+    "constraint_vocab_size": 262145,
+    "identity_prefix": [
+      0,
+      262144
+    ],
+    "model_only_tail": [
+      262145,
+      262207
+    ],
+    "tail_count": 63,
+    "tail_policy": "always_forbidden"
+  },
+  "model_placement": {
+    "parameter_devices": [
+      "cuda:0"
+    ],
+    "buffer_devices": [
+      "cuda:0"
+    ],
+    "quantized_linear8bitlt_modules": 400,
+    "input_embedding_device": "cuda:0",
+    "gpu_execution_verified": true
+  },
+  "authority_mutations": 0,
+  "cleanup_status": "PASS",
+  "vram_safety": {
+    "total_bytes": 8589410304,
+    "peak_allocated_bytes": 5149513216,
+    "peak_allocated_gib": 4.796875,
+    "headroom_classification": "PASS; no OOM and approximately 3.2 GiB below total capacity"
+  },
+  "matmul8bitlt_cast_behavior": "Observed bfloat16 inputs cast to float16 during INT8 quantization; expected runtime behavior, not a failure",
+  "performance_classification": "GPU execution verified; no GPU-vs-CPU performance claim made",
+  "cpu_bf16_evidence_preserved": true,
+  "cpu_bf16_and_gpu_int8_distinct_variants": true,
+  "next_stage": "EXT-4H.3 Fresh Development Benchmark Design and Freeze"
+}

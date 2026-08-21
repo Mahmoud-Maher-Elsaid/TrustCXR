@@ -1,0 +1,118 @@
+{
+  "schema_version": "trustcxr-ext2g-fcos-repair-v1",
+  "extension": "EXT-2G",
+  "status": "FP32_STABILITY_REPAIR_FROZEN",
+  "hypothesis": "A dense anchor-free detector may improve small-opacity representation and localization precision without repeating the failed Stage 10J custom-anchor intervention.",
+  "architecture": "fcos_resnet50_fpn",
+  "torchvision_constructor": "torchvision.models.detection.fcos_resnet50_fpn",
+  "classes": ["background", "Lung Opacity"],
+  "initialization": {
+    "policy": "NO_NETWORK; deterministic_random_initialization_if_local_pretrained_weights_are_unavailable",
+    "weights": null,
+    "weights_backbone": null,
+    "network_downloads_allowed": false,
+    "stage10e_checkpoint_reuse": false,
+    "reason": "The Stage 10E Faster R-CNN checkpoint is not an FCOS checkpoint; no incompatible checkpoint conversion is attempted."
+  },
+  "cohort": {
+    "manifest_path": "artifacts/research_extensions/ext2e_dev_cohort/manifest.json",
+    "manifest_sha256": "a9c6c90d49df5b89a60fa14859edf43358819c083875dbff9599a42f8535a38f",
+    "maximum_train_patients": 3000,
+    "maximum_validation_patients": 1000,
+    "locked_test_included": false,
+    "resampling_allowed": false
+  },
+  "preprocessing": {
+    "input_size": [1024, 1024],
+    "pixel_dtype": "float32",
+    "pixel_scaling": "per_image_[0,1]",
+    "channels": "grayscale_repeated_to_rgb",
+    "validation_deterministic": true
+  },
+  "augmentation": {
+    "training_horizontal_flip_probability": 0.5,
+    "validation": "NONE_DETERMINISTIC_ONLY",
+    "other_transforms": "none",
+    "laterality_claim_authorized": false
+  },
+  "training": {
+    "batch_size": 1,
+    "gradient_accumulation_steps": 1,
+    "automatic_mixed_precision": false,
+    "optimizer": "AdamW",
+    "learning_rate": 0.00005,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "maximum_epochs": 12,
+    "minimum_epochs": 3,
+    "early_stopping_metric": "validation_AP50",
+    "early_stopping_patience": 3,
+    "early_stopping_minimum_improvement": 0.001,
+    "progress_interval_batches": 50,
+    "seed": 20260806,
+    "selection_split": "validation_only",
+    "checkpoint_metric": "validation_AP50"
+  },
+  "numerical_stability": {
+    "status": "FP32_STABILITY_REPAIR_FROZEN",
+    "policy": "EXT2G_FCOS_RESNET50_FPN_FP32_STABILITY_REPAIR",
+    "amp_enabled": false,
+    "amp_disable_only_if_proven_overflow": true,
+    "diagnosis": {
+      "classification": "AMP_ONLY_GRADIENT_OVERFLOW",
+      "amp_loss_finite": true,
+      "amp_gradient_finite": false,
+      "amp_first_non_finite_parameter": "backbone.body.conv1.weight",
+      "amp_non_finite_parameter_count": 2,
+      "amp_grad_scaler_scale": 65536,
+      "amp_optimizer_step_performed": false,
+      "fp32_loss_finite": true,
+      "fp32_gradient_finite": true,
+      "fp32_first_non_finite_parameter": null,
+      "fp32_non_finite_parameter_count": 0,
+      "fp32_optimizer_step_performed": false,
+      "locked_test_accessed": false,
+      "final_test_images_accessed": 0
+    },
+    "smoke_batches": 200,
+    "failure_status": "FAILED_NUMERICAL_STABILITY",
+    "diagnostic_loss_components_required": true,
+    "target_validation_required": true,
+    "gradient_finiteness_required": true
+  },
+  "evaluation_inheritance": {
+    "score_threshold_grid": [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5],
+    "iou_match_threshold": 0.5,
+    "size_bins": {
+      "small": [0.0, 0.02],
+      "medium": [0.02, 0.1],
+      "large": [0.1, 1.0]
+    },
+    "operating_point_rule": "maximize small-lesion sensitivity subject to overall sensitivity >= 0.70 and false positives per image <= 1.0; otherwise UNFROZEN",
+    "bootstrap_method": "patient_level_bootstrap_percentile",
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20260806
+  },
+  "comparison_reference": {
+    "ext2e_ap50": 0.4095703880498198,
+    "ext2e_ap75": 0.037253093312356544,
+    "ext2e_ap50_95": 0.12871736120999172
+  },
+  "scientific_disposition": {
+    "status": "REJECTED_AS_LOCALIZATION_REPAIR",
+    "selected_epoch": 5,
+    "selection_metric": "validation_AP50",
+    "selected_metrics": {
+      "AP50": 0.19961717086084899,
+      "AP75": 0.013797242087103846,
+      "AP50_95": 0.05964153608973849
+    },
+    "reason": "FCOS remained scientifically weaker than the controlled Faster R-CNN baseline and did not provide an accepted localization repair.",
+    "historical_amp_failure_is_not_scientific_evidence": true
+  },
+  "lock_policy": {
+    "locked_test_accessed": false,
+    "final_test_images_accessed": 0,
+    "final_test_evaluation_authorized": false
+  }
+}

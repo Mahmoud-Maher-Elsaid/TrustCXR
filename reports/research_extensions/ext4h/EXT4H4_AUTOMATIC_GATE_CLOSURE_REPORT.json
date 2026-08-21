@@ -1,0 +1,82 @@
+{
+  "stage": "EXT-4H.4",
+  "run_id": "20260820T070353Z_fc35947a",
+  "status": "EXT4H4_AUTOMATIC_GATE_PASS_REVIEW_REQUIRED",
+  "classification_84_vs_80": "EXPECTED_FROZEN_NON_GENERATIVE_REVIEWER_QUESTION_POLICY",
+  "benchmark_id": "EXT4H_FRESH_DEVELOPMENT_BENCHMARK_V1",
+  "benchmark_sha256": "1c34ce622fbf68af9b5114ddbf0f73fcfabffabd36dfc7536ad0c01e5402d324",
+  "total_semantic_manifest_slots": 84,
+  "required_model_generation_slots": 80,
+  "deterministic_non_generation_slots": 4,
+  "non_generated_slots": [
+    {
+      "case_id": "ext4h_dev_009",
+      "case_sha256": "da32a25edcdbe64ae08e0ae29fca5214d94f1d84f61ffb7be739261f61f7c936",
+      "manifest_sha256": "6996506880a13c8ae6ac0306ef118cf25a4e9b7ae3acf51457eeae9f2e09b3af",
+      "slot_id": "slot_reviewer_defer_reason",
+      "slot_type": "REVIEWER_QUESTION",
+      "ordinal": 4,
+      "authority_classification": "DETERMINISTIC_OPTIONAL_REVIEW_TOPIC",
+      "model_authored_slot_text_required": false
+    },
+    {
+      "case_id": "ext4h_dev_010",
+      "case_sha256": "c8868a200f73c62a7e4c07fa851a4fa70c9b30a4a7bd332786a7a8d456da5865",
+      "manifest_sha256": "640bc39257140241a0be8ca8a0854380a76c56766ca752b4a9a0bfa9b85e2340",
+      "slot_id": "slot_reviewer_defer_reason",
+      "slot_type": "REVIEWER_QUESTION",
+      "ordinal": 5,
+      "authority_classification": "DETERMINISTIC_OPTIONAL_REVIEW_TOPIC",
+      "model_authored_slot_text_required": false
+    },
+    {
+      "case_id": "ext4h_dev_018",
+      "case_sha256": "2ec9a8d1afe5bb627f510939ded6431059fcfaea3a24dc5a1450827825588638",
+      "manifest_sha256": "4532a837140f8a2fedffa6407b8a690a4265111bbbeac42959396cd56852c3f3",
+      "slot_id": "slot_reviewer_defer_reason",
+      "slot_type": "REVIEWER_QUESTION",
+      "ordinal": 6,
+      "authority_classification": "DETERMINISTIC_OPTIONAL_REVIEW_TOPIC",
+      "model_authored_slot_text_required": false
+    },
+    {
+      "case_id": "ext4h_dev_022",
+      "case_sha256": "a81aafa43ed3a09085c39b8f11ae451671639c054e1d3e60572264cdf3def56e",
+      "manifest_sha256": "d41b48f88747daaffb0119af85420d088df2211124b08b890a9596c5aee3bd08",
+      "slot_id": "slot_reviewer_defer_reason",
+      "slot_type": "REVIEWER_QUESTION",
+      "ordinal": 4,
+      "authority_classification": "DETERMINISTIC_OPTIONAL_REVIEW_TOPIC",
+      "model_authored_slot_text_required": false
+    }
+  ],
+  "frozen_evidence": {
+    "realization_slot_required_field": "required=False for reviewer slots",
+    "manifest_builder": "build_ext4h_slot_manifest filters selected_request.slots where required is true",
+    "h4_policy": "one generation per required manifest slot",
+    "pre_run": true
+  },
+  "automatic_evidence": {
+    "cases_attempted": 24,
+    "required_generations": 80,
+    "generate_calls": 80,
+    "generation_completed": 80,
+    "parse_valid": 80,
+    "slot_contract_valid": 80,
+    "truncated": 0,
+    "assembled_cases": 24,
+    "final_validation": 24,
+    "plan_bindings": 24,
+    "manifest_request_bindings": 24,
+    "slot_integrity": 24,
+    "authority_mutations": 0,
+    "protocol_deviations": 0,
+    "retry_count": 0,
+    "gpu_execution_verified": true
+  },
+  "semantic_review_status": "REVIEW_REQUIRED",
+  "scientific_selection": "NOT_YET_DECIDED",
+  "final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "next_stage": "EXT-4H.5 Blinded Semantic Faithfulness Review"
+}

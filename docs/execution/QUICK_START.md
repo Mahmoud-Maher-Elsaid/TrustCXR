@@ -4,7 +4,7 @@
 2. Run:
 
 ```powershell
-Set-Location -LiteralPath "F:\AI\TrustCXR"
+Set-Location -LiteralPath (Resolve-Path ".")
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\training\run_stage9b_external.ps1" -PreflightOnly
 ```
 
@@ -24,14 +24,14 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\training\run_
 5. In another PowerShell, request a one-time status snapshot:
 
 ```powershell
-Set-Location -LiteralPath "F:\AI\TrustCXR"
+Set-Location -LiteralPath (Resolve-Path ".")
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\training\monitor_stage9b.ps1"
 ```
 
 6. After completion, finalize and validate:
 
 ```powershell
-.\.venv\Scripts\python.exe .\scripts\evaluation\finalize_stage9b_reports.py --project-root "F:\AI\TrustCXR" --config ".\configs\training\stage9b_segmentation_guided_ablation.json"
+.\.venv\Scripts\python.exe .\scripts\evaluation\finalize_stage9b_reports.py --project-root (Resolve-Path ".").Path --config ".\configs\training\stage9b_segmentation_guided_ablation.json"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\evaluation\validate_stage9b_completion.ps1"
 ```
 

@@ -1,0 +1,47 @@
+{
+  "schema_id": "EXT4E2D0_STRUCTURED_OUTPUT_COMPATIBILITY_CLOSURE",
+  "schema_version": "1",
+  "status": "CLOSED_PASS",
+  "decision": "STRUCTURED_OUTPUT_COMPATIBILITY_VERIFIED",
+  "run_id": "20260817T081800Z",
+  "evidence_path": "artifacts/research_extensions/ext4e2_candidate1/structured_output_compatibility/20260817T081800Z",
+  "mechanism": "REQUEST_RESPONSE_FORMAT_JSON_OBJECT_WITH_SCHEMA",
+  "response_format_type": "json_object",
+  "schema_sha256": "6ed2511e9eef51293c061b09a87c11a6758427b4f0d038a3c75d786f88f85e96",
+  "model": {
+    "filename": "Qwen3-8B-Q4_K_M.gguf",
+    "sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785"
+  },
+  "runtime": {
+    "release": "b10453",
+    "commit_prefix": "3cb7ffb",
+    "context_size": 2048,
+    "parallel_slots": 1,
+    "gpu_layers": 999,
+    "reasoning": "off",
+    "request_reasoning_effort": "none"
+  },
+  "observed": {
+    "generation_started": true,
+    "generation_completed": true,
+    "response_parse_valid": true,
+    "synthetic_validation_passed": true,
+    "reasoning_content_present": false,
+    "request_count": 1,
+    "retry_count": 0,
+    "server_cleanup_confirmed": true,
+    "raw_model_content": {
+      "message": "structured output compatibility",
+      "status": "PASS"
+    }
+  },
+  "access_controls": {
+    "development_cases_accessed": 0,
+    "frozen_final_cases_accessed": 0,
+    "locked_test_accessed": false,
+    "patient_or_medical_payload": false
+  },
+  "scientific_scope": "TECHNICAL_COMPATIBILITY_ONLY; CANDIDATE_NOT_SCIENTIFICALLY_EVALUATED",
+  "historical_failures_preserved": true,
+  "next_authorized_stage": "EXT-4E2D CANDIDATE #1 SINGLE DEVELOPMENT-CASE EXECUTION"
+}

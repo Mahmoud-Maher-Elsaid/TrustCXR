@@ -1,0 +1,22 @@
+{
+  "read_only": true,
+  "total_project_bytes": 492026683471,
+  "total_project_gib": 458.236,
+  "definitely_safe_to_delete_bytes": 35835034899,
+  "definitely_safe_to_delete_gib": 33.374,
+  "review_before_delete_bytes": 455991648572,
+  "review_before_delete_gib": 424.862,
+  "safe_candidates": [
+    {"path": "cache/research_extensions/ext4e2", "size_bytes": 6829282378, "size_gib": 6.36, "classification": "SAFE_TO_DELETE_MODEL_CACHE", "tracked_by_git": false, "reproducible": true, "needed_for_scientific_audit": false, "reason": "obsolete model cache; reports/metadata retained"},
+    {"path": "cache/research_extensions/ext4e_candidate2", "size_bytes": 6746459336, "size_gib": 6.283, "classification": "SAFE_TO_DELETE_MODEL_CACHE", "tracked_by_git": false, "reproducible": true, "needed_for_scientific_audit": false, "reason": "candidate model cache; historical reports retained"},
+    {"path": "cache/research_extensions/ext4e_candidate3", "size_bytes": 7694006825, "size_gib": 7.166, "classification": "SAFE_TO_DELETE_MODEL_CACHE", "tracked_by_git": false, "reproducible": true, "needed_for_scientific_audit": false, "reason": "candidate model cache; historical reports retained"},
+    {"path": "cache/research_extensions/ext4g_candidate_gemma3_4b_it", "size_bytes": 8639631638, "size_gib": 8.046, "classification": "SAFE_TO_DELETE_MODEL_CACHE", "tracked_by_git": false, "reproducible": true, "needed_for_scientific_audit": false, "reason": "closed candidate model cache; run evidence retained"},
+    {"path": "cache/pip", "size_bytes": 2066992297, "size_gib": 1.925, "classification": "SAFE_TO_DELETE_REGENERABLE_CACHE", "tracked_by_git": false, "reproducible": true, "needed_for_scientific_audit": false, "reason": "package download cache"},
+    {"path": ".venv", "size_bytes": 3770311385, "size_gib": 3.511, "classification": "SAFE_TO_DELETE_REGENERABLE_CACHE", "tracked_by_git": false, "reproducible": true, "needed_for_scientific_audit": false, "reason": "recreatable environment after closure"}
+  ],
+  "review_candidates": [
+    {"path": "TrustCXR-Data", "size_bytes": 443504177084, "size_gib": 413.045, "classification": "REVIEW_BEFORE_DELETE", "tracked_by_git": false, "reproducible": false, "needed_for_scientific_audit": "partition-dependent; verify retention policy"},
+    {"path": "artifacts", "size_bytes": 10486484428, "size_gib": 9.766, "classification": "KEEP_FINAL_EVIDENCE / REVIEW_BEFORE_DELETE", "tracked_by_git": false, "reproducible": true, "needed_for_scientific_audit": true}
+  ],
+  "notes": ["No deletion performed.", "Source, configs, tests, reports, roadmap, .git, and committed evidence are never-delete/keep-required categories.", "The review total is a conservative scoped remainder after definite safe candidates; verify exact subpath retention before any cleanup."]
+}

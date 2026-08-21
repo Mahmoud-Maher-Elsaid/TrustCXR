@@ -1,0 +1,12 @@
+{
+  "synthetic_cases": [
+    {"case": "supported", "description": "supported classifier evidence"},
+    {"case": "uncertainty", "description": "high predictive uncertainty"},
+    {"case": "defer", "description": "active deterministic DEFER"},
+    {"case": "withheld", "description": "localization withheld after EXT-3 negative result"},
+    {"case": "conflict", "description": "contradicted classifier evidence"},
+    {"case": "missing", "description": "classifier evidence not available"}
+  ],
+  "patient_data": false,
+  "locked_test_data": false
+}

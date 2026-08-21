@@ -1,0 +1,169 @@
+{
+  "schema_id": "EXT4E_CANDIDATE3_IDENTITY_AND_RUNTIME",
+  "schema_version": "1",
+  "candidate_id": 3,
+  "model_family": "Phi-4-mini",
+  "model_variant": "Phi-4-mini-instruct",
+  "publisher": "Microsoft",
+  "repository": "microsoft/Phi-4-mini-instruct",
+  "resolved_revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+  "format": "safetensors",
+  "quantization": "none",
+  "license": "MIT",
+  "architecture": "Phi3ForCausalLM",
+  "text_only": true,
+  "context_length": 131072,
+  "artifacts": [
+    {
+      "filename": "model-00001-of-00002.safetensors",
+      "sha256": "bc703090b63eda16f639fa4de7ac54635c23105ab1da2f6ec4d3403151d38ee6",
+      "size_bytes": 4903637712,
+      "size_status": "LOCALLY_VERIFIED"
+    },
+    {
+      "filename": "model-00002-of-00002.safetensors",
+      "sha256": "7ff79b9d2d31076bac2663393451f6530f4fc8ca49b09002116c92c373dba983",
+      "size_bytes": 2768428504,
+      "size_status": "LOCALLY_VERIFIED"
+    },
+    {
+      "filename": "model.safetensors.index.json",
+      "sha256": "613a98d5e5716ca96fa75931abedc9c5a5d95f488ce4d62df71e639fe3ac6c59",
+      "size_bytes": 16273,
+      "size_status": "LOCALLY_VERIFIED"
+    },
+    {
+      "filename": "config.json",
+      "sha256": "ac65d86061d3d0d704ee2511fd0eb8713ef19eb6eedba17c3080a4165d5b933b",
+      "size_bytes": 2504,
+      "size_status": "LOCALLY_VERIFIED",
+      "role": "model_config"
+    },
+    {
+      "filename": "generation_config.json",
+      "sha256": "3e3f48753753f92d2b958679151861d4fd7bf26e4dfc41fd47056116c4914dcd",
+      "size_bytes": 168,
+      "size_status": "LOCALLY_VERIFIED",
+      "role": "generation_config"
+    },
+    {
+      "filename": "tokenizer.json",
+      "sha256": "382cc235b56c725945e149cc25f191da667c836655efd0857b004320e90e91ea",
+      "size_bytes": 15524095,
+      "size_status": "LOCALLY_VERIFIED",
+      "role": "tokenizer"
+    },
+    {
+      "filename": "tokenizer_config.json",
+      "sha256": "9c9b6bc0c94d95f69f826c41069a3e8b387ac3ced89601d201886e99240ac9db",
+      "size_bytes": 2932,
+      "size_status": "LOCALLY_VERIFIED",
+      "role": "tokenizer_config"
+    },
+    {
+      "filename": "special_tokens_map.json",
+      "sha256": "aff38493227d813e29fcf8406e8e90062f1f031aa47d589325e9c31d89ac7cc3",
+      "size_bytes": 587,
+      "size_status": "LOCALLY_VERIFIED",
+      "role": "special_tokens"
+    },
+    {
+      "filename": "added_tokens.json",
+      "sha256": "d4f2aceb0f20b71dd1f4bcc7e052e4412946bf281840b8f83d39f259571af486",
+      "size_bytes": 249,
+      "size_status": "LOCALLY_VERIFIED",
+      "role": "added_tokens"
+    },
+    {
+      "filename": "merges.txt",
+      "sha256": "856ce61180bb689282eed6b3a6838bb1f438399be23aefe9d20eb379791fb4ad",
+      "size_bytes": 2418348,
+      "size_status": "LOCALLY_VERIFIED",
+      "role": "tokenizer_merges"
+    },
+    {
+      "filename": "vocab.json",
+      "sha256": "6cb65a857824fa6615bb1782d95d882617a8bbce1da0317118586b36f39e98bd",
+      "size_bytes": 3910310,
+      "size_status": "LOCALLY_VERIFIED",
+      "role": "tokenizer_vocab"
+    },
+    {
+      "filename": "configuration_phi3.py",
+      "sha256": "ec2044b77d0b8111640ac134daa3af1f40dc552a739f8959626e7e58ea3352df",
+      "size_bytes": 10875,
+      "size_status": "LOCALLY_VERIFIED",
+      "role": "custom_config_code"
+    },
+    {
+      "filename": "modeling_phi3.py",
+      "sha256": "d5fd551a7fe759b1d25e5b16b5012aa98b9b8bd400d26c7ee69c0090a245d6cd",
+      "size_bytes": 54268,
+      "size_status": "LOCALLY_VERIFIED",
+      "role": "custom_model_code"
+    }
+  ],
+  "runtime": {
+    "kind": "transformers",
+    "transformers_version": "4.57.6",
+    "torch_version": "2.12.1+cu130",
+    "trust_remote_code": false,
+    "reason": "Official config declares Phi3ForCausalLM; installed Transformers exposes Phi3ForCausalLM. llama.cpp compatibility is not assumed."
+  },
+  "server": {
+    "host": "127.0.0.1",
+    "port": 18082,
+    "context_size": 2048,
+    "parallel": 1,
+    "gpu_policy": "EXPLICIT_LOAD_ONLY_GATE_REQUIRED"
+  },
+  "load_only": {
+    "dtype": "bfloat16",
+    "device_strategy": "CPU_ONLY_BFLOAT16",
+    "device_policy": "cpu_only",
+    "transformers_device_map": null,
+    "quantization": "none",
+    "local_files_only": true,
+    "trust_remote_code": false,
+    "forward_pass": false,
+    "generation": false
+  },
+  "generation": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "seed": 20260806,
+    "max_tokens": 768,
+    "stream": false,
+    "request_count": 1,
+    "retry_count": 0,
+    "free_form_fallback": false
+  },
+  "structured_output": {
+    "backend": "llguidance",
+    "version": "1.8.0",
+    "mechanism": "LLGUIDANCE_JSON_SCHEMA_MATCHER_LOGITS_PROCESSOR",
+    "schema": "GroundedOutputEnvelope.model_json_schema()",
+    "schema_sha256": "7e28f42cc574cf40d45a725ffac526fc469ac834ab86a574ac613ae79923c650",
+    "status": "LLGUIDANCE_PRODUCTION_INSTALLATION_PENDING",
+    "fallback_allowed": false
+  },
+  "partitions": {
+    "development_case_ids": [
+      "dev_supported",
+      "dev_uncertainty",
+      "dev_defer",
+      "dev_withheld",
+      "dev_missing",
+      "dev_conflict"
+    ],
+    "development_cases_accessed": 0,
+    "final_cases_accessed": 0,
+    "locked_test_accessed": false
+  },
+  "download": {
+    "required": false,
+    "source": "https://huggingface.co/microsoft/Phi-4-mini-instruct/tree/cfbefacb99257ffa30c83adab238a50856ac3083",
+    "destination": "cache/research_extensions/ext4e_candidate3/models",
+    "status": "WEIGHTS_AND_SUPPORT_FILES_LOCALLY_VERIFIED"
+  }
+}
