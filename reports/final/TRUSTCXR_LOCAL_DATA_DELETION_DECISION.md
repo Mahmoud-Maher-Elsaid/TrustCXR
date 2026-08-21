@@ -11,7 +11,8 @@ retraining and dataset-level rerun capability. The planned deletion target is:
 
 Current measured size: `443,504,177,084 bytes` / `413.045 GiB`.
 
-Deletion has **NOT** occurred at the time of this record.
+Deletion is now **COMPLETE**. The deletion safety gate passed and the local
+dataset directory was intentionally removed.
 
 No scientific result is being recomputed or altered. No model is loaded, no
 inference or training is run, and no final or locked case content is accessed.
@@ -28,5 +29,7 @@ One small non-sensitive COVID source note was preserved at
 No raw images, PHI, patient identifiers, large archives, or label datasets
 were copied.
 
-This decision record authorizes documentation of a later deletion plan only;
-it does not execute deletion.
+Post-deletion F: free space was recorded as `697.62 GiB`. The recovery
+manifest, committed source/history, retained scientific artifacts, and final
+Git bundle records remain preserved. Immediate local dataset-level
+reproduction is no longer available.
