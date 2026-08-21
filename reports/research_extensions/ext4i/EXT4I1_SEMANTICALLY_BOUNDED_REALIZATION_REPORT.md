@@ -22,6 +22,13 @@ clinical checks (including authorized topic exemptions) and added explicit
 SUPPORTED state-substitution rejection. H5 and historical regression inputs
 were not changed.
 
+Authoritative local repair validation recorded 8 focused realization tests
+passed and 0 failed. The mutation corpus is 264 attempted, 264 rejected,
+0 unexpected accepts; the positive matrix is 12/12 PASS. The full suite was
+1049 passed with one remaining report-metadata assertion, which this report
+repair addresses. Final EXT-4I.1 closure remains pending a new zero-failure
+full-suite run.
+
 The current bounded repair also fixes the proven remaining defects:
 `resolved` is matched as a word, so `unresolved conflict` remains valid;
 WITHHELD explicitly rejects `normal`; and NOT_APPLICABLE explicitly rejects
