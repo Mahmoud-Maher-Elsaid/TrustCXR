@@ -1,0 +1,23 @@
+{
+  "status": "EXT4I2_BOUNDED_LEXICAL_RUNTIME_GOVERNANCE_PASS",
+  "starting_head": "efc5a560104b6eb3d59730b069ffcb2eb051d441",
+  "ext4i1_status": "EXT4I1_SEMANTICALLY_BOUNDED_REALIZATION_AND_REGRESSION_PASS",
+  "ext4i1_integrity": {"focused_tests": "8 passed, 0 failed", "full_pytest": "1050 passed, 0 failed", "pip_check": "PASS", "model_calls": [0, 0, 0]},
+  "lexical_field": {"name": "connector", "location": "EXT4I_BOUNDED_LEXICAL_CHOICE_V1 / ext4i_realization.py", "enum": ["and", "while"], "count": 2, "role": "non-semantic sentence connector", "semantic_equivalence": true, "readability_benefit": "marginal", "deterministic_selection_sufficient": true, "scientific_model_value": false},
+  "mode_a": {"name": "FULLY_DETERMINISTIC_REALIZATION", "safety": "highest", "reproducibility": "exact", "runtime_complexity": "minimal", "research_value": "sufficient; lexical variation can be enumerated deterministically"},
+  "mode_b": {"name": "BOUNDED_LLM_LEXICAL_SELECTION", "safety": "requires constrained runtime", "reproducibility": "adds model/runtime variance", "gpu_cost": "non-zero", "research_value": "no demonstrated benefit for a two-value connector enum", "not_selected_reason": "deterministic selection already satisfies the role"},
+  "decision": "EXT4I2_DECISION_FULLY_DETERMINISTIC_REALIZATION",
+  "scientific_statement": "NO_LLM_NEEDED_FOR_REALIZATION",
+  "model_semantic_authority_fields": [],
+  "model_lexical_authority_fields": [],
+  "free_text_model_fields": 0,
+  "bounded_lexical_fields": 1,
+  "smoke_case_id": "ext4i2_bounded_lexical_smoke_001",
+  "failure_policy": {"invalid_enum": "EXT4I_BOUNDED_LEXICAL_INVALID_ENUM", "extra_content": "EXT4I_BOUNDED_LEXICAL_EXTRA_CONTENT", "constraint_failure": "EXT4I_BOUNDED_LEXICAL_CONSTRAINT_FAILURE", "runtime_failure": "EXT4I_BOUNDED_LEXICAL_RUNTIME_FAILURE", "semantic_failure": "EXT4I_SEMANTIC_VALIDATION_FAILURE", "retry": "none", "fallback": "deterministic-only path; no unconstrained generation"},
+  "development_cases_accessed": 0,
+  "frozen_final_cases_accessed": 0,
+  "locked_test_accessed": false,
+  "model_load_calls": 0,
+  "model_generate_calls": 0,
+  "next_stage": "EXT-4I.3 Deterministic Realization Acceptance and LLM Role Reassessment"
+}
